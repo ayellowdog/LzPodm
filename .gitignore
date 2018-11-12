@@ -24,11 +24,11 @@ hs_err_pid*
 
 # add by lc
 .project
-ipodm-api/.classpath
-ipodm-api/.gitignore
-ipodm-api/.project
-ipodm-api/.settings/
-ipodm-api/target/
+ipodm/ipodm-api/.classpath
+ipodm/ipodm-api/.gitignore
+ipodm/ipodm-api/.project
+ipodm/ipodm-api/.settings/
+ipodm/ipodm-api/target/
 
 ipodm-common/.classpath
 ipodm-common/.gitignore
