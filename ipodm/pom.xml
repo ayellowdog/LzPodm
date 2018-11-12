@@ -318,5 +318,6 @@
 	<modules>
 		<module>ipodm-service</module>
 		<module>ipodm-api</module>
+		<module>ipodm-common</module>
 	</modules>
 </project>
