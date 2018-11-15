@@ -26,7 +26,7 @@
 	      <version>3.8.1</version>
 	      <scope>test</scope>
 	    </dependency>
-        <!--鎺ュ彛鏂囨。-->
+        <!--接口文档-->
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
@@ -35,7 +35,7 @@
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger-ui</artifactId>
         </dependency>
-        <!-- 鏂板jar鍖呰鍐欏湪杩欓噷Start -->
+        <!-- 新增jar包请写在这里Start -->
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
             <artifactId>mybatis-spring-boot-starter</artifactId>
@@ -55,7 +55,7 @@
         
 		
 				
-        <!-- 鏂板jar鍖呰鍐欏湪杩欓噷End -->
+        <!-- 新增jar包请写在这里End -->
     </dependencies>
     <build>
         <resources>

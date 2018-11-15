@@ -97,6 +97,7 @@
             <artifactId>poi</artifactId>
             <version>3.6</version>
         </dependency>
+<<<<<<< HEAD
         <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
 		<dependency>
 		    <groupId>com.fasterxml.jackson.core</groupId>
@@ -151,6 +152,13 @@
 		    <groupId>org.springframework</groupId>
 		    <artifactId>spring-web</artifactId>
 		    <version>4.3.9.RELEASE</version>
+=======
+		<!--quartz定时 -->
+		<dependency>
+			<groupId>org.quartz-scheduler</groupId>
+			<artifactId>quartz</artifactId>
+			<version>2.3.0</version>
+>>>>>>> 1782c3ec9e34aabf157a57f154acb4378d3392c2
 		</dependency>
 		<!-- 新增jar包请写在这里End -->
 	</dependencies>
