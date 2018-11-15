@@ -25,6 +25,7 @@ import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.core.Response;
 
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -37,24 +38,22 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
-@RequestMapping(value = "/v1/pimFm")
+@RequestMapping("/redfish/v1/Chassis")
 @Api(value = "ChassisController", description = "Chassis Controller")
 public class ChassisCollectionResource extends BaseResource {
 //    @Inject
 //    private ReaderService<ChassisDto> readerService;
 
-    @GET
+    @RequestMapping(method=RequestMethod.GET)
     @Override
     public CollectionDto get() {
-    	return null;
-//        return getOrThrow(() -> readerService.getCollection(SERVICE_ROOT_CONTEXT));
+        return null;//getOrThrow(() -> readerService.getCollection(SERVICE_ROOT_CONTEXT));
     }
 
-//    @Path(CHASSIS_ID)
-    @ApiOperation(value = "CHASSIS", notes = "getChassis")
     @RequestMapping(value = CHASSIS_ID, method = RequestMethod.GET, produces={APPLICATION_JSON})
-    public ChassisResource getChassis() {
-        return null;//getResource(ChassisResource.class);
+    @ApiOperation(value = "CHASSIS", notes = "getChassis")
+    public ChassisResource getChassis(@PathVariable("ChassisID") String chassisID) {
+        return getResource(ChassisResource.class);
     }
 
     @Override
