@@ -24,16 +24,21 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.inspur.podm.business.dto.ChassisDto;
 import com.inspur.podm.business.dto.redfish.CollectionDto;
 import com.inspur.podm.business.services.redfish.ReaderService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 @RequestScoped
-@Produces(APPLICATION_JSON)
+@RequestMapping(value = "/v1/pimFm")
+@Api(value = "ChassisController", description = "Chassis Controller")
 public class ChassisCollectionResource extends BaseResource {
     @Inject
     private ReaderService<ChassisDto> readerService;
@@ -44,7 +49,9 @@ public class ChassisCollectionResource extends BaseResource {
         return getOrThrow(() -> readerService.getCollection(SERVICE_ROOT_CONTEXT));
     }
 
-    @Path(CHASSIS_ID)
+//    @Path(CHASSIS_ID)
+    @ApiOperation(value = "CHASSIS", notes = "getChassis")
+    @RequestMapping(value = CHASSIS_ID, method = RequestMethod.GET, produces={APPLICATION_JSON})
     public ChassisResource getChassis() {
         return getResource(ChassisResource.class);
     }

@@ -46,7 +46,6 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static javax.ws.rs.core.Response.ok;
 
 @RequestScoped
-@Produces(APPLICATION_JSON)
 @SuppressWarnings({"checkstyle:ClassFanOutComplexity"})
 public class ChassisResource extends BaseResource {
     @Inject
