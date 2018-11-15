@@ -97,6 +97,12 @@
             <artifactId>poi</artifactId>
             <version>3.6</version>
         </dependency>
+		<!--quartz定时 -->
+		<dependency>
+			<groupId>org.quartz-scheduler</groupId>
+			<artifactId>quartz</artifactId>
+			<version>2.3.0</version>
+		</dependency>
 		<!-- 新增jar包请写在这里End -->
 	</dependencies>
 

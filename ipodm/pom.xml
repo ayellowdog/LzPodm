@@ -32,6 +32,9 @@
 		<spring-boot.version>1.5.4.RELEASE</spring-boot.version>
 		<spring-boot-starter.version>1.5.4.RELEASE</spring-boot-starter.version>
 		<springloaded.version>1.2.6.RELEASE</springloaded.version>
+		<commons-codec.version>1.10</commons-codec.version>
+		<!-- Spring -->
+		<org.springframework.version>4.3.9.RELEASE</org.springframework.version>
 		<!--bean转换 -->
 		<dozer.version>5.5.1</dozer.version>
 
@@ -50,6 +53,36 @@
 
 	<dependencyManagement>
 		<dependencies>
+			<dependency>
+	            <groupId>org.springframework</groupId>
+	            <artifactId>spring-context-support</artifactId>
+	            <version>${org.springframework.version}</version>
+	        </dependency>
+	        <dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-core</artifactId>
+				<version>${org.springframework.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-beans</artifactId>
+				<version>${org.springframework.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-context</artifactId>
+				<version>${org.springframework.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-expression</artifactId>
+				<version>${org.springframework.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-context-support</artifactId>
+				<version>${org.springframework.version}</version>
+			</dependency>
 			<!-- log start -->
 			<dependency>
 				<groupId>log4j</groupId>
@@ -122,6 +155,7 @@
 				<artifactId>spring-boot-starter-web</artifactId>
 				<version>${spring-boot.version}</version>
 			</dependency>
+			<!-- https://mvnrepository.com/artifact/org.springframework/spring-core -->
 			<dependency>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-starter-test</artifactId>
@@ -155,15 +189,22 @@
 				<artifactId>spring-boot-starter-security</artifactId>
 				<version>${spring-boot-starter.version}</version>
 			</dependency>
-
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+			<version>${commons-codec.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>${commons-io.version}</version>
+		</dependency>
 			<!--bean转换 -->
 			<dependency>
 				<groupId>net.sf.dozer</groupId>
 				<artifactId>dozer</artifactId>
 				<version>${dozer.version}</version>
 			</dependency>
-
-
 			<!--swagger2接口生成 -->
 			<dependency>
 				<groupId>io.springfox</groupId>
