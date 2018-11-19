@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.inspur.podm.service.mapper.ChassisEntityMapper">
+  <resultMap id="BaseResultMap" type="com.inspur.podm.api.entity.ChassisEntity">
+    <result column="id" jdbcType="INTEGER" property="id" />
+    <result column="model" jdbcType="VARCHAR" property="model" />
+  </resultMap>
+  <select id="getChassissById" resultMap="BaseResultMap">
+  select * from chassis where chassis.id=#{id}
+  </select>
+</mapper>
