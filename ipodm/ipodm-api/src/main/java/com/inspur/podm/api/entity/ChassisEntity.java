@@ -3,10 +3,9 @@
  */
 package com.inspur.podm.api.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.inspur.podm.common.intel.types.ChassisType;
 import com.inspur.podm.common.persistence.BaseEntity;
 
 /**
@@ -16,32 +15,33 @@ import com.inspur.podm.common.persistence.BaseEntity;
  * @author: liuchangbj
  * @date: 2018年11月16日 上午11:08:41
  */
-@Table(name = "chassis")
+//@Table(name = "chassis")
 public class ChassisEntity extends BaseEntity {
 
 	/** @Fields serialVersionUID: TODO 功能描述  */
 	private static final long serialVersionUID = 1L;
-	
-	@Id
-	@Column(name = "id")
-	private int id;
+
 	
 	private String model;
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
+//    private ChassisType chassisType;
 	public String getModel() {
 		return model;
 	}
 
 	public void setModel(String model) {
 		this.model = model;
+	}
+
+	@Override
+	public void preRemove() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean containedBy(BaseEntity possibleParent) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

@@ -28,7 +28,20 @@ public class DhcpServiceDetector {
 	public void test(String str) {
 		logger.info("-------------this is test: "+ str + "----------------");
 		List<ChassisEntity> list = chassisEntityMapper.getChassissById(1);
-		System.out.println(list.get(0).getModel() + "*******************************************");
+		System.out.println(list.size() + "&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
+//		System.out.println(list.get(0).getModel() + "*******************************************");
+		
+//		try {
+//			if (list.size() == 0) {
+//				ChassisEntity chassis = new ChassisEntity();
+//				chassis.setModel("nmb");
+//				chassisEntityMapper.insertUseGeneratedKeys(chassis);
+//				System.out.println("(((((((((((((((((((((((((((((");
+//			}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+		
 		
 	}
 }

@@ -4,6 +4,7 @@
   <resultMap id="BaseResultMap" type="com.inspur.podm.api.entity.ChassisEntity">
     <result column="id" jdbcType="INTEGER" property="id" />
     <result column="model" jdbcType="VARCHAR" property="model" />
+    <!-- <result column="event_source_context" javaType="java.net.URI"/> -->
   </resultMap>
   <select id="getChassissById" resultMap="BaseResultMap">
   select * from chassis where chassis.id=#{id}

@@ -1,0 +1,219 @@
+/*
+ * Copyright (c) 2016-2018 Intel Corporation
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.inspur.podm.common.persistence.entity;
+
+
+import java.util.Objects;
+
+import com.inspur.podm.common.intel.types.Id;
+import com.inspur.podm.common.intel.types.PhysicalContext;
+import com.inspur.podm.common.persistence.BaseEntity;
+
+//@javax.persistence.Entity
+//@Table(name = "thermal_fan", indexes = @Index(name = "idx_thermal_fan_entity_id", columnList = "entity_id", unique = true))
+//@SuppressWarnings({"checkstyle:MethodCount"})
+//@Eventable
+public class ThermalFan extends DiscoverableEntity {
+/** @Fields serialVersionUID: TODO 功能描述  */
+	private static final long serialVersionUID = -3978258627021379862L;
+
+	//    @Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
+    private Id entityId;
+
+//    @Column(name = "member_id")
+    private String memberId;
+
+//    @Column(name = "physical_context")
+//    @Enumerated(STRING)
+    private PhysicalContext physicalContext;
+
+//    @Column(name = "reading")
+    private Integer reading;
+
+//    @Column(name = "reading_units")
+    private String readingUnits;
+
+//    @Column(name = "upper_threshold_non_critical")
+    private Integer upperThresholdNonCritical;
+
+//    @Column(name = "upper_threshold_critical")
+    private Integer upperThresholdCritical;
+
+//    @Column(name = "upper_threshold_fatal")
+    private Integer upperThresholdFatal;
+
+//    @Column(name = "lower_threshold_non_critical")
+    private Integer lowerThresholdNonCritical;
+
+//    @Column(name = "lower_threshold_critical")
+    private Integer lowerThresholdCritical;
+
+//    @Column(name = "lower_threshold_fatal")
+    private Integer lowerThresholdFatal;
+
+//    @Column(name = "min_reading_range")
+    private Integer minReadingRange;
+
+//    @Column(name = "max_reading_range")
+    private Integer maxReadingRange;
+
+//    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
+//    @JoinColumn(name = "thermal_id")
+    private Thermal thermal;
+
+    @Override
+    public Id getId() {
+        return entityId;
+    }
+
+    @Override
+    public void setId(Id id) {
+        this.entityId = id;
+    }
+
+    public String getMemberId() {
+        return memberId;
+    }
+
+    public void setMemberId(String memberId) {
+        this.memberId = memberId;
+    }
+
+    public PhysicalContext getPhysicalContext() {
+        return physicalContext;
+    }
+
+    public void setPhysicalContext(PhysicalContext physicalContext) {
+        this.physicalContext = physicalContext;
+    }
+
+    public Integer getReading() {
+        return reading;
+    }
+
+    public void setReading(Integer reading) {
+        this.reading = reading;
+    }
+
+    public String getReadingUnits() {
+        return readingUnits;
+    }
+
+    public void setReadingUnits(String readingUnits) {
+        this.readingUnits = readingUnits;
+    }
+
+    public Integer getUpperThresholdNonCritical() {
+        return upperThresholdNonCritical;
+    }
+
+    public void setUpperThresholdNonCritical(Integer upperThresholdNonCritical) {
+        this.upperThresholdNonCritical = upperThresholdNonCritical;
+    }
+
+    public Integer getUpperThresholdCritical() {
+        return upperThresholdCritical;
+    }
+
+    public void setUpperThresholdCritical(Integer upperThresholdCritical) {
+        this.upperThresholdCritical = upperThresholdCritical;
+    }
+
+    public Integer getUpperThresholdFatal() {
+        return upperThresholdFatal;
+    }
+
+    public void setUpperThresholdFatal(Integer upperThresholdFatal) {
+        this.upperThresholdFatal = upperThresholdFatal;
+    }
+
+    public Integer getLowerThresholdNonCritical() {
+        return lowerThresholdNonCritical;
+    }
+
+    public void setLowerThresholdNonCritical(Integer lowerThresholdNonCritical) {
+        this.lowerThresholdNonCritical = lowerThresholdNonCritical;
+    }
+
+    public Integer getLowerThresholdCritical() {
+        return lowerThresholdCritical;
+    }
+
+    public void setLowerThresholdCritical(Integer lowerThresholdCritical) {
+        this.lowerThresholdCritical = lowerThresholdCritical;
+    }
+
+    public Integer getLowerThresholdFatal() {
+        return lowerThresholdFatal;
+    }
+
+    public void setLowerThresholdFatal(Integer lowerThresholdFatal) {
+        this.lowerThresholdFatal = lowerThresholdFatal;
+    }
+
+    public Integer getMinReadingRange() {
+        return minReadingRange;
+    }
+
+    public void setMinReadingRange(Integer minReadingRange) {
+        this.minReadingRange = minReadingRange;
+    }
+
+    public Integer getMaxReadingRange() {
+        return maxReadingRange;
+    }
+
+    public void setMaxReadingRange(Integer maxReadingRange) {
+        this.maxReadingRange = maxReadingRange;
+    }
+
+//    @EventOriginProvider
+    public Thermal getThermal() {
+        return thermal;
+    }
+
+    public void setThermal(Thermal thermal) {
+        if (!Objects.equals(this.thermal, thermal)) {
+            unlinkThermal(this.thermal);
+            this.thermal = thermal;
+            if (thermal != null && !thermal.getFans().contains(this)) {
+                thermal.addFan(this);
+            }
+        }
+
+        this.thermal = thermal;
+    }
+
+    public void unlinkThermal(Thermal thermal) {
+        if (Objects.equals(this.thermal, thermal)) {
+            this.thermal = null;
+            if (thermal != null) {
+                thermal.unlinkFan(this);
+            }
+        }
+    }
+
+    @Override
+    public void preRemove() {
+        unlinkThermal(thermal);
+    }
+
+    @Override
+    public boolean containedBy(BaseEntity possibleParent) {
+        return isContainedBy(possibleParent, thermal);
+    }
+}
