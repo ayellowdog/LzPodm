@@ -22,12 +22,11 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableScheduling
 @EnableAsync
 @EnableTransactionManagement
-@SpringBootApplication(exclude = JpaRepositoriesAutoConfiguration.class)
+@SpringBootApplication
 //@EnableEncryptableProperties
 @ComponentScan(basePackages = "com.inspur.podm")
 @EnableAutoConfiguration()
 @Configuration
-//@EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class})
 public class ServiceApplication {
 	/**
 	 * 

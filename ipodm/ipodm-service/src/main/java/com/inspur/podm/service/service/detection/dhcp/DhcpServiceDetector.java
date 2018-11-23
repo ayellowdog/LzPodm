@@ -5,11 +5,7 @@ package com.inspur.podm.service.service.detection.dhcp;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.inspur.podm.common.persistence.entity.Chassis;
-import com.inspur.podm.service.mapper.ChassisMapper;
 
 /**
  * @ClassName: DhcpServiceDetector
@@ -20,21 +16,9 @@ import com.inspur.podm.service.mapper.ChassisMapper;
  */
 @Service("dhcpServiceDetector")
 public class DhcpServiceDetector {
-	@Autowired
-	private ChassisMapper chassisEntityMapper;
 	private static final Logger logger = LoggerFactory.getLogger(DhcpServiceDetector.class);
 	public void test(String str) {
 		logger.info("-------------this is test: "+ str + "----------------");
-		try {
-			Chassis c = chassisEntityMapper.getChassissById(1).get(0);
-			System.out.println(c.getEventSourceContext());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		
-		
-		
 	}
 }
 
