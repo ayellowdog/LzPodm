@@ -7,8 +7,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
-import com.inspur.podm.api.entity.ChassisEntity;
-import com.inspur.podm.common.persistence.BaseMapper;
+import com.inspur.podm.common.persistence.entity.Chassis;
 
 /**
  * @ClassName: ChassisEntityMapper
@@ -17,7 +16,7 @@ import com.inspur.podm.common.persistence.BaseMapper;
  * @author: liuchangbj
  * @date: 2018年11月16日 上午11:13:14
  */
-public interface ChassisEntityMapper extends BaseMapper<ChassisEntity> {
-	public List<ChassisEntity> getChassissById(@Param("id")int id);
+public interface ChassisMapper {
+	public List<Chassis> getChassissById(@Param("id")long id);
 }
 

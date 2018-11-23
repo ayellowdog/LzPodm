@@ -12,6 +12,7 @@ import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 import javax.persistence.PreRemove;
+import javax.persistence.Transient;
 
 /**
  * 
@@ -39,6 +40,7 @@ public abstract class BaseEntity implements Serializable{
     private long version;
 	
 //    @Column(name = "event_source_context")
+    @Transient
     private URI eventSourceContext;
     
     protected long getPrimaryKey() {
@@ -108,9 +110,9 @@ public abstract class BaseEntity implements Serializable{
 //		return id;
 //	}
 //
-//	public void setId(long id) {
-//		this.id = id;
-//	}
+	public void setId(long id) {
+		this.id = id;
+	}
 
 	public long getVersion() {
 		return version;

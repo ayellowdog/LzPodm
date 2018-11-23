@@ -3,15 +3,13 @@
  */
 package com.inspur.podm.service.service.detection.dhcp;
 
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.inspur.podm.api.entity.ChassisEntity;
-import com.inspur.podm.service.mapper.ChassisEntityMapper;
+import com.inspur.podm.common.persistence.entity.Chassis;
+import com.inspur.podm.service.mapper.ChassisMapper;
 
 /**
  * @ClassName: DhcpServiceDetector
@@ -23,24 +21,18 @@ import com.inspur.podm.service.mapper.ChassisEntityMapper;
 @Service("dhcpServiceDetector")
 public class DhcpServiceDetector {
 	@Autowired
-	private ChassisEntityMapper chassisEntityMapper;
+	private ChassisMapper chassisEntityMapper;
 	private static final Logger logger = LoggerFactory.getLogger(DhcpServiceDetector.class);
 	public void test(String str) {
 		logger.info("-------------this is test: "+ str + "----------------");
-		List<ChassisEntity> list = chassisEntityMapper.getChassissById(1);
-		System.out.println(list.size() + "&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
-//		System.out.println(list.get(0).getModel() + "*******************************************");
+		try {
+			Chassis c = chassisEntityMapper.getChassissById(1).get(0);
+			System.out.println(c.getEventSourceContext());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 		
-//		try {
-//			if (list.size() == 0) {
-//				ChassisEntity chassis = new ChassisEntity();
-//				chassis.setModel("nmb");
-//				chassisEntityMapper.insertUseGeneratedKeys(chassis);
-//				System.out.println("(((((((((((((((((((((((((((((");
-//			}
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
 		
 		
 	}
