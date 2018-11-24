@@ -2,8 +2,10 @@ package com.inspur.podm.service;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -22,6 +24,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @SpringBootApplication
 //@EnableEncryptableProperties
 @ComponentScan(basePackages = "com.inspur.podm")
+@EnableJpaRepositories(basePackages={"com.inspur.podm"})
+@EntityScan("com.inspur.podm")
 @Configuration
 public class ServiceApplication {
 	/**

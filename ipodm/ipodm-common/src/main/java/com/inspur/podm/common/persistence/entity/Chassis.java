@@ -19,11 +19,26 @@ package com.inspur.podm.common.persistence.entity;
 
 
 import static com.inspur.podm.common.utils.Contracts.requiresNonNull;
-
+import static javax.persistence.CascadeType.MERGE;
+import static javax.persistence.CascadeType.PERSIST;
+import static javax.persistence.EnumType.STRING;
+import static javax.persistence.FetchType.LAZY;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
-
+import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.Enumerated;
+import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import com.inspur.podm.common.intel.types.ChassisType;
 import com.inspur.podm.common.intel.types.Id;
 import com.inspur.podm.common.intel.types.IndicatorLed;
@@ -64,113 +79,113 @@ public class Chassis extends DiscoverableEntity {
     public static final String GET_CHASSIS_BY_TYPE_AND_SERVICE = "GET_CHASSIS_BY_TYPE_AND_SERVICE";
     public static final String GET_CHASSIS_BY_TYPE_AND_LOCATION = "GET_CHASSIS_BY_TYPE_AND_LOCATION";
 
-//    @Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
+    @Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
     private Id entityId;
 
-//    @Column(name = "chassis_type")
-//    @Enumerated(STRING)
+    @Column(name = "chassis_type")
+    @Enumerated(STRING)
     private ChassisType chassisType;
 
-//    @Column(name = "manufacturer")
+    @Column(name = "manufacturer")
     private String manufacturer;
 
-//    @Column(name = "model")
+    @Column(name = "model")
     private String model;
 
-//    @Column(name = "sku")
+    @Column(name = "sku")
     private String sku;
 
-//    @Column(name = "serial_number")
+    @Column(name = "serial_number")
     private String serialNumber;
 
-//    @Column(name = "part_number")
+    @Column(name = "part_number")
     private String partNumber;
 
-//    @Column(name = "asset_tag")
+    @Column(name = "asset_tag")
     private String assetTag;
 
-//    @Column(name = "indicator_led")
-//    @Enumerated(STRING)
+    @Column(name = "indicator_led")
+    @Enumerated(STRING)
     private IndicatorLed indicatorLed;
 
-//    @Column(name = "location_id")
+    @Column(name = "location_id")
     private String locationId;
 
-//    @Column(name = "location_parent_id")
+    @Column(name = "location_parent_id")
     private String locationParentId;
 
-//    @Column(name = "power_state")
-//    @Enumerated(STRING)
+    @Column(name = "power_state")
+    @Enumerated(STRING)
     private PowerState powerState;
 
-//    @Embedded
+    @Embedded
     private RackChassisAttributes rackChassisAttributes;
 
-//    @OneToMany(mappedBy = "containedByChassis", fetch = LAZY, cascade = {MERGE, PERSIST})
+    @OneToMany(mappedBy = "containedByChassis", fetch = LAZY, cascade = {MERGE, PERSIST})
     private Set<Chassis> containedChassis = new HashSet<>();
 
-//    @OneToMany(mappedBy = "chassis", fetch = LAZY, cascade = {MERGE, PERSIST})
+    @OneToMany(mappedBy = "chassis", fetch = LAZY, cascade = {MERGE, PERSIST})
     private Set<EthernetSwitch> ethernetSwitches = new HashSet<>();
 
-//    @OneToMany(mappedBy = "inChassisManager", fetch = LAZY, cascade = {MERGE, PERSIST})
+    @OneToMany(mappedBy = "inChassisManager", fetch = LAZY, cascade = {MERGE, PERSIST})
     private Set<Manager> inChassisManagers = new HashSet<>();
 
-//    @OneToMany(mappedBy = "chassis", fetch = LAZY, cascade = {MERGE, PERSIST})
+    @OneToMany(mappedBy = "chassis", fetch = LAZY, cascade = {MERGE, PERSIST})
     private Set<Drive> drives = new HashSet<>();
 
-//    @OneToMany(mappedBy = "chassis", fetch = LAZY, cascade = {MERGE, PERSIST})
+    @OneToMany(mappedBy = "chassis", fetch = LAZY, cascade = {MERGE, PERSIST})
     private Set<Storage> storages = new HashSet<>();
 
-//    @ManyToMany(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinTable(
-//        name = "chassis_computer_system",
-//        joinColumns = {@JoinColumn(name = "chassis_id", referencedColumnName = "id")},
-//        inverseJoinColumns = {@JoinColumn(name = "computer_system_id", referencedColumnName = "id")})
+    @ManyToMany(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinTable(
+        name = "chassis_computer_system",
+        joinColumns = {@JoinColumn(name = "chassis_id", referencedColumnName = "id")},
+        inverseJoinColumns = {@JoinColumn(name = "computer_system_id", referencedColumnName = "id")})
     private Set<ComputerSystem> computerSystems = new HashSet<>();
 
-//    @ManyToMany(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinTable(
-//        name = "chassis_fabric_switch",
-//        joinColumns = {@JoinColumn(name = "chassis_id", referencedColumnName = "id")},
-//        inverseJoinColumns = {@JoinColumn(name = "fabric_switch_id", referencedColumnName = "id")})
+    @ManyToMany(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinTable(
+        name = "chassis_fabric_switch",
+        joinColumns = {@JoinColumn(name = "chassis_id", referencedColumnName = "id")},
+        inverseJoinColumns = {@JoinColumn(name = "fabric_switch_id", referencedColumnName = "id")})
     private Set<Switch> fabricSwitches = new HashSet<>();
 
-//    @ManyToMany(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinTable(
-//        name = "chassis_pcie_device",
-//        joinColumns = {@JoinColumn(name = "chassis_id", referencedColumnName = "id")},
-//        inverseJoinColumns = {@JoinColumn(name = "pcie_device_id", referencedColumnName = "id")})
+    @ManyToMany(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinTable(
+        name = "chassis_pcie_device",
+        joinColumns = {@JoinColumn(name = "chassis_id", referencedColumnName = "id")},
+        inverseJoinColumns = {@JoinColumn(name = "pcie_device_id", referencedColumnName = "id")})
     private Set<PcieDevice> pcieDevices = new HashSet<>();
 
-//    @ManyToMany(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinTable(
-//        name = "chassis_manager",
-//        joinColumns = {@JoinColumn(name = "chassis_id", referencedColumnName = "id")},
-//        inverseJoinColumns = {@JoinColumn(name = "manager_id", referencedColumnName = "id")})
+    @ManyToMany(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinTable(
+        name = "chassis_manager",
+        joinColumns = {@JoinColumn(name = "chassis_id", referencedColumnName = "id")},
+        inverseJoinColumns = {@JoinColumn(name = "manager_id", referencedColumnName = "id")})
     private Set<Manager> managers = new HashSet<>();
 
-//    @ManyToMany(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinTable(
-//        name = "chassis_power",
-//        joinColumns = {@JoinColumn(name = "chassis_id", referencedColumnName = "id")},
-//        inverseJoinColumns = {@JoinColumn(name = "power_id", referencedColumnName = "id")})
+    @ManyToMany(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinTable(
+        name = "chassis_power",
+        joinColumns = {@JoinColumn(name = "chassis_id", referencedColumnName = "id")},
+        inverseJoinColumns = {@JoinColumn(name = "power_id", referencedColumnName = "id")})
     private Set<Power> poweredBy = new HashSet<>();
 
-//    @ManyToMany(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinTable(
-//        name = "chassis_thermal",
-//        joinColumns = {@JoinColumn(name = "chassis_id", referencedColumnName = "id")},
-//        inverseJoinColumns = {@JoinColumn(name = "thermal_id", referencedColumnName = "id")})
+    @ManyToMany(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinTable(
+        name = "chassis_thermal",
+        joinColumns = {@JoinColumn(name = "chassis_id", referencedColumnName = "id")},
+        inverseJoinColumns = {@JoinColumn(name = "thermal_id", referencedColumnName = "id")})
     private Set<Thermal> cooledBy = new HashSet<>();
 
-//    @OneToOne(mappedBy = "chassis", fetch = LAZY, cascade = {MERGE, PERSIST})
+    @OneToOne(mappedBy = "chassis", fetch = LAZY, cascade = {MERGE, PERSIST})
     private Thermal thermal;
 
-//    @OneToOne(mappedBy = "chassis", fetch = LAZY, cascade = {MERGE, PERSIST})
+    @OneToOne(mappedBy = "chassis", fetch = LAZY, cascade = {MERGE, PERSIST})
     private Power power;
 
-//    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinColumn(name = "parent_chassis_id")
+    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinColumn(name = "parent_chassis_id")
     private Chassis containedByChassis;
 
     @Override
