@@ -18,6 +18,11 @@ package com.inspur.podm.common.persistence.entity;
 
 
 import static com.inspur.podm.common.utils.Contracts.requiresNonNull;
+import static javax.persistence.CascadeType.MERGE;
+import static javax.persistence.CascadeType.PERSIST;
+import static javax.persistence.EnumType.STRING;
+import static javax.persistence.FetchType.LAZY;
+import static org.hibernate.annotations.NotFoundAction.IGNORE;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -26,6 +31,24 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.function.Predicate;
+
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Embedded;
+import javax.persistence.Enumerated;
+import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.OrderColumn;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.NotFound;
 
 import com.inspur.podm.common.intel.types.AdministrativeState;
 import com.inspur.podm.common.intel.types.DcbxState;
@@ -42,133 +65,125 @@ import com.inspur.podm.common.persistence.base.VlanPossessor;
 import com.inspur.podm.common.persistence.entity.embeddables.IpV4Address;
 import com.inspur.podm.common.persistence.entity.embeddables.IpV6Address;
 import com.inspur.podm.common.persistence.entity.embeddables.PriorityFlowControl;
-//import static javax.persistence.CascadeType.MERGE;
-//import static javax.persistence.CascadeType.PERSIST;
-//import static javax.persistence.EnumType.STRING;
-//import static javax.persistence.FetchType.LAZY;
-//import static org.hibernate.annotations.NotFoundAction.IGNORE;
-
-//@javax.persistence.Entity
-//@NamedQueries({
-//    @NamedQuery(name = EthernetSwitchPort.GET_ETHERNET_SWITCH_PORT_BY_NEIGHBOR_MAC,
-//        query = "SELECT esp FROM EthernetSwitchPort esp WHERE esp.neighborMac = :neighborMac")
-//})
-//@Table(name = "ethernet_switch_port", indexes = @Index(name = "idx_ethernet_switch_port_entity_id", columnList = "entity_id", unique = true))
+@javax.persistence.Entity
+@NamedQueries({
+    @NamedQuery(name = EthernetSwitchPort.GET_ETHERNET_SWITCH_PORT_BY_NEIGHBOR_MAC,
+        query = "SELECT esp FROM EthernetSwitchPort esp WHERE esp.neighborMac = :neighborMac")
+})
+@Table(name = "ethernet_switch_port", indexes = @Index(name = "idx_ethernet_switch_port_entity_id", columnList = "entity_id", unique = true))
 //@Eventable
 //@SuppressWarnings({"checkstyle:ClassFanOutComplexity", "checkstyle:MethodCount"})
 public class EthernetSwitchPort extends DiscoverableEntity implements VlanPossessor {
-    /** @Fields serialVersionUID: TODO 功能描述  */
-	private static final long serialVersionUID = -6027827494896786425L;
 
 	public static final String GET_ETHERNET_SWITCH_PORT_BY_NEIGHBOR_MAC = "GET_ETHERNET_SWITCH_PORT_BY_NEIGHBOR_MAC";
 
-//    @Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
+    @Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
     private Id entityId;
 
-//    @Column(name = "port_id")
+    @Column(name = "port_id")
     private String portId;
 
-//    @Column(name = "link_type")
-//    @Enumerated(STRING)
+    @Column(name = "link_type")
+    @Enumerated(STRING)
     private LinkType linkType;
 
-//    @Column(name = "operational_state")
-//    @Enumerated(STRING)
+    @Column(name = "operational_state")
+    @Enumerated(STRING)
     private OperationalState operationalState;
 
-//    @Column(name = "administrative_state")
-//    @Enumerated(STRING)
+    @Column(name = "administrative_state")
+    @Enumerated(STRING)
     private AdministrativeState administrativeState;
 
-//    @Column(name = "link_speed_gbps")
+    @Column(name = "link_speed_gbps")
     private Integer linkSpeedGbps;
 
-//    @Column(name = "neighbor_info")
+    @Column(name = "neighbor_info")
     private NeighborInfo neighborInfo;
 
-//    @Column(name = "neighbor_mac")
+    @Column(name = "neighbor_mac")
     private MacAddress neighborMac;
 
-//    @Column(name = "mac_address")
+    @Column(name = "mac_address")
     private MacAddress macAddress;
 
-//    @Column(name = "autosense")
+    @Column(name = "autosense")
     private Boolean autosense;
 
-//    @Column(name = "frame_size")
+    @Column(name = "frame_size")
     private Integer frameSize;
 
-//    @Column(name = "full_duplex")
+    @Column(name = "full_duplex")
     private Boolean fullDuplex;
 
-//    @Column(name = "port_class")
-//    @Enumerated(STRING)
+    @Column(name = "port_class")
+    @Enumerated(STRING)
     private PortClass portClass;
 
-//    @Column(name = "port_mode")
-//    @Enumerated(STRING)
+    @Column(name = "port_mode")
+    @Enumerated(STRING)
     private PortMode portMode;
 
-//    @Column(name = "port_type")
-//    @Enumerated(STRING)
+    @Column(name = "port_type")
+    @Enumerated(STRING)
     private PortType portType;
 
-//    @ElementCollection
-//    @CollectionTable(name = "ethernet_switch_port_ipv4_address", joinColumns = @JoinColumn(name = "ethernet_switch_port_id"))
-//    @OrderColumn(name = "ipv4_address_order")
+    @ElementCollection
+    @CollectionTable(name = "ethernet_switch_port_ipv4_address", joinColumns = @JoinColumn(name = "ethernet_switch_port_id"))
+    @OrderColumn(name = "ipv4_address_order")
     private List<IpV4Address> ipv4Addresses = new ArrayList<>();
 
-//    @ElementCollection
-//    @CollectionTable(name = "ethernet_switch_port_ipv6_address", joinColumns = @JoinColumn(name = "ethernet_switch_port_id"))
-//    @OrderColumn(name = "ipv6_address_order")
+    @ElementCollection
+    @CollectionTable(name = "ethernet_switch_port_ipv6_address", joinColumns = @JoinColumn(name = "ethernet_switch_port_id"))
+    @OrderColumn(name = "ipv6_address_order")
     private List<IpV6Address> ipv6Addresses = new ArrayList<>();
 
-//    @OneToMany(mappedBy = "memberOfPort", fetch = LAZY, cascade = {MERGE, PERSIST})
+    @OneToMany(mappedBy = "memberOfPort", fetch = LAZY, cascade = {MERGE, PERSIST})
     private Set<EthernetSwitchPort> portMembers = new HashSet<>();
 
 //    @SuppressEvents
-//    @OneToMany(mappedBy = "ethernetSwitchPort", fetch = LAZY, cascade = {MERGE, PERSIST})
+    @OneToMany(mappedBy = "ethernetSwitchPort", fetch = LAZY, cascade = {MERGE, PERSIST})
     private Set<EthernetSwitchPortVlan> ethernetSwitchPortVlans = new HashSet<>();
 
-//    @OneToMany(mappedBy = "ethernetSwitchPort", fetch = LAZY, cascade = {MERGE, PERSIST})
+    @OneToMany(mappedBy = "ethernetSwitchPort", fetch = LAZY, cascade = {MERGE, PERSIST})
     private Set<EthernetSwitchStaticMac> ethernetSwitchStaticMacs = new HashSet<>();
 
-//    @ManyToMany(mappedBy = "boundPorts", fetch = LAZY, cascade = {MERGE, PERSIST})
+    @ManyToMany(mappedBy = "boundPorts", fetch = LAZY, cascade = {MERGE, PERSIST})
     private Set<EthernetSwitchAcl> activeAcls = new HashSet<>();
 
-//    @ManyToMany(mappedBy = "bindActionAllowableValues", fetch = LAZY, cascade = {MERGE, PERSIST})
+    @ManyToMany(mappedBy = "bindActionAllowableValues", fetch = LAZY, cascade = {MERGE, PERSIST})
     private Set<EthernetSwitchAcl> aclsToBind = new HashSet<>();
 
 //    @SuppressEvents
-//    @ManyToMany(mappedBy = "mirrorPortRegions", fetch = LAZY, cascade = {MERGE, PERSIST})
+    @ManyToMany(mappedBy = "mirrorPortRegions", fetch = LAZY, cascade = {MERGE, PERSIST})
     private Set<EthernetSwitchAclRule> mirrorPortRegionForRules = new HashSet<>();
 
 //    @IgnoreUnlinkingRelationship
-//    @OneToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinColumn(name = "primary_vlan_id")
-//    @NotFound(action = IGNORE)
+    @OneToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinColumn(name = "primary_vlan_id")
+    @NotFound(action = IGNORE)
     private EthernetSwitchPortVlan primaryVlan;
 
-//    @OneToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinColumn(name = "ethernet_switch_port_metrics_id")
+    @OneToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinColumn(name = "ethernet_switch_port_metrics_id")
     private EthernetSwitchPortMetrics metrics;
 
-//    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinColumn(name = "ethernet_switch_id")
+    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinColumn(name = "ethernet_switch_id")
     private EthernetSwitch ethernetSwitch;
 
-//    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinColumn(name = "member_of_port_id")
+    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinColumn(name = "member_of_port_id")
     private EthernetSwitchPort memberOfPort;
 
-//    @Column(name = "dcbx_state")
-//    @Enumerated(STRING)
+    @Column(name = "dcbx_state")
+    @Enumerated(STRING)
     private DcbxState dcbxState;
 
-//    @Column(name = "lldp_enabled")
+    @Column(name = "lldp_enabled")
     private Boolean lldpEnabled;
 
-//    @Embedded
+    @Embedded
     private PriorityFlowControl priorityFlowControl;
 
     @Override

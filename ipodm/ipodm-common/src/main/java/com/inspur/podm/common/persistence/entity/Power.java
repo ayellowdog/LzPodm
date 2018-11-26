@@ -18,43 +18,51 @@ package com.inspur.podm.common.persistence.entity;
 
 
 import static com.inspur.podm.common.utils.Contracts.requiresNonNull;
+import static javax.persistence.CascadeType.MERGE;
+import static javax.persistence.CascadeType.PERSIST;
+import static javax.persistence.FetchType.LAZY;
 
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.persistence.Column;
+import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
 import com.inspur.podm.common.intel.types.Id;
 import com.inspur.podm.common.persistence.base.Entity;
-
-//@javax.persistence.Entity
-//@Table(name = "power", indexes = @Index(name = "idx_power_entity_id", columnList = "entity_id", unique = true))
+@javax.persistence.Entity
+@Table(name = "power", indexes = @Index(name = "idx_power_entity_id", columnList = "entity_id", unique = true))
 //@SuppressWarnings({"checkstyle:MethodCount"})
 //@Eventable
 public class Power extends DiscoverableEntity {
-/** @Fields serialVersionUID: TODO 功能描述  */
-	private static final long serialVersionUID = 5591475026677656710L;
 
-	//    @Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
+    @Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
     private Id entityId;
 
-//    @Column(name = "input_ac_power_watts")
+    @Column(name = "input_ac_power_watts")
     private BigDecimal inputAcPowerWatts;
 
-//    @OneToMany(mappedBy = "power", fetch = LAZY, cascade = {MERGE, PERSIST})
+    @OneToMany(mappedBy = "power", fetch = LAZY, cascade = {MERGE, PERSIST})
     private Set<PowerControl> powerControls = new HashSet<>();
 
-//    @OneToMany(mappedBy = "power", fetch = LAZY, cascade = {MERGE, PERSIST})
+    @OneToMany(mappedBy = "power", fetch = LAZY, cascade = {MERGE, PERSIST})
     private Set<PowerVoltage> voltages = new HashSet<>();
 
-//    @OneToMany(mappedBy = "power", fetch = LAZY, cascade = {MERGE, PERSIST})
+    @OneToMany(mappedBy = "power", fetch = LAZY, cascade = {MERGE, PERSIST})
     private Set<PowerSupply> powerSupplies = new HashSet<>();
 
-//    @ManyToMany(mappedBy = "poweredBy", fetch = LAZY, cascade = {MERGE, PERSIST})
+    @ManyToMany(mappedBy = "poweredBy", fetch = LAZY, cascade = {MERGE, PERSIST})
     private Set<Chassis> poweredChassis = new HashSet<>();
 
-//    @OneToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinColumn(name = "chassis_id")
+    @OneToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinColumn(name = "chassis_id")
     private Chassis chassis;
 
     @Override

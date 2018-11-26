@@ -18,47 +18,56 @@ package com.inspur.podm.common.persistence.entity;
 
 
 import static com.inspur.podm.common.utils.Contracts.requiresNonNull;
+import static javax.persistence.CascadeType.MERGE;
+import static javax.persistence.CascadeType.PERSIST;
+import static javax.persistence.EnumType.STRING;
+import static javax.persistence.FetchType.LAZY;
 
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.Column;
+import javax.persistence.Enumerated;
+import javax.persistence.Index;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
 import com.inspur.podm.common.intel.types.Id;
 import com.inspur.podm.common.intel.types.Protocol;
 import com.inspur.podm.common.persistence.base.Entity;
-
-//@javax.persistence.Entity
-//@NamedQueries({
-//    @NamedQuery(name = Fabric.GET_ALL_FABRIC_IDS, query = "SELECT fabric.entityId FROM Fabric fabric")
-//})
-//@Table(name = "fabric", indexes = @Index(name = "idx_fabric_entity_id", columnList = "entity_id", unique = true))
+@javax.persistence.Entity
+@NamedQueries({
+    @NamedQuery(name = Fabric.GET_ALL_FABRIC_IDS, query = "SELECT fabric.entityId FROM Fabric fabric")
+})
+@Table(name = "fabric", indexes = @Index(name = "idx_fabric_entity_id", columnList = "entity_id", unique = true))
 //@SuppressWarnings({"checkstyle:MethodCount"})
 //@Eventable
 public class Fabric extends DiscoverableEntity {
-    /** @Fields serialVersionUID: TODO 功能描述  */
-	private static final long serialVersionUID = 4525536726038364789L;
 
 	public static final String GET_ALL_FABRIC_IDS = "GET_ALL_FABRIC_IDS";
 
-//    @Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
+    @Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
     private Id entityId;
 
-//    @Column(name = "max_zones")
+    @Column(name = "max_zones")
     private Integer maxZones;
 
-//    @Column(name = "fabric_type")
-//    @Enumerated(STRING)
+    @Column(name = "fabric_type")
+    @Enumerated(STRING)
     private Protocol fabricType;
 
 //    @SuppressEvents
-//    @OneToMany(mappedBy = "fabric", fetch = LAZY, cascade = {MERGE, PERSIST})
+    @OneToMany(mappedBy = "fabric", fetch = LAZY, cascade = {MERGE, PERSIST})
     private Set<Zone> zones = new HashSet<>();
 
 //    @SuppressEvents
-//    @OneToMany(mappedBy = "fabric", fetch = LAZY, cascade = {MERGE, PERSIST})
+    @OneToMany(mappedBy = "fabric", fetch = LAZY, cascade = {MERGE, PERSIST})
     private Set<Switch> switches = new HashSet<>();
 
 //    @SuppressEvents
-//    @OneToMany(mappedBy = "fabric", fetch = LAZY, cascade = {MERGE, PERSIST})
+    @OneToMany(mappedBy = "fabric", fetch = LAZY, cascade = {MERGE, PERSIST})
     private Set<Endpoint> endpoints = new HashSet<>();
 
     @Override

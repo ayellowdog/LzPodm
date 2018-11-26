@@ -24,68 +24,77 @@ import static com.inspur.podm.common.utils.Collector.toSingle;
 import static com.inspur.podm.common.utils.Contracts.requiresNonNull;
 import static com.inspur.podm.common.utils.Converters.convertGibToBytes;
 import static java.math.BigDecimal.ZERO;
+import static javax.persistence.CascadeType.MERGE;
+import static javax.persistence.CascadeType.PERSIST;
+import static javax.persistence.FetchType.LAZY;
 
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
 import com.inspur.podm.common.intel.types.Id;
 import com.inspur.podm.common.intel.types.Protocol;
 import com.inspur.podm.common.persistence.base.Entity;
 import com.inspur.podm.common.persistence.entity.embeddables.Capacity;
 import com.inspur.podm.common.persistence.entity.embeddables.Identifier;
-
-//@javax.persistence.Entity
-//@Table(name = "storage_pool", indexes = @Index(name = "idx_storage_pool_entity_id", columnList = "entity_id", unique = true))
+@javax.persistence.Entity
+@Table(name = "storage_pool", indexes = @Index(name = "idx_storage_pool_entity_id", columnList = "entity_id", unique = true))
 //@Eventable
 //@SuppressWarnings({"checkstyle:MethodCount", "checkstyle:ClassFanOutComplexity"})
 public class StoragePool extends DiscoverableEntity {
 
-/** @Fields serialVersionUID: TODO 功能描述  */
-	private static final long serialVersionUID = -3295399059942219030L;
-
-	//    @Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
+    @Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
     private Id entityId;
 
-//    @Embedded
+    @Embedded
     private Identifier identifier;
 
-//    @Column(name = "block_size_bytes")
+    @Column(name = "block_size_bytes")
     private BigDecimal blockSizeBytes;
 
-//    @Embedded
+    @Embedded
     private Capacity capacity;
 
-//    @OneToMany(mappedBy = "storagePool", fetch = LAZY, cascade = {MERGE, PERSIST})
+    @OneToMany(mappedBy = "storagePool", fetch = LAZY, cascade = {MERGE, PERSIST})
     private Set<CapacitySource> capacitySources = new HashSet<>();
 
-//    @OneToMany(mappedBy = "storagePool", fetch = LAZY, cascade = {MERGE, PERSIST})
+    @OneToMany(mappedBy = "storagePool", fetch = LAZY, cascade = {MERGE, PERSIST})
     private Set<Volume> allocatedVolumes = new HashSet<>();
 
-//    @OneToMany(mappedBy = "storagePool", fetch = LAZY, cascade = {MERGE, PERSIST})
+    @OneToMany(mappedBy = "storagePool", fetch = LAZY, cascade = {MERGE, PERSIST})
     private Set<StoragePool> allocatedPools = new HashSet<>();
 
-//    @ManyToMany(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinTable(
-//        name = "storage_providing_pool_capacity_source",
-//        joinColumns = {@JoinColumn(name = "storage_pool_id", referencedColumnName = "id")},
-//        inverseJoinColumns = {@JoinColumn(name = "capacity_source_id", referencedColumnName = "id")})
+    @ManyToMany(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinTable(
+        name = "storage_providing_pool_capacity_source",
+        joinColumns = {@JoinColumn(name = "storage_pool_id", referencedColumnName = "id")},
+        inverseJoinColumns = {@JoinColumn(name = "capacity_source_id", referencedColumnName = "id")})
     private Set<CapacitySource> providingPoolCapacitySources = new HashSet<>();
 
-//    @ManyToMany(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinTable(
-//        name = "storage_pool_composed_node",
-//        joinColumns = {@JoinColumn(name = "storage_pool_id", referencedColumnName = "id")},
-//        inverseJoinColumns = {@JoinColumn(name = "composed_node_id", referencedColumnName = "id")})
+    @ManyToMany(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinTable(
+        name = "storage_pool_composed_node",
+        joinColumns = {@JoinColumn(name = "storage_pool_id", referencedColumnName = "id")},
+        inverseJoinColumns = {@JoinColumn(name = "composed_node_id", referencedColumnName = "id")})
     private Set<ComposedNode> composedNodes = new HashSet<>();
 
-//    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinColumn(name = "storage_pool_id")
+    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinColumn(name = "storage_pool_id")
     private StoragePool storagePool;
 
-//    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinColumn(name = "storage_service_id")
+    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinColumn(name = "storage_service_id")
     private StorageService storageService;
 
     @Override

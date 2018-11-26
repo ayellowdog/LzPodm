@@ -18,72 +18,82 @@ package com.inspur.podm.common.persistence.entity;
 
 
 import static com.inspur.podm.common.utils.Contracts.requiresNonNull;
+import static javax.persistence.CascadeType.MERGE;
+import static javax.persistence.CascadeType.PERSIST;
+import static javax.persistence.EnumType.STRING;
+import static javax.persistence.FetchType.LAZY;
 
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+
+import javax.persistence.Column;
+import javax.persistence.Enumerated;
+import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import com.inspur.podm.common.intel.types.DeviceClass;
 import com.inspur.podm.common.intel.types.FunctionType;
 import com.inspur.podm.common.intel.types.Id;
 import com.inspur.podm.common.persistence.base.Entity;
 import com.inspur.podm.common.persistence.base.NetworkInterfacePossessor;
-
-//@javax.persistence.Entity
-//@Table(name = "pcie_device_function", indexes = @Index(name = "idx_pcie_device_function_entity_id", columnList = "entity_id", unique = true))
+@javax.persistence.Entity
+@Table(name = "pcie_device_function", indexes = @Index(name = "idx_pcie_device_function_entity_id", columnList = "entity_id", unique = true))
 //@SuppressWarnings({"checkstyle:MethodCount"})
 //@Eventable
 public class PcieDeviceFunction extends DiscoverableEntity implements NetworkInterfacePossessor {
-/** @Fields serialVersionUID: TODO 功能描述  */
-	private static final long serialVersionUID = 1276525433824381975L;
 
-	//    @Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
+    @Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
     private Id entityId;
 
-//    @Column(name = "function_id")
+    @Column(name = "function_id")
     private Integer functionId;
 
-//    @Column(name = "device_class")
-//    @Enumerated(STRING)
+    @Column(name = "device_class")
+    @Enumerated(STRING)
     private DeviceClass deviceClass;
 
-//    @Column(name = "function_type")
-//    @Enumerated(STRING)
+    @Column(name = "function_type")
+    @Enumerated(STRING)
     private FunctionType functionType;
 
-//    @Column(name = "device_id")
+    @Column(name = "device_id")
     private String deviceId;
 
-//    @Column(name = "vendor_id")
+    @Column(name = "vendor_id")
     private String vendorId;
 
-//    @Column(name = "class_code")
+    @Column(name = "class_code")
     private String classCode;
 
-//    @Column(name = "revision_id")
+    @Column(name = "revision_id")
     private String revisionId;
 
-//    @Column(name = "subsystem_id")
+    @Column(name = "subsystem_id")
     private String subsystemId;
 
-//    @Column(name = "subsystem_vendor_id")
+    @Column(name = "subsystem_vendor_id")
     private String subsystemVendorId;
 
-//    @OneToMany(mappedBy = "pcieDeviceFunction", fetch = LAZY, cascade = {MERGE, PERSIST})
+    @OneToMany(mappedBy = "pcieDeviceFunction", fetch = LAZY, cascade = {MERGE, PERSIST})
     private Set<Drive> drives = new HashSet<>();
 
-//    @ManyToMany(mappedBy = "pcieDeviceFunctions", fetch = LAZY, cascade = {MERGE, PERSIST})
+    @ManyToMany(mappedBy = "pcieDeviceFunctions", fetch = LAZY, cascade = {MERGE, PERSIST})
     private Set<EthernetInterface> ethernetInterfaces = new HashSet<>();
 
-//    @ManyToMany(mappedBy = "pcieDeviceFunctions", fetch = LAZY, cascade = {MERGE, PERSIST})
+    @ManyToMany(mappedBy = "pcieDeviceFunctions", fetch = LAZY, cascade = {MERGE, PERSIST})
     private Set<StorageController> storageControllers = new HashSet<>();
 
-//    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinColumn(name = "pcie_device_id")
+    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinColumn(name = "pcie_device_id")
     private PcieDevice pcieDevice;
 
-//    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinColumn(name = "computer_system_id")
+    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinColumn(name = "computer_system_id")
     private ComputerSystem computerSystem;
 
     @Override

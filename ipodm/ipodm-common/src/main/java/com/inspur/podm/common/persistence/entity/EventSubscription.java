@@ -17,53 +17,66 @@
 package com.inspur.podm.common.persistence.entity;
 
 
+import static javax.persistence.EnumType.STRING;
+import static org.hibernate.annotations.GenerationTime.INSERT;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.Convert;
+import javax.persistence.ElementCollection;
+import javax.persistence.Enumerated;
+import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.OrderColumn;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.Generated;
 
 import com.inspur.podm.common.intel.types.Id;
 import com.inspur.podm.common.intel.types.events.EventType;
 import com.inspur.podm.common.persistence.base.Entity;
+import com.inspur.podm.common.persistence.converter.IdToLongConverter;
 
-
-//@Table(name = "event_subscription", indexes = @Index(name = "idx_event_subscription_entity_id", columnList = "entity_id", unique = true))
-//@javax.persistence.Entity
+@Table(name = "event_subscription", indexes = @Index(name = "idx_event_subscription_entity_id", columnList = "entity_id", unique = true))
+@javax.persistence.Entity
 //@SuppressWarnings({"checkstyle:MethodCount"})
 //@Eventable
 public class EventSubscription extends Entity {
-/** @Fields serialVersionUID: TODO 功能描述  */
-	private static final long serialVersionUID = 7827754893952893998L;
 
-	//    @Generated(INSERT)
-//    @Convert(converter = IdToLongConverter.class)
-//    @Column(name = "entity_id", columnDefinition = ENTITY_ID_NUMERIC_COLUMN_DEFINITION, insertable = false, nullable = false)
+    @Generated(INSERT)
+    @Convert(converter = IdToLongConverter.class)
+    @Column(name = "entity_id", columnDefinition = ENTITY_ID_NUMERIC_COLUMN_DEFINITION, insertable = false, nullable = false)
     private Id entityId;
 
-//    @Column(name = "name")
+    @Column(name = "name")
     private String name;
 
-//    @Column(name = "description")
+    @Column(name = "description")
     private String description;
 
-//    @Column(name = "destination")
+    @Column(name = "destination")
     private String destination;
 
-//    @Column(name = "subscription_context")
+    @Column(name = "subscription_context")
     private String subscriptionContext;
 
-//    @Column(name = "protocol")
+    @Column(name = "protocol")
     private String protocol;
 
-//    @ElementCollection
-//    @Enumerated(STRING)
-//    @CollectionTable(name = "event_subscription_event_type", joinColumns = @JoinColumn(name = "event_subscription_id"))
-//    @Column(name = "event_type")
-//    @OrderColumn(name = "event_type_order")
+    @ElementCollection
+    @Enumerated(STRING)
+    @CollectionTable(name = "event_subscription_event_type", joinColumns = @JoinColumn(name = "event_subscription_id"))
+    @Column(name = "event_type")
+    @OrderColumn(name = "event_type_order")
     private List<EventType> eventTypes = new ArrayList<>();
 
-//    @ElementCollection
-//    @CollectionTable(name = "event_subscription_origin_resource", joinColumns = @JoinColumn(name = "event_subscription_id"))
-//    @Column(name = "origin_resource")
-//    @OrderColumn(name = "origin_resource_order")
+    @ElementCollection
+    @CollectionTable(name = "event_subscription_origin_resource", joinColumns = @JoinColumn(name = "event_subscription_id"))
+    @Column(name = "origin_resource")
+    @OrderColumn(name = "origin_resource_order")
     private List<String> originResources = new ArrayList<>();
 
     public Id getId() {

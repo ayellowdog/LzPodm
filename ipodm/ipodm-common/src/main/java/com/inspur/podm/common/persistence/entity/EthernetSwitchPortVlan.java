@@ -17,37 +17,43 @@
 package com.inspur.podm.common.persistence.entity;
 
 
+import static javax.persistence.CascadeType.MERGE;
+import static javax.persistence.CascadeType.PERSIST;
+import static javax.persistence.FetchType.LAZY;
+
 import java.util.Objects;
+
+import javax.persistence.Column;
+import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 import com.inspur.podm.common.intel.types.Id;
 import com.inspur.podm.common.persistence.base.Entity;
-
-//@javax.persistence.Entity
-//@Table(name = "ethernet_switch_port_vlan", indexes = @Index(name = "idx_ethernet_switch_port_vlan_entity_id", columnList = "entity_id", unique = true))
+@javax.persistence.Entity
+@Table(name = "ethernet_switch_port_vlan", indexes = @Index(name = "idx_ethernet_switch_port_vlan_entity_id", columnList = "entity_id", unique = true))
 //@SuppressWarnings({"checkstyle:MethodCount"})
 //@Eventable
 public class EthernetSwitchPortVlan extends DiscoverableEntity {
-/** @Fields serialVersionUID: TODO 功能描述  */
-	private static final long serialVersionUID = -1230936230802106768L;
-
-	//    @Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
+    @Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
     private Id entityId;
 
-//    @Column(name = "vlan_enable")
+    @Column(name = "vlan_enable")
     private Boolean vlanEnable;
 
-//    @Column(name = "tagged")
+    @Column(name = "tagged")
     private Boolean tagged;
 
-//    @Column(name = "vlan_id")
+    @Column(name = "vlan_id")
     private Integer vlanId;
 
-//    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinColumn(name = "ethernet_switch_port_id")
+    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinColumn(name = "ethernet_switch_port_id")
     private EthernetSwitchPort ethernetSwitchPort;
 
-//    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinColumn(name = "ethernet_interface_id")
+    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinColumn(name = "ethernet_interface_id")
     private EthernetInterface ethernetInterface;
 
     @Override

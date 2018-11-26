@@ -17,63 +17,72 @@
 package com.inspur.podm.common.persistence.entity;
 
 
+import static javax.persistence.CascadeType.MERGE;
+import static javax.persistence.CascadeType.PERSIST;
+import static javax.persistence.EnumType.STRING;
+import static javax.persistence.FetchType.LAZY;
+
 import java.math.BigDecimal;
 import java.util.Objects;
+
+import javax.persistence.Column;
+import javax.persistence.Enumerated;
+import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 import com.inspur.podm.common.intel.types.Id;
 import com.inspur.podm.common.intel.types.PhysicalContext;
 import com.inspur.podm.common.persistence.base.Entity;
-
-//@javax.persistence.Entity
-//@Table(name = "thermal_temperature", indexes = @Index(name = "idx_thermal_temperature_entity_id", columnList = "entity_id", unique = true))
+@javax.persistence.Entity
+@Table(name = "thermal_temperature", indexes = @Index(name = "idx_thermal_temperature_entity_id", columnList = "entity_id", unique = true))
 //@SuppressWarnings({"checkstyle:MethodCount"})
 //@Eventable
 public class ThermalTemperature extends DiscoverableEntity {
-/** @Fields serialVersionUID: TODO 功能描述  */
-	private static final long serialVersionUID = -2820370995977305695L;
 
-	//    @Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
+    @Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
     private Id entityId;
 
-//    @Column(name = "member_id")
+    @Column(name = "member_id")
     private String memberId;
 
-//    @Column(name = "sensor_number")
+    @Column(name = "sensor_number")
     private Integer sensorNumber;
 
-//    @Column(name = "reading_celsius")
+    @Column(name = "reading_celsius")
     private BigDecimal readingCelsius;
 
-//    @Column(name = "upper_threshold_non_critical")
+    @Column(name = "upper_threshold_non_critical")
     private BigDecimal upperThresholdNonCritical;
 
-//    @Column(name = "upper_threshold_critical")
+    @Column(name = "upper_threshold_critical")
     private BigDecimal upperThresholdCritical;
 
-//    @Column(name = "upper_threshold_fatal")
+    @Column(name = "upper_threshold_fatal")
     private BigDecimal upperThresholdFatal;
 
-//    @Column(name = "lower_threshold_non_critical")
+    @Column(name = "lower_threshold_non_critical")
     private BigDecimal lowerThresholdNonCritical;
 
-//    @Column(name = "lower_threshold_critical")
+    @Column(name = "lower_threshold_critical")
     private BigDecimal lowerThresholdCritical;
 
-//    @Column(name = "lower_threshold_fatal")
+    @Column(name = "lower_threshold_fatal")
     private BigDecimal lowerThresholdFatal;
 
-//    @Column(name = "min_reading_range_temp")
+    @Column(name = "min_reading_range_temp")
     private BigDecimal minReadingRangeTemp;
 
-//    @Column(name = "max_reading_range_temp")
+    @Column(name = "max_reading_range_temp")
     private BigDecimal maxReadingRangeTemp;
 
-//    @Column(name = "physical_context")
-//    @Enumerated(STRING)
+    @Column(name = "physical_context")
+    @Enumerated(STRING)
     private PhysicalContext physicalContext;
 
-//    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinColumn(name = "thermal_id")
+    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinColumn(name = "thermal_id")
     private Thermal thermal;
 
     @Override

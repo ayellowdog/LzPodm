@@ -10,6 +10,7 @@ import static java.util.stream.Collectors.toList;
 import static javax.persistence.CascadeType.MERGE;
 import static javax.persistence.CascadeType.PERSIST;
 import static javax.persistence.FetchType.LAZY;
+import static javax.persistence.InheritanceType.JOINED;
 
 import java.net.URI;
 import java.util.ArrayList;
@@ -19,13 +20,19 @@ import java.util.Set;
 
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
 import javax.persistence.ElementCollection;
+import javax.persistence.Index;
+import javax.persistence.Inheritance;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderColumn;
 import javax.persistence.PreRemove;
+import javax.persistence.Table;
 
 import com.inspur.podm.common.intel.types.Id;
 import com.inspur.podm.common.intel.types.State;
@@ -39,6 +46,15 @@ import com.inspur.podm.common.persistence.entity.embeddables.UnknownOem;
  * @author: liuchangbj
  * @date: 2018年11月20日 上午9:28:43
  */
+@javax.persistence.Entity
+@NamedQueries({
+    @NamedQuery(name = DiscoverableEntity.GET_ENTITY_BY_SERVICE_AND_SOURCE_URI,
+        query = "SELECT el.discoverableEntity FROM ExternalLink el WHERE el.externalService = :externalService AND el.sourceUri = :sourceUri"
+    )
+})
+@Inheritance(strategy = JOINED)
+@DiscriminatorColumn(name = "discriminator_class", length = 100)
+@Table(name = "discoverable_entity", indexes = @Index(name = "idx_discoverable_entity_global_id", columnList = "global_id", unique = true))
 public abstract class DiscoverableEntity extends Entity{
 
 	public static final String GET_ENTITY_BY_SERVICE_AND_SOURCE_URI = "GET_ENTITY_BY_SERVICE_AND_SOURCE_URI";

@@ -17,6 +17,14 @@
 package com.inspur.podm.common.persistence.entity;
 
 
+import static java.lang.String.format;
+import static javax.persistence.CascadeType.MERGE;
+import static javax.persistence.CascadeType.PERSIST;
+import static javax.persistence.FetchType.EAGER;
+
+import java.net.URI;
+import java.util.Objects;
+
 import javax.persistence.Column;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -26,31 +34,23 @@ import javax.persistence.Table;
 
 import com.inspur.podm.common.persistence.base.Entity;
 
-import java.net.URI;
-import java.util.Objects;
-
-import static java.lang.String.format;
-import static javax.persistence.CascadeType.MERGE;
-import static javax.persistence.CascadeType.PERSIST;
-import static javax.persistence.FetchType.EAGER;
-
-//@javax.persistence.Entity
-//@NamedQueries({
-//    @NamedQuery(name = ExternalLink.GET_EXTERNAL_LINK_BY_SERVICE_AND_ENTITY,
-//        query = "SELECT el FROM ExternalLink el WHERE el.externalService = :externalService AND el.discoverableEntity = :discoverableEntity"
-//    )
-//})
-//@Table(name = "external_link")
+@javax.persistence.Entity
+@NamedQueries({
+    @NamedQuery(name = ExternalLink.GET_EXTERNAL_LINK_BY_SERVICE_AND_ENTITY,
+        query = "SELECT el FROM ExternalLink el WHERE el.externalService = :externalService AND el.discoverableEntity = :discoverableEntity"
+    )
+})
+@Table(name = "external_link")
 public class ExternalLink extends Entity {
 
     public static final String GET_EXTERNAL_LINK_BY_SERVICE_AND_ENTITY = "GET_EXTERNAL_LINK_BY_SERVICE_AND_ENTITY";
 
-//    @Column(name = "uri")
+    @Column(name = "uri")
     private URI sourceUri;
 
 //    @IgnoreUnlinkingRelationship
-//    @ManyToOne(fetch = EAGER, cascade = {MERGE, PERSIST})
-//    @JoinColumn(name = "external_service_id")
+    @ManyToOne(fetch = EAGER, cascade = {MERGE, PERSIST})
+    @JoinColumn(name = "external_service_id")
     private ExternalService externalService;
 
     @ManyToOne(fetch = EAGER, cascade = {MERGE, PERSIST})

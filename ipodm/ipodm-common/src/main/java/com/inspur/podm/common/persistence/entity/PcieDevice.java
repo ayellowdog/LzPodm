@@ -18,59 +18,68 @@ package com.inspur.podm.common.persistence.entity;
 
 
 import static com.inspur.podm.common.utils.Contracts.requiresNonNull;
+import static javax.persistence.CascadeType.MERGE;
+import static javax.persistence.CascadeType.PERSIST;
+import static javax.persistence.EnumType.STRING;
+import static javax.persistence.FetchType.LAZY;
 
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.persistence.Column;
+import javax.persistence.Enumerated;
+import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
 import com.inspur.podm.common.intel.types.DeviceType;
 import com.inspur.podm.common.intel.types.Id;
 import com.inspur.podm.common.persistence.base.Entity;
-
-//@javax.persistence.Entity
-//@Table(name = "pcie_device", indexes = @Index(name = "idx_pcie_device_entity_id", columnList = "entity_id", unique = true))
+@javax.persistence.Entity
+@Table(name = "pcie_device", indexes = @Index(name = "idx_pcie_device_entity_id", columnList = "entity_id", unique = true))
 //@SuppressWarnings({"checkstyle:MethodCount"})
 //@Eventable
 public class PcieDevice extends DiscoverableEntity {
-/** @Fields serialVersionUID: TODO 功能描述  */
-	private static final long serialVersionUID = 4993234295976485105L;
-
-	//    @Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
+    @Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
     private Id entityId;
 
-//    @Column(name = "asset_tag")
+    @Column(name = "asset_tag")
     private String assetTag;
 
-//    @Column(name = "manufacturer")
+    @Column(name = "manufacturer")
     private String manufacturer;
 
-//    @Column(name = "model")
+    @Column(name = "model")
     private String model;
 
-//    @Column(name = "sku")
+    @Column(name = "sku")
     private String sku;
 
-//    @Column(name = "serial_number")
+    @Column(name = "serial_number")
     private String serialNumber;
 
-//    @Column(name = "part_number")
+    @Column(name = "part_number")
     private String partNumber;
 
-//    @Column(name = "device_type")
-//    @Enumerated(STRING)
+    @Column(name = "device_type")
+    @Enumerated(STRING)
     private DeviceType deviceType;
 
-//    @Column(name = "firmware_version")
+    @Column(name = "firmware_version")
     private String firmwareVersion;
 
-//    @OneToMany(mappedBy = "pcieDevice", fetch = LAZY, cascade = {MERGE, PERSIST})
+    @OneToMany(mappedBy = "pcieDevice", fetch = LAZY, cascade = {MERGE, PERSIST})
     private Set<PcieDeviceFunction> pcieDeviceFunctions = new HashSet<>();
 
-//    @ManyToMany(mappedBy = "pcieDevices", fetch = LAZY, cascade = {MERGE, PERSIST})
+    @ManyToMany(mappedBy = "pcieDevices", fetch = LAZY, cascade = {MERGE, PERSIST})
     private Set<Chassis> chassis = new HashSet<>();
 
-//    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinColumn(name = "computer_system_id")
+    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinColumn(name = "computer_system_id")
     private ComputerSystem computerSystem;
 
     @Override

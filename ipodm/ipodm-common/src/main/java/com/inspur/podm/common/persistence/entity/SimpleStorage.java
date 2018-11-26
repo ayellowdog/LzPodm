@@ -18,48 +18,57 @@ package com.inspur.podm.common.persistence.entity;
 
 
 import static com.inspur.podm.common.utils.Contracts.requiresNonNull;
+import static javax.persistence.CascadeType.MERGE;
+import static javax.persistence.CascadeType.PERSIST;
+import static javax.persistence.FetchType.LAZY;
 
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.persistence.Column;
+import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
 import com.inspur.podm.common.intel.types.Id;
 import com.inspur.podm.common.persistence.base.Entity;
 import com.inspur.podm.common.persistence.base.MultiSourceResource;
-
-//@javax.persistence.Entity
-//@Table(name = "simple_storage", indexes = @Index(name = "idx_simple_storage_entity_id", columnList = "entity_id", unique = true))
-//@NamedQueries({
-//    @NamedQuery(name = SimpleStorage.GET_SIMPLE_STORAGE_MULTI_SOURCE,
-//        query = "SELECT simpleStorage "
-//            + "FROM SimpleStorage simpleStorage "
-//            + "WHERE simpleStorage.multiSourceDiscriminator = :multiSourceDiscriminator "
-//            + "AND simpleStorage.isComplementary = :isComplementary"
-//    )
-//})
+@javax.persistence.Entity
+@Table(name = "simple_storage", indexes = @Index(name = "idx_simple_storage_entity_id", columnList = "entity_id", unique = true))
+@NamedQueries({
+    @NamedQuery(name = SimpleStorage.GET_SIMPLE_STORAGE_MULTI_SOURCE,
+        query = "SELECT simpleStorage "
+            + "FROM SimpleStorage simpleStorage "
+            + "WHERE simpleStorage.multiSourceDiscriminator = :multiSourceDiscriminator "
+            + "AND simpleStorage.isComplementary = :isComplementary"
+    )
+})
 //@EntityListeners(SimpleStorageListener.class)
 //@Eventable
 //@SuppressWarnings({"checkstyle:MethodCount"})
 public class SimpleStorage extends DiscoverableEntity implements MultiSourceResource {
-    /** @Fields serialVersionUID: TODO 功能描述  */
-	private static final long serialVersionUID = -5562853506893402519L;
 
 	public static final String GET_SIMPLE_STORAGE_MULTI_SOURCE = "GET_SIMPLE_STORAGE_MULTI_SOURCE";
 
-//    @Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
+    @Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
     private Id entityId;
 
-//    @Column(name = "uefi_device_path")
+    @Column(name = "uefi_device_path")
     private String uefiDevicePath;
 
-//    @Column(name = "multi_source_discriminator")
+    @Column(name = "multi_source_discriminator")
     private String multiSourceDiscriminator;
 
-//    @OneToMany(mappedBy = "simpleStorage", fetch = LAZY, cascade = {MERGE, PERSIST})
+    @OneToMany(mappedBy = "simpleStorage", fetch = LAZY, cascade = {MERGE, PERSIST})
     private Set<SimpleStorageDevice> devices = new HashSet<>();
 
-//    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinColumn(name = "computer_system_id")
+    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinColumn(name = "computer_system_id")
     private ComputerSystem computerSystem;
 
     @Override

@@ -18,6 +18,10 @@ package com.inspur.podm.common.persistence.entity;
 
 
 import static com.inspur.podm.common.utils.Contracts.requiresNonNull;
+import static javax.persistence.CascadeType.MERGE;
+import static javax.persistence.CascadeType.PERSIST;
+import static javax.persistence.EnumType.STRING;
+import static javax.persistence.FetchType.LAZY;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -25,75 +29,87 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Enumerated;
+import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
+import javax.persistence.OrderColumn;
+import javax.persistence.Table;
+
 import com.inspur.podm.common.intel.types.Id;
 import com.inspur.podm.common.intel.types.PciePortType;
 import com.inspur.podm.common.intel.types.Protocol;
 import com.inspur.podm.common.intel.types.actions.ResetType;
 import com.inspur.podm.common.persistence.base.Entity;
 import com.inspur.podm.common.persistence.base.Resettable;
-
-//@javax.persistence.Entity
-//@Table(name = "port", indexes = @Index(name = "idx_port_entity_id", columnList = "entity_id", unique = true))
-//@NamedQueries({
-//    @NamedQuery(name = GET_PORTS_BY_PCIE_CONNECTION_ID,
-//        query = "SELECT port FROM Port port WHERE :pcieConnectionId MEMBER OF port.pcieConnectionIds")
-//})
+@javax.persistence.Entity
+@Table(name = "port", indexes = @Index(name = "idx_port_entity_id", columnList = "entity_id", unique = true))
+@NamedQueries({
+    @NamedQuery(name = Port.GET_PORTS_BY_PCIE_CONNECTION_ID,
+        query = "SELECT port FROM Port port WHERE :pcieConnectionId MEMBER OF port.pcieConnectionIds")
+})
 //@SuppressWarnings({"checkstyle:MethodCount"})
 //@Eventable
 public class Port extends DiscoverableEntity implements Resettable {
-    /** @Fields serialVersionUID: TODO 功能描述  */
-	private static final long serialVersionUID = -8246330298743733752L;
 	public static final String GET_PORTS_BY_PCIE_CONNECTION_ID = "GET_PORTS_BY_PCIE_CONNECTION_ID";
     private static final String ENTITY_NAME = "Port";
 
-//    @Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
+    @Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
     private Id entityId;
 
-//    @Column(name = "port_id")
+    @Column(name = "port_id")
     private String portId;
 
-//    @Column(name = "port_type")
-//    @Enumerated(STRING)
+    @Column(name = "port_type")
+    @Enumerated(STRING)
     private PciePortType portType;
 
-//    @Column(name = "port_protocol")
-//    @Enumerated(STRING)
+    @Column(name = "port_protocol")
+    @Enumerated(STRING)
     private Protocol portProtocol;
 
-//    @Column(name = "current_speed_gbps")
+    @Column(name = "current_speed_gbps")
     private Long currentSpeedGbps;
 
-//    @Column(name = "max_speed_gbps")
+    @Column(name = "max_speed_gbps")
     private Long maxSpeedGbps;
 
-//    @Column(name = "width")
+    @Column(name = "width")
     private Long width;
 
-//    @ElementCollection
-//    @CollectionTable(name = "port_pcie_connection_id", joinColumns = @JoinColumn(name = "port_id"))
-//    @Column(name = "pcie_connection_id")
-//    @OrderColumn(name = "pcie_connection_id_order")
+    @ElementCollection
+    @CollectionTable(name = "port_pcie_connection_id", joinColumns = @JoinColumn(name = "port_id"))
+    @Column(name = "pcie_connection_id")
+    @OrderColumn(name = "pcie_connection_id_order")
     private List<String> pcieConnectionIds = new ArrayList<>();
 
-//    @ElementCollection
-//    @Enumerated(STRING)
-//    @CollectionTable(name = "port_allowable_reset_type", joinColumns = @JoinColumn(name = "port_id"))
-//    @Column(name = "allowable_reset_type")
-//    @OrderColumn(name = "allowable_reset_type_order")
+    @ElementCollection
+    @Enumerated(STRING)
+    @CollectionTable(name = "port_allowable_reset_type", joinColumns = @JoinColumn(name = "port_id"))
+    @Column(name = "allowable_reset_type")
+    @OrderColumn(name = "allowable_reset_type_order")
     private List<ResetType> allowableResetTypes = new ArrayList<>();
 
-//    @ManyToMany(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinTable(
-//        name = "port_endpoint",
-//        joinColumns = {@JoinColumn(name = "port_id", referencedColumnName = "id")},
-//        inverseJoinColumns = {@JoinColumn(name = "endpoint_id", referencedColumnName = "id")})
+    @ManyToMany(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinTable(
+        name = "port_endpoint",
+        joinColumns = {@JoinColumn(name = "port_id", referencedColumnName = "id")},
+        inverseJoinColumns = {@JoinColumn(name = "endpoint_id", referencedColumnName = "id")})
     private Set<Endpoint> endpoints = new HashSet<>();
 
-//    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinColumn(name = "fabric_switch_id")
+    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinColumn(name = "fabric_switch_id")
     private Switch fabricSwitch;
 
-//    @OneToOne(mappedBy = "port", fetch = LAZY, cascade = {MERGE, PERSIST})
+    @OneToOne(mappedBy = "port", fetch = LAZY, cascade = {MERGE, PERSIST})
     private PortMetrics portMetrics;
 
     @Override

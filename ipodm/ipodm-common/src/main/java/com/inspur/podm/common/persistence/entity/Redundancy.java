@@ -17,45 +17,52 @@
 package com.inspur.podm.common.persistence.entity;
 
 import static com.inspur.podm.common.utils.Contracts.requiresNonNull;
+import static javax.persistence.CascadeType.MERGE;
+import static javax.persistence.CascadeType.PERSIST;
+import static javax.persistence.FetchType.LAZY;
 
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.persistence.Column;
+import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
 import com.inspur.podm.common.intel.types.Id;
 import com.inspur.podm.common.persistence.base.Entity;
-
-//@javax.persistence.Entity
-//@Table(name = "redundancy", indexes = @Index(name = "idx_redundancy_entity_id", columnList = "entity_id", unique = true))
+@javax.persistence.Entity
+@Table(name = "redundancy", indexes = @Index(name = "idx_redundancy_entity_id", columnList = "entity_id", unique = true))
 //@SuppressWarnings({"checkstyle:MethodCount"})
 //@Eventable
 public class Redundancy extends DiscoverableEntity {
-/** @Fields serialVersionUID: TODO 功能描述  */
-	private static final long serialVersionUID = 1149992484914280882L;
 
-	//    @Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
+    @Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
     private Id entityId;
 
-//    @Column(name = "member_id")
+    @Column(name = "member_id")
     private String memberId;
 
-//    @Column(name = "redundancy_enabled")
+    @Column(name = "redundancy_enabled")
     private Boolean redundancyEnabled;
 
-//    @Column(name = "mode")
+    @Column(name = "mode")
     private String mode;
 
-//    @Column(name = "min_num_needed")
+    @Column(name = "min_num_needed")
     private Integer minNumNeeded;
 
-//    @Column(name = "max_num_supported")
+    @Column(name = "max_num_supported")
     private Integer maxNumSupported;
 
-//    @ManyToMany(mappedBy = "redundancies", fetch = LAZY, cascade = {MERGE, PERSIST})
+    @ManyToMany(mappedBy = "redundancies", fetch = LAZY, cascade = {MERGE, PERSIST})
     private Set<DiscoverableEntity> redundancyMembers = new HashSet<>();
 
-//    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinColumn(name = "redundancy_owner_id")
+    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinColumn(name = "redundancy_owner_id")
     private DiscoverableEntity redundancyOwner;
 
     @Override

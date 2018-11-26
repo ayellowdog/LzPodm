@@ -36,17 +36,61 @@ import com.inspur.podm.common.intel.types.Protocol;
 import com.inspur.podm.common.intel.types.Status;
 import com.inspur.podm.common.persistence.base.Entity;
 import com.inspur.podm.common.persistence.base.LocalStorage;
+import static com.inspur.podm.common.utils.Contracts.requiresNonNull;
+import static java.lang.String.format;
+import static java.time.Duration.between;
+import static java.time.LocalDateTime.now;
+import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toSet;
+import static javax.persistence.EnumType.STRING;
+import static org.hibernate.annotations.GenerationTime.INSERT;
+import java.net.URI;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
 
-//@javax.persistence.Entity
-//@Table(name = "simple_storage_device", indexes = @Index(name = "idx_simple_storage_device_entity_id", columnList = "entity_id", unique = true))
+import javax.persistence.Column;
+import javax.persistence.Convert;
+import javax.persistence.Enumerated;
+
+import com.inspur.podm.common.intel.types.Id;
+import com.inspur.podm.common.intel.types.ServiceType;
+import com.inspur.podm.common.persistence.base.Entity;
+import com.inspur.podm.common.persistence.converter.IdToLongConverter;
+
+import static com.inspur.podm.common.utils.Contracts.requiresNonNull;
+import static javax.persistence.CascadeType.MERGE;
+import static javax.persistence.CascadeType.PERSIST;
+import static javax.persistence.EnumType.STRING;
+import static javax.persistence.FetchType.LAZY;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
+import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.Enumerated;
+import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.Generated;
+@javax.persistence.Entity
+@Table(name = "simple_storage_device", indexes = @Index(name = "idx_simple_storage_device_entity_id", columnList = "entity_id", unique = true))
 //@SuppressWarnings({"checkstyle:MethodCount"})
 public class SimpleStorageDevice extends Entity implements LocalStorage {
-/** @Fields serialVersionUID: TODO 功能描述  */
-	private static final long serialVersionUID = -4887096890522328889L;
-
-//    @Generated(INSERT)
-//    @Convert(converter = IdToLongConverter.class)
-//    @Column(name = "entity_id", columnDefinition = ENTITY_ID_NUMERIC_COLUMN_DEFINITION, insertable = false, nullable = false)
+    @Generated(INSERT)
+    @Convert(converter = IdToLongConverter.class)
+    @Column(name = "entity_id", columnDefinition = ENTITY_ID_NUMERIC_COLUMN_DEFINITION, insertable = false, nullable = false)
     private Id entityId;
 
     @Column(name = "status")

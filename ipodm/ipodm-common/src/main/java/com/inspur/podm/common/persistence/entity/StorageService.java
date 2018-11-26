@@ -18,55 +18,66 @@ package com.inspur.podm.common.persistence.entity;
 
 
 import static com.inspur.podm.common.utils.Contracts.requiresNonNull;
+import static javax.persistence.CascadeType.MERGE;
+import static javax.persistence.CascadeType.PERSIST;
+import static javax.persistence.FetchType.LAZY;
 
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.persistence.Column;
+import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
 import com.inspur.podm.common.intel.types.Id;
 import com.inspur.podm.common.persistence.base.Entity;
-
-//@javax.persistence.Entity
-//@NamedQueries({
-//    @NamedQuery(name = StorageService.GET_ALL_STORAGE_SERVICE_IDS,
-//        query = "SELECT storageService.entityId FROM StorageService storageService")
-//})
-//@Table(name = "storage_service", indexes = @Index(name = "idx_storage_service_entity_id", columnList = "entity_id", unique = true))
+@javax.persistence.Entity
+@NamedQueries({
+    @NamedQuery(name = StorageService.GET_ALL_STORAGE_SERVICE_IDS,
+        query = "SELECT storageService.entityId FROM StorageService storageService")
+})
+@Table(name = "storage_service", indexes = @Index(name = "idx_storage_service_entity_id", columnList = "entity_id", unique = true))
 //@SuppressWarnings({"checkstyle:MethodCount", "checkstyle:ClassFanOutComplexity"})
 //@Eventable
 public class StorageService extends DiscoverableEntity {
-    /** @Fields serialVersionUID: TODO 功能描述  */
-	private static final long serialVersionUID = 5006749717910651537L;
 
 	public static final String GET_ALL_STORAGE_SERVICE_IDS = "GET_ALL_STORAGE_SERVICE_IDS";
 
-//    @Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
+    @Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
     private Id entityId;
 
 //    @SuppressEvents
-//    @OneToMany(mappedBy = "storageService", fetch = LAZY, cascade = {MERGE, PERSIST})
+    @OneToMany(mappedBy = "storageService", fetch = LAZY, cascade = {MERGE, PERSIST})
     private Set<Volume> volumes = new HashSet<>();
 
 //    @SuppressEvents
-//    @OneToMany(mappedBy = "storageService", fetch = LAZY, cascade = {MERGE, PERSIST})
+    @OneToMany(mappedBy = "storageService", fetch = LAZY, cascade = {MERGE, PERSIST})
     private Set<Drive> drives = new HashSet<>();
 
 //    @SuppressEvents
-//    @OneToMany(mappedBy = "storageService", fetch = LAZY, cascade = {MERGE, PERSIST})
+    @OneToMany(mappedBy = "storageService", fetch = LAZY, cascade = {MERGE, PERSIST})
     private Set<Endpoint> endpoints = new HashSet<>();
 
-//    @ManyToMany(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinTable(
-//        name = "storage_service_manager",
-//        joinColumns = {@JoinColumn(name = "storage_service_id", referencedColumnName = "id")},
-//        inverseJoinColumns = {@JoinColumn(name = "manager_id", referencedColumnName = "id")})
+    @ManyToMany(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinTable(
+        name = "storage_service_manager",
+        joinColumns = {@JoinColumn(name = "storage_service_id", referencedColumnName = "id")},
+        inverseJoinColumns = {@JoinColumn(name = "manager_id", referencedColumnName = "id")})
     private Set<Manager> managers = new HashSet<>();
 
-//    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinColumn(name = "computer_system_id")
+    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinColumn(name = "computer_system_id")
     private ComputerSystem computerSystem;
 
-//    @OneToMany(mappedBy = "storageService", fetch = LAZY, cascade = {MERGE, PERSIST})
+    @OneToMany(mappedBy = "storageService", fetch = LAZY, cascade = {MERGE, PERSIST})
     private Set<StoragePool> storagePools = new HashSet<>();
 
     @Override

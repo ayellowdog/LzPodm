@@ -17,29 +17,37 @@
 package com.inspur.podm.common.persistence.entity;
 
 
+import static javax.persistence.CascadeType.MERGE;
+import static javax.persistence.CascadeType.PERSIST;
+import static javax.persistence.FetchType.LAZY;
+
 import java.util.Objects;
+
+import javax.persistence.Column;
+import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 import com.inspur.podm.common.intel.types.Id;
 import com.inspur.podm.common.persistence.base.Entity;
-
-//@javax.persistence.Entity
-//@Table(name = "metric_item", indexes = @Index(name = "idx_metric_item_entity_id", columnList = "entity_id", unique = true))
+@javax.persistence.Entity
+@Table(name = "metric_item", indexes = @Index(name = "idx_metric_item_entity_id", columnList = "entity_id", unique = true))
 public class MetricItem extends DiscoverableEntity {
-/** @Fields serialVersionUID: TODO 功能描述  */
-	private static final long serialVersionUID = 4928940981992575250L;
 
-	//    @Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
+	@Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
     private Id entityId;
 
-//    @Column(name = "metric_value")
+    @Column(name = "metric_value")
     private String metricValue;
 
-//    @OneToOne(mappedBy = "metricItem", fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinColumn(name = "metric_definition_id")
+    @OneToOne(mappedBy = "metricItem", fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinColumn(name = "metric_definition_id")
     private MetricDefinition metricDefinition;
 
-//    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinColumn(name = "metric_report_definition_id")
+    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinColumn(name = "metric_report_definition_id")
     private MetricReportDefinition metricReportDefinition;
 
     @Override

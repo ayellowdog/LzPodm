@@ -18,6 +18,9 @@ package com.inspur.podm.common.persistence.entity;
 
 
 import static com.inspur.podm.common.utils.Contracts.requiresNonNull;
+import static javax.persistence.CascadeType.MERGE;
+import static javax.persistence.CascadeType.PERSIST;
+import static javax.persistence.FetchType.LAZY;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -25,55 +28,61 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.persistence.Column;
+import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
 import com.inspur.podm.common.intel.types.Id;
 import com.inspur.podm.common.persistence.base.Entity;
 import com.inspur.podm.common.persistence.base.MultiSourceResource;
-
-//@javax.persistence.Entity
-//@Table(name = "storage", indexes = @Index(name = "idx_storage_entity_id", columnList = "entity_id", unique = true))
-//@NamedQueries({
-//    @NamedQuery(name = Storage.GET_STORAGE_MULTI_SOURCE,
-//        query = "SELECT storage "
-//            + "FROM Storage storage "
-//            + "WHERE storage.computerSystem.uuid = :uuid "
-//            + "AND storage.isComplementary = :isComplementary"
-//    ),
-//    @NamedQuery(name = Storage.GET_PRIMARY_STORAGE,
-//        query = "SELECT storage "
-//            + "FROM Storage storage "
-//            + "WHERE storage.multiSourceDiscriminator = :multiSourceDiscriminator "
-//            + "AND storage.isComplementary = false"
-//    )
-//})
+@javax.persistence.Entity
+@Table(name = "storage", indexes = @Index(name = "idx_storage_entity_id", columnList = "entity_id", unique = true))
+@NamedQueries({
+    @NamedQuery(name = Storage.GET_STORAGE_MULTI_SOURCE,
+        query = "SELECT storage "
+            + "FROM Storage storage "
+            + "WHERE storage.computerSystem.uuid = :uuid "
+            + "AND storage.isComplementary = :isComplementary"
+    ),
+    @NamedQuery(name = Storage.GET_PRIMARY_STORAGE,
+        query = "SELECT storage "
+            + "FROM Storage storage "
+            + "WHERE storage.multiSourceDiscriminator = :multiSourceDiscriminator "
+            + "AND storage.isComplementary = false"
+    )
+})
 //@SuppressWarnings({"checkstyle:MethodCount"})
 //@Eventable
 public class Storage extends DiscoverableEntity implements MultiSourceResource {
-    /** @Fields serialVersionUID: TODO 功能描述  */
-	private static final long serialVersionUID = 4942411261596686324L;
 	public static final String GET_STORAGE_MULTI_SOURCE = "GET_STORAGE_MULTI_SOURCE";
     public static final String GET_PRIMARY_STORAGE = "GET_PRIMARY_STORAGE";
 
-//    @Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
+    @Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
     private Id entityId;
 
-//    @Column(name = "multi_source_discriminator")
+    @Column(name = "multi_source_discriminator")
     private String multiSourceDiscriminator;
 
-//    @OneToMany(mappedBy = "storage", fetch = LAZY, cascade = {MERGE, PERSIST})
+    @OneToMany(mappedBy = "storage", fetch = LAZY, cascade = {MERGE, PERSIST})
     private List<StorageController> storageControllers = new ArrayList<>();
 
-//    @OneToMany(mappedBy = "storageAdapter", fetch = LAZY, cascade = {MERGE, PERSIST})
+    @OneToMany(mappedBy = "storageAdapter", fetch = LAZY, cascade = {MERGE, PERSIST})
     private Set<StorageController> adapters = new HashSet<>();
 
-//    @OneToMany(mappedBy = "storage", fetch = LAZY, cascade = {MERGE, PERSIST})
+    @OneToMany(mappedBy = "storage", fetch = LAZY, cascade = {MERGE, PERSIST})
     private Set<Drive> drives = new HashSet<>();
 
-//    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinColumn(name = "computer_system_id")
+    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinColumn(name = "computer_system_id")
     private ComputerSystem computerSystem;
 
-//    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinColumn(name = "chassis_id")
+    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinColumn(name = "chassis_id")
     private Chassis chassis;
 
     @Override

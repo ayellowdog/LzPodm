@@ -18,12 +18,29 @@ package com.inspur.podm.common.persistence.entity;
 
 
 import static com.inspur.podm.common.utils.Contracts.requiresNonNull;
+import static javax.persistence.CascadeType.MERGE;
+import static javax.persistence.CascadeType.PERSIST;
+import static javax.persistence.EnumType.STRING;
+import static javax.persistence.FetchType.LAZY;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Enumerated;
+import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderColumn;
+import javax.persistence.Table;
 
 import com.inspur.podm.common.intel.types.Id;
 import com.inspur.podm.common.intel.types.IndicatorLed;
@@ -32,89 +49,86 @@ import com.inspur.podm.common.intel.types.Protocol;
 import com.inspur.podm.common.intel.types.actions.ResetType;
 import com.inspur.podm.common.persistence.base.Entity;
 import com.inspur.podm.common.persistence.base.Resettable;
-
-//@javax.persistence.Entity
-//@Table(name = "switch", indexes = @Index(name = "idx_switch_entity_id", columnList = "entity_id", unique = true))
+@javax.persistence.Entity
+@Table(name = "switch", indexes = @Index(name = "idx_switch_entity_id", columnList = "entity_id", unique = true))
 //@SuppressWarnings({"checkstyle:MethodCount", "checkstyle:ClassFanOutComplexity"})
 //@Eventable
 public class Switch extends DiscoverableEntity implements Resettable {
-    /** @Fields serialVersionUID: TODO 功能描述  */
-	private static final long serialVersionUID = -2772053325305630325L;
 
 	private static final String ENTITY_NAME = "Switch";
 
-//    @Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
+    @Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
     private Id entityId;
 
-//    @Column(name = "manufacturer")
+    @Column(name = "manufacturer")
     private String manufacturer;
 
-//    @Column(name = "model")
+    @Column(name = "model")
     private String model;
 
-//    @Column(name = "sku")
+    @Column(name = "sku")
     private String sku;
 
-//    @Column(name = "serial_number")
+    @Column(name = "serial_number")
     private String serialNumber;
 
-//    @Column(name = "part_number")
+    @Column(name = "part_number")
     private String partNumber;
 
-//    @Column(name = "asset_tag")
+    @Column(name = "asset_tag")
     private String assetTag;
 
-//    @Column(name = "domain_id")
+    @Column(name = "domain_id")
     private Integer domainId;
 
-//    @Column(name = "switch_type")
-//    @Enumerated(STRING)
+    @Column(name = "switch_type")
+    @Enumerated(STRING)
     private Protocol switchType;
 
-//    @Column(name = "is_managed")
+    @Column(name = "is_managed")
     private Boolean isManaged;
 
-//    @Column(name = "total_switch_width")
+    @Column(name = "total_switch_width")
     private Integer totalSwitchWidth;
 
-//    @Column(name = "indicator_led")
-//    @Enumerated(STRING)
+    @Column(name = "indicator_led")
+    @Enumerated(STRING)
     private IndicatorLed indicatorLed;
 
-//    @Column(name = "power_state")
-//    @Enumerated(STRING)
+    @Column(name = "power_state")
+    @Enumerated(STRING)
     private PowerState powerState;
 
-//    @ElementCollection
-//    @Enumerated(STRING)
-//    @CollectionTable(name = "switch_allowable_reset_type", joinColumns = @JoinColumn(name = "switch_id"))
-//    @Column(name = "allowable_reset_type")
-//    @OrderColumn(name = "allowable_reset_type_order")
+    @ElementCollection
+    @Enumerated(STRING)
+    @CollectionTable(name = "switch_allowable_reset_type", joinColumns = @JoinColumn(name = "switch_id"))
+    @Column(name = "allowable_reset_type")
+    @OrderColumn(name = "allowable_reset_type_order")
     private List<ResetType> allowableResetTypes = new ArrayList<>();
 
 //    @SuppressEvents
-//    @OneToMany(mappedBy = "fabricSwitch", fetch = LAZY, cascade = {MERGE, PERSIST})
+    @OneToMany(mappedBy = "fabricSwitch", fetch = LAZY, cascade = {MERGE, PERSIST})
     private Set<Port> ports = new HashSet<>();
 
-//    @ManyToMany(mappedBy = "fabricSwitches", fetch = LAZY, cascade = {MERGE, PERSIST})
+    @ManyToMany(mappedBy = "fabricSwitches", fetch = LAZY, cascade = {MERGE, PERSIST})
     private Set<Chassis> chassis = new HashSet<>();
 
-//    @ManyToMany(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinTable(
-//        name = "switch_zone",
-//        joinColumns = {@JoinColumn(name = "switch_id", referencedColumnName = "id")},
-//        inverseJoinColumns = {@JoinColumn(name = "zone_id", referencedColumnName = "id")})
+    @ManyToMany(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinTable(
+        name = "switch_zone",
+        joinColumns = {@JoinColumn(name = "switch_id", referencedColumnName = "id")},
+        inverseJoinColumns = {@JoinColumn(name = "zone_id", referencedColumnName = "id")})
     private Set<Zone> zones = new HashSet<>();
 
-//    @ManyToMany(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinTable(
-//        name = "switch_manager",
-//        joinColumns = {@JoinColumn(name = "switch_id", referencedColumnName = "id")},
-//        inverseJoinColumns = {@JoinColumn(name = "manager_id", referencedColumnName = "id")})
+    @ManyToMany(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinTable(
+        name = "switch_manager",
+        joinColumns = {@JoinColumn(name = "switch_id", referencedColumnName = "id")},
+        inverseJoinColumns = {@JoinColumn(name = "manager_id", referencedColumnName = "id")})
     private Set<Manager> managers = new HashSet<>();
 
-//    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinColumn(name = "fabric_id")
+    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinColumn(name = "fabric_id")
     private Fabric fabric;
 
     @Override
