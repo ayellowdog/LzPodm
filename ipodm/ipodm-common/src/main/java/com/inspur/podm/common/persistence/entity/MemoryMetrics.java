@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.Objects;
 
 import com.inspur.podm.common.intel.types.Id;
-import com.inspur.podm.common.persistence.BaseEntity;
+import com.inspur.podm.common.persistence.base.Entity;
 import com.inspur.podm.common.persistence.entity.embeddables.CurrentPeriod;
 import com.inspur.podm.common.persistence.entity.embeddables.HealthData;
 import com.inspur.podm.common.persistence.entity.embeddables.LifeTime;
@@ -213,7 +213,7 @@ public class MemoryMetrics extends DiscoverableEntity {
     }
 
     @Override
-    public boolean containedBy(BaseEntity possibleParent) {
+    public boolean containedBy(Entity possibleParent) {
         return isContainedBy(possibleParent, memory);
     }
 }

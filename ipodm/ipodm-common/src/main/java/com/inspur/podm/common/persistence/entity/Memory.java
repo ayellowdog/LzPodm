@@ -29,7 +29,7 @@ import com.inspur.podm.common.intel.types.MemoryDeviceType;
 import com.inspur.podm.common.intel.types.MemoryMedia;
 import com.inspur.podm.common.intel.types.MemoryType;
 import com.inspur.podm.common.intel.types.OperatingMemoryMode;
-import com.inspur.podm.common.persistence.BaseEntity;
+import com.inspur.podm.common.persistence.base.Entity;
 import com.inspur.podm.common.persistence.base.MemoryModule;
 import com.inspur.podm.common.persistence.base.MultiSourceResource;
 import com.inspur.podm.common.persistence.entity.embeddables.MemoryLocation;
@@ -428,7 +428,7 @@ public class Memory extends DiscoverableEntity implements MemoryModule, MultiSou
     }
 
     @Override
-    public boolean containedBy(BaseEntity possibleParent) {
+    public boolean containedBy(Entity possibleParent) {
         return isContainedBy(possibleParent, computerSystem);
     }
 }

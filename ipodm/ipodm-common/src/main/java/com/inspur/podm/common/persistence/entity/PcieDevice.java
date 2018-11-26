@@ -25,7 +25,7 @@ import java.util.Set;
 
 import com.inspur.podm.common.intel.types.DeviceType;
 import com.inspur.podm.common.intel.types.Id;
-import com.inspur.podm.common.persistence.BaseEntity;
+import com.inspur.podm.common.persistence.base.Entity;
 
 //@javax.persistence.Entity
 //@Table(name = "pcie_device", indexes = @Index(name = "idx_pcie_device_entity_id", columnList = "entity_id", unique = true))
@@ -223,7 +223,7 @@ public class PcieDevice extends DiscoverableEntity {
     }
 
     @Override
-    public boolean containedBy(BaseEntity possibleParent) {
+    public boolean containedBy(Entity possibleParent) {
         return isContainedBy(possibleParent, chassis);
     }
 }

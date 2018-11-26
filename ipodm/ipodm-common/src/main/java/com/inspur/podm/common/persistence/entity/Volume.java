@@ -35,7 +35,7 @@ import com.inspur.podm.common.intel.types.Id;
 import com.inspur.podm.common.intel.types.StorageAccessCapability;
 import com.inspur.podm.common.intel.types.VolumeType;
 import com.inspur.podm.common.intel.types.actions.InitializeType;
-import com.inspur.podm.common.persistence.BaseEntity;
+import com.inspur.podm.common.persistence.base.Entity;
 import com.inspur.podm.common.persistence.base.ComposableAsset;
 import com.inspur.podm.common.persistence.entity.embeddables.Capacity;
 import com.inspur.podm.common.persistence.entity.embeddables.Identifier;
@@ -485,7 +485,7 @@ public class Volume extends DiscoverableEntity implements ComposableAsset {
     }
 
     @Override
-    public boolean containedBy(BaseEntity possibleParent) {
+    public boolean containedBy(Entity possibleParent) {
         return isContainedBy(possibleParent, storageService);
     }
 }

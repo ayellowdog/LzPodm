@@ -26,7 +26,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import com.inspur.podm.common.intel.types.Id;
-import com.inspur.podm.common.persistence.BaseEntity;
+import com.inspur.podm.common.persistence.base.Entity;
 import com.inspur.podm.common.persistence.base.MultiSourceResource;
 
 //@javax.persistence.Entity
@@ -227,7 +227,7 @@ public class Storage extends DiscoverableEntity implements MultiSourceResource {
     }
 
     @Override
-    public boolean containedBy(BaseEntity possibleParent) {
+    public boolean containedBy(Entity possibleParent) {
         return isContainedBy(possibleParent, computerSystem);
     }
 }

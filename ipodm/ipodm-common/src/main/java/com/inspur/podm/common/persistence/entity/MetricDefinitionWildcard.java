@@ -22,11 +22,11 @@ import java.util.Objects;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 
-import com.inspur.podm.common.persistence.BaseEntity;
+import com.inspur.podm.common.persistence.base.Entity;
 
 //@javax.persistence.Entity
 //@Table(name = "metric_definition_wildcard")
-public class MetricDefinitionWildcard extends BaseEntity {
+public class MetricDefinitionWildcard extends Entity {
 
 /** @Fields serialVersionUID: TODO 功能描述  */
 	private static final long serialVersionUID = 4387494604817166762L;
@@ -80,7 +80,7 @@ public class MetricDefinitionWildcard extends BaseEntity {
     }
 
     @Override
-    public boolean containedBy(BaseEntity possibleParent) {
+    public boolean containedBy(Entity possibleParent) {
         return false;
     }
 

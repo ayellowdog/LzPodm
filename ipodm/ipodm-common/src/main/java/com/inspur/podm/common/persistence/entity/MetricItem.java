@@ -20,7 +20,7 @@ package com.inspur.podm.common.persistence.entity;
 import java.util.Objects;
 
 import com.inspur.podm.common.intel.types.Id;
-import com.inspur.podm.common.persistence.BaseEntity;
+import com.inspur.podm.common.persistence.base.Entity;
 
 //@javax.persistence.Entity
 //@Table(name = "metric_item", indexes = @Index(name = "idx_metric_item_entity_id", columnList = "entity_id", unique = true))
@@ -114,7 +114,7 @@ public class MetricItem extends DiscoverableEntity {
     }
 
     @Override
-    public boolean containedBy(BaseEntity possibleParent) {
+    public boolean containedBy(Entity possibleParent) {
         return isContainedBy(possibleParent, metricReportDefinition);
     }
 }

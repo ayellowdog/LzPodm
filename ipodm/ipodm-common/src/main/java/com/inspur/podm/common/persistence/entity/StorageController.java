@@ -29,7 +29,7 @@ import java.util.Set;
 
 import com.inspur.podm.common.intel.types.Id;
 import com.inspur.podm.common.intel.types.Protocol;
-import com.inspur.podm.common.persistence.BaseEntity;
+import com.inspur.podm.common.persistence.base.Entity;
 import com.inspur.podm.common.persistence.base.MultiSourceResource;
 import com.inspur.podm.common.persistence.entity.embeddables.Identifier;
 
@@ -319,7 +319,7 @@ public class StorageController extends DiscoverableEntity implements MultiSource
     }
 
     @Override
-    public boolean containedBy(BaseEntity possibleParent) {
+    public boolean containedBy(Entity possibleParent) {
         return false;
     }
 }

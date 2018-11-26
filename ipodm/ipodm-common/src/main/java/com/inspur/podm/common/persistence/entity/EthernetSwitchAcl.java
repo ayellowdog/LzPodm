@@ -18,48 +18,56 @@ package com.inspur.podm.common.persistence.entity;
 
 
 import static com.inspur.podm.common.utils.Contracts.requiresNonNull;
+import static javax.persistence.CascadeType.MERGE;
+import static javax.persistence.CascadeType.PERSIST;
+import static javax.persistence.FetchType.LAZY;
 
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import java.util.function.Predicate;
 
-import com.inspur.podm.common.intel.types.Id;
-import com.inspur.podm.common.persistence.BaseEntity;
+import javax.persistence.Column;
+import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
-//@javax.persistence.Entity
-//@Table(name = "ethernet_switch_acl", indexes = @Index(name = "idx_ethernet_switch_acl_entity_id", columnList = "entity_id", unique = true))
+import com.inspur.podm.common.intel.types.Id;
+import com.inspur.podm.common.persistence.base.Entity;
+@javax.persistence.Entity
+@Table(name = "ethernet_switch_acl", indexes = @Index(name = "idx_ethernet_switch_acl_entity_id", columnList = "entity_id", unique = true))
 //@Eventable
 //@SuppressWarnings("checkstyle:MethodCount")
 public class EthernetSwitchAcl extends DiscoverableEntity {
-/** @Fields serialVersionUID: TODO 功能描述  */
-	private static final long serialVersionUID = -6264410326686356028L;
-
-	//    @Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
+    @Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
     private Id entityId;
 
 //    @SuppressEvents
-//    @OneToMany(mappedBy = "ethernetSwitchAcl", fetch = LAZY, cascade = {MERGE, PERSIST})
+    @OneToMany(mappedBy = "ethernetSwitchAcl", fetch = LAZY, cascade = {MERGE, PERSIST})
     private Set<EthernetSwitchAclRule> rules = new HashSet<>();
 
-//    @ManyToMany(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinTable(
-//        name = "ethernet_switch_acl_bound_port",
-//        joinColumns = {@JoinColumn(name = "acl_id", referencedColumnName = "id")},
-//        inverseJoinColumns = {@JoinColumn(name = "port_id", referencedColumnName = "id")}
-//    )
+    @ManyToMany(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinTable(
+        name = "ethernet_switch_acl_bound_port",
+        joinColumns = {@JoinColumn(name = "acl_id", referencedColumnName = "id")},
+        inverseJoinColumns = {@JoinColumn(name = "port_id", referencedColumnName = "id")}
+    )
     private Set<EthernetSwitchPort> boundPorts = new HashSet<>();
 
-//    @ManyToMany(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinTable(
-//        name = "ethernet_switch_acl_bind_action_allowable_value_port",
-//        joinColumns = {@JoinColumn(name = "acl_id", referencedColumnName = "id")},
-//        inverseJoinColumns = {@JoinColumn(name = "port_id", referencedColumnName = "id")}
-//    )
+    @ManyToMany(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinTable(
+        name = "ethernet_switch_acl_bind_action_allowable_value_port",
+        joinColumns = {@JoinColumn(name = "acl_id", referencedColumnName = "id")},
+        inverseJoinColumns = {@JoinColumn(name = "port_id", referencedColumnName = "id")}
+    )
     private Set<EthernetSwitchPort> bindActionAllowableValues = new HashSet<>();
 
-//    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinColumn(name = "ethernet_switch_id")
+    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinColumn(name = "ethernet_switch_id")
     private EthernetSwitch ethernetSwitch;
 
     @Override
@@ -178,7 +186,7 @@ public class EthernetSwitchAcl extends DiscoverableEntity {
     }
 
     @Override
-    public boolean containedBy(BaseEntity possibleParent) {
+    public boolean containedBy(Entity possibleParent) {
         return isContainedBy(possibleParent, ethernetSwitch);
     }
 }

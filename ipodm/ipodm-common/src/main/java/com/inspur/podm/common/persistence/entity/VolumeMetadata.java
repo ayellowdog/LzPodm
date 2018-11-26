@@ -16,11 +16,11 @@
 
 package com.inspur.podm.common.persistence.entity;
 
-import com.inspur.podm.common.persistence.BaseEntity;
+import com.inspur.podm.common.persistence.base.Entity;
 
 //@javax.persistence.Entity
 //@Table(name = "volume_metadata")
-public class VolumeMetadata extends BaseEntity {
+public class VolumeMetadata extends Entity {
 /** @Fields serialVersionUID: TODO 功能描述  */
 	private static final long serialVersionUID = -1467043072749499555L;
 //    @Column(name = "allocated")
@@ -39,7 +39,7 @@ public class VolumeMetadata extends BaseEntity {
     }
 
     @Override
-    public boolean containedBy(BaseEntity possibleParent) {
+    public boolean containedBy(Entity possibleParent) {
         return false;
     }
 }

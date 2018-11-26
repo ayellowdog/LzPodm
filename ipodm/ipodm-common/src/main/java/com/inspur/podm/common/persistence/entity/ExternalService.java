@@ -36,7 +36,7 @@ import javax.persistence.Enumerated;
 
 import com.inspur.podm.common.intel.types.Id;
 import com.inspur.podm.common.intel.types.ServiceType;
-import com.inspur.podm.common.persistence.BaseEntity;
+import com.inspur.podm.common.persistence.base.Entity;
 
 //@javax.persistence.Entity
 //@NamedQueries({
@@ -51,7 +51,7 @@ import com.inspur.podm.common.persistence.BaseEntity;
 //})
 //@EntityListeners(ExternalServiceListener.class)
 //@SuppressWarnings({"checkstyle:MethodCount"})
-public class ExternalService extends BaseEntity {
+public class ExternalService extends Entity {
     public static final String GET_EXTERNAL_SERVICE_BY_UUID = "GET_EXTERNAL_SERVICE_BY_UUID";
     public static final String GET_EXTERNAL_SERVICES_BY_SERVICES_TYPES = "GET_EXTERNAL_SERVICES_BY_SERVICES_TYPES";
 
@@ -205,7 +205,7 @@ public class ExternalService extends BaseEntity {
     }
 
     @Override
-    public boolean containedBy(BaseEntity possibleParent) {
+    public boolean containedBy(Entity possibleParent) {
         return false;
     }
 

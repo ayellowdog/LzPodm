@@ -20,7 +20,7 @@ package com.inspur.podm.common.persistence.entity;
 import java.util.Objects;
 
 import com.inspur.podm.common.intel.types.Id;
-import com.inspur.podm.common.persistence.BaseEntity;
+import com.inspur.podm.common.persistence.base.Entity;
 
 //@javax.persistence.Entity
 //@Table(name = "ethernet_switch_port_vlan", indexes = @Index(name = "idx_ethernet_switch_port_vlan_entity_id", columnList = "entity_id", unique = true))
@@ -140,7 +140,7 @@ public class EthernetSwitchPortVlan extends DiscoverableEntity {
     }
 
     @Override
-    public boolean containedBy(BaseEntity possibleParent) {
+    public boolean containedBy(Entity possibleParent) {
         return isContainedBy(possibleParent, ethernetSwitchPort) || isContainedBy(possibleParent, ethernetInterface);
     }
 }

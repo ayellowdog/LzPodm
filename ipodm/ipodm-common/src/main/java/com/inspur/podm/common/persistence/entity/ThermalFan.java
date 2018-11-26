@@ -21,7 +21,7 @@ import java.util.Objects;
 
 import com.inspur.podm.common.intel.types.Id;
 import com.inspur.podm.common.intel.types.PhysicalContext;
-import com.inspur.podm.common.persistence.BaseEntity;
+import com.inspur.podm.common.persistence.base.Entity;
 
 //@javax.persistence.Entity
 //@Table(name = "thermal_fan", indexes = @Index(name = "idx_thermal_fan_entity_id", columnList = "entity_id", unique = true))
@@ -213,7 +213,7 @@ public class ThermalFan extends DiscoverableEntity {
     }
 
     @Override
-    public boolean containedBy(BaseEntity possibleParent) {
+    public boolean containedBy(Entity possibleParent) {
         return isContainedBy(possibleParent, thermal);
     }
 }

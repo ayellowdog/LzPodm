@@ -33,7 +33,7 @@ import com.inspur.podm.common.intel.types.MetricType;
 import com.inspur.podm.common.intel.types.MetricValueType;
 import com.inspur.podm.common.intel.types.PhysicalContext;
 import com.inspur.podm.common.intel.types.SensorType;
-import com.inspur.podm.common.persistence.BaseEntity;
+import com.inspur.podm.common.persistence.base.Entity;
 import com.inspur.podm.common.persistence.entity.embeddables.CalculationParamsType;
 
 //@javax.persistence.Entity
@@ -367,7 +367,7 @@ public class MetricDefinition extends DiscoverableEntity {
     }
 
     @Override
-    public boolean containedBy(BaseEntity possibleParent) {
+    public boolean containedBy(Entity possibleParent) {
         return false;
     }
 }

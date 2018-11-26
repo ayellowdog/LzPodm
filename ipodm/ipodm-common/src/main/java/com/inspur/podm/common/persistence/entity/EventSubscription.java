@@ -22,14 +22,14 @@ import java.util.List;
 
 import com.inspur.podm.common.intel.types.Id;
 import com.inspur.podm.common.intel.types.events.EventType;
-import com.inspur.podm.common.persistence.BaseEntity;
+import com.inspur.podm.common.persistence.base.Entity;
 
 
 //@Table(name = "event_subscription", indexes = @Index(name = "idx_event_subscription_entity_id", columnList = "entity_id", unique = true))
 //@javax.persistence.Entity
 //@SuppressWarnings({"checkstyle:MethodCount"})
 //@Eventable
-public class EventSubscription extends BaseEntity {
+public class EventSubscription extends Entity {
 /** @Fields serialVersionUID: TODO 功能描述  */
 	private static final long serialVersionUID = 7827754893952893998L;
 
@@ -135,7 +135,7 @@ public class EventSubscription extends BaseEntity {
     }
 
     @Override
-    public boolean containedBy(BaseEntity possibleParent) {
+    public boolean containedBy(Entity possibleParent) {
         return false;
     }
 }

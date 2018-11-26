@@ -15,7 +15,7 @@
  */
 
 package com.inspur.podm.common.persistence.entity;
-
+import static org.hibernate.annotations.GenerationTime.INSERT;
 import static com.inspur.podm.common.intel.types.Health.CRITICAL;
 import static com.inspur.podm.common.intel.types.Health.OK;
 import static com.inspur.podm.common.intel.types.State.ENABLED;
@@ -25,6 +25,10 @@ import static java.lang.Boolean.TRUE;
 import static java.util.Arrays.stream;
 import static java.util.Collections.emptySet;
 import static java.util.stream.Collectors.toSet;
+import static javax.persistence.CascadeType.MERGE;
+import static javax.persistence.CascadeType.PERSIST;
+import static javax.persistence.EnumType.STRING;
+import static javax.persistence.FetchType.LAZY;
 
 import java.math.BigDecimal;
 import java.util.Collection;
@@ -34,98 +38,116 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
+
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.Convert;
+import javax.persistence.ElementCollection;
+import javax.persistence.Enumerated;
+import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.OrderColumn;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.Generated;
+
 import com.inspur.podm.common.intel.types.ComposedNodeState;
 import com.inspur.podm.common.intel.types.Id;
 import com.inspur.podm.common.intel.types.Status;
-import com.inspur.podm.common.persistence.BaseEntity;
+import com.inspur.podm.common.persistence.base.Entity;
+import com.inspur.podm.common.persistence.converter.IdToLongConverter;
 import com.inspur.podm.common.persistence.entity.embeddables.Identifier;
 
-//@javax.persistence.Entity
-//@NamedQueries({
-//    @NamedQuery(name = ComposedNode.GET_ALL_NODES_IDS,
-//        query = "SELECT composedNode.entityId FROM ComposedNode composedNode"),
-//    @NamedQuery(name = ComposedNode.GET_NODE_BY_ASSOCIATED_COMPUTER_SYSTEM_UUID,
-//        query = "SELECT composedNode FROM ComposedNode composedNode WHERE composedNode.associatedComputerSystemUuid = :uuid"),
-//    @NamedQuery(name = ComposedNode.GET_NODES_ELIGIBLE_FOR_RECOVERY,
-//        query = "SELECT composedNode FROM ComposedNode composedNode WHERE composedNode.eligibleForRecovery = true")
-//})
-//@Table(name = "composed_node", indexes = @Index(name = "idx_composed_node_entity_id", columnList = "entity_id", unique = true))
+@javax.persistence.Entity
+@NamedQueries({
+    @NamedQuery(name = ComposedNode.GET_ALL_NODES_IDS,
+        query = "SELECT composedNode.entityId FROM ComposedNode composedNode"),
+    @NamedQuery(name = ComposedNode.GET_NODE_BY_ASSOCIATED_COMPUTER_SYSTEM_UUID,
+        query = "SELECT composedNode FROM ComposedNode composedNode WHERE composedNode.associatedComputerSystemUuid = :uuid"),
+    @NamedQuery(name = ComposedNode.GET_NODES_ELIGIBLE_FOR_RECOVERY,
+        query = "SELECT composedNode FROM ComposedNode composedNode WHERE composedNode.eligibleForRecovery = true")
+})
+@Table(name = "composed_node", indexes = @Index(name = "idx_composed_node_entity_id", columnList = "entity_id", unique = true))
 //@Eventable
 //@SuppressWarnings({"checkstyle:MethodCount", "checkstyle:ClassFanOutComplexity"})
-public class ComposedNode extends BaseEntity {
-    /** @Fields serialVersionUID: TODO 功能描述  */
-	private static final long serialVersionUID = -1455534036190646295L;
+public class ComposedNode extends Entity {
+
 	public static final String GET_ALL_NODES_IDS = "GET_ALL_NODES_IDS";
     public static final String GET_NODES_ELIGIBLE_FOR_RECOVERY = "GET_NODES_ELIGIBLE_FOR_RECOVERY";
     public static final String GET_NODE_BY_ASSOCIATED_COMPUTER_SYSTEM_UUID = "GET_NODE_BY_ASSOCIATED_COMPUTER_SYSTEM_UUID";
     public static final Status OFFLINE_CRITICAL_STATUS = new Status(UNAVAILABLE_OFFLINE, CRITICAL, null);
 
-//    @Generated(INSERT)
-//    @Convert(converter = IdToLongConverter.class)
-//    @Column(name = "entity_id", columnDefinition = ENTITY_ID_NUMERIC_COLUMN_DEFINITION, insertable = false, nullable = false)
+    @Generated(INSERT)
+    @Convert(converter = IdToLongConverter.class)
+    @Column(name = "entity_id", columnDefinition = ENTITY_ID_NUMERIC_COLUMN_DEFINITION, insertable = false, nullable = false)
     private Id entityId;
 
-//    @Column(name = "name")
+    @Column(name = "name")
     private String name;
 
-//    @Column(name = "description")
+    @Column(name = "description")
     private String description;
 
-//    @Column(name = "status")
+    @Column(name = "status")
     private Status status;
 
-//    @Column(name = "composed_node_state")
-//    @Enumerated(STRING)
+    @Column(name = "composed_node_state")
+    @Enumerated(STRING)
     private ComposedNodeState composedNodeState;
 
-//    @Column(name = "remote_drive_capacity_gib")
+    @Column(name = "remote_drive_capacity_gib")
     private BigDecimal remoteDriveCapacityGib;
 
-//    @Column(name = "associated_computer_system_uuid")
+    @Column(name = "associated_computer_system_uuid")
     private UUID associatedComputerSystemUuid;
 
-//    @Column(name = "associated_compute_service_uuid")
+    @Column(name = "associated_compute_service_uuid")
     private UUID associatedComputeServiceUuid;
 
-//    @Column(name = "associated_storage_service_uuid")
+    @Column(name = "associated_storage_service_uuid")
     private UUID associatedStorageServiceUuid;
 
-//    @Column(name = "eligible_for_recovery")
+    @Column(name = "eligible_for_recovery")
     private boolean eligibleForRecovery;
 
-//    @Column(name = "prior_untagged_vlan_id")
+    @Column(name = "prior_untagged_vlan_id")
     private Integer priorUntaggedVlanId;
 
-//    @Column(name = "number_of_requested_drives")
+    @Column(name = "number_of_requested_drives")
     private int numberOfRequestedDrives;
 
-//    @Column(name = "clear_tpm_on_delete")
+    @Column(name = "clear_tpm_on_delete")
     private boolean clearTpmOnDelete;
 
-//    @ElementCollection
-//    @CollectionTable(name = "associated_endpoint_identifier", joinColumns = @JoinColumn(name = "associated_endpoint_identifier_id"))
-//    @OrderColumn(name = "associated_endpoint_identifier_order")
+    @ElementCollection
+    @CollectionTable(name = "associated_endpoint_identifier", joinColumns = @JoinColumn(name = "associated_endpoint_identifier_id"))
+    @OrderColumn(name = "associated_endpoint_identifier_order")
     private Set<Identifier> associatedEndpointIdentifiers = new HashSet<>();
 
-//    @ElementCollection
-//    @CollectionTable(name = "associated_volume_identifier", joinColumns = @JoinColumn(name = "associated_volume_identifier_id"))
-//    @OrderColumn(name = "associated_volume_identifier")
+    @ElementCollection
+    @CollectionTable(name = "associated_volume_identifier", joinColumns = @JoinColumn(name = "associated_volume_identifier_id"))
+    @OrderColumn(name = "associated_volume_identifier")
     private Set<Identifier> associatedVolumeIdentifiers = new HashSet<>();
 
-//    @OneToMany(mappedBy = "composedNode", fetch = LAZY, cascade = {MERGE, PERSIST})
+    @OneToMany(mappedBy = "composedNode", fetch = LAZY, cascade = {MERGE, PERSIST})
     private Set<Endpoint> endpoints = new HashSet<>();
 
-//    @OneToMany(mappedBy = "composedNode", fetch = LAZY, cascade = {MERGE, PERSIST})
+    @OneToMany(mappedBy = "composedNode", fetch = LAZY, cascade = {MERGE, PERSIST})
     private Set<Volume> volumes = new HashSet<>();
 
-//    @OneToMany(mappedBy = "composedNode", fetch = LAZY, cascade = {MERGE, PERSIST})
+    @OneToMany(mappedBy = "composedNode", fetch = LAZY, cascade = {MERGE, PERSIST})
     private Set<Drive> drives = new HashSet<>();
 
-//    @ManyToMany(mappedBy = "composedNodes", fetch = LAZY, cascade = {MERGE, PERSIST})
+    @ManyToMany(mappedBy = "composedNodes", fetch = LAZY, cascade = {MERGE, PERSIST})
     private Set<StoragePool> storagePools = new HashSet<>();
 
-//    @OneToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinColumn(name = "computer_system_id")
+    @OneToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinColumn(name = "computer_system_id")
     private ComputerSystem computerSystem;
 
     public Id getId() {
@@ -399,7 +421,7 @@ public class ComposedNode extends BaseEntity {
     }
 
     @Override
-    public boolean containedBy(BaseEntity possibleParent) {
+    public boolean containedBy(Entity possibleParent) {
         return false;
     }
 

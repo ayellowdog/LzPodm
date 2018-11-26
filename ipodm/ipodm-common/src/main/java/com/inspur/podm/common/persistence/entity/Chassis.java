@@ -43,36 +43,35 @@ import com.inspur.podm.common.intel.types.ChassisType;
 import com.inspur.podm.common.intel.types.Id;
 import com.inspur.podm.common.intel.types.IndicatorLed;
 import com.inspur.podm.common.intel.types.PowerState;
-import com.inspur.podm.common.persistence.BaseEntity;
+import com.inspur.podm.common.persistence.base.Entity;
 import com.inspur.podm.common.persistence.entity.embeddables.RackChassisAttributes;
 
-//@javax.persistence.Entity
-//@NamedQueries({
-//    @NamedQuery(name = Chassis.GET_CHASSIS_BY_TYPE,
-//        query = "SELECT chassis FROM Chassis chassis WHERE chassis.chassisType = :chassisType"),
-//
-//    @NamedQuery(name = Chassis.GET_CHASSIS_IDS_FROM_PRIMARY_DATA_SOURCE,
-//        query = "SELECT chassis.entityId FROM Chassis chassis WHERE chassis.isComplementary = false "),
-//
-//    @NamedQuery(name = Chassis.GET_CHASSIS_BY_TYPE_AND_SERVICE,
-//        query = "SELECT chassis FROM Chassis chassis JOIN chassis.externalLinks links WHERE links.externalService = :externalService "
-//            + "AND chassis.chassisType = :chassisType"),
-//
-//    @NamedQuery(name = Chassis.GET_CHASSIS_MULTI_SOURCE,
-//        query = "SELECT DISTINCT chas FROM ComputerSystem system JOIN system.chassis chas WHERE chas.chassisType = :type "
-//            + "AND system.isComplementary = :isComplementary "
-//            + "AND system.uuid IN (:uuids)"
-//    ),
-//    @NamedQuery(name = Chassis.GET_CHASSIS_BY_TYPE_AND_LOCATION,
-//        query = "SELECT chassis FROM Chassis chassis WHERE chassis.chassisType = :chassisType AND chassis.locationId = :locationId"
-//    ),
-//})
-//@Table(name = "chassis", indexes = @Index(name = "idx_chassis_entity_id", columnList = "entity_id", unique = true))
+@javax.persistence.Entity
+@NamedQueries({
+    @NamedQuery(name = Chassis.GET_CHASSIS_BY_TYPE,
+        query = "SELECT chassis FROM Chassis chassis WHERE chassis.chassisType = :chassisType"),
+
+    @NamedQuery(name = Chassis.GET_CHASSIS_IDS_FROM_PRIMARY_DATA_SOURCE,
+        query = "SELECT chassis.entityId FROM Chassis chassis WHERE chassis.isComplementary = false "),
+
+    @NamedQuery(name = Chassis.GET_CHASSIS_BY_TYPE_AND_SERVICE,
+        query = "SELECT chassis FROM Chassis chassis JOIN chassis.externalLinks links WHERE links.externalService = :externalService "
+            + "AND chassis.chassisType = :chassisType"),
+
+    @NamedQuery(name = Chassis.GET_CHASSIS_MULTI_SOURCE,
+        query = "SELECT DISTINCT chas FROM ComputerSystem system JOIN system.chassis chas WHERE chas.chassisType = :type "
+            + "AND system.isComplementary = :isComplementary "
+            + "AND system.uuid IN (:uuids)"
+    ),
+    @NamedQuery(name = Chassis.GET_CHASSIS_BY_TYPE_AND_LOCATION,
+        query = "SELECT chassis FROM Chassis chassis WHERE chassis.chassisType = :chassisType AND chassis.locationId = :locationId"
+    ),
+})
+@Table(name = "chassis", indexes = @Index(name = "idx_chassis_entity_id", columnList = "entity_id", unique = true))
 //@Eventable
 //@SuppressWarnings({"checkstyle:ClassFanOutComplexity", "checkstyle:MethodCount"})
 public class Chassis extends DiscoverableEntity {
-    /** @Fields serialVersionUID: TODO 功能描述  */
-	private static final long serialVersionUID = -6454277548966473550L;
+
 	public static final String GET_CHASSIS_BY_TYPE = "GET_CHASSIS_BY_TYPE";
     public static final String GET_CHASSIS_IDS_FROM_PRIMARY_DATA_SOURCE = "GET_CHASSIS_IDS_FROM_PRIMARY_DATA_SOURCE";
     public static final String GET_CHASSIS_MULTI_SOURCE = "GET_CHASSIS_MULTI_SOURCE";
@@ -636,7 +635,7 @@ public class Chassis extends DiscoverableEntity {
     }
 
     @Override
-    public boolean containedBy(BaseEntity possibleParent) {
+    public boolean containedBy(Entity possibleParent) {
         return isContainedBy(possibleParent, containedByChassis);
     }
 

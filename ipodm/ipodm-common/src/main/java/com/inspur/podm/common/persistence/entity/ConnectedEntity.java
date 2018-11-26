@@ -17,54 +17,75 @@
 package com.inspur.podm.common.persistence.entity;
 
 
+import static com.inspur.podm.common.persistence.entity.ConnectedEntity.GET_CONNECTED_ENTITY_BY_ENTITY_LINK_AND_ENDPOINT;
+import static javax.persistence.CascadeType.MERGE;
+import static javax.persistence.CascadeType.PERSIST;
+import static javax.persistence.EnumType.STRING;
+import static javax.persistence.FetchType.EAGER;
+import static org.hibernate.annotations.GenerationTime.INSERT;
+
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Embedded;
+import javax.persistence.Enumerated;
+import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OrderColumn;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.Generated;
+
 import com.inspur.podm.common.intel.types.EntityRole;
 import com.inspur.podm.common.intel.types.Id;
-import com.inspur.podm.common.persistence.BaseEntity;
+import com.inspur.podm.common.persistence.base.Entity;
 import com.inspur.podm.common.persistence.entity.embeddables.Identifier;
 import com.inspur.podm.common.persistence.entity.embeddables.PciId;
-
-//@javax.persistence.Entity
-//@NamedQueries({
-//    @NamedQuery(name = GET_CONNECTED_ENTITY_BY_ENTITY_LINK_AND_ENDPOINT,
-//        query = "SELECT c FROM ConnectedEntity c WHERE c.endpoint = :endpoint AND c.entityLink = :volume")
-//})
-//@Table(name = "connected_entity", indexes = @Index(name = "idx_connected_entity_entity_id", columnList = "entity_id", unique = true))
+@javax.persistence.Entity
+@NamedQueries({
+    @NamedQuery(name = GET_CONNECTED_ENTITY_BY_ENTITY_LINK_AND_ENDPOINT,
+        query = "SELECT c FROM ConnectedEntity c WHERE c.endpoint = :endpoint AND c.entityLink = :volume")
+})
+@Table(name = "connected_entity", indexes = @Index(name = "idx_connected_entity_entity_id", columnList = "entity_id", unique = true))
 //@SuppressWarnings({"checkstyle:MethodCount"})
 public class ConnectedEntity extends DiscoverableEntity {
     public static final String GET_CONNECTED_ENTITY_BY_ENTITY_LINK_AND_ENDPOINT = "GET_CONNECTED_ENTITY_BY_ENTITY_LINK_AND_ENDPOINT";
 
-//    @Generated(INSERT)
-//    @Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
+    @Generated(INSERT)
+    @Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
     private Id entityId;
 
-//    @Column(name = "entity_role")
-//    @Enumerated(STRING)
+    @Column(name = "entity_role")
+    @Enumerated(STRING)
     private EntityRole entityRole;
 
-//    @Column(name = "pci_function_number")
+    @Column(name = "pci_function_number")
     private Integer pciFunctionNumber;
 
-//    @Column(name = "pci_class_code")
+    @Column(name = "pci_class_code")
     private String pciClassCode;
 
-//    @Embedded
+    @Embedded
     private PciId pciId;
 
-//    @ElementCollection
-//    @CollectionTable(name = "connected_entity_identifier", joinColumns = @JoinColumn(name = "connected_entity_id"))
-//    @OrderColumn(name = "connected_entity_identifier_order")
+    @ElementCollection
+    @CollectionTable(name = "connected_entity_identifier", joinColumns = @JoinColumn(name = "connected_entity_id"))
+    @OrderColumn(name = "connected_entity_identifier_order")
     private Set<Identifier> identifiers = new HashSet<>();
 
-//    @ManyToOne(fetch = EAGER, cascade = {MERGE, PERSIST})
-//    @JoinColumn(name = "discoverable_entity_id")
+    @ManyToOne(fetch = EAGER, cascade = {MERGE, PERSIST})
+    @JoinColumn(name = "discoverable_entity_id")
     private DiscoverableEntity entityLink;
 
-//    @ManyToOne(fetch = EAGER, cascade = {MERGE, PERSIST})
-//    @JoinColumn(name = "endpoint_id")
+    @ManyToOne(fetch = EAGER, cascade = {MERGE, PERSIST})
+    @JoinColumn(name = "endpoint_id")
     private Endpoint endpoint;
 
     @Override
@@ -171,7 +192,7 @@ public class ConnectedEntity extends DiscoverableEntity {
     }
 
     @Override
-    public boolean containedBy(BaseEntity possibleParent) {
+    public boolean containedBy(Entity possibleParent) {
         return false;
     }
 }

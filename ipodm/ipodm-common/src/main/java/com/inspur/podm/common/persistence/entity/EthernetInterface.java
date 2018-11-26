@@ -18,6 +18,10 @@ package com.inspur.podm.common.persistence.entity;
 
 
 import static com.inspur.podm.common.utils.Contracts.requiresNonNull;
+import static javax.persistence.CascadeType.MERGE;
+import static javax.persistence.CascadeType.PERSIST;
+import static javax.persistence.EnumType.STRING;
+import static javax.persistence.FetchType.LAZY;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -26,147 +30,160 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Enumerated;
+import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderColumn;
+import javax.persistence.Table;
+
 import com.inspur.podm.common.intel.types.Id;
 import com.inspur.podm.common.intel.types.LinkStatus;
 import com.inspur.podm.common.intel.types.Protocol;
 import com.inspur.podm.common.intel.types.net.MacAddress;
-import com.inspur.podm.common.persistence.BaseEntity;
+import com.inspur.podm.common.persistence.base.Entity;
 import com.inspur.podm.common.persistence.base.MultiSourceResource;
 import com.inspur.podm.common.persistence.base.VlanPossessor;
 import com.inspur.podm.common.persistence.entity.embeddables.IpV4Address;
 import com.inspur.podm.common.persistence.entity.embeddables.IpV6Address;
 import com.inspur.podm.common.persistence.entity.embeddables.IpV6AddressPolicy;
-
-//@javax.persistence.Entity
-//@NamedQueries({
-//    @NamedQuery(name = EthernetInterface.GET_ETHERNET_INTERFACE_BY_MAC_ADDRESS,
-//        query = "SELECT ei FROM EthernetInterface ei WHERE ei.macAddress = :macAddress"
-//    ),
-//    @NamedQuery(name = EthernetInterface.GET_ETHERNET_INTERFACE_MULTI_SOURCE,
-//        query = "SELECT ethernetInterface "
-//            + "FROM EthernetInterface ethernetInterface "
-//            + "WHERE ethernetInterface.multiSourceDiscriminator = :multiSourceDiscriminator "
-//            + "AND ethernetInterface.isComplementary = :isComplementary"
-//    )
-//})
-//@Table(name = "ethernet_interface", indexes = @Index(name = "idx_ethernet_interface_entity_id", columnList = "entity_id", unique = true))
+@javax.persistence.Entity
+@NamedQueries({
+    @NamedQuery(name = EthernetInterface.GET_ETHERNET_INTERFACE_BY_MAC_ADDRESS,
+        query = "SELECT ei FROM EthernetInterface ei WHERE ei.macAddress = :macAddress"
+    ),
+    @NamedQuery(name = EthernetInterface.GET_ETHERNET_INTERFACE_MULTI_SOURCE,
+        query = "SELECT ethernetInterface "
+            + "FROM EthernetInterface ethernetInterface "
+            + "WHERE ethernetInterface.multiSourceDiscriminator = :multiSourceDiscriminator "
+            + "AND ethernetInterface.isComplementary = :isComplementary"
+    )
+})
+@Table(name = "ethernet_interface", indexes = @Index(name = "idx_ethernet_interface_entity_id", columnList = "entity_id", unique = true))
 //@Eventable
 //@SuppressWarnings({"checkstyle:MethodCount", "checkstyle:ClassFanOutComplexity"})
 public class EthernetInterface extends DiscoverableEntity implements VlanPossessor, MultiSourceResource {
-    /** @Fields serialVersionUID: TODO 功能描述  */
-	private static final long serialVersionUID = 3012722906576481126L;
+
 	public static final String GET_ETHERNET_INTERFACE_BY_MAC_ADDRESS = "GET_ETHERNET_INTERFACE_BY_MAC_ADDRESS";
     public static final String GET_ETHERNET_INTERFACE_MULTI_SOURCE = "GET_ETHERNET_INTERFACE_MULTI_SOURCE";
 
-//    @Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
+    @Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
     private Id entityId;
 
-//    @Column(name = "link_status")
-//    @Enumerated(STRING)
+    @Column(name = "link_status")
+    @Enumerated(STRING)
     private LinkStatus linkStatus;
 
-//    @Column(name = "interface_enabled")
+    @Column(name = "interface_enabled")
     private Boolean interfaceEnabled;
 
-//    @Column(name = "auto_neg")
+    @Column(name = "auto_neg")
     private Boolean autoNeg;
 
-//    @Column(name = "mtu_size")
+    @Column(name = "mtu_size")
     private Integer mtuSize;
 
-//    @Column(name = "max_ipv6_static_addresses")
+    @Column(name = "max_ipv6_static_addresses")
     private Integer maxIPv6StaticAddresses;
 
-//    @Column(name = "vlan_enable")
+    @Column(name = "vlan_enable")
     private Boolean vlanEnable;
 
-//    @Column(name = "vlan_id")
+    @Column(name = "vlan_id")
     private Integer vlanId;
 
-//    @Column(name = "permanent_mac_address")
+    @Column(name = "permanent_mac_address")
     private MacAddress permanentMacAddress;
 
-//    @Column(name = "mac_address")
+    @Column(name = "mac_address")
     private MacAddress macAddress;
 
-//    @Column(name = "speed_mbps")
+    @Column(name = "speed_mbps")
     private Integer speedMbps;
 
-//    @Column(name = "full_duplex")
+    @Column(name = "full_duplex")
     private Boolean fullDuplex;
 
-//    @Column(name = "hostname")
+    @Column(name = "hostname")
     private String hostName;
 
-//    @Column(name = "fqdn")
+    @Column(name = "fqdn")
     private String fqdn;
 
-//    @Column(name = "ipv6_default_gateway")
+    @Column(name = "ipv6_default_gateway")
     private String ipV6DefaultGateway;
 
-//    @Column(name = "multi_source_discriminator")
+    @Column(name = "multi_source_discriminator")
     private String multiSourceDiscriminator;
 
-//    @ElementCollection
-//    @CollectionTable(name = "ethernet_interface_name_server", joinColumns = @JoinColumn(name = "ethernet_interface_id"))
-//    @Column(name = "name_server")
-//    @OrderColumn(name = "name_server_order")
+    @ElementCollection
+    @CollectionTable(name = "ethernet_interface_name_server", joinColumns = @JoinColumn(name = "ethernet_interface_id"))
+    @Column(name = "name_server")
+    @OrderColumn(name = "name_server_order")
     private List<String> nameServers = new ArrayList<>();
 
-//    @ElementCollection
-//    @CollectionTable(name = "ethernet_interface_ipv4_address", joinColumns = @JoinColumn(name = "ethernet_interface_id"))
-//    @OrderColumn(name = "ipv4_address_order")
+    @ElementCollection
+    @CollectionTable(name = "ethernet_interface_ipv4_address", joinColumns = @JoinColumn(name = "ethernet_interface_id"))
+    @OrderColumn(name = "ipv4_address_order")
     private List<IpV4Address> ipV4Addresses = new ArrayList<>();
 
-//    @ElementCollection
-//    @CollectionTable(name = "ethernet_interface_ipv6_address", joinColumns = @JoinColumn(name = "ethernet_interface_id"))
-//    @OrderColumn(name = "ipv6_address_order")
+    @ElementCollection
+    @CollectionTable(name = "ethernet_interface_ipv6_address", joinColumns = @JoinColumn(name = "ethernet_interface_id"))
+    @OrderColumn(name = "ipv6_address_order")
     private List<IpV6Address> ipV6Addresses = new ArrayList<>();
 
-//    @ElementCollection
-//    @CollectionTable(name = "ethernet_interface_ipv6_static_address", joinColumns = @JoinColumn(name = "ethernet_interface_id"))
-//    @OrderColumn(name = "ipv6_static_address_order")
+    @ElementCollection
+    @CollectionTable(name = "ethernet_interface_ipv6_static_address", joinColumns = @JoinColumn(name = "ethernet_interface_id"))
+    @OrderColumn(name = "ipv6_static_address_order")
     private List<IpV6Address> ipV6StaticAddresses = new ArrayList<>();
 
-//    @ElementCollection
-//    @CollectionTable(name = "ethernet_interface_ipv6_address_policy", joinColumns = @JoinColumn(name = "ethernet_interface_id"))
-//    @OrderColumn(name = "ipv6_address_policy_order")
+    @ElementCollection
+    @CollectionTable(name = "ethernet_interface_ipv6_address_policy", joinColumns = @JoinColumn(name = "ethernet_interface_id"))
+    @OrderColumn(name = "ipv6_address_policy_order")
     private List<IpV6AddressPolicy> ipV6AddressPolicyTable = new ArrayList<>();
 
 //    @SuppressEvents
-//    @OneToMany(mappedBy = "ethernetInterface", fetch = LAZY, cascade = {MERGE, PERSIST})
+    @OneToMany(mappedBy = "ethernetInterface", fetch = LAZY, cascade = {MERGE, PERSIST})
     private Set<EthernetSwitchPortVlan> ethernetSwitchPortVlans = new HashSet<>();
 
-//    @ManyToMany(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinTable(
-//        name = "ethernet_interface_manager",
-//        joinColumns = {@JoinColumn(name = "ethernet_interface_id", referencedColumnName = "id")},
-//        inverseJoinColumns = {@JoinColumn(name = "manager_id", referencedColumnName = "id")})
+    @ManyToMany(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinTable(
+        name = "ethernet_interface_manager",
+        joinColumns = {@JoinColumn(name = "ethernet_interface_id", referencedColumnName = "id")},
+        inverseJoinColumns = {@JoinColumn(name = "manager_id", referencedColumnName = "id")})
     private Set<Manager> managers = new HashSet<>();
 
-//    @ManyToMany(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinTable(
-//        name = "ethernet_interface_pcie_function",
-//        joinColumns = {@JoinColumn(name = "ethernet_interface_id", referencedColumnName = "id")},
-//        inverseJoinColumns = {@JoinColumn(name = "pcie_function_id", referencedColumnName = "id")})
+    @ManyToMany(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinTable(
+        name = "ethernet_interface_pcie_function",
+        joinColumns = {@JoinColumn(name = "ethernet_interface_id", referencedColumnName = "id")},
+        inverseJoinColumns = {@JoinColumn(name = "pcie_function_id", referencedColumnName = "id")})
     private Set<PcieDeviceFunction> pcieDeviceFunctions = new HashSet<>();
 
-//    @ManyToMany(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinTable(
-//        name = "ethernet_interface_endpoint",
-//        joinColumns = {@JoinColumn(name = "ethernet_interface_id", referencedColumnName = "id")},
-//        inverseJoinColumns = {@JoinColumn(name = "endpoint_id", referencedColumnName = "id")})
+    @ManyToMany(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinTable(
+        name = "ethernet_interface_endpoint",
+        joinColumns = {@JoinColumn(name = "ethernet_interface_id", referencedColumnName = "id")},
+        inverseJoinColumns = {@JoinColumn(name = "endpoint_id", referencedColumnName = "id")})
     private Set<Endpoint> endpoints = new HashSet<>();
 
-//    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinColumn(name = "computer_system_id")
+    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinColumn(name = "computer_system_id")
     private ComputerSystem computerSystem;
 
-//    @ElementCollection
-//    @Enumerated(STRING)
-//    @CollectionTable(name = "ethernet_interface_supported_protocol", joinColumns = @JoinColumn(name = "ethernet_interface_id"))
-//    @Column(name = "supported_protocol")
-//    @OrderColumn(name = "supported_protocol_order")
+    @ElementCollection
+    @Enumerated(STRING)
+    @CollectionTable(name = "ethernet_interface_supported_protocol", joinColumns = @JoinColumn(name = "ethernet_interface_id"))
+    @Column(name = "supported_protocol")
+    @OrderColumn(name = "supported_protocol_order")
     private List<Protocol> supportedProtocols = new ArrayList<>();
 
     @Override
@@ -470,7 +487,7 @@ public class EthernetInterface extends DiscoverableEntity implements VlanPossess
     }
 
     @Override
-    public boolean containedBy(BaseEntity possibleParent) {
+    public boolean containedBy(Entity possibleParent) {
         return isContainedBy(possibleParent, managers) || isContainedBy(possibleParent, computerSystem);
     }
 }

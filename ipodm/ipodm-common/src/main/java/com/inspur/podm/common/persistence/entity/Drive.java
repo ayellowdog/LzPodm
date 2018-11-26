@@ -21,6 +21,12 @@ package com.inspur.podm.common.persistence.entity;
 import static com.inspur.podm.common.intel.types.Protocol.NVME;
 import static com.inspur.podm.common.persistence.base.StatusControl.statusOf;
 import static com.inspur.podm.common.utils.Contracts.requiresNonNull;
+import static javax.persistence.CascadeType.MERGE;
+import static javax.persistence.CascadeType.PERSIST;
+import static javax.persistence.CascadeType.REMOVE;
+import static javax.persistence.EnumType.STRING;
+import static javax.persistence.FetchType.EAGER;
+import static javax.persistence.FetchType.LAZY;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -28,6 +34,21 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Enumerated;
+import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
+import javax.persistence.OrderColumn;
+import javax.persistence.Table;
 
 import com.inspur.podm.common.intel.types.EncryptionAbility;
 import com.inspur.podm.common.intel.types.EncryptionStatus;
@@ -37,165 +58,162 @@ import com.inspur.podm.common.intel.types.IndicatorLed;
 import com.inspur.podm.common.intel.types.MediaType;
 import com.inspur.podm.common.intel.types.Protocol;
 import com.inspur.podm.common.intel.types.StatusIndicator;
-import com.inspur.podm.common.persistence.BaseEntity;
 import com.inspur.podm.common.persistence.base.ComposableAsset;
+import com.inspur.podm.common.persistence.base.Entity;
 import com.inspur.podm.common.persistence.base.HasProtocol;
 import com.inspur.podm.common.persistence.base.MultiSourceResource;
 import com.inspur.podm.common.persistence.entity.embeddables.Identifier;
 import com.inspur.podm.common.persistence.entity.embeddables.RedfishLocation;
-
-//@javax.persistence.Entity
-//@Table(name = "drive", indexes = @Index(name = "idx_drive_entity_id", columnList = "entity_id", unique = true))
+@javax.persistence.Entity
+@Table(name = "drive", indexes = @Index(name = "idx_drive_entity_id", columnList = "entity_id", unique = true))
 //@EntityListeners(DriveListener.class)
-//@NamedQueries({
-//    @NamedQuery(name = Drive.GET_PRIMARY_DRIVE,
-//        query = "SELECT drive "
-//            + "FROM Drive drive "
-//            + "WHERE drive.multiSourceDiscriminator = :multiSourceDiscriminator "
-//            + "AND drive.isComplementary = false"
-//    )
-//})
+@NamedQueries({
+    @NamedQuery(name = Drive.GET_PRIMARY_DRIVE,
+        query = "SELECT drive "
+            + "FROM Drive drive "
+            + "WHERE drive.multiSourceDiscriminator = :multiSourceDiscriminator "
+            + "AND drive.isComplementary = false"
+    )
+})
 //@Eventable
 //@SuppressWarnings({"checkstyle:MethodCount", "checkstyle:ClassFanOutComplexity"})
 public class Drive extends DiscoverableEntity implements MultiSourceResource, HasProtocol, ComposableAsset {
-    /** @Fields serialVersionUID: TODO 功能描述  */
-	private static final long serialVersionUID = 6488743648523825016L;
 
 	public static final String GET_PRIMARY_DRIVE = "GET_PRIMARY_DRIVE";
 
-//    @Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
+    @Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
     private Id entityId;
 
-//    @Column(name = "status_indicator")
-//    @Enumerated(STRING)
+    @Column(name = "status_indicator")
+    @Enumerated(STRING)
     private StatusIndicator statusIndicator;
 
-//    @Column(name = "indicator_led")
-//    @Enumerated(STRING)
+    @Column(name = "indicator_led")
+    @Enumerated(STRING)
     private IndicatorLed indicatorLed;
 
-//    @Column(name = "model")
+    @Column(name = "model")
     private String model;
 
-//    @Column(name = "revision")
+    @Column(name = "revision")
     private String revision;
 
-//    @Column(name = "capacity_bytes")
+    @Column(name = "capacity_bytes")
     private Long capacityBytes;
 
-//    @Column(name = "failure_predicted")
+    @Column(name = "failure_predicted")
     private Boolean failurePredicted;
 
-//    @Column(name = "protocol")
-//    @Enumerated(STRING)
+    @Column(name = "protocol")
+    @Enumerated(STRING)
     private Protocol protocol;
 
-//    @Column(name = "media_type")
-//    @Enumerated(STRING)
+    @Column(name = "media_type")
+    @Enumerated(STRING)
     private MediaType mediaType;
 
-//    @Column(name = "manufacturer")
+    @Column(name = "manufacturer")
     private String manufacturer;
 
-//    @Column(name = "sku")
+    @Column(name = "sku")
     private String sku;
 
-//    @Column(name = "serial_number")
+    @Column(name = "serial_number")
     private String serialNumber;
 
-//    @Column(name = "part_number")
+    @Column(name = "part_number")
     private String partNumber;
 
-//    @Column(name = "asset_tag")
+    @Column(name = "asset_tag")
     private String assetTag;
 
-//    @Column(name = "hotspare_type")
-//    @Enumerated(STRING)
+    @Column(name = "hotspare_type")
+    @Enumerated(STRING)
     private HotspareType hotspareType;
 
-//    @Column(name = "encryption_ability")
-//    @Enumerated(STRING)
+    @Column(name = "encryption_ability")
+    @Enumerated(STRING)
     private EncryptionAbility encryptionAbility;
 
-//    @Column(name = "encryption_status")
-//    @Enumerated(STRING)
+    @Column(name = "encryption_status")
+    @Enumerated(STRING)
     private EncryptionStatus encryptionStatus;
 
-//    @Column(name = "rotation_speed_rpm")
+    @Column(name = "rotation_speed_rpm")
     private BigDecimal rotationSpeedRpm;
 
-//    @Column(name = "block_size_bytes")
+    @Column(name = "block_size_bytes")
     private Integer blockSizeBytes;
 
-//    @Column(name = "capable_speed_gbs")
+    @Column(name = "capable_speed_gbs")
     private BigDecimal capableSpeedGbs;
 
-//    @Column(name = "negotiated_speed_gbs")
+    @Column(name = "negotiated_speed_gbs")
     private BigDecimal negotiatedSpeedGbs;
 
-//    @Column(name = "predicted_media_life_left_percent")
+    @Column(name = "predicted_media_life_left_percent")
     private BigDecimal predictedMediaLifeLeftPercent;
 
-//    @Column(name = "erase_on_detach")
+    @Column(name = "erase_on_detach")
     private Boolean eraseOnDetach;
 
-//    @Column(name = "firmware_version")
+    @Column(name = "firmware_version")
     private String firmwareVersion;
 
-//    @Column(name = "drive_erased")
+    @Column(name = "drive_erased")
     private Boolean driveErased;
 
-//    @Column(name = "multi_source_discriminator")
+    @Column(name = "multi_source_discriminator")
     private String multiSourceDiscriminator;
 
-//    @ElementCollection
-//    @CollectionTable(name = "drive_location", joinColumns = @JoinColumn(name = "drive_id"))
-//    @OrderColumn(name = "location_order")
+    @ElementCollection
+    @CollectionTable(name = "drive_location", joinColumns = @JoinColumn(name = "drive_id"))
+    @OrderColumn(name = "location_order")
     private List<RedfishLocation> locations = new ArrayList<>();
 
-//    @ElementCollection
-//    @CollectionTable(name = "drive_identifier", joinColumns = @JoinColumn(name = "drive_id"))
-//    @OrderColumn(name = "identifier_order")
+    @ElementCollection
+    @CollectionTable(name = "drive_identifier", joinColumns = @JoinColumn(name = "drive_id"))
+    @OrderColumn(name = "identifier_order")
     private List<Identifier> identifiers = new ArrayList<>();
 
 //    @IgnoreUnlinkingRelationship
-//    @OneToOne(fetch = EAGER, cascade = {MERGE, PERSIST, REMOVE})
-//    @JoinColumn(name = "drive_metadata_id")
+    @OneToOne(fetch = EAGER, cascade = {MERGE, PERSIST, REMOVE})
+    @JoinColumn(name = "drive_metadata_id")
     private DriveMetadata metadata = new DriveMetadata();
 
-//    @OneToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinColumn(name = "drive_metrics_id")
+    @OneToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinColumn(name = "drive_metrics_id")
     private DriveMetrics metrics;
 
-//    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinColumn(name = "chassis_id")
+    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinColumn(name = "chassis_id")
     private Chassis chassis;
 
-//    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinColumn(name = "composed_node_id")
+    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinColumn(name = "composed_node_id")
     private ComposedNode composedNode;
 
-//    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinColumn(name = "storage_id")
+    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinColumn(name = "storage_id")
     private Storage storage;
 
-//    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinColumn(name = "pcie_device_function_id")
+    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinColumn(name = "pcie_device_function_id")
     private PcieDeviceFunction pcieDeviceFunction;
 
-//    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinColumn(name = "storage_service_id")
+    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinColumn(name = "storage_service_id")
     private StorageService storageService;
 
-//    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinColumn(name = "volume_id")
+    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinColumn(name = "volume_id")
     private Volume volume;
 
-//    @ManyToMany(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinTable(
-//        name = "drive_capacity_sources",
-//        joinColumns = {@JoinColumn(name = "drive_id", referencedColumnName = "id")},
-//        inverseJoinColumns = {@JoinColumn(name = "capacity_source_id", referencedColumnName = "id")})
+    @ManyToMany(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinTable(
+        name = "drive_capacity_sources",
+        joinColumns = {@JoinColumn(name = "drive_id", referencedColumnName = "id")},
+        inverseJoinColumns = {@JoinColumn(name = "capacity_source_id", referencedColumnName = "id")})
     private Set<CapacitySource> capacitySources = new HashSet<>();
 
     public DriveMetrics getMetrics() {
@@ -645,7 +663,7 @@ public class Drive extends DiscoverableEntity implements MultiSourceResource, Ha
     }
 
     @Override
-    public boolean containedBy(BaseEntity possibleParent) {
+    public boolean containedBy(Entity possibleParent) {
         return isContainedBy(possibleParent, chassis);
     }
 }

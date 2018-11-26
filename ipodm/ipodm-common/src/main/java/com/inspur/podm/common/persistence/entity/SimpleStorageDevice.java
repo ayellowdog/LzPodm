@@ -34,13 +34,13 @@ import com.inspur.podm.common.intel.types.Id;
 import com.inspur.podm.common.intel.types.MediaType;
 import com.inspur.podm.common.intel.types.Protocol;
 import com.inspur.podm.common.intel.types.Status;
-import com.inspur.podm.common.persistence.BaseEntity;
+import com.inspur.podm.common.persistence.base.Entity;
 import com.inspur.podm.common.persistence.base.LocalStorage;
 
 //@javax.persistence.Entity
 //@Table(name = "simple_storage_device", indexes = @Index(name = "idx_simple_storage_device_entity_id", columnList = "entity_id", unique = true))
 //@SuppressWarnings({"checkstyle:MethodCount"})
-public class SimpleStorageDevice extends BaseEntity implements LocalStorage {
+public class SimpleStorageDevice extends Entity implements LocalStorage {
 /** @Fields serialVersionUID: TODO 功能描述  */
 	private static final long serialVersionUID = -4887096890522328889L;
 
@@ -193,7 +193,7 @@ public class SimpleStorageDevice extends BaseEntity implements LocalStorage {
     }
 
     @Override
-    public boolean containedBy(BaseEntity possibleParent) {
+    public boolean containedBy(Entity possibleParent) {
         return isContainedBy(possibleParent, simpleStorage);
     }
 }

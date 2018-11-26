@@ -14,33 +14,26 @@
  * limitations under the License.
  */
 
-package com.inspur.podm.common.persistence.entity;
+package com.inspur.podm.common.persistence.converter;
 
-import com.inspur.podm.common.persistence.base.Entity;
 
-import javax.persistence.Column;
-import javax.persistence.Table;
 
-@javax.persistence.Entity
-@Table(name = "drive_metadata")
-public class DriveMetadata extends Entity {
-	@Column(name = "allocated")
-    private boolean allocated;
+import javax.persistence.AttributeConverter;
+import javax.persistence.Converter;
 
-    public boolean isAllocated() {
-        return allocated;
-    }
+import com.inspur.podm.common.intel.types.Id;
 
-    public void setAllocated(boolean allocated) {
-        this.allocated = allocated;
+import static com.inspur.podm.common.intel.types.Id.id;
+
+@Converter(autoApply = true)
+public class IdToStringConverter implements AttributeConverter<Id, String> {
+    @Override
+    public String convertToDatabaseColumn(Id value) {
+        return value == null ? null : value.getValue();
     }
 
     @Override
-    public void preRemove() {
-    }
-
-    @Override
-    public boolean containedBy(Entity possibleParent) {
-        return false;
+    public Id convertToEntityAttribute(String value) {
+        return value == null ? null : id(value);
     }
 }

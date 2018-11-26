@@ -1,4 +1,4 @@
-package com.inspur.podm.common.persistence;
+package com.inspur.podm.common.persistence.base;
 
 import static java.lang.String.format;
 import static java.util.Objects.hash;
@@ -14,10 +14,8 @@ import java.util.function.Predicate;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.PreRemove;
-import javax.persistence.Transient;
 import javax.persistence.Version;
 
 /**
@@ -29,13 +27,11 @@ import javax.persistence.Version;
  * @date: 2018年11月19日 下午4:02:07
  */
 @MappedSuperclass
-public abstract class BaseEntity implements Serializable{
+//@EntityListeners(EntityListenerImpl.class)
+public abstract class Entity {
     protected static final String ENTITY_ID_NUMERIC_COLUMN_DEFINITION = "bigserial";
     protected static final String ENTITY_ID_STRING_COLUMN_DEFINITION = "text";
-    /**
-     * 序列号.
-     */
-    private static final long serialVersionUID = 1L;
+
     @javax.persistence.Id
     @GeneratedValue(strategy = IDENTITY)
 	private long id;
@@ -47,8 +43,8 @@ public abstract class BaseEntity implements Serializable{
     @Column(name = "version", columnDefinition = "integer DEFAULT 0", nullable = false)
     private long version;
 	
-//    @Column(name = "event_source_context")
-//    private URI eventSourceContext;
+    @Column(name = "event_source_context")
+    private URI eventSourceContext;
     
     protected long getPrimaryKey() {
         return id;
@@ -56,18 +52,18 @@ public abstract class BaseEntity implements Serializable{
 
     public abstract void preRemove();
 
-    public abstract boolean containedBy(BaseEntity possibleParent);
+    public abstract boolean containedBy(Entity possibleParent);
 
     @PreRemove
     public void unlinkRelations() {
         preRemove();
     }
 
-    protected boolean isContainedBy(BaseEntity possibleParent, BaseEntity realParent) {
+    protected boolean isContainedBy(Entity possibleParent, Entity realParent) {
         return possibleParent != null && Objects.equals(realParent, possibleParent);
     }
 
-    protected boolean isContainedBy(BaseEntity possibleParent, Collection<? extends BaseEntity> realParents) {
+    protected boolean isContainedBy(Entity possibleParent, Collection<? extends Entity> realParents) {
         if (possibleParent == null || realParents == null) {
             return false;
         }
@@ -75,7 +71,7 @@ public abstract class BaseEntity implements Serializable{
         return realParents.stream().filter(realParent -> isContainedBy(possibleParent, realParent)).count() > 0;
     }
 
-    protected <T extends BaseEntity> void unlinkCollection(Collection<T> entities, Consumer<T> unlinkConsumer, Predicate<T> predicate) {
+    protected <T extends Entity> void unlinkCollection(Collection<T> entities, Consumer<T> unlinkConsumer, Predicate<T> predicate) {
         // Iterator prevents ConcurrentModification exception, update method carefully. Checked by unit test.
         Iterator<T> iterator = entities.iterator();
         while (iterator.hasNext()) {
@@ -87,7 +83,7 @@ public abstract class BaseEntity implements Serializable{
         }
     }
 
-    protected <T extends BaseEntity> void unlinkCollection(Collection<T> entities, Consumer<T> unlinkConsumer) {
+    protected <T extends Entity> void unlinkCollection(Collection<T> entities, Consumer<T> unlinkConsumer) {
         unlinkCollection(entities, unlinkConsumer, x -> true);
     }
 
@@ -101,10 +97,10 @@ public abstract class BaseEntity implements Serializable{
         if (this == o) {
             return true;
         }
-        if (o == null || (!(o instanceof BaseEntity))) {
+        if (o == null || (!(o instanceof Entity))) {
             return false;
         }
-        BaseEntity that = (BaseEntity) o;
+        Entity that = (Entity) o;
         return Objects.equals(getPrimaryKey(), that.getPrimaryKey());
     }
 
@@ -129,11 +125,11 @@ public abstract class BaseEntity implements Serializable{
 		this.version = version;
 	}
 
-//	public URI getEventSourceContext() {
-//        return eventSourceContext;
-//    }
-//
-//    public void setEventSourceContext(URI context) {
-//        this.eventSourceContext = context;
-//    }
+	public URI getEventSourceContext() {
+        return eventSourceContext;
+    }
+
+    public void setEventSourceContext(URI context) {
+        this.eventSourceContext = context;
+    }
 }

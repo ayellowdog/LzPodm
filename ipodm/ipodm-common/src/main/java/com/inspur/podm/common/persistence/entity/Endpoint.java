@@ -20,9 +20,18 @@ package com.inspur.podm.common.persistence.entity;
 import static com.inspur.podm.common.intel.types.DurableNameFormat.IQN;
 import static com.inspur.podm.common.intel.types.Protocol.ISCSI;
 import static com.inspur.podm.common.persistence.base.StatusControl.statusOf;
+import static com.inspur.podm.common.persistence.entity.Endpoint.GET_ENDPOINTS_ASSOCIATED_WITH_COMPUTER_SYSTEM_BY_SERVICE_UUID_AND_PROTOCOL;
+import static com.inspur.podm.common.persistence.entity.Endpoint.GET_ENDPOINTS_WITH_NULL_USERNAME_BY_SERVICE_UUID_AND_PROTOCOL;
+import static com.inspur.podm.common.persistence.entity.Endpoint.GET_ENDPOINT_MATCHING_UUID;
 import static com.inspur.podm.common.utils.Collections.firstByPredicate;
 import static com.inspur.podm.common.utils.Contracts.requiresNonNull;
 import static java.util.stream.Collectors.toList;
+import static javax.persistence.CascadeType.MERGE;
+import static javax.persistence.CascadeType.PERSIST;
+import static javax.persistence.CascadeType.REMOVE;
+import static javax.persistence.EnumType.STRING;
+import static javax.persistence.FetchType.EAGER;
+import static javax.persistence.FetchType.LAZY;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -30,100 +39,113 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Embedded;
+import javax.persistence.Enumerated;
+import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.OrderColumn;
+import javax.persistence.Table;
+
 import com.inspur.podm.common.intel.types.EntityRole;
 import com.inspur.podm.common.intel.types.Id;
 import com.inspur.podm.common.intel.types.Protocol;
-import com.inspur.podm.common.persistence.BaseEntity;
 import com.inspur.podm.common.persistence.base.ComposableAsset;
+import com.inspur.podm.common.persistence.base.Entity;
 import com.inspur.podm.common.persistence.base.HasProtocol;
 import com.inspur.podm.common.persistence.entity.embeddables.EndpointAuthentication;
 import com.inspur.podm.common.persistence.entity.embeddables.Identifier;
 import com.inspur.podm.common.persistence.entity.embeddables.PciId;
-
-//@javax.persistence.Entity
-//@NamedQueries({
-//    @NamedQuery(name = GET_ENDPOINT_MATCHING_UUID,
-//        query = "SELECT e FROM Endpoint e JOIN e.identifiers i WHERE i.durableName LIKE CONCAT('%',:uuid,'%')"),
-//    @NamedQuery(name = GET_ENDPOINTS_WITH_NULL_USERNAME_BY_SERVICE_UUID_AND_PROTOCOL,
-//        query = "SELECT e FROM Endpoint e JOIN e.externalLinks el WHERE e.authentication.username IS NULL "
-//            + "AND el.externalService.uuid = :serviceUuid AND e.protocol = :protocol"),
-//    @NamedQuery(name = GET_ENDPOINTS_ASSOCIATED_WITH_COMPUTER_SYSTEM_BY_SERVICE_UUID_AND_PROTOCOL,
-//        query = "SELECT e FROM Endpoint e JOIN e.externalLinks el WHERE e.computerSystem IS NOT NULL "
-//            + "AND el.externalService.uuid = :serviceUuid AND e.protocol = :protocol")
-//})
-//@Table(name = "endpoint", indexes = @Index(name = "idx_endpoint_entity_id", columnList = "entity_id", unique = true))
+@javax.persistence.Entity
+@NamedQueries({
+    @NamedQuery(name = GET_ENDPOINT_MATCHING_UUID,
+        query = "SELECT e FROM Endpoint e JOIN e.identifiers i WHERE i.durableName LIKE CONCAT('%',:uuid,'%')"),
+    @NamedQuery(name = GET_ENDPOINTS_WITH_NULL_USERNAME_BY_SERVICE_UUID_AND_PROTOCOL,
+        query = "SELECT e FROM Endpoint e JOIN e.externalLinks el WHERE e.authentication.username IS NULL "
+            + "AND el.externalService.uuid = :serviceUuid AND e.protocol = :protocol"),
+    @NamedQuery(name = GET_ENDPOINTS_ASSOCIATED_WITH_COMPUTER_SYSTEM_BY_SERVICE_UUID_AND_PROTOCOL,
+        query = "SELECT e FROM Endpoint e JOIN e.externalLinks el WHERE e.computerSystem IS NOT NULL "
+            + "AND el.externalService.uuid = :serviceUuid AND e.protocol = :protocol")
+})
+@Table(name = "endpoint", indexes = @Index(name = "idx_endpoint_entity_id", columnList = "entity_id", unique = true))
 //@EntityListeners(EndpointListener.class)
 //@Eventable
 //@SuppressWarnings({"checkstyle:MethodCount", "checkstyle:ClassFanOutComplexity"})
 public class Endpoint extends DiscoverableEntity implements HasProtocol, ComposableAsset {
-    /** @Fields serialVersionUID: TODO 功能描述  */
-	private static final long serialVersionUID = -6956767193976541782L;
 	public static final String GET_ENDPOINT_MATCHING_UUID = "GET_ENDPOINT_MATCHING_UUID";
     public static final String GET_ENDPOINTS_WITH_NULL_USERNAME_BY_SERVICE_UUID_AND_PROTOCOL =
         "GET_ENDPOINTS_WITH_NULL_USERNAME_BY_SERVICE_UUID_AND_PROTOCOL";
     public static final String GET_ENDPOINTS_ASSOCIATED_WITH_COMPUTER_SYSTEM_BY_SERVICE_UUID_AND_PROTOCOL =
         "GET_ENDPOINTS_ASSOCIATED_WITH_COMPUTER_SYSTEM_BY_SERVICE_UUID_AND_PROTOCOL";
 
-//    @Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
+    @Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
     private Id entityId;
 
-//    @Column(name = "endpoint_protocol")
-//    @Enumerated(STRING)
+    @Column(name = "endpoint_protocol")
+    @Enumerated(STRING)
     private Protocol protocol;
 
-//    @Column(name = "host_reservation_memory_bytes")
+    @Column(name = "host_reservation_memory_bytes")
     private Integer hostReservationMemoryBytes;
 
-//    @Embedded
+    @Embedded
     private PciId pciId;
 
-//    @Embedded
+    @Embedded
     private EndpointAuthentication authentication;
 
-//    @ElementCollection
-//    @CollectionTable(name = "endpoint_identifier", joinColumns = @JoinColumn(name = "endpoint_id"))
-//    @OrderColumn(name = "endpoint_identifier_order")
+    @ElementCollection
+    @CollectionTable(name = "endpoint_identifier", joinColumns = @JoinColumn(name = "endpoint_id"))
+    @OrderColumn(name = "endpoint_identifier_order")
     private Set<Identifier> identifiers = new HashSet<>();
 
-//    @OneToMany(mappedBy = "endpoint", fetch = EAGER, cascade = {MERGE, PERSIST})
+    @OneToMany(mappedBy = "endpoint", fetch = EAGER, cascade = {MERGE, PERSIST})
     private Set<ConnectedEntity> connectedEntities = new HashSet<>();
 
-//    @OneToMany(mappedBy = "endpoint", fetch = EAGER, cascade = {MERGE, PERSIST})
+    @OneToMany(mappedBy = "endpoint", fetch = EAGER, cascade = {MERGE, PERSIST})
     private Set<IpTransportDetails> transports = new HashSet<>();
 
-//    @ManyToMany(mappedBy = "endpoints", fetch = LAZY, cascade = {MERGE, PERSIST})
+    @ManyToMany(mappedBy = "endpoints", fetch = LAZY, cascade = {MERGE, PERSIST})
     private Set<Port> ports = new HashSet<>();
 
-//    @ManyToMany(mappedBy = "endpoints", fetch = LAZY, cascade = {MERGE, PERSIST})
+    @ManyToMany(mappedBy = "endpoints", fetch = LAZY, cascade = {MERGE, PERSIST})
     private Set<EthernetInterface> ethernetInterfaces = new HashSet<>();
 
-//    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinColumn(name = "fabric_id")
+    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinColumn(name = "fabric_id")
     private Fabric fabric;
 
-//    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinColumn(name = "zone_id")
+    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinColumn(name = "zone_id")
     private Zone zone;
 
-//    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinColumn(name = "computer_system_id")
+    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinColumn(name = "computer_system_id")
     private ComputerSystem computerSystem;
 
-//    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinColumn(name = "processor_id")
+    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinColumn(name = "processor_id")
     private Processor processor;
 
-//    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinColumn(name = "storage_service_id")
+    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinColumn(name = "storage_service_id")
     private StorageService storageService;
 
-//    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinColumn(name = "composed_node_id")
+    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinColumn(name = "composed_node_id")
     private ComposedNode composedNode;
 
 //    @IgnoreUnlinkingRelationship
-//    @OneToOne(fetch = EAGER, cascade = {MERGE, PERSIST, REMOVE})
-//    @JoinColumn(name = "endpoint_metadata_id")
+    @OneToOne(fetch = EAGER, cascade = {MERGE, PERSIST, REMOVE})
+    @JoinColumn(name = "endpoint_metadata_id")
     private EndpointMetadata metadata = new EndpointMetadata();
 
     @Override
@@ -445,7 +467,7 @@ public class Endpoint extends DiscoverableEntity implements HasProtocol, Composa
     }
 
     @Override
-    public boolean containedBy(BaseEntity possibleParent) {
+    public boolean containedBy(Entity possibleParent) {
         return isContainedBy(possibleParent, fabric);
     }
 

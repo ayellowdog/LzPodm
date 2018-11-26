@@ -16,50 +16,60 @@
 
 package com.inspur.podm.common.persistence.entity;
 
+import static javax.persistence.CascadeType.MERGE;
+import static javax.persistence.CascadeType.PERSIST;
+import static javax.persistence.FetchType.LAZY;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import com.inspur.podm.common.intel.types.Id;
-import com.inspur.podm.common.persistence.BaseEntity;
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.OrderColumn;
+import javax.persistence.Table;
 
-//@javax.persistence.Entity
-//@Table(name = "computer_system_metrics", indexes = @Index(name = "idx_computer_system_metrics_entity_id", columnList = "entity_id", unique = true))
+import com.inspur.podm.common.intel.types.Id;
+import com.inspur.podm.common.persistence.base.Entity;
+@javax.persistence.Entity
+@Table(name = "computer_system_metrics", indexes = @Index(name = "idx_computer_system_metrics_entity_id", columnList = "entity_id", unique = true))
 //@SuppressWarnings({"checkstyle:MethodCount"})
 public class ComputerSystemMetrics extends DiscoverableEntity {
-/** @Fields serialVersionUID: TODO 功能描述  */
-	private static final long serialVersionUID = 5717961288933065597L;
 
-	//    @Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
+	@Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
     private Id entityId;
 
-//    @Column(name = "io_bandwidth_gbps")
+    @Column(name = "io_bandwidth_gbps")
     private BigDecimal ioBandwidthGbps;
 
-//    @Column(name = "processor_bandwidth_percent")
+    @Column(name = "processor_bandwidth_percent")
     private BigDecimal processorBandwidthPercent;
 
-//    @Column(name = "memory_bandwidth_percent")
+    @Column(name = "memory_bandwidth_percent")
     private BigDecimal memoryBandwidthPercent;
 
-//    @Column(name = "memory_throttled_cycles_percent")
+    @Column(name = "memory_throttled_cycles_percent")
     private BigDecimal memoryThrottledCyclesPercent;
 
-//    @Column(name = "processor_power_watt")
+    @Column(name = "processor_power_watt")
     private BigDecimal processorPowerWatt;
 
-//    @Column(name = "memory_power_watt")
+    @Column(name = "memory_power_watt")
     private BigDecimal memoryPowerWatt;
 
-//    @ElementCollection
-//    @CollectionTable(name = "computer_system_metrics_health", joinColumns = @JoinColumn(name = "computer_system_metrics_id"))
-//    @Column(name = "health")
-//    @OrderColumn(name = "health_order")
+    @ElementCollection
+    @CollectionTable(name = "computer_system_metrics_health", joinColumns = @JoinColumn(name = "computer_system_metrics_id"))
+    @Column(name = "health")
+    @OrderColumn(name = "health_order")
     private List<String> healthList = new ArrayList<>();
 
-//    @OneToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinColumn(name = "computer_system_id")
+    @OneToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinColumn(name = "computer_system_id")
     private ComputerSystem computerSystem;
 
     @Override
@@ -157,7 +167,7 @@ public class ComputerSystemMetrics extends DiscoverableEntity {
     }
 
     @Override
-    public boolean containedBy(BaseEntity possibleParent) {
+    public boolean containedBy(Entity possibleParent) {
         return isContainedBy(possibleParent, computerSystem);
     }
 }

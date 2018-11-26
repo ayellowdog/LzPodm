@@ -18,94 +18,106 @@ package com.inspur.podm.common.persistence.entity;
 
 
 import static com.inspur.podm.common.utils.Contracts.requiresNonNull;
+import static javax.persistence.CascadeType.MERGE;
+import static javax.persistence.CascadeType.PERSIST;
+import static javax.persistence.FetchType.LAZY;
 
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-import com.inspur.podm.common.intel.types.Id;
-import com.inspur.podm.common.persistence.BaseEntity;
+import javax.persistence.Column;
+import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
-//@javax.persistence.Entity
-//@NamedQueries({
-//    @NamedQuery(name = EthernetSwitch.GET_ALL_ETHERNET_SWITCH_IDS,
-//        query = "SELECT ethernetSwitch.entityId FROM EthernetSwitch ethernetSwitch")
-//})
-//@Table(name = "ethernet_switch", indexes = @Index(name = "idx_ethernet_switch_entity_id", columnList = "entity_id", unique = true))
+import com.inspur.podm.common.intel.types.Id;
+import com.inspur.podm.common.persistence.base.Entity;
+@javax.persistence.Entity
+@NamedQueries({
+    @NamedQuery(name = EthernetSwitch.GET_ALL_ETHERNET_SWITCH_IDS,
+        query = "SELECT ethernetSwitch.entityId FROM EthernetSwitch ethernetSwitch")
+})
+@Table(name = "ethernet_switch", indexes = @Index(name = "idx_ethernet_switch_entity_id", columnList = "entity_id", unique = true))
 //@Eventable
 //@SuppressWarnings({"checkstyle:MethodCount"})
 public class EthernetSwitch extends DiscoverableEntity {
-    /** @Fields serialVersionUID: TODO 功能描述  */
-	private static final long serialVersionUID = -6032661039031543292L;
 
 	public static final String GET_ALL_ETHERNET_SWITCH_IDS = "GET_ALL_ETHERNET_SWITCH_IDS";
 
-//    @Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
+    @Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
     private Id entityId;
 
-//    @Column(name = "switch_id")
+    @Column(name = "switch_id")
     private String switchId;
 
-//    @Column(name = "manufacturer")
+    @Column(name = "manufacturer")
     private String manufacturer;
 
-//    @Column(name = "manufacturing_date")
+    @Column(name = "manufacturing_date")
     private String manufacturingDate;
 
-//    @Column(name = "model")
+    @Column(name = "model")
     private String model;
 
-//    @Column(name = "serial_number")
+    @Column(name = "serial_number")
     private String serialNumber;
 
-//    @Column(name = "part_number")
+    @Column(name = "part_number")
     private String partNumber;
 
-//    @Column(name = "firmware_name")
+    @Column(name = "firmware_name")
     private String firmwareName;
 
-//    @Column(name = "firmware_version")
+    @Column(name = "firmware_version")
     private String firmwareVersion;
 
-//    @Column(name = "role")
+    @Column(name = "role")
     private String role;
 
-//    @Column(name = "lldp_enabled")
+    @Column(name = "lldp_enabled")
     private Boolean lldpEnabled;
 
-//    @Column(name = "ets_enabled")
+    @Column(name = "ets_enabled")
     private Boolean etsEnabled;
 
-//    @Column(name = "dcbx_enabled")
+    @Column(name = "dcbx_enabled")
     private Boolean dcbxEnabled;
 
-//    @Column(name = "pfc_enabled")
+    @Column(name = "pfc_enabled")
     private Boolean pfcEnabled;
 
-//    @OneToOne(mappedBy = "ethernetSwitch", fetch = LAZY, cascade = {MERGE, PERSIST})
+    @OneToOne(mappedBy = "ethernetSwitch", fetch = LAZY, cascade = {MERGE, PERSIST})
     private DcbxConfig dcbxSharedConfiguration;
 
 //    @SuppressEvents
-//    @OneToMany(mappedBy = "ethernetSwitch", fetch = LAZY, cascade = {MERGE, PERSIST})
+    @OneToMany(mappedBy = "ethernetSwitch", fetch = LAZY, cascade = {MERGE, PERSIST})
     private Set<EthernetSwitchPort> ports = new HashSet<>();
 
 //    @SuppressEvents
-//    @OneToMany(mappedBy = "ethernetSwitch", fetch = LAZY, cascade = {MERGE, PERSIST})
+    @OneToMany(mappedBy = "ethernetSwitch", fetch = LAZY, cascade = {MERGE, PERSIST})
     private Set<EthernetSwitchAcl> acls = new HashSet<>();
 
-//    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinColumn(name = "ethernet_switch_metrics_id")
+    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinColumn(name = "ethernet_switch_metrics_id")
     private EthernetSwitchMetrics ethernetSwitchMetrics;
 
-//    @ManyToMany(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinTable(
-//        name = "ethernet_switch_manager",
-//        joinColumns = {@JoinColumn(name = "ethernet_switch_id", referencedColumnName = "id")},
-//        inverseJoinColumns = {@JoinColumn(name = "manager_id", referencedColumnName = "id")})
+    @ManyToMany(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinTable(
+        name = "ethernet_switch_manager",
+        joinColumns = {@JoinColumn(name = "ethernet_switch_id", referencedColumnName = "id")},
+        inverseJoinColumns = {@JoinColumn(name = "manager_id", referencedColumnName = "id")})
     private Set<Manager> managers = new HashSet<>();
 
-//    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinColumn(name = "chassis_id")
+    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinColumn(name = "chassis_id")
     private Chassis chassis;
 
     @Override
@@ -368,7 +380,7 @@ public class EthernetSwitch extends DiscoverableEntity {
     }
 
     @Override
-    public boolean containedBy(BaseEntity possibleParent) {
+    public boolean containedBy(Entity possibleParent) {
         return isContainedBy(possibleParent, chassis);
     }
 }

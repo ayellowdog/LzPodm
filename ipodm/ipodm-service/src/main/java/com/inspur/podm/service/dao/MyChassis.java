@@ -18,43 +18,24 @@ package com.inspur.podm.service.dao;
 
 
 
-import static com.inspur.podm.common.utils.Contracts.requiresNonNull;
-import static javax.persistence.CascadeType.MERGE;
-import static javax.persistence.CascadeType.PERSIST;
 import static javax.persistence.EnumType.STRING;
-import static javax.persistence.FetchType.LAZY;
-import static javax.persistence.GenerationType.IDENTITY;
 
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Index;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
 import com.inspur.podm.common.intel.types.ChassisType;
 import com.inspur.podm.common.intel.types.Id;
-import com.inspur.podm.common.intel.types.IndicatorLed;
-import com.inspur.podm.common.intel.types.PowerState;
-import com.inspur.podm.common.persistence.BaseEntity;
-import com.inspur.podm.common.persistence.entity.DiscoverableEntity;
+import com.inspur.podm.common.persistence.base.Entity;
 import com.inspur.podm.common.persistence.entity.embeddables.RackChassisAttributes;
 
 @javax.persistence.Entity
 @Table(name = "chassis", indexes = @Index(name = "idx_chassis_entity_id", columnList = "entity_id", unique = true))
 //@Eventable
 @SuppressWarnings({"checkstyle:ClassFanOutComplexity", "checkstyle:MethodCount"})
-public class MyChassis extends BaseEntity{
+public class MyChassis extends Entity{
 /** @Fields serialVersionUID: TODO 功能描述  */
 	private static final long serialVersionUID = -6105764673167107127L;
 	//    /** @Fields serialVersionUID: TODO 功能描述  */
@@ -104,8 +85,8 @@ public class MyChassis extends BaseEntity{
 //    @Enumerated(STRING)
 //    private PowerState powerState;
 
-//    @Embedded
-//    private RackChassisAttributes rackChassisAttributes;
+    @Embedded
+    private RackChassisAttributes rackChassisAttributes;
 
    
 
@@ -206,7 +187,7 @@ public class MyChassis extends BaseEntity{
 	}
 
 	@Override
-	public boolean containedBy(BaseEntity possibleParent) {
+	public boolean containedBy(Entity possibleParent) {
 		// TODO Auto-generated method stub
 		return false;
 	}

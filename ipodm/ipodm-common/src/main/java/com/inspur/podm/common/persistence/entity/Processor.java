@@ -31,7 +31,7 @@ import com.inspur.podm.common.intel.types.InstructionSet;
 import com.inspur.podm.common.intel.types.ProcessorArchitecture;
 import com.inspur.podm.common.intel.types.ProcessorBrand;
 import com.inspur.podm.common.intel.types.ProcessorType;
-import com.inspur.podm.common.persistence.BaseEntity;
+import com.inspur.podm.common.persistence.base.Entity;
 import com.inspur.podm.common.persistence.base.MultiSourceResource;
 import com.inspur.podm.common.persistence.entity.embeddables.Fpga;
 import com.inspur.podm.common.persistence.entity.embeddables.OnPackageMemory;
@@ -352,7 +352,7 @@ public class Processor extends DiscoverableEntity implements MultiSourceResource
     }
 
     @Override
-    public boolean containedBy(BaseEntity possibleParent) {
+    public boolean containedBy(Entity possibleParent) {
         return isContainedBy(possibleParent, computerSystem);
     }
 }

@@ -18,58 +18,69 @@ package com.inspur.podm.common.persistence.entity;
 
 
 import static com.inspur.podm.common.utils.Contracts.requiresNonNull;
+import static javax.persistence.CascadeType.MERGE;
+import static javax.persistence.CascadeType.PERSIST;
+import static javax.persistence.EnumType.STRING;
+import static javax.persistence.FetchType.LAZY;
 
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import java.util.function.Predicate;
 
+import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.Enumerated;
+import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
 import com.inspur.podm.common.intel.types.ActionType;
 import com.inspur.podm.common.intel.types.Id;
 import com.inspur.podm.common.intel.types.MirrorType;
-import com.inspur.podm.common.persistence.BaseEntity;
+import com.inspur.podm.common.persistence.base.Entity;
 import com.inspur.podm.common.persistence.entity.embeddables.Condition;
-
-//@javax.persistence.Entity
-//@Table(name = "ethernet_switch_acl_rule", indexes = @Index(name = "idx_ethernet_switch_acl_rule_entity_id", columnList = "entity_id", unique = true))
+@javax.persistence.Entity
+@Table(name = "ethernet_switch_acl_rule", indexes = @Index(name = "idx_ethernet_switch_acl_rule_entity_id", columnList = "entity_id", unique = true))
 //@Eventable
 //@SuppressWarnings("checkstyle:MethodCount")
 public class EthernetSwitchAclRule extends DiscoverableEntity {
-/** @Fields serialVersionUID: TODO 功能描述  */
-	private static final long serialVersionUID = -378491503347774025L;
-
-//    @Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
+    @Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
     private Id entityId;
 
-//    @Column(name = "rule_id")
+    @Column(name = "rule_id")
     private Long ruleId;
 
-//    @Column(name = "action")
-//    @Enumerated(STRING)
+    @Column(name = "action")
+    @Enumerated(STRING)
     private ActionType action;
 
-//    @Column(name = "mirror_type")
-//    @Enumerated(STRING)
+    @Column(name = "mirror_type")
+    @Enumerated(STRING)
     private MirrorType mirrorType;
 
-//    @Embedded
+    @Embedded
     private Condition condition;
 
-//    @ManyToMany(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinTable(
-//        name = "ethernet_switch_acl_rule_mirror_port_region",
-//        joinColumns = {@JoinColumn(name = "rule_id", referencedColumnName = "id")},
-//        inverseJoinColumns = {@JoinColumn(name = "port_id", referencedColumnName = "id")}
-//    )
+    @ManyToMany(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinTable(
+        name = "ethernet_switch_acl_rule_mirror_port_region",
+        joinColumns = {@JoinColumn(name = "rule_id", referencedColumnName = "id")},
+        inverseJoinColumns = {@JoinColumn(name = "port_id", referencedColumnName = "id")}
+    )
     private Set<EthernetSwitchPort> mirrorPortRegions = new HashSet<>();
 
 //    @IgnoreUnlinkingRelationship
-//    @OneToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinColumn(name = "ethernet_switch_acl_rule_forward_mirror_interface_id")
+    @OneToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinColumn(name = "ethernet_switch_acl_rule_forward_mirror_interface_id")
     private EthernetSwitchPort forwardMirrorInterface;
 
-//    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinColumn(name = "ethernet_switch_acl_id")
+    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinColumn(name = "ethernet_switch_acl_id")
     private EthernetSwitchAcl ethernetSwitchAcl;
 
     @Override
@@ -188,7 +199,7 @@ public class EthernetSwitchAclRule extends DiscoverableEntity {
     }
 
     @Override
-    public boolean containedBy(BaseEntity possibleParent) {
+    public boolean containedBy(Entity possibleParent) {
         return isContainedBy(possibleParent, ethernetSwitchAcl);
     }
 }

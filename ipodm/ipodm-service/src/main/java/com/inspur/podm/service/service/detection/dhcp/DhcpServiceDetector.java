@@ -29,9 +29,9 @@ public class DhcpServiceDetector {
 	public void test(String str) {
 		logger.info("-------------this is test: "+ str + "----------------");
 		try {
-////			MyChassis c = chassisDao.getOne((long) 1);
-//			MyChassis c = mydao.getChassisById((long) 1).get(0);
-//			System.out.println(c.getSerialNumber());
+//			MyChassis c = chassisDao.getOne((long) 1);
+			MyChassis c = mydao.getChassisById((long) 1).get(0);
+			System.out.println(c.getAssetTag());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

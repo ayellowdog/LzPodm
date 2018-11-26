@@ -28,7 +28,7 @@ import com.inspur.podm.common.intel.types.Id;
 import com.inspur.podm.common.intel.types.MetricReportActionType;
 import com.inspur.podm.common.intel.types.MetricReportType;
 import com.inspur.podm.common.intel.types.TransmitFormat;
-import com.inspur.podm.common.persistence.BaseEntity;
+import com.inspur.podm.common.persistence.base.Entity;
 
 //@javax.persistence.Entity
 //@NamedQueries({
@@ -159,7 +159,7 @@ public class MetricReportDefinition extends DiscoverableEntity {
     }
 
     @Override
-    public boolean containedBy(BaseEntity possibleParent) {
+    public boolean containedBy(Entity possibleParent) {
         return false;
     }
 }

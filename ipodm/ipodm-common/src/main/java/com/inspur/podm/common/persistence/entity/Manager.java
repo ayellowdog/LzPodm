@@ -27,7 +27,7 @@ import java.util.UUID;
 import com.inspur.podm.common.intel.types.Id;
 import com.inspur.podm.common.intel.types.ManagerType;
 import com.inspur.podm.common.intel.types.PowerState;
-import com.inspur.podm.common.persistence.BaseEntity;
+import com.inspur.podm.common.persistence.base.Entity;
 import com.inspur.podm.common.persistence.base.NetworkInterfacePossessor;
 import com.inspur.podm.common.persistence.entity.embeddables.CommandShell;
 import com.inspur.podm.common.persistence.entity.embeddables.GraphicalConsole;
@@ -412,7 +412,7 @@ public class Manager extends DiscoverableEntity implements NetworkInterfacePosse
     }
 
     @Override
-    public boolean containedBy(BaseEntity possibleParent) {
+    public boolean containedBy(Entity possibleParent) {
         return false;
     }
 }

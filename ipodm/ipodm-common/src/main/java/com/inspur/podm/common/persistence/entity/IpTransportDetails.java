@@ -25,7 +25,7 @@ import java.util.Optional;
 
 import com.inspur.podm.common.intel.types.Id;
 import com.inspur.podm.common.intel.types.Protocol;
-import com.inspur.podm.common.persistence.BaseEntity;
+import com.inspur.podm.common.persistence.base.Entity;
 import com.inspur.podm.common.persistence.entity.embeddables.IpV4Address;
 import com.inspur.podm.common.persistence.entity.embeddables.IpV6Address;
 
@@ -143,7 +143,7 @@ public class IpTransportDetails extends DiscoverableEntity {
     }
 
     @Override
-    public boolean containedBy(BaseEntity possibleParent) {
+    public boolean containedBy(Entity possibleParent) {
         return isContainedBy(possibleParent, endpoint);
     }
 

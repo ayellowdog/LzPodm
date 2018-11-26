@@ -20,26 +20,28 @@ package com.inspur.podm.common.persistence.entity;
 import static com.inspur.podm.common.intel.types.DeepDiscoveryState.RUNNING;
 import static com.inspur.podm.common.intel.types.DeepDiscoveryState.WAITING_TO_START;
 import static java.util.Arrays.stream;
+import static javax.persistence.EnumType.STRING;
 
 import java.util.UUID;
 
+import javax.persistence.Column;
+import javax.persistence.Enumerated;
+import javax.persistence.Table;
+
 import com.inspur.podm.common.intel.types.DeepDiscoveryState;
-import com.inspur.podm.common.persistence.BaseEntity;
+import com.inspur.podm.common.persistence.base.Entity;
+@javax.persistence.Entity
+@Table(name = "computer_system_metadata")
+public class ComputerSystemMetadata extends Entity {
 
-//@javax.persistence.Entity
-//@Table(name = "computer_system_metadata")
-public class ComputerSystemMetadata extends BaseEntity {
-/** @Fields serialVersionUID: TODO 功能描述  */
-	private static final long serialVersionUID = 1L;
-
-	//    @Column(name = "allocated")
+	@Column(name = "allocated")
     private boolean allocated;
 
-//    @Column(name = "deep_discovery_state")
-//    @Enumerated(STRING)
+    @Column(name = "deep_discovery_state")
+    @Enumerated(STRING)
     private DeepDiscoveryState deepDiscoveryState;
 
-//    @Column(name = "task_uuid")
+    @Column(name = "task_uuid")
     private UUID taskUuid;
 
     public boolean isAllocated() {
@@ -81,7 +83,7 @@ public class ComputerSystemMetadata extends BaseEntity {
     }
 
     @Override
-    public boolean containedBy(BaseEntity possibleParent) {
+    public boolean containedBy(Entity possibleParent) {
         return false;
     }
 }

@@ -30,7 +30,7 @@ import com.inspur.podm.common.intel.types.IndicatorLed;
 import com.inspur.podm.common.intel.types.PowerState;
 import com.inspur.podm.common.intel.types.Protocol;
 import com.inspur.podm.common.intel.types.actions.ResetType;
-import com.inspur.podm.common.persistence.BaseEntity;
+import com.inspur.podm.common.persistence.base.Entity;
 import com.inspur.podm.common.persistence.base.Resettable;
 
 //@javax.persistence.Entity
@@ -353,7 +353,7 @@ public class Switch extends DiscoverableEntity implements Resettable {
     }
 
     @Override
-    public boolean containedBy(BaseEntity possibleParent) {
+    public boolean containedBy(Entity possibleParent) {
         return isContainedBy(possibleParent, fabric);
     }
 

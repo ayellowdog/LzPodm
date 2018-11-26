@@ -26,7 +26,7 @@ import java.util.Set;
 import com.inspur.podm.common.intel.types.DeviceClass;
 import com.inspur.podm.common.intel.types.FunctionType;
 import com.inspur.podm.common.intel.types.Id;
-import com.inspur.podm.common.persistence.BaseEntity;
+import com.inspur.podm.common.persistence.base.Entity;
 import com.inspur.podm.common.persistence.base.NetworkInterfacePossessor;
 
 //@javax.persistence.Entity
@@ -292,7 +292,7 @@ public class PcieDeviceFunction extends DiscoverableEntity implements NetworkInt
     }
 
     @Override
-    public boolean containedBy(BaseEntity possibleParent) {
+    public boolean containedBy(Entity possibleParent) {
         return isContainedBy(possibleParent, pcieDevice);
     }
 }

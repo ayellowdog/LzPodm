@@ -20,7 +20,7 @@ package com.inspur.podm.common.persistence.entity;
 import java.util.Objects;
 
 import com.inspur.podm.common.intel.types.Id;
-import com.inspur.podm.common.persistence.BaseEntity;
+import com.inspur.podm.common.persistence.base.Entity;
 import com.inspur.podm.common.persistence.entity.embeddables.SwitchPortMetrics;
 
 //@javax.persistence.Entity
@@ -126,7 +126,7 @@ public class EthernetSwitchPortMetrics extends DiscoverableEntity {
     }
 
     @Override
-    public boolean containedBy(BaseEntity possibleParent) {
+    public boolean containedBy(Entity possibleParent) {
         return isContainedBy(possibleParent, ethernetSwitchPort);
     }
 }

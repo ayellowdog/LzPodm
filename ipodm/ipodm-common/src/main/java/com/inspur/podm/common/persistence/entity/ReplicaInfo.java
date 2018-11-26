@@ -25,7 +25,7 @@ import java.util.Objects;
 import com.inspur.podm.common.intel.types.Id;
 import com.inspur.podm.common.intel.types.ReplicaRole;
 import com.inspur.podm.common.intel.types.ReplicaType;
-import com.inspur.podm.common.persistence.BaseEntity;
+import com.inspur.podm.common.persistence.base.Entity;
 
 //@javax.persistence.Entity
 //@Table(name = "replica_info", indexes = @Index(name = "idx_replica_info_entity_id", columnList = "entity_id", unique = true))
@@ -125,7 +125,7 @@ public class ReplicaInfo extends DiscoverableEntity {
     }
 
     @Override
-    public boolean containedBy(BaseEntity possibleParent) {
+    public boolean containedBy(Entity possibleParent) {
         return isContainedBy(possibleParent, volume);
     }
 }

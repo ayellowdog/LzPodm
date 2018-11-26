@@ -20,16 +20,18 @@ import java.util.Set;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OrderColumn;
 import javax.persistence.PreRemove;
 
 import com.inspur.podm.common.intel.types.Id;
 import com.inspur.podm.common.intel.types.State;
 import com.inspur.podm.common.intel.types.Status;
-import com.inspur.podm.common.persistence.BaseEntity;
+import com.inspur.podm.common.persistence.base.Entity;
 import com.inspur.podm.common.persistence.entity.embeddables.UnknownOem;
-
 /**
  * @ClassName: DiscoverableEntity
  * @Description: TODO
@@ -37,10 +39,7 @@ import com.inspur.podm.common.persistence.entity.embeddables.UnknownOem;
  * @author: liuchangbj
  * @date: 2018年11月20日 上午9:28:43
  */
-public abstract class DiscoverableEntity extends BaseEntity{
-
-//    /** @Fields serialVersionUID: TODO 功能描述  */
-//	private static final long serialVersionUID = -1377191332919028996L;
+public abstract class DiscoverableEntity extends Entity{
 
 	public static final String GET_ENTITY_BY_SERVICE_AND_SOURCE_URI = "GET_ENTITY_BY_SERVICE_AND_SOURCE_URI";
     protected static final Status ABSENT = new Status(State.ABSENT, null, null);
@@ -60,9 +59,9 @@ public abstract class DiscoverableEntity extends BaseEntity{
     @Column(name = "is_complementary")
     private boolean isComplementary;
 
-//    @ElementCollection
-//    @CollectionTable(name = "unknown_oem", joinColumns = @JoinColumn(name = "entity_id"))
-//    @OrderColumn(name = "unknown_oem_order")
+    @ElementCollection
+    @CollectionTable(name = "unknown_oem", joinColumns = @JoinColumn(name = "entity_id"))
+    @OrderColumn(name = "unknown_oem_order")
     private List<UnknownOem> unknownOems = new ArrayList<>();
 
     /**
@@ -70,30 +69,30 @@ public abstract class DiscoverableEntity extends BaseEntity{
      * This attribute contains all redundancies owned by this entity;
      */
 //    @SuppressEvents
-//    @OneToMany(mappedBy = "redundancyOwner", fetch = LAZY, cascade = {MERGE, PERSIST})
+    @OneToMany(mappedBy = "redundancyOwner", fetch = LAZY, cascade = {MERGE, PERSIST})
     private Set<Redundancy> ownedRedundancies = new HashSet<>();
 
-//    @ManyToMany(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinTable(
-//        name = "redundancy_member",
-//        joinColumns = {@JoinColumn(name = "redundancy_id", referencedColumnName = "id")},
-//        inverseJoinColumns = {@JoinColumn(name = "member_id", referencedColumnName = "id")})
+    @ManyToMany(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinTable(
+        name = "redundancy_member",
+        joinColumns = {@JoinColumn(name = "redundancy_id", referencedColumnName = "id")},
+        inverseJoinColumns = {@JoinColumn(name = "member_id", referencedColumnName = "id")})
     private Set<Redundancy> redundancies = new HashSet<>();
 
-//    @ManyToMany(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinTable(
-//        name = "entity_related_item",
-//        joinColumns = {@JoinColumn(name = "item_owner_id", referencedColumnName = "id")},
-//        inverseJoinColumns = {@JoinColumn(name = "item_id", referencedColumnName = "id")})
+    @ManyToMany(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinTable(
+        name = "entity_related_item",
+        joinColumns = {@JoinColumn(name = "item_owner_id", referencedColumnName = "id")},
+        inverseJoinColumns = {@JoinColumn(name = "item_id", referencedColumnName = "id")})
     private Set<DiscoverableEntity> relatedItems = new HashSet<>();
 
     @ManyToMany(mappedBy = "relatedItems", fetch = LAZY, cascade = {MERGE, PERSIST})
     private Set<DiscoverableEntity> referencedBy = new HashSet<>();
 
-//    @OneToMany(mappedBy = "discoverableEntity", fetch = LAZY, cascade = {MERGE, PERSIST})
+    @OneToMany(mappedBy = "discoverableEntity", fetch = LAZY, cascade = {MERGE, PERSIST})
     private Set<ExternalLink> externalLinks = new HashSet<>();
 
-//    @OneToMany(mappedBy = "entityLink", fetch = LAZY, cascade = {MERGE, PERSIST})
+    @OneToMany(mappedBy = "entityLink", fetch = LAZY, cascade = {MERGE, PERSIST})
     private Set<ConnectedEntity> entityConnections = new HashSet<>();
 
     public abstract Id getId();

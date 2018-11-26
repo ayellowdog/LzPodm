@@ -17,34 +17,42 @@
 package com.inspur.podm.common.persistence.entity;
 
 
+import static javax.persistence.CascadeType.MERGE;
+import static javax.persistence.CascadeType.PERSIST;
+import static javax.persistence.FetchType.LAZY;
+
 import java.math.BigDecimal;
 import java.util.Objects;
 
+import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
 import com.inspur.podm.common.intel.types.Id;
-import com.inspur.podm.common.persistence.BaseEntity;
+import com.inspur.podm.common.persistence.base.Entity;
 import com.inspur.podm.common.persistence.entity.embeddables.DriveMetricsHealthData;
 import com.inspur.podm.common.persistence.entity.embeddables.DriveMetricsLifeTime;
-
-//@javax.persistence.Entity
-//@Table(name = "drive_metrics", indexes = @Index(name = "idx_drive_metrics_entity_id", columnList = "entity_id", unique = true))
+@javax.persistence.Entity
+@Table(name = "drive_metrics", indexes = @Index(name = "idx_drive_metrics_entity_id", columnList = "entity_id", unique = true))
 public class DriveMetrics extends DiscoverableEntity {
-/** @Fields serialVersionUID: TODO 功能描述  */
-	private static final long serialVersionUID = 5327894156227704298L;
 
-	//    @Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
+	@Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
     private Id entityId;
 
-//    @Column(name = "temperature_kelvin")
+    @Column(name = "temperature_kelvin")
     private BigDecimal temperatureKelvin;
 
-//    @OneToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinColumn(name = "drive_id")
+    @OneToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinColumn(name = "drive_id")
     private Drive drive;
 
-//    @Embedded
+    @Embedded
     private DriveMetricsLifeTime lifeTime;
 
-//    @Embedded
+    @Embedded
     private DriveMetricsHealthData healthData;
 
     public Drive getDrive() {
@@ -110,7 +118,7 @@ public class DriveMetrics extends DiscoverableEntity {
     }
 
     @Override
-    public boolean containedBy(BaseEntity possibleParent) {
+    public boolean containedBy(Entity possibleParent) {
         return isContainedBy(possibleParent, drive);
     }
 }

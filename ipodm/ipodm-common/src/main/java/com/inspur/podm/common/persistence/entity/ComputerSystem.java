@@ -17,11 +17,32 @@
 package com.inspur.podm.common.persistence.entity;
 
 
+import static com.inspur.podm.common.intel.types.ChassisType.DRAWER;
+import static com.inspur.podm.common.utils.Collector.toSingle;
+import static com.inspur.podm.common.utils.Collector.toSingleOrNull;
+import static com.inspur.podm.common.utils.Contracts.requiresNonNull;
+import static javax.persistence.CascadeType.MERGE;
+import static javax.persistence.CascadeType.PERSIST;
+import static javax.persistence.CascadeType.REMOVE;
+import static javax.persistence.EnumType.STRING;
+import static javax.persistence.FetchType.EAGER;
+import static javax.persistence.FetchType.LAZY;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
+import java.util.UUID;
+
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
-import javax.persistence.EntityListeners;
 import javax.persistence.Enumerated;
 import javax.persistence.Index;
 import javax.persistence.JoinColumn;
@@ -43,8 +64,8 @@ import com.inspur.podm.common.intel.types.PowerState;
 import com.inspur.podm.common.intel.types.Status;
 import com.inspur.podm.common.intel.types.SystemType;
 import com.inspur.podm.common.intel.types.actions.ResetType;
-import com.inspur.podm.common.persistence.BaseEntity;
 import com.inspur.podm.common.persistence.base.ComposableAsset;
+import com.inspur.podm.common.persistence.base.Entity;
 import com.inspur.podm.common.persistence.base.MemoryModule;
 import com.inspur.podm.common.persistence.base.MultiSourceResource;
 import com.inspur.podm.common.persistence.base.NetworkInterfacePossessor;
@@ -55,39 +76,17 @@ import com.inspur.podm.common.persistence.entity.embeddables.MemorySummary;
 import com.inspur.podm.common.persistence.entity.embeddables.ProcessorSummary;
 import com.inspur.podm.common.persistence.entity.embeddables.TrustedModule;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
-import java.util.UUID;
-
-import static com.inspur.podm.common.intel.types.ChassisType.DRAWER;
-import static com.inspur.podm.common.utils.Collector.toSingle;
-import static com.inspur.podm.common.utils.Collector.toSingleOrNull;
-import static com.inspur.podm.common.utils.Contracts.requiresNonNull;
-import static javax.persistence.CascadeType.MERGE;
-import static javax.persistence.CascadeType.PERSIST;
-import static javax.persistence.CascadeType.REMOVE;
-import static javax.persistence.EnumType.STRING;
-import static javax.persistence.FetchType.EAGER;
-import static javax.persistence.FetchType.LAZY;
-
-//@javax.persistence.Entity
-//@Table(name = "computer_system", indexes = @Index(name = "idx_computer_system_entity_id", columnList = "entity_id", unique = true))
-//@NamedQueries({
-//    @NamedQuery(name = ComputerSystem.GET_COMPUTER_SYSTEM_IDS_FROM_PRIMARY_DATA_SOURCE,
-//        query = ComputerSystemQueries.GET_COMPUTER_SYSTEM_IDS_FROM_PRIMARY_DATA_SOURCE),
-//    @NamedQuery(name = ComputerSystem.GET_PRIMARY_COMPUTER_SYSTEM, query = ComputerSystemQueries.GET_PRIMARY_COMPUTER_SYSTEM),
-//    @NamedQuery(name = ComputerSystem.GET_COMPUTER_SYSTEM_MULTI_SOURCE, query = ComputerSystemQueries.GET_COMPUTER_SYSTEM_MULTI_SOURCE),
-//    @NamedQuery(name = ComputerSystem.GET_COMPUTER_SYSTEMS_AVAILABLE_TO_ALLOCATE, query = ComputerSystemQueries.GET_COMPUTER_SYSTEMS_AVAILABLE_TO_ALLOCATE),
-//    @NamedQuery(name = ComputerSystem.GET_COMPUTER_SYSTEMS_MATCHING_CONNECTION_ID, query = ComputerSystemQueries.GET_COMPUTER_SYSTEMS_MATCHING_CONNECTION_ID),
-//    @NamedQuery(name = ComputerSystem.GET_PHYSICAL_COMPUTER_SYSTEM_BY_UUID, query = ComputerSystemQueries.GET_PHYSICAL_COMPUTER_SYSTEM_BY_UUID)
-//})
+@javax.persistence.Entity
+@Table(name = "computer_system", indexes = @Index(name = "idx_computer_system_entity_id", columnList = "entity_id", unique = true))
+@NamedQueries({
+    @NamedQuery(name = ComputerSystem.GET_COMPUTER_SYSTEM_IDS_FROM_PRIMARY_DATA_SOURCE,
+        query = ComputerSystemQueries.GET_COMPUTER_SYSTEM_IDS_FROM_PRIMARY_DATA_SOURCE),
+    @NamedQuery(name = ComputerSystem.GET_PRIMARY_COMPUTER_SYSTEM, query = ComputerSystemQueries.GET_PRIMARY_COMPUTER_SYSTEM),
+    @NamedQuery(name = ComputerSystem.GET_COMPUTER_SYSTEM_MULTI_SOURCE, query = ComputerSystemQueries.GET_COMPUTER_SYSTEM_MULTI_SOURCE),
+    @NamedQuery(name = ComputerSystem.GET_COMPUTER_SYSTEMS_AVAILABLE_TO_ALLOCATE, query = ComputerSystemQueries.GET_COMPUTER_SYSTEMS_AVAILABLE_TO_ALLOCATE),
+    @NamedQuery(name = ComputerSystem.GET_COMPUTER_SYSTEMS_MATCHING_CONNECTION_ID, query = ComputerSystemQueries.GET_COMPUTER_SYSTEMS_MATCHING_CONNECTION_ID),
+    @NamedQuery(name = ComputerSystem.GET_PHYSICAL_COMPUTER_SYSTEM_BY_UUID, query = ComputerSystemQueries.GET_PHYSICAL_COMPUTER_SYSTEM_BY_UUID)
+})
 //@EntityListeners(ComputerSystemListener.class)
 //@Eventable
 //@SuppressWarnings({"checkstyle:ClassFanOutComplexity", "checkstyle:MethodCount"})
@@ -100,168 +99,168 @@ public class ComputerSystem extends DiscoverableEntity implements NetworkInterfa
     public static final String GET_PHYSICAL_COMPUTER_SYSTEM_BY_UUID = "GET_PHYSICAL_COMPUTER_SYSTEM_BY_UUID";
     private static final String ENTITY_NAME = "ComputerSystem";
 
-//    @Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
+    @Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
     private Id entityId;
 
-//    @Column(name = "manufacturer")
+    @Column(name = "manufacturer")
     private String manufacturer;
 
-//    @Column(name = "model")
+    @Column(name = "model")
     private String model;
 
-//    @Column(name = "serial_number")
+    @Column(name = "serial_number")
     private String serialNumber;
 
-//    @Column(name = "uuid")
+    @Column(name = "uuid")
     private UUID uuid;
 
-//    @Column(name = "system_type")
-//    @Enumerated(STRING)
+    @Column(name = "system_type")
+    @Enumerated(STRING)
     private SystemType systemType;
 
-//    @Column(name = "asset_tag")
+    @Column(name = "asset_tag")
     private String assetTag;
 
-//    @Column(name = "bios_version")
+    @Column(name = "bios_version")
     private String biosVersion;
 
-//    @Column(name = "sku")
+    @Column(name = "sku")
     private String sku;
 
-//    @Column(name = "host_name")
+    @Column(name = "host_name")
     private String hostName;
 
-//    @Column(name = "indicator_led")
-//    @Enumerated(STRING)
+    @Column(name = "indicator_led")
+    @Enumerated(STRING)
     private IndicatorLed indicatorLed;
 
-//    @Column(name = "memory_sockets")
+    @Column(name = "memory_sockets")
     private Integer memorySockets;
 
-//    @Column(name = "processor_sockets")
+    @Column(name = "processor_sockets")
     private Integer processorSockets;
 
-//    @Column(name = "discovery_state")
-//    @Enumerated(STRING)
+    @Column(name = "discovery_state")
+    @Enumerated(STRING)
     private DiscoveryState discoveryState;
 
-//    @Column(name = "power_state")
-//    @Enumerated(STRING)
+    @Column(name = "power_state")
+    @Enumerated(STRING)
 //    @EventRedirectionSource
     private PowerState powerState;
 
-//    @Column(name = "part_number")
+    @Column(name = "part_number")
     private String partNumber;
 
-//    @Column(name = "user_mode_enabled")
+    @Column(name = "user_mode_enabled")
     private Boolean userModeEnabled;
 
-//    @Column(name = "trusted_execution_technology_enabled")
+    @Column(name = "trusted_execution_technology_enabled")
     private Boolean trustedExecutionTechnologyEnabled;
 
 //    @EventRedirectionSource
-//    @Embedded
+    @Embedded
     private Boot boot;
 
-//    @Embedded
+    @Embedded
 //    @EventRedirectionSource
     private ProcessorSummary processorSummary;
 
-//    @Embedded
+    @Embedded
     private MemorySummary memorySummary;
 
-//    @ElementCollection
-//    @CollectionTable(name = "computer_system_pcie_connection_id", joinColumns = @JoinColumn(name = "computer_system_id"))
-//    @Column(name = "pcie_connection_id")
-//    @OrderColumn(name = "pcie_connection_id_order")
+    @ElementCollection
+    @CollectionTable(name = "computer_system_pcie_connection_id", joinColumns = @JoinColumn(name = "computer_system_id"))
+    @Column(name = "pcie_connection_id")
+    @OrderColumn(name = "pcie_connection_id_order")
     private List<String> pcieConnectionIds = new ArrayList<>();
 
-//    @ElementCollection
-//    @Enumerated(STRING)
-//    @CollectionTable(name = "computer_system_hosting_role", joinColumns = @JoinColumn(name = "computer_system_id"))
-//    @Column(name = "hosting_role")
-//    @OrderColumn(name = "hosting_role_order")
+    @ElementCollection
+    @Enumerated(STRING)
+    @CollectionTable(name = "computer_system_hosting_role", joinColumns = @JoinColumn(name = "computer_system_id"))
+    @Column(name = "hosting_role")
+    @OrderColumn(name = "hosting_role_order")
     private List<HostingRole> hostingRoles = new ArrayList<>();
 
-//    @ElementCollection
-//    @Enumerated(STRING)
-//    @CollectionTable(name = "computer_system_allowable_reset_type", joinColumns = @JoinColumn(name = "computer_system_id"))
-//    @Column(name = "allowable_reset_type")
-//    @OrderColumn(name = "allowable_reset_type_order")
+    @ElementCollection
+    @Enumerated(STRING)
+    @CollectionTable(name = "computer_system_allowable_reset_type", joinColumns = @JoinColumn(name = "computer_system_id"))
+    @Column(name = "allowable_reset_type")
+    @OrderColumn(name = "allowable_reset_type_order")
     private List<ResetType> allowableResetTypes = new ArrayList<>();
 
-//    @ElementCollection
-//    @Enumerated(STRING)
-//    @CollectionTable(name = "computer_system_allowable_interface_type", joinColumns = @JoinColumn(name = "computer_system_id"))
-//    @Column(name = "allowable_interface_type")
-//    @OrderColumn(name = "allowable_interface_type_order")
+    @ElementCollection
+    @Enumerated(STRING)
+    @CollectionTable(name = "computer_system_allowable_interface_type", joinColumns = @JoinColumn(name = "computer_system_id"))
+    @Column(name = "allowable_interface_type")
+    @OrderColumn(name = "allowable_interface_type_order")
     private List<InterfaceType> allowableInterfaceTypes = new ArrayList<>();
 
-//    @ElementCollection
-//    @CollectionTable(name = "computer_system_pci_device", joinColumns = @JoinColumn(name = "computer_system_id"))
-//    @OrderColumn(name = "pci_device_order")
+    @ElementCollection
+    @CollectionTable(name = "computer_system_pci_device", joinColumns = @JoinColumn(name = "computer_system_id"))
+    @OrderColumn(name = "pci_device_order")
     private List<ComputerSystemDevice> pciDevices = new ArrayList<>();
 
-//    @ElementCollection
-//    @CollectionTable(name = "computer_system_trusted_module", joinColumns = @JoinColumn(name = "computer_system_id"))
-//    @OrderColumn(name = "trusted_module_order")
+    @ElementCollection
+    @CollectionTable(name = "computer_system_trusted_module", joinColumns = @JoinColumn(name = "computer_system_id"))
+    @OrderColumn(name = "trusted_module_order")
     private List<TrustedModule> trustedModules = new ArrayList<>();
 
 //    @SuppressEvents
-//    @OneToMany(mappedBy = "computerSystem", fetch = LAZY, cascade = {MERGE, PERSIST})
+    @OneToMany(mappedBy = "computerSystem", fetch = LAZY, cascade = {MERGE, PERSIST})
     private Set<Memory> memoryModules = new HashSet<>();
 
 //    @SuppressEvents
-//    @OneToMany(mappedBy = "computerSystem", fetch = LAZY, cascade = {MERGE, PERSIST})
+    @OneToMany(mappedBy = "computerSystem", fetch = LAZY, cascade = {MERGE, PERSIST})
     private Set<Processor> processors = new HashSet<>();
 
 //    @SuppressEvents
-//    @OneToMany(mappedBy = "computerSystem", fetch = LAZY, cascade = {MERGE, PERSIST})
+    @OneToMany(mappedBy = "computerSystem", fetch = LAZY, cascade = {MERGE, PERSIST})
     private Set<SimpleStorage> simpleStorages = new HashSet<>();
 
 //    @SuppressEvents
-//    @OneToMany(mappedBy = "computerSystem", fetch = LAZY, cascade = {MERGE, PERSIST})
+    @OneToMany(mappedBy = "computerSystem", fetch = LAZY, cascade = {MERGE, PERSIST})
     private Set<Storage> storages = new HashSet<>();
 
 //    @SuppressEvents
-//    @OneToMany(mappedBy = "computerSystem", fetch = LAZY, cascade = {MERGE, PERSIST})
+    @OneToMany(mappedBy = "computerSystem", fetch = LAZY, cascade = {MERGE, PERSIST})
     private Set<StorageService> storageServices = new HashSet<>();
 
 //    @SuppressEvents
-//    @OneToMany(mappedBy = "computerSystem", fetch = LAZY, cascade = {MERGE, PERSIST})
+    @OneToMany(mappedBy = "computerSystem", fetch = LAZY, cascade = {MERGE, PERSIST})
     private Set<EthernetInterface> ethernetInterfaces = new HashSet<>();
 
-//    @OneToMany(mappedBy = "computerSystem", fetch = LAZY, cascade = {MERGE, PERSIST})
+    @OneToMany(mappedBy = "computerSystem", fetch = LAZY, cascade = {MERGE, PERSIST})
     private Set<Endpoint> endpoints = new HashSet<>();
 
-//    @OneToMany(mappedBy = "computerSystem", fetch = LAZY, cascade = {MERGE, PERSIST})
+    @OneToMany(mappedBy = "computerSystem", fetch = LAZY, cascade = {MERGE, PERSIST})
     private Set<PcieDevice> pcieDevices = new HashSet<>();
 
-//    @OneToMany(mappedBy = "computerSystem", fetch = LAZY, cascade = {MERGE, PERSIST})
+    @OneToMany(mappedBy = "computerSystem", fetch = LAZY, cascade = {MERGE, PERSIST})
     private Set<PcieDeviceFunction> pcieDeviceFunctions = new HashSet<>();
 
-//    @OneToMany(mappedBy = "computerSystem", fetch = LAZY, cascade = {MERGE, PERSIST})
+    @OneToMany(mappedBy = "computerSystem", fetch = LAZY, cascade = {MERGE, PERSIST})
     private Set<NetworkInterface> networkInterfaces = new HashSet<>();
 
-//    @ManyToMany(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinTable(
-//        name = "computer_system_manager",
-//        joinColumns = {@JoinColumn(name = "computer_system_id", referencedColumnName = "id")},
-//        inverseJoinColumns = {@JoinColumn(name = "manager_id", referencedColumnName = "id")})
+    @ManyToMany(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinTable(
+        name = "computer_system_manager",
+        joinColumns = {@JoinColumn(name = "computer_system_id", referencedColumnName = "id")},
+        inverseJoinColumns = {@JoinColumn(name = "manager_id", referencedColumnName = "id")})
     private Set<Manager> managers = new HashSet<>();
 
-//    @ManyToMany(mappedBy = "computerSystems", fetch = LAZY, cascade = {MERGE, PERSIST})
+    @ManyToMany(mappedBy = "computerSystems", fetch = LAZY, cascade = {MERGE, PERSIST})
     private Set<Chassis> chassis = new HashSet<>();
 
 //    @IgnoreUnlinkingRelationship
-//    @OneToOne(fetch = EAGER, cascade = {MERGE, PERSIST, REMOVE})
-//    @JoinColumn(name = "computer_system_metadata_id")
+    @OneToOne(fetch = EAGER, cascade = {MERGE, PERSIST, REMOVE})
+    @JoinColumn(name = "computer_system_metadata_id")
     private ComputerSystemMetadata metadata = new ComputerSystemMetadata();
 
-//    @OneToOne(mappedBy = "computerSystem", fetch = LAZY, cascade = {MERGE, PERSIST})
+    @OneToOne(mappedBy = "computerSystem", fetch = LAZY, cascade = {MERGE, PERSIST})
     private ComposedNode composedNode;
 
-//    @OneToOne(mappedBy = "computerSystem", fetch = LAZY, cascade = {MERGE, PERSIST})
+    @OneToOne(mappedBy = "computerSystem", fetch = LAZY, cascade = {MERGE, PERSIST})
     private ComputerSystemMetrics computerSystemMetrics;
 
     @Override
@@ -859,7 +858,7 @@ public class ComputerSystem extends DiscoverableEntity implements NetworkInterfa
     }
 
     @Override
-    public boolean containedBy(BaseEntity possibleParent) {
+    public boolean containedBy(Entity possibleParent) {
         return isContainedBy(possibleParent, chassis);
     }
 

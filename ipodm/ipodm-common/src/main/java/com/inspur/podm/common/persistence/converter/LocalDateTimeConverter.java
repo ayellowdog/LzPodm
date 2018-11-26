@@ -14,33 +14,22 @@
  * limitations under the License.
  */
 
-package com.inspur.podm.common.persistence.entity;
+package com.inspur.podm.common.persistence.converter;
 
-import com.inspur.podm.common.persistence.base.Entity;
+import javax.persistence.AttributeConverter;
+import javax.persistence.Converter;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
-import javax.persistence.Column;
-import javax.persistence.Table;
-
-@javax.persistence.Entity
-@Table(name = "drive_metadata")
-public class DriveMetadata extends Entity {
-	@Column(name = "allocated")
-    private boolean allocated;
-
-    public boolean isAllocated() {
-        return allocated;
-    }
-
-    public void setAllocated(boolean allocated) {
-        this.allocated = allocated;
+@Converter(autoApply = true)
+public class LocalDateTimeConverter implements AttributeConverter<LocalDateTime, Timestamp> {
+    @Override
+    public Timestamp convertToDatabaseColumn(LocalDateTime value) {
+        return value == null ? null : Timestamp.valueOf(value);
     }
 
     @Override
-    public void preRemove() {
-    }
-
-    @Override
-    public boolean containedBy(Entity possibleParent) {
-        return false;
+    public LocalDateTime convertToEntityAttribute(Timestamp value) {
+        return value == null ? null : value.toLocalDateTime();
     }
 }

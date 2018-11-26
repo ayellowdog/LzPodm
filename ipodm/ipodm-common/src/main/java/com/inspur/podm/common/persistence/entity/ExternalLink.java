@@ -24,7 +24,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
-import com.inspur.podm.common.persistence.BaseEntity;
+import com.inspur.podm.common.persistence.base.Entity;
 
 import java.net.URI;
 import java.util.Objects;
@@ -41,7 +41,7 @@ import static javax.persistence.FetchType.EAGER;
 //    )
 //})
 //@Table(name = "external_link")
-public class ExternalLink extends BaseEntity {
+public class ExternalLink extends Entity {
 
     public static final String GET_EXTERNAL_LINK_BY_SERVICE_AND_ENTITY = "GET_EXTERNAL_LINK_BY_SERVICE_AND_ENTITY";
 
@@ -121,7 +121,7 @@ public class ExternalLink extends BaseEntity {
     }
 
     @Override
-    public boolean containedBy(BaseEntity possibleParent) {
+    public boolean containedBy(Entity possibleParent) {
         return false;
     }
 

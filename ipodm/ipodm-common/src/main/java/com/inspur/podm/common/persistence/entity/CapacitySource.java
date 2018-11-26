@@ -22,35 +22,45 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-import com.inspur.podm.common.intel.types.Id;
-import com.inspur.podm.common.persistence.BaseEntity;
-import com.inspur.podm.common.persistence.entity.embeddables.Capacity;
+import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
-//@javax.persistence.Entity
-//@Table(name = "capacity_source", indexes = @Index(name = "idx_capacity_source_entity_id", columnList = "entity_id", unique = true))
+import com.inspur.podm.common.intel.types.Id;
+import com.inspur.podm.common.persistence.base.Entity;
+import com.inspur.podm.common.persistence.entity.embeddables.Capacity;
+import static javax.persistence.CascadeType.MERGE;
+import static javax.persistence.CascadeType.PERSIST;
+import static javax.persistence.FetchType.LAZY;
+
+@javax.persistence.Entity
+@Table(name = "capacity_source", indexes = @Index(name = "idx_capacity_source_entity_id", columnList = "entity_id", unique = true))
 //@SuppressWarnings("checkstyle:MethodCount")
 public class CapacitySource extends DiscoverableEntity {
-/** @Fields serialVersionUID: TODO 功能描述  */
-	private static final long serialVersionUID = 1489610229100298106L;
 
-	//    @Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
+
+	@Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
     private Id entityId;
 
-//    @Embedded
+    @Embedded
     private Capacity providedCapacity;
 
-//    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinColumn(name = "volume_id")
+    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinColumn(name = "volume_id")
     private Volume volume;
 
-//    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinColumn(name = "storage_pool_id")
+    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinColumn(name = "storage_pool_id")
     private StoragePool storagePool;
 
-//    @ManyToMany(mappedBy = "providingPoolCapacitySources", fetch = LAZY, cascade = {MERGE, PERSIST})
+    @ManyToMany(mappedBy = "providingPoolCapacitySources", fetch = LAZY, cascade = {MERGE, PERSIST})
     private Set<StoragePool> providingPools = new HashSet<>();
 
-//    @ManyToMany(mappedBy = "capacitySources", fetch = LAZY, cascade = {MERGE, PERSIST})
+    @ManyToMany(mappedBy = "capacitySources", fetch = LAZY, cascade = {MERGE, PERSIST})
     private Set<Drive> drives = new HashSet<>();
 
     @Override
@@ -158,7 +168,7 @@ public class CapacitySource extends DiscoverableEntity {
     }
 
     @Override
-    public boolean containedBy(BaseEntity possibleParent) {
+    public boolean containedBy(Entity possibleParent) {
         return isContainedBy(possibleParent, volume);
     }
 }
