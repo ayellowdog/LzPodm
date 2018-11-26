@@ -133,8 +133,12 @@
 			<artifactId>quartz</artifactId>
 			<version>2.3.0</version>
 		</dependency>
-		
-		
+		<!-- https://mvnrepository.com/artifact/org.modelmapper/modelmapper -->
+		<dependency>
+		    <groupId>org.modelmapper</groupId>
+		    <artifactId>modelmapper</artifactId>
+		    <version>1.1.0</version>
+		</dependency>
 		<!-- 新增jar包请写在这里End -->
 	</dependencies>
 
