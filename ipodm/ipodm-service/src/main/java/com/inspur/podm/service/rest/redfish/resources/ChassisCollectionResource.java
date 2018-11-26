@@ -41,13 +41,13 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping("/redfish/v1/Chassis")
 @Api(value = "ChassisController", description = "Chassis Controller")
 public class ChassisCollectionResource extends BaseResource {
-//    @Inject
-//    private ReaderService<ChassisDto> readerService;
+    @Inject
+    private ReaderService<ChassisDto> readerService;
 
     @RequestMapping(method=RequestMethod.GET)
     @Override
     public CollectionDto get() {
-        return null;//getOrThrow(() -> readerService.getCollection(SERVICE_ROOT_CONTEXT));
+        return getOrThrow(() -> readerService.getCollection(SERVICE_ROOT_CONTEXT));
     }
 
     @RequestMapping(value = CHASSIS_ID, method = RequestMethod.GET, produces={APPLICATION_JSON})
