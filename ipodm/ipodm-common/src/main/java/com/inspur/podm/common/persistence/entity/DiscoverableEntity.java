@@ -17,7 +17,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.ManyToMany;
+import javax.persistence.OrderColumn;
 import javax.persistence.PreRemove;
 
 import com.inspur.podm.common.intel.types.Id;
@@ -35,25 +39,25 @@ import com.inspur.podm.common.persistence.entity.embeddables.UnknownOem;
  */
 public abstract class DiscoverableEntity extends BaseEntity{
 
-    /** @Fields serialVersionUID: TODO 功能描述  */
-	private static final long serialVersionUID = -1377191332919028996L;
+//    /** @Fields serialVersionUID: TODO 功能描述  */
+//	private static final long serialVersionUID = -1377191332919028996L;
 
 	public static final String GET_ENTITY_BY_SERVICE_AND_SOURCE_URI = "GET_ENTITY_BY_SERVICE_AND_SOURCE_URI";
     protected static final Status ABSENT = new Status(State.ABSENT, null, null);
 
-//    @Column(name = "name")
+    @Column(name = "name")
     private String name;
 
-//    @Column(name = "description")
+    @Column(name = "description")
     private String description;
 
-//    @Column(name = "status")
+    @Column(name = "status")
     private Status status;
 
-//    @Column(name = "global_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
+    @Column(name = "global_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
     private Id globalId;
 
-//    @Column(name = "is_complementary")
+    @Column(name = "is_complementary")
     private boolean isComplementary;
 
 //    @ElementCollection

@@ -23,12 +23,15 @@ import static javax.persistence.CascadeType.MERGE;
 import static javax.persistence.CascadeType.PERSIST;
 import static javax.persistence.EnumType.STRING;
 import static javax.persistence.FetchType.LAZY;
+import static javax.persistence.GenerationType.IDENTITY;
+
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -51,16 +54,18 @@ import com.inspur.podm.common.persistence.entity.embeddables.RackChassisAttribut
 @Table(name = "chassis", indexes = @Index(name = "idx_chassis_entity_id", columnList = "entity_id", unique = true))
 //@Eventable
 @SuppressWarnings({"checkstyle:ClassFanOutComplexity", "checkstyle:MethodCount"})
-public class MyChassis extends DiscoverableEntity {
-    /** @Fields serialVersionUID: TODO 功能描述  */
-	private static final long serialVersionUID = -6454277548966473550L;
+public class MyChassis extends BaseEntity{
+/** @Fields serialVersionUID: TODO 功能描述  */
+	private static final long serialVersionUID = -6105764673167107127L;
+	//    /** @Fields serialVersionUID: TODO 功能描述  */
+//	private static final long serialVersionUID = -6454277548966473550L;
 	public static final String GET_CHASSIS_BY_TYPE = "GET_CHASSIS_BY_TYPE";
     public static final String GET_CHASSIS_IDS_FROM_PRIMARY_DATA_SOURCE = "GET_CHASSIS_IDS_FROM_PRIMARY_DATA_SOURCE";
     public static final String GET_CHASSIS_MULTI_SOURCE = "GET_CHASSIS_MULTI_SOURCE";
     public static final String GET_CHASSIS_BY_TYPE_AND_SERVICE = "GET_CHASSIS_BY_TYPE_AND_SERVICE";
     public static final String GET_CHASSIS_BY_TYPE_AND_LOCATION = "GET_CHASSIS_BY_TYPE_AND_LOCATION";
 
-    @Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
+    @Column(name = "entity_id")
     private Id entityId;
 
     @Column(name = "chassis_type")
@@ -85,9 +90,9 @@ public class MyChassis extends DiscoverableEntity {
     @Column(name = "asset_tag")
     private String assetTag;
 
-    @Column(name = "indicator_led")
-    @Enumerated(STRING)
-    private IndicatorLed indicatorLed;
+//    @Column(name = "indicator_led")
+//    @Enumerated(STRING)
+//    private IndicatorLed indicatorLed;
 
     @Column(name = "location_id")
     private String locationId;
@@ -95,32 +100,32 @@ public class MyChassis extends DiscoverableEntity {
     @Column(name = "location_parent_id")
     private String locationParentId;
 
-    @Column(name = "power_state")
-    @Enumerated(STRING)
-    private PowerState powerState;
+//    @Column(name = "power_state")
+//    @Enumerated(STRING)
+//    private PowerState powerState;
 
-    @Embedded
-    private RackChassisAttributes rackChassisAttributes;
+//    @Embedded
+//    private RackChassisAttributes rackChassisAttributes;
 
    
 
-    @Override
-    public Id getId() {
-        return entityId;
-    }
+//    @Override
+//    public Id getId() {
+//        return entityId;
+//    }
+//
+//    @Override
+//    public void setId(Id id) {
+//        entityId = id;
+//    }
 
-    @Override
-    public void setId(Id id) {
-        entityId = id;
-    }
-
-    public ChassisType getChassisType() {
-        return chassisType;
-    }
-
-    public void setChassisType(ChassisType chassisType) {
-        this.chassisType = chassisType;
-    }
+//    public ChassisType getChassisType() {
+//        return chassisType;
+//    }
+//
+//    public void setChassisType(ChassisType chassisType) {
+//        this.chassisType = chassisType;
+//    }
 
     public String getManufacturer() {
         return manufacturer;
@@ -170,13 +175,13 @@ public class MyChassis extends DiscoverableEntity {
         this.assetTag = assetTag;
     }
 
-    public IndicatorLed getIndicatorLed() {
-        return indicatorLed;
-    }
-
-    public void setIndicatorLed(IndicatorLed indicatorLed) {
-        this.indicatorLed = indicatorLed;
-    }
+//    public IndicatorLed getIndicatorLed() {
+//        return indicatorLed;
+//    }
+//
+//    public void setIndicatorLed(IndicatorLed indicatorLed) {
+//        this.indicatorLed = indicatorLed;
+//    }
 
     public String getLocationId() {
         return locationId;
@@ -194,21 +199,33 @@ public class MyChassis extends DiscoverableEntity {
         this.locationParentId = locationParentId;
     }
 
-    public PowerState getPowerState() {
-        return powerState;
-    }
+	@Override
+	public void preRemove() {
+		// TODO Auto-generated method stub
+		
+	}
 
-    public void setPowerState(PowerState powerState) {
-        this.powerState = powerState;
-    }
+	@Override
+	public boolean containedBy(BaseEntity possibleParent) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 
-    public RackChassisAttributes getRackChassisAttributes() {
-        return rackChassisAttributes;
-    }
+//    public PowerState getPowerState() {
+//        return powerState;
+//    }
+//
+//    public void setPowerState(PowerState powerState) {
+//        this.powerState = powerState;
+//    }
 
-    public void setRackChassisAttributes(RackChassisAttributes rackChassisAttributes) {
-        this.rackChassisAttributes = rackChassisAttributes;
-    }
+//    public RackChassisAttributes getRackChassisAttributes() {
+//        return rackChassisAttributes;
+//    }
+//
+//    public void setRackChassisAttributes(RackChassisAttributes rackChassisAttributes) {
+//        this.rackChassisAttributes = rackChassisAttributes;
+//    }
 
 
 
@@ -224,14 +241,14 @@ public class MyChassis extends DiscoverableEntity {
 
 
 
-    @Override
-    public void preRemove() {
-
-    }
-
-    @Override
-    public boolean containedBy(BaseEntity possibleParent) {
-        return false;
-    }
+//    @Override
+//    public void preRemove() {
+//
+//    }
+//
+//    @Override
+//    public boolean containedBy(BaseEntity possibleParent) {
+//        return false;
+//    }
 
 }

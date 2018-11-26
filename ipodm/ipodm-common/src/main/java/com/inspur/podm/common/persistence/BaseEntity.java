@@ -47,8 +47,8 @@ public abstract class BaseEntity implements Serializable{
     @Column(name = "version", columnDefinition = "integer DEFAULT 0", nullable = false)
     private long version;
 	
-    @Column(name = "event_source_context")
-    private URI eventSourceContext;
+//    @Column(name = "event_source_context")
+//    private URI eventSourceContext;
     
     protected long getPrimaryKey() {
         return id;
@@ -129,11 +129,11 @@ public abstract class BaseEntity implements Serializable{
 		this.version = version;
 	}
 
-	public URI getEventSourceContext() {
-        return eventSourceContext;
-    }
-
-    public void setEventSourceContext(URI context) {
-        this.eventSourceContext = context;
-    }
+//	public URI getEventSourceContext() {
+//        return eventSourceContext;
+//    }
+//
+//    public void setEventSourceContext(URI context) {
+//        this.eventSourceContext = context;
+//    }
 }
