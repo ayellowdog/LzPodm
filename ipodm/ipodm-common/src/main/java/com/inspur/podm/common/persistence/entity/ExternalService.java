@@ -21,7 +21,11 @@ import static java.time.Duration.between;
 import static java.time.LocalDateTime.now;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toSet;
+import static javax.persistence.CascadeType.MERGE;
+import static javax.persistence.CascadeType.PERSIST;
 import static javax.persistence.EnumType.STRING;
+import static javax.persistence.FetchType.LAZY;
+import static org.hibernate.annotations.GenerationTime.INSERT;
 
 import java.net.URI;
 import java.time.Duration;
@@ -32,32 +36,40 @@ import java.util.Set;
 import java.util.UUID;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Enumerated;
+import javax.persistence.Index;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.Generated;
 
 import com.inspur.podm.common.intel.types.Id;
 import com.inspur.podm.common.intel.types.ServiceType;
 import com.inspur.podm.common.persistence.base.Entity;
-
-//@javax.persistence.Entity
-//@NamedQueries({
-//    @NamedQuery(name = ExternalService.GET_EXTERNAL_SERVICE_BY_UUID,
-//        query = "SELECT es FROM ExternalService es WHERE es.uuid = :uuid"),
-//    @NamedQuery(name = ExternalService.GET_EXTERNAL_SERVICES_BY_SERVICES_TYPES,
-//        query = "SELECT es FROM ExternalService es WHERE es.serviceType IN (:serviceTypes)")
-//})
-//@Table(name = "external_service", indexes = {
-//    @Index(name = "idx_external_service_entity_id", columnList = "entity_id", unique = true),
-//    @Index(name = "idx_external_service_uuid", columnList = "uuid", unique = true)
-//})
+import com.inspur.podm.common.persistence.converter.IdToLongConverter;
+@javax.persistence.Entity
+@NamedQueries({
+    @NamedQuery(name = ExternalService.GET_EXTERNAL_SERVICE_BY_UUID,
+        query = "SELECT es FROM ExternalService es WHERE es.uuid = :uuid"),
+    @NamedQuery(name = ExternalService.GET_EXTERNAL_SERVICES_BY_SERVICES_TYPES,
+        query = "SELECT es FROM ExternalService es WHERE es.serviceType IN (:serviceTypes)")
+})
+@Table(name = "external_service", indexes = {
+    @Index(name = "idx_external_service_entity_id", columnList = "entity_id", unique = true),
+    @Index(name = "idx_external_service_uuid", columnList = "uuid", unique = true)
+})
 //@EntityListeners(ExternalServiceListener.class)
 //@SuppressWarnings({"checkstyle:MethodCount"})
 public class ExternalService extends Entity {
     public static final String GET_EXTERNAL_SERVICE_BY_UUID = "GET_EXTERNAL_SERVICE_BY_UUID";
     public static final String GET_EXTERNAL_SERVICES_BY_SERVICES_TYPES = "GET_EXTERNAL_SERVICES_BY_SERVICES_TYPES";
 
-//    @Generated(INSERT)
-//    @Convert(converter = IdToLongConverter.class)
-//    @Column(name = "entity_id", columnDefinition = ENTITY_ID_NUMERIC_COLUMN_DEFINITION, insertable = false, nullable = false)
+    @Generated(INSERT)
+    @Convert(converter = IdToLongConverter.class)
+    @Column(name = "entity_id", columnDefinition = ENTITY_ID_NUMERIC_COLUMN_DEFINITION, insertable = false, nullable = false)
     private Id entityId;
 
     @Column(name = "uuid")
@@ -83,7 +95,7 @@ public class ExternalService extends Entity {
     private boolean eventingAvailable = true;
 
 //    @IgnoreUnlinkingRelationship
-//    @OneToMany(mappedBy = "externalService", fetch = LAZY, cascade = {MERGE, PERSIST})
+    @OneToMany(mappedBy = "externalService", fetch = LAZY, cascade = {MERGE, PERSIST})
     private Set<ExternalLink> ownedLinks = new HashSet<>();
 
     public Id getId() {

@@ -18,6 +18,10 @@ package com.inspur.podm.common.persistence.entity;
 
 
 import static com.inspur.podm.common.utils.Contracts.requiresNonNull;
+import static javax.persistence.CascadeType.MERGE;
+import static javax.persistence.CascadeType.PERSIST;
+import static javax.persistence.EnumType.STRING;
+import static javax.persistence.FetchType.LAZY;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -27,95 +31,106 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Enumerated;
+import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OrderColumn;
+import javax.persistence.Table;
+
 import com.inspur.podm.common.intel.types.Id;
 import com.inspur.podm.common.intel.types.Protocol;
 import com.inspur.podm.common.persistence.base.Entity;
 import com.inspur.podm.common.persistence.base.MultiSourceResource;
 import com.inspur.podm.common.persistence.entity.embeddables.Identifier;
-
-//@javax.persistence.Entity
-//@Table(name = "storage_controller", indexes = @Index(name = "idx_storage_controller_entity_id", columnList = "entity_id", unique = true))
+@javax.persistence.Entity
+@Table(name = "storage_controller", indexes = @Index(name = "idx_storage_controller_entity_id", columnList = "entity_id", unique = true))
 //@SuppressWarnings({"checkstyle:MethodCount"})
 //@Eventable
-//@NamedQueries({
-//    @NamedQuery(name = StorageController.GET_STORAGE_CONTROLLER_MULTI_SOURCE,
-//        query = "SELECT storageController "
-//            + "FROM StorageController storageController "
-//            + "WHERE storageController.multiSourceDiscriminator = :multiSourceDiscriminator "
-//            + "AND storageController.isComplementary = :isComplementary"
-//    )
-//})
+@NamedQueries({
+    @NamedQuery(name = StorageController.GET_STORAGE_CONTROLLER_MULTI_SOURCE,
+        query = "SELECT storageController "
+            + "FROM StorageController storageController "
+            + "WHERE storageController.multiSourceDiscriminator = :multiSourceDiscriminator "
+            + "AND storageController.isComplementary = :isComplementary"
+    )
+})
 public class StorageController extends DiscoverableEntity implements MultiSourceResource {
-    /** @Fields serialVersionUID: TODO 功能描述  */
-	private static final long serialVersionUID = 5827819512316527122L;
 
 	public static final String GET_STORAGE_CONTROLLER_MULTI_SOURCE = "GET_STORAGE_CONTROLLER_MULTI_SOURCE";
 
-//    @Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
+    @Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
     private Id entityId;
 
-//    @Column(name = "multi_source_discriminator")
+    @Column(name = "multi_source_discriminator")
     private String multiSourceDiscriminator;
 
-//    @Column(name = "member_id")
+    @Column(name = "member_id")
     private String memberId;
 
-//    @Column(name = "manufacturer")
+    @Column(name = "manufacturer")
     private String manufacturer;
 
-//    @Column(name = "model")
+    @Column(name = "model")
     private String model;
 
-//    @Column(name = "sku")
+    @Column(name = "sku")
     private String sku;
 
-//    @Column(name = "serial_number")
+    @Column(name = "serial_number")
     private String serialNumber;
 
-//    @Column(name = "part_number")
+    @Column(name = "part_number")
     private String partNumber;
 
-//    @Column(name = "asset_tag")
+    @Column(name = "asset_tag")
     private String assetTag;
 
-//    @Column(name = "speed_gbps")
+    @Column(name = "speed_gbps")
     private BigDecimal speedGbps;
 
-//    @Column(name = "firmware_version")
+    @Column(name = "firmware_version")
     private String firmwareVersion;
 
-//    @ElementCollection
-//    @Enumerated(STRING)
-//    @CollectionTable(name = "storage_controller_supported_controller_protocol", joinColumns = @JoinColumn(name = "storage_controller_id"))
-//    @Column(name = "supported_controller_protocol")
-//    @OrderColumn(name = "supported_controller_protocol_order")
+    @ElementCollection
+    @Enumerated(STRING)
+    @CollectionTable(name = "storage_controller_supported_controller_protocol", joinColumns = @JoinColumn(name = "storage_controller_id"))
+    @Column(name = "supported_controller_protocol")
+    @OrderColumn(name = "supported_controller_protocol_order")
     private List<Protocol> supportedControllerProtocols = new ArrayList<>();
 
-//    @ElementCollection
-//    @Enumerated(STRING)
-//    @CollectionTable(name = "storage_controller_supported_device_protocol", joinColumns = @JoinColumn(name = "storage_controller_id"))
-//    @Column(name = "supported_device_protocol")
-//    @OrderColumn(name = "supported_device_protocol_order")
+    @ElementCollection
+    @Enumerated(STRING)
+    @CollectionTable(name = "storage_controller_supported_device_protocol", joinColumns = @JoinColumn(name = "storage_controller_id"))
+    @Column(name = "supported_device_protocol")
+    @OrderColumn(name = "supported_device_protocol_order")
     private List<Protocol> supportedDeviceProtocols = new ArrayList<>();
 
-//    @ElementCollection
-//    @CollectionTable(name = "storage_controller_identifier", joinColumns = @JoinColumn(name = "storage_controller_id"))
-//    @OrderColumn(name = "identifier_order")
+    @ElementCollection
+    @CollectionTable(name = "storage_controller_identifier", joinColumns = @JoinColumn(name = "storage_controller_id"))
+    @OrderColumn(name = "identifier_order")
     private List<Identifier> identifiers = new ArrayList<>();
 
-//    @ManyToMany(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinTable(
-//        name = "storage_controller_pcie_device_function",
-//        joinColumns = {@JoinColumn(name = "storage_controller_id", referencedColumnName = "id")},
-//        inverseJoinColumns = {@JoinColumn(name = "pcie_device_function_id", referencedColumnName = "id")})
+    @ManyToMany(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinTable(
+        name = "storage_controller_pcie_device_function",
+        joinColumns = {@JoinColumn(name = "storage_controller_id", referencedColumnName = "id")},
+        inverseJoinColumns = {@JoinColumn(name = "pcie_device_function_id", referencedColumnName = "id")})
     private Set<PcieDeviceFunction> pcieDeviceFunctions = new HashSet<>();
 
-//    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinColumn(name = "storage_id")
+    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinColumn(name = "storage_id")
     private Storage storage;
 
-//    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinColumn(name = "storage_adapter_id")
+    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinColumn(name = "storage_adapter_id")
     private Storage storageAdapter;
 
     @Override

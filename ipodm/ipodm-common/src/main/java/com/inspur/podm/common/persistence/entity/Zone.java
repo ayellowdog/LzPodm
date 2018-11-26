@@ -18,33 +18,41 @@ package com.inspur.podm.common.persistence.entity;
 
 
 import static com.inspur.podm.common.utils.Contracts.requiresNonNull;
+import static javax.persistence.CascadeType.MERGE;
+import static javax.persistence.CascadeType.PERSIST;
+import static javax.persistence.FetchType.LAZY;
 
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.persistence.Column;
+import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
 import com.inspur.podm.common.intel.types.Id;
 import com.inspur.podm.common.persistence.base.Entity;
-
-//@javax.persistence.Entity
-//@Table(name = "zone", indexes = @Index(name = "idx_zone_entity_id", columnList = "entity_id", unique = true))
+@javax.persistence.Entity
+@Table(name = "zone", indexes = @Index(name = "idx_zone_entity_id", columnList = "entity_id", unique = true))
 //@SuppressWarnings({"checkstyle:MethodCount"})
 //@Eventable
 public class Zone extends DiscoverableEntity {
-/** @Fields serialVersionUID: TODO 功能描述  */
-	private static final long serialVersionUID = 1402871154231310758L;
 
-	//    @Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
+    @Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
     private Id entityId;
 
-//    @OneToMany(mappedBy = "zone", fetch = LAZY, cascade = {MERGE, PERSIST})
+    @OneToMany(mappedBy = "zone", fetch = LAZY, cascade = {MERGE, PERSIST})
     private Set<Endpoint> endpoints = new HashSet<>();
 
-//    @ManyToMany(mappedBy = "zones", fetch = LAZY, cascade = {MERGE, PERSIST})
+    @ManyToMany(mappedBy = "zones", fetch = LAZY, cascade = {MERGE, PERSIST})
     private Set<Switch> switches = new HashSet<>();
 
-//    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinColumn(name = "fabric_id")
+    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinColumn(name = "fabric_id")
     private Fabric fabric;
 
     @Override

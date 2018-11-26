@@ -17,73 +17,86 @@
 package com.inspur.podm.common.persistence.entity;
 
 
+import static javax.persistence.CascadeType.MERGE;
+import static javax.persistence.CascadeType.PERSIST;
+import static javax.persistence.FetchType.LAZY;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Embedded;
+import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.OrderColumn;
+import javax.persistence.Table;
 
 import com.inspur.podm.common.intel.types.Id;
 import com.inspur.podm.common.persistence.base.Entity;
 import com.inspur.podm.common.persistence.entity.embeddables.CurrentPeriod;
 import com.inspur.podm.common.persistence.entity.embeddables.HealthData;
 import com.inspur.podm.common.persistence.entity.embeddables.LifeTime;
-
-//@javax.persistence.Entity
-//@Table(name = "memory_metrics", indexes = @Index(name = "idx_memory_metrics_entity_id", columnList = "entity_id", unique = true))
+@javax.persistence.Entity
+@Table(name = "memory_metrics", indexes = @Index(name = "idx_memory_metrics_entity_id", columnList = "entity_id", unique = true))
 //@SuppressWarnings({"checkstyle:MethodCount"})
 public class MemoryMetrics extends DiscoverableEntity {
-/** @Fields serialVersionUID: TODO 功能描述  */
-	private static final long serialVersionUID = 2791345005336225274L;
 
-//    @Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
+    @Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
     private Id entityId;
 
-//    @Column(name = "temperature_celsius")
+    @Column(name = "temperature_celsius")
     private BigDecimal temperatureCelsius;
 
-//    @Column(name = "block_size_bytes")
+    @Column(name = "block_size_bytes")
     private Long blockSizeBytes;
 
-//    @Column(name = "bandwidth_percent")
+    @Column(name = "bandwidth_percent")
     private BigDecimal bandwidthPercent;
 
-//    @Column(name = "throttled_cycles_percent")
+    @Column(name = "throttled_cycles_percent")
     private BigDecimal throttledCyclesPercent;
 
-//    @Column(name = "thermal_margin_celsius")
+    @Column(name = "thermal_margin_celsius")
     private BigDecimal thermalMarginCelsius;
 
-//    @Column(name = "consumed_power_watt")
+    @Column(name = "consumed_power_watt")
     private BigDecimal consumedPowerWatt;
 
-//    @Column(name = "ecc_errors_count")
+    @Column(name = "ecc_errors_count")
     private Long eccErrorsCount;
 
-//    @Embedded
+    @Embedded
     private HealthData healthData;
 
-//    @Embedded
-//    @AttributeOverrides({
-//        @AttributeOverride(name = "blocksRead", column = @Column(name = "current_period_blocks_read")),
-//        @AttributeOverride(name = "blocksWritten", column = @Column(name = "current_period_blocks_written"))
-//    })
+    @Embedded
+    @AttributeOverrides({
+        @AttributeOverride(name = "blocksRead", column = @Column(name = "current_period_blocks_read")),
+        @AttributeOverride(name = "blocksWritten", column = @Column(name = "current_period_blocks_written"))
+    })
     private CurrentPeriod currentPeriod;
 
-//    @Embedded
-//    @AttributeOverrides({
-//        @AttributeOverride(name = "blocksRead", column = @Column(name = "life_time_blocks_read")),
-//        @AttributeOverride(name = "blocksWritten", column = @Column(name = "life_time_blocks_written"))
-//    })
+    @Embedded
+    @AttributeOverrides({
+        @AttributeOverride(name = "blocksRead", column = @Column(name = "life_time_blocks_read")),
+        @AttributeOverride(name = "blocksWritten", column = @Column(name = "life_time_blocks_written"))
+    })
     private LifeTime lifeTime;
 
-//    @ElementCollection
-//    @CollectionTable(name = "memory_metrics_health", joinColumns = @JoinColumn(name = "memory_metrics_id"))
-//    @Column(name = "health")
-//    @OrderColumn(name = "health_order")
+    @ElementCollection
+    @CollectionTable(name = "memory_metrics_health", joinColumns = @JoinColumn(name = "memory_metrics_id"))
+    @Column(name = "health")
+    @OrderColumn(name = "health_order")
     private List<String> healthList = new ArrayList<>();
 
-//    @OneToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinColumn(name = "memory_id")
+    @OneToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinColumn(name = "memory_id")
     private Memory memory;
 
     @Override

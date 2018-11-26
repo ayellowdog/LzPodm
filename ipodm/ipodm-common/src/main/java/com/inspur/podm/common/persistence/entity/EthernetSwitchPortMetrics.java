@@ -17,50 +17,60 @@
 package com.inspur.podm.common.persistence.entity;
 
 
+import static javax.persistence.CascadeType.MERGE;
+import static javax.persistence.CascadeType.PERSIST;
+import static javax.persistence.FetchType.LAZY;
+
 import java.util.Objects;
+
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
+import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 import com.inspur.podm.common.intel.types.Id;
 import com.inspur.podm.common.persistence.base.Entity;
 import com.inspur.podm.common.persistence.entity.embeddables.SwitchPortMetrics;
-
-//@javax.persistence.Entity
-//@Table(name = "ethernet_switch_port_metrics", indexes = @Index(name = "idx_ethernet_switch_port_metrics_entity_id", columnList = "entity_id", unique = true))
+@javax.persistence.Entity
+@Table(name = "ethernet_switch_port_metrics", indexes = @Index(name = "idx_ethernet_switch_port_metrics_entity_id", columnList = "entity_id", unique = true))
 public class EthernetSwitchPortMetrics extends DiscoverableEntity {
-/** @Fields serialVersionUID: TODO 功能描述  */
-	private static final long serialVersionUID = -5083905312827990084L;
 
-	//    @Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
+    @Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
     private Id entityId;
 
-//    @Embedded
-//    @AttributeOverrides({
-//        @AttributeOverride(name = "packets", column = @Column(name = "received_packets")),
-//        @AttributeOverride(name = "droppedPackets", column = @Column(name = "received_dropped_packets")),
-//        @AttributeOverride(name = "errorPackets", column = @Column(name = "received_error_packets")),
-//        @AttributeOverride(name = "broadcastPackets", column = @Column(name = "received_broadcast_packets")),
-//        @AttributeOverride(name = "multicastPackets", column = @Column(name = "received_multicast_packets")),
-//        @AttributeOverride(name = "bytes", column = @Column(name = "received_bytes")),
-//        @AttributeOverride(name = "errors", column = @Column(name = "received_errors"))
-//    })
+    @Embedded
+    @AttributeOverrides({
+        @AttributeOverride(name = "packets", column = @Column(name = "received_packets")),
+        @AttributeOverride(name = "droppedPackets", column = @Column(name = "received_dropped_packets")),
+        @AttributeOverride(name = "errorPackets", column = @Column(name = "received_error_packets")),
+        @AttributeOverride(name = "broadcastPackets", column = @Column(name = "received_broadcast_packets")),
+        @AttributeOverride(name = "multicastPackets", column = @Column(name = "received_multicast_packets")),
+        @AttributeOverride(name = "bytes", column = @Column(name = "received_bytes")),
+        @AttributeOverride(name = "errors", column = @Column(name = "received_errors"))
+    })
     private SwitchPortMetrics received = new SwitchPortMetrics();
 
-//    @Embedded
-//    @AttributeOverrides({
-//        @AttributeOverride(name = "packets", column = @Column(name = "transmitted_packets")),
-//        @AttributeOverride(name = "droppedPackets", column = @Column(name = "transmitted_dropped_packets")),
-//        @AttributeOverride(name = "errorPackets", column = @Column(name = "transmitted_error_packets")),
-//        @AttributeOverride(name = "broadcastPackets", column = @Column(name = "transmitted_broadcast_packets")),
-//        @AttributeOverride(name = "multicastPackets", column = @Column(name = "transmitted_multicast_packets")),
-//        @AttributeOverride(name = "bytes", column = @Column(name = "transmitted_bytes")),
-//        @AttributeOverride(name = "errors", column = @Column(name = "transmitted_errors"))
-//    })
+    @Embedded
+    @AttributeOverrides({
+        @AttributeOverride(name = "packets", column = @Column(name = "transmitted_packets")),
+        @AttributeOverride(name = "droppedPackets", column = @Column(name = "transmitted_dropped_packets")),
+        @AttributeOverride(name = "errorPackets", column = @Column(name = "transmitted_error_packets")),
+        @AttributeOverride(name = "broadcastPackets", column = @Column(name = "transmitted_broadcast_packets")),
+        @AttributeOverride(name = "multicastPackets", column = @Column(name = "transmitted_multicast_packets")),
+        @AttributeOverride(name = "bytes", column = @Column(name = "transmitted_bytes")),
+        @AttributeOverride(name = "errors", column = @Column(name = "transmitted_errors"))
+    })
     private SwitchPortMetrics transmitted = new SwitchPortMetrics();
 
-//    @Column(name = "collisions")
+    @Column(name = "collisions")
     private Long collisions;
 
-//    @OneToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinColumn(name = "ethernet_switch_port_id")
+    @OneToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinColumn(name = "ethernet_switch_port_id")
     private EthernetSwitchPort ethernetSwitchPort;
 
     @Override

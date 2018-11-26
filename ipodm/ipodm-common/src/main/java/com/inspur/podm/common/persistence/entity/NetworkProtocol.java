@@ -16,95 +16,104 @@
 
 package com.inspur.podm.common.persistence.entity;
 
+import static javax.persistence.CascadeType.MERGE;
+import static javax.persistence.CascadeType.PERSIST;
+import static javax.persistence.EnumType.STRING;
+import static javax.persistence.FetchType.LAZY;
+
 import java.util.Objects;
+
+import javax.persistence.Column;
+import javax.persistence.Enumerated;
+import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 import com.inspur.podm.common.intel.types.Id;
 import com.inspur.podm.common.intel.types.NotifyIpV6Scope;
 import com.inspur.podm.common.persistence.base.Entity;
-
-//@javax.persistence.Entity
-//@Table(name = "network_protocol", indexes = @Index(name = "idx_network_protocol_entity_id", columnList = "entity_id", unique = true))
+@javax.persistence.Entity
+@Table(name = "network_protocol", indexes = @Index(name = "idx_network_protocol_entity_id", columnList = "entity_id", unique = true))
 //@SuppressWarnings({"checkstyle:MethodCount"})
 //@Eventable
 public class NetworkProtocol extends DiscoverableEntity {
-/** @Fields serialVersionUID: TODO 功能描述  */
-	private static final long serialVersionUID = 4833942466718867256L;
 
-//    @Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
+    @Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
     private Id entityId;
 
-//    @Column(name = "kvm_ip_port")
+    @Column(name = "kvm_ip_port")
     private Integer kvmIpPort;
 
-//    @Column(name = "kvm_ip_protocol_enabled")
+    @Column(name = "kvm_ip_protocol_enabled")
     private Boolean kvmIpProtocolEnabled;
 
-//    @Column(name = "telnet_port")
+    @Column(name = "telnet_port")
     private Integer telnetPort;
 
-//    @Column(name = "telnet_protocol_enabled")
+    @Column(name = "telnet_protocol_enabled")
     private Boolean telnetProtocolEnabled;
 
-//    @Column(name = "ssdp_notify_ttl")
+    @Column(name = "ssdp_notify_ttl")
     private Integer ssdpNotifyTtl;
 
-//    @Column(name = "ssdp_notify_multicast_interval_seconds")
+    @Column(name = "ssdp_notify_multicast_interval_seconds")
     private Integer ssdpNotifyMulticastIntervalSeconds;
 
-//    @Column(name = "ssdp_notify_ipv6_scope")
-//    @Enumerated(STRING)
+    @Column(name = "ssdp_notify_ipv6_scope")
+    @Enumerated(STRING)
     private NotifyIpV6Scope ssdpNotifyIpV6Scope;
 
-//    @Column(name = "ssdp_port")
+    @Column(name = "ssdp_port")
     private Integer ssdpPort;
 
-//    @Column(name = "ssdp_protocol_enabled")
+    @Column(name = "ssdp_protocol_enabled")
     private Boolean ssdpProtocolEnabled;
 
-//    @Column(name = "virtual_media_port")
+    @Column(name = "virtual_media_port")
     private Integer virtualMediaPort;
 
-//    @Column(name = "virtual_media_protocol_enabled")
+    @Column(name = "virtual_media_protocol_enabled")
     private Boolean virtualMediaProtocolEnabled;
 
-//    @Column(name = "snmp_port")
+    @Column(name = "snmp_port")
     private Integer snmpPort;
 
-//    @Column(name = "snmp_protocol_enabled")
+    @Column(name = "snmp_protocol_enabled")
     private Boolean snmpProtocolEnabled;
 
-//    @Column(name = "ssh_port")
+    @Column(name = "ssh_port")
     private Integer sshPort;
 
-//    @Column(name = "ssh_protocol_enabled")
+    @Column(name = "ssh_protocol_enabled")
     private Boolean sshProtocolEnabled;
 
-//    @Column(name = "ipmi_port")
+    @Column(name = "ipmi_port")
     private Integer ipmiPort;
 
-//    @Column(name = "ipmi_protocol_enabled")
+    @Column(name = "ipmi_protocol_enabled")
     private Boolean ipmiProtocolEnabled;
 
-//    @Column(name = "http_port")
+    @Column(name = "http_port")
     private Integer httpPort;
 
-//    @Column(name = "http_protocol_enabled")
+    @Column(name = "http_protocol_enabled")
     private Boolean httpProtocolEnabled;
 
-//    @Column(name = "https_port")
+    @Column(name = "https_port")
     private Integer httpsPort;
 
-//    @Column(name = "https_protocol_enabled")
+    @Column(name = "https_protocol_enabled")
     private Boolean httpsProtocolEnabled;
 
-//    @Column(name = "hostname")
+    @Column(name = "hostname")
     private String hostname;
 
-//    @Column(name = "fqdn")
+    @Column(name = "fqdn")
     private String fqdn;
 
-//    @OneToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinColumn(name = "manager_id")
+    @OneToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinColumn(name = "manager_id")
     private Manager manager;
 
     @Override

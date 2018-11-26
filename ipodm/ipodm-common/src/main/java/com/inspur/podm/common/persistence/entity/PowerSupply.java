@@ -17,76 +17,88 @@
 package com.inspur.podm.common.persistence.entity;
 
 
+import static javax.persistence.CascadeType.MERGE;
+import static javax.persistence.CascadeType.PERSIST;
+import static javax.persistence.EnumType.STRING;
+import static javax.persistence.FetchType.LAZY;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Enumerated;
+import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OrderColumn;
+import javax.persistence.Table;
 
 import com.inspur.podm.common.intel.types.Id;
 import com.inspur.podm.common.intel.types.LineInputVoltageType;
 import com.inspur.podm.common.intel.types.PowerSupplyType;
 import com.inspur.podm.common.persistence.base.Entity;
 import com.inspur.podm.common.persistence.entity.embeddables.InputRange;
-
-//@javax.persistence.Entity
-//@Table(name = "power_supply", indexes = @Index(name = "idx_power_supply_id", columnList = "entity_id", unique = true))
+@javax.persistence.Entity
+@Table(name = "power_supply", indexes = @Index(name = "idx_power_supply_id", columnList = "entity_id", unique = true))
 //@SuppressWarnings({"checkstyle:MethodCount"})
 //@Eventable
 public class PowerSupply extends DiscoverableEntity {
-/** @Fields serialVersionUID: TODO 功能描述  */
-	private static final long serialVersionUID = 658014137826101308L;
 
-	//    @Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
+    @Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
     private Id entityId;
 
-//    @Column(name = "member_id")
+    @Column(name = "member_id")
     private String memberId;
 
-//    @Column(name = "power_supply_type")
-//    @Enumerated(STRING)
+    @Column(name = "power_supply_type")
+    @Enumerated(STRING)
     private PowerSupplyType powerSupplyType;
 
-//    @Column(name = "line_input_voltage_type")
-//    @Enumerated(STRING)
+    @Column(name = "line_input_voltage_type")
+    @Enumerated(STRING)
     private LineInputVoltageType lineInputVoltageType;
 
-//    @Column(name = "line_input_voltage")
+    @Column(name = "line_input_voltage")
     private BigDecimal lineInputVoltage;
 
-//    @Column(name = "power_capacity_watts")
+    @Column(name = "power_capacity_watts")
     private BigDecimal powerCapacityWatts;
 
-//    @Column(name = "last_power_output_watts")
+    @Column(name = "last_power_output_watts")
     private BigDecimal lastPowerOutputWatts;
 
-//    @Column(name = "model")
+    @Column(name = "model")
     private String model;
 
-//    @Column(name = "manufacturer")
+    @Column(name = "manufacturer")
     private String manufacturer;
 
-//    @Column(name = "firmware_version")
+    @Column(name = "firmware_version")
     private String firmwareVersion;
 
-//    @Column(name = "serial_number")
+    @Column(name = "serial_number")
     private String serialNumber;
 
-//    @Column(name = "part_number")
+    @Column(name = "part_number")
     private String partNumber;
 
-//    @Column(name = "spare_part_number")
+    @Column(name = "spare_part_number")
     private String sparePartNumber;
 
-//    @Column(name = "oem")
+    @Column(name = "oem")
     private String oem;
 
-//    @ElementCollection
-//    @CollectionTable(name = "power_supply_input_range", joinColumns = @JoinColumn(name = "power_supply_id"))
-//    @OrderColumn(name = "input_range_order")
+    @ElementCollection
+    @CollectionTable(name = "power_supply_input_range", joinColumns = @JoinColumn(name = "power_supply_id"))
+    @OrderColumn(name = "input_range_order")
     private List<InputRange> inputRanges = new ArrayList<>();
 
-//    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinColumn(name = "power_id")
+    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinColumn(name = "power_id")
     private Power power;
 
     @Override

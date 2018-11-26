@@ -18,59 +18,73 @@ package com.inspur.podm.common.persistence.entity;
 
 
 import static com.inspur.podm.common.utils.Contracts.requiresNonNull;
+import static javax.persistence.CascadeType.MERGE;
+import static javax.persistence.CascadeType.PERSIST;
+import static javax.persistence.EnumType.STRING;
+import static javax.persistence.FetchType.EAGER;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Enumerated;
+import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderColumn;
+import javax.persistence.Table;
+
 import com.inspur.podm.common.intel.types.Id;
 import com.inspur.podm.common.intel.types.MetricReportActionType;
 import com.inspur.podm.common.intel.types.MetricReportType;
 import com.inspur.podm.common.intel.types.TransmitFormat;
 import com.inspur.podm.common.persistence.base.Entity;
-
-//@javax.persistence.Entity
-//@NamedQueries({
-//    @NamedQuery(name = MetricReportDefinition.GET_ALL_METRIC_REPORT_DEFINITIONS_IDS,
-//        query = "SELECT metricReportDefinition.entityId FROM MetricReportDefinition metricReportDefinition")
-//})
-//@Table(name = "metric_report_definition", indexes = @Index(name = "idx_metric_report_definition_entity_id", columnList = "entity_id", unique = true))
+@javax.persistence.Entity
+@NamedQueries({
+    @NamedQuery(name = MetricReportDefinition.GET_ALL_METRIC_REPORT_DEFINITIONS_IDS,
+        query = "SELECT metricReportDefinition.entityId FROM MetricReportDefinition metricReportDefinition")
+})
+@Table(name = "metric_report_definition", indexes = @Index(name = "idx_metric_report_definition_entity_id", columnList = "entity_id", unique = true))
 //@SuppressWarnings({"checkstyle:MethodCount"})
 public class MetricReportDefinition extends DiscoverableEntity {
-    /** @Fields serialVersionUID: TODO 功能描述  */
-	private static final long serialVersionUID = 5846239713555115019L;
 
 	public static final String GET_ALL_METRIC_REPORT_DEFINITIONS_IDS = "GET_ALL_METRIC_REPORT_DEFINITIONS_IDS";
 
-//    @Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
+    @Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
     private Id entityId;
 
-//    @Column(name = "metric_report_type")
-//    @Enumerated(STRING)
+    @Column(name = "metric_report_type")
+    @Enumerated(STRING)
     private MetricReportType metricReportType;
 
-//    @Column(name = "metric_report_destination")
+    @Column(name = "metric_report_destination")
     private String metricReportDestination;
 
-//    @Column(name = "polling_interval_milli_seconds")
+    @Column(name = "polling_interval_milli_seconds")
     private BigDecimal pollingIntervalMilliSeconds;
 
-//    @Column(name = "report_interval_milli_seconds")
+    @Column(name = "report_interval_milli_seconds")
     private BigDecimal reportIntervalMilliSeconds;
 
-//    @Column(name = "transmit_format")
-//    @Enumerated(STRING)
+    @Column(name = "transmit_format")
+    @Enumerated(STRING)
     private TransmitFormat transmitFormat;
 
-//    @ElementCollection
-//    @Enumerated(STRING)
-//    @CollectionTable(name = "metric_report_definition_metric_report_action", joinColumns = @JoinColumn(name = "metric_report_definition_id"))
-//    @Column(name = "metric_report_action")
-//    @OrderColumn(name = "metric_report_action_order")
+    @ElementCollection
+    @Enumerated(STRING)
+    @CollectionTable(name = "metric_report_definition_metric_report_action", joinColumns = @JoinColumn(name = "metric_report_definition_id"))
+    @Column(name = "metric_report_action")
+    @OrderColumn(name = "metric_report_action_order")
     private List<MetricReportActionType> metricReportActions = new ArrayList<>();
 
-//    @OneToMany(mappedBy = "metricReportDefinition", fetch = EAGER, cascade = {MERGE, PERSIST})
+    @OneToMany(mappedBy = "metricReportDefinition", fetch = EAGER, cascade = {MERGE, PERSIST})
     private Set<MetricItem> metricItems = new HashSet<>();
 
     @Override

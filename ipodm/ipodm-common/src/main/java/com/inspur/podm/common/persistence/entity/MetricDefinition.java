@@ -18,11 +18,29 @@ package com.inspur.podm.common.persistence.entity;
 
 
 import static com.inspur.podm.common.utils.Contracts.requiresNonNull;
+import static javax.persistence.CascadeType.MERGE;
+import static javax.persistence.CascadeType.PERSIST;
+import static javax.persistence.CascadeType.REMOVE;
+import static javax.persistence.EnumType.STRING;
+import static javax.persistence.FetchType.LAZY;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Enumerated;
+import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.OrderColumn;
+import javax.persistence.Table;
 
 import com.inspur.podm.common.intel.types.Calculable;
 import com.inspur.podm.common.intel.types.CalculationAlgorithm;
@@ -35,112 +53,109 @@ import com.inspur.podm.common.intel.types.PhysicalContext;
 import com.inspur.podm.common.intel.types.SensorType;
 import com.inspur.podm.common.persistence.base.Entity;
 import com.inspur.podm.common.persistence.entity.embeddables.CalculationParamsType;
-
-//@javax.persistence.Entity
-//@NamedQueries({
-//    @NamedQuery(name = MetricDefinition.GET_ALL_METRIC_DEFINITIONS_IDS,
-//        query = "SELECT metricDefinition.entityId FROM MetricDefinition metricDefinition")
-//})
-//@Table(name = "metric_definition", indexes = @Index(name = "idx_metric_definition_entity_id", columnList = "entity_id", unique = true))
+@javax.persistence.Entity
+@NamedQueries({
+    @NamedQuery(name = MetricDefinition.GET_ALL_METRIC_DEFINITIONS_IDS,
+        query = "SELECT metricDefinition.entityId FROM MetricDefinition metricDefinition")
+})
+@Table(name = "metric_definition", indexes = @Index(name = "idx_metric_definition_entity_id", columnList = "entity_id", unique = true))
 //@SuppressWarnings({"checkstyle:MethodCount", "checkstyle:ClassFanOutComplexity"})
 public class MetricDefinition extends DiscoverableEntity {
-    /** @Fields serialVersionUID: TODO 功能描述  */
-	private static final long serialVersionUID = -431345940168038295L;
 
 	public static final String GET_ALL_METRIC_DEFINITIONS_IDS = "GET_ALL_METRIC_DEFINITIONS_IDS";
 
-//    @Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
+    @Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
     private Id entityId;
 
-//    @Column(name = "sensor_type")
-//    @Enumerated(STRING)
+    @Column(name = "sensor_type")
+    @Enumerated(STRING)
     private SensorType sensorType;
 
-//    @Column(name = "calculable")
-//    @Enumerated(STRING)
+    @Column(name = "calculable")
+    @Enumerated(STRING)
     private Calculable calculable;
 
-//    @Column(name = "data_type")
-//    @Enumerated(STRING)
+    @Column(name = "data_type")
+    @Enumerated(STRING)
     private DataType dataType;
 
-//    @Column(name = "implementation")
-//    @Enumerated(STRING)
+    @Column(name = "implementation")
+    @Enumerated(STRING)
     private Implementation implementation;
 
-//    @Column(name = "sensing_interval")
+    @Column(name = "sensing_interval")
     private String sensingInterval;
 
-//    @Column(name = "is_linear")
+    @Column(name = "is_linear")
     private Boolean isLinear;
 
-//    @Column(name = "metric_type")
-//    @Enumerated(STRING)
+    @Column(name = "metric_type")
+    @Enumerated(STRING)
     private MetricType metricType;
 
-//    @Column(name = "physical_context")
-//    @Enumerated(STRING)
+    @Column(name = "physical_context")
+    @Enumerated(STRING)
     private PhysicalContext physicalContext;
 
-//    @Column(name = "calculation_algorithm")
-//    @Enumerated(STRING)
+    @Column(name = "calculation_algorithm")
+    @Enumerated(STRING)
     private CalculationAlgorithm calculationAlgorithm;
 
-//    @Column(name = "units")
+    @Column(name = "units")
     private String units;
 
-//    @Column(name = "min_reading_range")
+    @Column(name = "min_reading_range")
     private BigDecimal minReadingRange;
 
-//    @Column(name = "max_reading_range")
+    @Column(name = "max_reading_range")
     private BigDecimal maxReadingRange;
 
-//    @Column(name = "precision")
+    @Column(name = "precision")
     private Integer precision;
 
-//    @Column(name = "calibration")
+    @Column(name = "calibration")
     private BigDecimal calibration;
 
-//    @Column(name = "accuracy")
+    @Column(name = "accuracy")
     private BigDecimal accuracy;
 
-//    @Column(name = "time_stamp_accuracy")
+    @Column(name = "time_stamp_accuracy")
     private String timeStampAccuracy;
 
-//    @Column(name = "calculation_time_interval")
+    @Column(name = "calculation_time_interval")
     private String calculationTimeInterval;
 
-//    @Column(name = "calculation_precision")
+    @Column(name = "calculation_precision")
     private Double calculationPrecision;
 
-//    @Column(name = "discrete_metric_type")
-//    @Enumerated(STRING)
+    @Column(name = "discrete_metric_type")
+    @Enumerated(STRING)
     private MetricValueType discreteMetricType;
 
-//    @ElementCollection
-//    @CollectionTable(name = "metric_definition_metric_properties", joinColumns = @JoinColumn(name = "metric_definition_id"))
-//    @Column(name = "metric_properties")
-//    @OrderColumn(name = "metric_properties_order")
+    @ElementCollection
+    @CollectionTable(name = "metric_definition_metric_properties", joinColumns = @JoinColumn(name = "metric_definition_id"))
+    @Column(name = "metric_properties")
+    @OrderColumn(name = "metric_properties_order")
     private List<String> metricProperties = new ArrayList<>();
 
-//    @ElementCollection
-//    @CollectionTable(name = "metric_definition_discrete_values", joinColumns = @JoinColumn(name = "metric_definition_id"))
-//    @Column(name = "discrete_values")
-//    @OrderColumn(name = "discrete_values_order")
+    @ElementCollection
+    @CollectionTable(name = "metric_definition_discrete_values", joinColumns = @JoinColumn(name = "metric_definition_id"))
+    @Column(name = "discrete_values")
+    @OrderColumn(name = "discrete_values_order")
     private List<String> discreteValues = new ArrayList<>();
 
-//    @OneToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinColumn(name = "metric_item_id")
+    @OneToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinColumn(name = "metric_item_id")
     private MetricItem metricItem;
 
 //    @IgnoreUnlinkingRelationship
-//    @OneToMany(fetch = LAZY, cascade = {MERGE, PERSIST, REMOVE})
-//    @JoinColumn(name = "metric_definition_wildcard_id")
+    @OneToMany(fetch = LAZY, cascade = {MERGE, PERSIST, REMOVE})
+    @JoinColumn(name = "metric_definition_wildcard_id")
     private List<MetricDefinitionWildcard> wildcards = new ArrayList<>();
 
-//    @ElementCollection
-//    @CollectionTable(name = "metric_definition_calculation_parameters", joinColumns = @JoinColumn(name = "metric_definition_id"))
-//    @OrderColumn(name = "calculation_parameters_values_order")
+    @ElementCollection
+    @CollectionTable(name = "metric_definition_calculation_parameters", joinColumns = @JoinColumn(name = "metric_definition_id"))
+    @OrderColumn(name = "calculation_parameters_values_order")
     private List<CalculationParamsType> calculationParameters = new ArrayList<>();
 
     @Override

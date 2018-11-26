@@ -18,6 +18,10 @@ package com.inspur.podm.common.persistence.entity;
 
 
 import static com.inspur.podm.common.utils.Contracts.requiresNonNull;
+import static javax.persistence.CascadeType.MERGE;
+import static javax.persistence.CascadeType.PERSIST;
+import static javax.persistence.EnumType.STRING;
+import static javax.persistence.FetchType.LAZY;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -25,6 +29,21 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Embedded;
+import javax.persistence.Enumerated;
+import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.OrderColumn;
+import javax.persistence.Table;
 
 import com.inspur.podm.common.intel.types.Id;
 import com.inspur.podm.common.intel.types.InstructionSet;
@@ -36,96 +55,93 @@ import com.inspur.podm.common.persistence.base.MultiSourceResource;
 import com.inspur.podm.common.persistence.entity.embeddables.Fpga;
 import com.inspur.podm.common.persistence.entity.embeddables.OnPackageMemory;
 import com.inspur.podm.common.persistence.entity.embeddables.ProcessorId;
-
-//@javax.persistence.Entity
-//@Table(name = "processor", indexes = @Index(name = "idx_processor_entity_id", columnList = "entity_id", unique = true))
-//@NamedQueries({
-//    @NamedQuery(name = Processor.GET_PROCESSOR_MULTI_SOURCE,
-//        query = "SELECT processor "
-//            + "FROM Processor processor "
-//            + "WHERE processor.multiSourceDiscriminator = :multiSourceDiscriminator "
-//            + "AND processor.isComplementary = :isComplementary"
-//    )
-//})
+@javax.persistence.Entity
+@Table(name = "processor", indexes = @Index(name = "idx_processor_entity_id", columnList = "entity_id", unique = true))
+@NamedQueries({
+    @NamedQuery(name = Processor.GET_PROCESSOR_MULTI_SOURCE,
+        query = "SELECT processor "
+            + "FROM Processor processor "
+            + "WHERE processor.multiSourceDiscriminator = :multiSourceDiscriminator "
+            + "AND processor.isComplementary = :isComplementary"
+    )
+})
 //@Eventable
 //@SuppressWarnings({"checkstyle:MethodCount", "checkstyle:ClassFanOutComplexity"})
 public class Processor extends DiscoverableEntity implements MultiSourceResource {
-    /** @Fields serialVersionUID: TODO 功能描述  */
-	private static final long serialVersionUID = -5609732749344321188L;
 
 	public static final String GET_PROCESSOR_MULTI_SOURCE = "GET_PROCESSOR_MULTI_SOURCE";
 
-//    @Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
+    @Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
     private Id entityId;
 
-//    @Column(name = "socket")
+    @Column(name = "socket")
     private String socket;
 
-//    @Column(name = "processor_type")
-//    @Enumerated(STRING)
+    @Column(name = "processor_type")
+    @Enumerated(STRING)
     private ProcessorType processorType;
 
-//    @Column(name = "processor_architecture")
-//    @Enumerated(STRING)
+    @Column(name = "processor_architecture")
+    @Enumerated(STRING)
     private ProcessorArchitecture processorArchitecture;
 
-//    @Column(name = "instruction_set")
-//    @Enumerated(STRING)
+    @Column(name = "instruction_set")
+    @Enumerated(STRING)
     private InstructionSet instructionSet;
 
-//    @Column(name = "manufacturer")
+    @Column(name = "manufacturer")
     private String manufacturer;
 
-//    @Column(name = "model")
+    @Column(name = "model")
     private String model;
 
-//    @Column(name = "max_speed_mhz")
+    @Column(name = "max_speed_mhz")
     private Integer maxSpeedMhz;
 
-//    @Column(name = "total_cores")
+    @Column(name = "total_cores")
     private Integer totalCores;
 
-//    @Column(name = "total_threads")
+    @Column(name = "total_threads")
     private Integer totalThreads;
 
-//    @Column(name = "brand")
-//    @Enumerated(STRING)
+    @Column(name = "brand")
+    @Enumerated(STRING)
     private ProcessorBrand brand;
 
-//    @Column(name = "multi_source_discriminator")
+    @Column(name = "multi_source_discriminator")
     private String multiSourceDiscriminator;
 
-//    @Column(name = "thermal_design_power_watt")
+    @Column(name = "thermal_design_power_watt")
     private BigDecimal thermalDesignPowerWatt;
 
-//    @Column(name = "extended_identification_registers")
+    @Column(name = "extended_identification_registers")
     private String extendedIdentificationRegisters;
 
-//    @Embedded
+    @Embedded
     private ProcessorId processorId;
 
-//    @Embedded
+    @Embedded
     private Fpga fpga;
 
-//    @ElementCollection
-//    @CollectionTable(name = "processor_capability", joinColumns = @JoinColumn(name = "processor_id"))
-//    @Column(name = "capability")
-//    @OrderColumn(name = "capability_order")
+    @ElementCollection
+    @CollectionTable(name = "processor_capability", joinColumns = @JoinColumn(name = "processor_id"))
+    @Column(name = "capability")
+    @OrderColumn(name = "capability_order")
     private List<String> capabilities = new ArrayList<>();
 
-//    @ElementCollection
-//    @CollectionTable(name = "processor_on_package_memory", joinColumns = @JoinColumn(name = "processor_id"))
-//    @OrderColumn(name = "on_package_memory_order")
+    @ElementCollection
+    @CollectionTable(name = "processor_on_package_memory", joinColumns = @JoinColumn(name = "processor_id"))
+    @OrderColumn(name = "on_package_memory_order")
     private List<OnPackageMemory> onPackageMemory = new ArrayList<>();
 
-//    @OneToMany(mappedBy = "processor", fetch = LAZY, cascade = {MERGE, PERSIST})
+    @OneToMany(mappedBy = "processor", fetch = LAZY, cascade = {MERGE, PERSIST})
     private Set<Endpoint> endpoints = new HashSet<>();
 
-//    @OneToOne(mappedBy = "processor", fetch = LAZY, cascade = {MERGE, PERSIST})
+    @OneToOne(mappedBy = "processor", fetch = LAZY, cascade = {MERGE, PERSIST})
     private ProcessorMetrics processorMetrics;
 
-//    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinColumn(name = "computer_system_id")
+    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinColumn(name = "computer_system_id")
     private ComputerSystem computerSystem;
 
     @Override

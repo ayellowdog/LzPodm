@@ -17,47 +17,57 @@
 package com.inspur.podm.common.persistence.entity;
 
 
+import static javax.persistence.CascadeType.MERGE;
+import static javax.persistence.CascadeType.PERSIST;
+import static javax.persistence.FetchType.LAZY;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.OrderColumn;
+import javax.persistence.Table;
+
 import com.inspur.podm.common.intel.types.Id;
 import com.inspur.podm.common.persistence.base.Entity;
-
-//@javax.persistence.Entity
-//@Table(name = "processor_metrics", indexes = @Index(name = "idx_processor_metrics_entity_id", columnList = "entity_id", unique = true))
+@javax.persistence.Entity
+@Table(name = "processor_metrics", indexes = @Index(name = "idx_processor_metrics_entity_id", columnList = "entity_id", unique = true))
 //@SuppressWarnings({"checkstyle:MethodCount"})
 public class ProcessorMetrics extends DiscoverableEntity {
-/** @Fields serialVersionUID: TODO 功能描述  */
-	private static final long serialVersionUID = -4720181993633249969L;
 
-//    @Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
+    @Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
     private Id entityId;
 
-//    @Column(name = "bandwidth_percent")
+    @Column(name = "bandwidth_percent")
     private BigDecimal bandwidthPercent;
 
-//    @Column(name = "average_frequency_mhz")
+    @Column(name = "average_frequency_mhz")
     private Integer averageFrequencyMhz;
 
-//    @Column(name = "throttling_celsius")
+    @Column(name = "throttling_celsius")
     private Integer throttlingCelsius;
 
-//    @Column(name = "temperature_celsius")
+    @Column(name = "temperature_celsius")
     private Integer temperatureCelsius;
 
-//    @Column(name = "consumed_power_watt")
+    @Column(name = "consumed_power_watt")
     private Integer consumedPowerWatt;
 
-//    @ElementCollection
-//    @CollectionTable(name = "processor_metrics_health", joinColumns = @JoinColumn(name = "processor_metrics_id"))
-//    @Column(name = "health")
-//    @OrderColumn(name = "health_order")
+    @ElementCollection
+    @CollectionTable(name = "processor_metrics_health", joinColumns = @JoinColumn(name = "processor_metrics_id"))
+    @Column(name = "health")
+    @OrderColumn(name = "health_order")
     private List<String> healthList = new ArrayList<>();
 
-//    @OneToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinColumn(name = "processor_id")
+    @OneToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinColumn(name = "processor_id")
     private Processor processor;
 
     @Override

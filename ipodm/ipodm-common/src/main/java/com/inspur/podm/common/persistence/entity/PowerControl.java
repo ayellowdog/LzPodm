@@ -17,54 +17,62 @@
 package com.inspur.podm.common.persistence.entity;
 
 
+import static javax.persistence.CascadeType.MERGE;
+import static javax.persistence.CascadeType.PERSIST;
+import static javax.persistence.FetchType.LAZY;
+
 import java.math.BigDecimal;
 import java.util.Objects;
+
+import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 import com.inspur.podm.common.intel.types.Id;
 import com.inspur.podm.common.persistence.base.Entity;
 import com.inspur.podm.common.persistence.entity.embeddables.PowerLimit;
 import com.inspur.podm.common.persistence.entity.embeddables.PowerMetrics;
-
-//@javax.persistence.Entity
-//@Table(name = "power_control", indexes = @Index(name = "idx_power_control_entity_id", columnList = "entity_id", unique = true))
+@javax.persistence.Entity
+@Table(name = "power_control", indexes = @Index(name = "idx_power_control_entity_id", columnList = "entity_id", unique = true))
 //@SuppressWarnings({"checkstyle:MethodCount"})
 //@Eventable
 public class PowerControl extends DiscoverableEntity {
-/** @Fields serialVersionUID: TODO 功能描述  */
-	private static final long serialVersionUID = -2441175705148478965L;
 
-	//    @Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
+    @Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
     private Id entityId;
 
-//    @Column(name = "member_id")
+    @Column(name = "member_id")
     private String memberId;
 
-//    @Column(name = "power_consumed_watts")
+    @Column(name = "power_consumed_watts")
     private BigDecimal powerConsumedWatts;
 
-//    @Column(name = "power_requested_watts")
+    @Column(name = "power_requested_watts")
     private BigDecimal powerRequestedWatts;
 
-//    @Column(name = "power_available_watts")
+    @Column(name = "power_available_watts")
     private BigDecimal powerAvailableWatts;
 
-//    @Column(name = "power_capacity_watts")
+    @Column(name = "power_capacity_watts")
     private BigDecimal powerCapacityWatts;
 
-//    @Column(name = "power_allocated_watts")
+    @Column(name = "power_allocated_watts")
     private BigDecimal powerAllocatedWatts;
 
-//    @Column(name = "oem")
+    @Column(name = "oem")
     private String oem;
 
-//    @Embedded
+    @Embedded
     private PowerMetrics powerMetrics;
 
-//    @Embedded
+    @Embedded
     private PowerLimit powerLimit;
 
-//    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinColumn(name = "power_id")
+    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinColumn(name = "power_id")
     private Power power;
 
     @Override

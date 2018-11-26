@@ -16,14 +16,14 @@
 
 package com.inspur.podm.common.persistence.entity;
 
-import com.inspur.podm.common.persistence.base.Entity;
+import javax.persistence.Column;
+import javax.persistence.Table;
 
-//@javax.persistence.Entity
-//@Table(name = "volume_metadata")
+import com.inspur.podm.common.persistence.base.Entity;
+@javax.persistence.Entity
+@Table(name = "volume_metadata")
 public class VolumeMetadata extends Entity {
-/** @Fields serialVersionUID: TODO 功能描述  */
-	private static final long serialVersionUID = -1467043072749499555L;
-//    @Column(name = "allocated")
+    @Column(name = "allocated")
     private boolean allocated;
 
     public boolean isAllocated() {

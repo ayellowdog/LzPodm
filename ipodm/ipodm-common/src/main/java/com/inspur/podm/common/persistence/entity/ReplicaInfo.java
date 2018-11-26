@@ -19,39 +19,47 @@ package com.inspur.podm.common.persistence.entity;
 
 import static com.inspur.podm.common.utils.IterableHelper.singleOrNull;
 import static java.util.stream.Collectors.toSet;
+import static javax.persistence.CascadeType.MERGE;
+import static javax.persistence.CascadeType.PERSIST;
+import static javax.persistence.EnumType.STRING;
+import static javax.persistence.FetchType.LAZY;
 
 import java.util.Objects;
+
+import javax.persistence.Column;
+import javax.persistence.Enumerated;
+import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 import com.inspur.podm.common.intel.types.Id;
 import com.inspur.podm.common.intel.types.ReplicaRole;
 import com.inspur.podm.common.intel.types.ReplicaType;
 import com.inspur.podm.common.persistence.base.Entity;
-
-//@javax.persistence.Entity
-//@Table(name = "replica_info", indexes = @Index(name = "idx_replica_info_entity_id", columnList = "entity_id", unique = true))
+@javax.persistence.Entity
+@Table(name = "replica_info", indexes = @Index(name = "idx_replica_info_entity_id", columnList = "entity_id", unique = true))
 //@SuppressWarnings("checkstyle:MethodCount")
 public class ReplicaInfo extends DiscoverableEntity {
-/** @Fields serialVersionUID: TODO 功能描述  */
-	private static final long serialVersionUID = 9051131059645563650L;
 
-	//    @Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
+    @Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
     private Id entityId;
 
-//    @Column(name = "replica_type")
-//    @Enumerated(STRING)
+    @Column(name = "replica_type")
+    @Enumerated(STRING)
     private ReplicaType replicaType;
 
-//    @Column(name = "replica_role")
-//    @Enumerated(STRING)
+    @Column(name = "replica_role")
+    @Enumerated(STRING)
     private ReplicaRole replicaRole;
 
-//    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinColumn(name = "volume_id")
+    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinColumn(name = "volume_id")
     private Volume volume;
 
 //    @IgnoreUnlinkingRelationship
-//    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinColumn(name = "replica_id")
+    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinColumn(name = "replica_id")
     private Volume replica;
 
     @Override

@@ -20,24 +20,27 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.JoinColumn;
+import javax.persistence.OrderColumn;
+import javax.persistence.Table;
+
 import org.apache.commons.lang3.builder.EqualsBuilder;
 
 import com.inspur.podm.common.persistence.base.Entity;
-
-//@javax.persistence.Entity
-//@Table(name = "metric_definition_wildcard")
+@javax.persistence.Entity
+@Table(name = "metric_definition_wildcard")
 public class MetricDefinitionWildcard extends Entity {
 
-/** @Fields serialVersionUID: TODO 功能描述  */
-	private static final long serialVersionUID = 4387494604817166762L;
-
-//    @Column(name = "name")
+    @Column(name = "name")
     private String name;
 
-//    @ElementCollection
-//    @CollectionTable(name = "metric_definition_wildcard_value", joinColumns = @JoinColumn(name = "metric_definition_wildcard_id"))
-//    @Column(name = "metric_definition_wildcard_value")
-//    @OrderColumn(name = "metric_definition_wildcard_value_order")
+    @ElementCollection
+    @CollectionTable(name = "metric_definition_wildcard_value", joinColumns = @JoinColumn(name = "metric_definition_wildcard_id"))
+    @Column(name = "metric_definition_wildcard_value")
+    @OrderColumn(name = "metric_definition_wildcard_value_order")
     private List<String> values = new ArrayList<>();
 
     public String getName() {

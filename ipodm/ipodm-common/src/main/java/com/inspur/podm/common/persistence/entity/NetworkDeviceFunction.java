@@ -17,34 +17,42 @@
 package com.inspur.podm.common.persistence.entity;
 
 
+import static javax.persistence.CascadeType.MERGE;
+import static javax.persistence.CascadeType.PERSIST;
+import static javax.persistence.FetchType.LAZY;
+
 import java.util.Objects;
+
+import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 import com.inspur.podm.common.intel.types.Id;
 import com.inspur.podm.common.persistence.base.Entity;
 import com.inspur.podm.common.persistence.entity.embeddables.Ethernet;
 import com.inspur.podm.common.persistence.entity.embeddables.IscsiBoot;
 
-
-//@javax.persistence.Entity
-//@Table(name = "network_device_function", indexes = @Index(name = "idx_network_device_function_entity_id", columnList = "entity_id", unique = true))
+@javax.persistence.Entity
+@Table(name = "network_device_function", indexes = @Index(name = "idx_network_device_function_entity_id", columnList = "entity_id", unique = true))
 public class NetworkDeviceFunction extends DiscoverableEntity {
-/** @Fields serialVersionUID: TODO 功能描述  */
-	private static final long serialVersionUID = -3153471057662150278L;
 
-//    @Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
+    @Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
     private Id entityId;
 
-//    @Column(name = "device_enabled")
+    @Column(name = "device_enabled")
     private Boolean deviceEnabled;
 
-//    @Embedded
+    @Embedded
     private Ethernet ethernet;
 
-//    @Embedded
+    @Embedded
     private IscsiBoot iscsiBoot;
 
-//    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinColumn(name = "network_interface_id")
+    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinColumn(name = "network_interface_id")
     private NetworkInterface networkInterface;
 
     @Override

@@ -18,11 +18,29 @@ package com.inspur.podm.common.persistence.entity;
 
 
 import static com.inspur.podm.common.utils.Contracts.requiresNonNull;
+import static javax.persistence.CascadeType.MERGE;
+import static javax.persistence.CascadeType.PERSIST;
+import static javax.persistence.EnumType.STRING;
+import static javax.persistence.FetchType.LAZY;
 
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
+
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
+import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.Enumerated;
+import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 import com.inspur.podm.common.intel.types.Id;
 import com.inspur.podm.common.intel.types.ManagerType;
@@ -32,94 +50,91 @@ import com.inspur.podm.common.persistence.base.NetworkInterfacePossessor;
 import com.inspur.podm.common.persistence.entity.embeddables.CommandShell;
 import com.inspur.podm.common.persistence.entity.embeddables.GraphicalConsole;
 import com.inspur.podm.common.persistence.entity.embeddables.SerialConsole;
-
-//@javax.persistence.Entity
-//@NamedQueries({
-//    @NamedQuery(name = Manager.GET_ALL_MANAGER_IDS, query = "SELECT manager.entityId FROM Manager manager")
-//})
-//@Table(name = "manager", indexes = @Index(name = "idx_manager_entity_id", columnList = "entity_id", unique = true))
+@javax.persistence.Entity
+@NamedQueries({
+    @NamedQuery(name = Manager.GET_ALL_MANAGER_IDS, query = "SELECT manager.entityId FROM Manager manager")
+})
+@Table(name = "manager", indexes = @Index(name = "idx_manager_entity_id", columnList = "entity_id", unique = true))
 //@Eventable
 //@SuppressWarnings({"checkstyle:ClassFanOutComplexity", "checkstyle:MethodCount"})
 public class Manager extends DiscoverableEntity implements NetworkInterfacePossessor {
-    /** @Fields serialVersionUID: TODO 功能描述  */
-	private static final long serialVersionUID = 8616045356434896755L;
 
 	public static final String GET_ALL_MANAGER_IDS = "GET_ALL_MANAGER_IDS";
 
-//    @Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
+    @Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
     private Id entityId;
 
-//    @Column(name = "manager_type")
-//    @Enumerated(STRING)
+    @Column(name = "manager_type")
+    @Enumerated(STRING)
     private ManagerType managerType;
 
-//    @Column(name = "service_entry_point_uuid")
+    @Column(name = "service_entry_point_uuid")
     private UUID serviceEntryPointUuid;
 
-//    @Column(name = "uuid")
+    @Column(name = "uuid")
     private UUID uuid;
 
-//    @Column(name = "model")
+    @Column(name = "model")
     private String model;
 
-//    @Column(name = "date_time")
+    @Column(name = "date_time")
     private String dateTime;
 
-//    @Column(name = "date_time_local_offset")
+    @Column(name = "date_time_local_offset")
     private String dateTimeLocalOffset;
 
-//    @Column(name = "firmware_version")
+    @Column(name = "firmware_version")
     private String firmwareVersion;
 
-//    @Column(name = "power_state")
-//    @Enumerated(STRING)
+    @Column(name = "power_state")
+    @Enumerated(STRING)
     private PowerState powerState;
 
-//    @Embedded
-//    @AttributeOverrides({
-//        @AttributeOverride(name = "serviceEnabled", column = @Column(name = "graphical_console_service_enabled")),
-//        @AttributeOverride(name = "maxConcurrentSessions", column = @Column(name = "graphical_console_max_concurrent_sessions"))
-//    })
+    @Embedded
+    @AttributeOverrides({
+        @AttributeOverride(name = "serviceEnabled", column = @Column(name = "graphical_console_service_enabled")),
+        @AttributeOverride(name = "maxConcurrentSessions", column = @Column(name = "graphical_console_max_concurrent_sessions"))
+    })
     private GraphicalConsole graphicalConsole;
 
-//    @Embedded
-//    @AttributeOverrides({
-//        @AttributeOverride(name = "serviceEnabled", column = @Column(name = "serial_console_service_enabled")),
-//        @AttributeOverride(name = "maxConcurrentSessions", column = @Column(name = "serial_console_max_concurrent_sessions"))
-//    })
+    @Embedded
+    @AttributeOverrides({
+        @AttributeOverride(name = "serviceEnabled", column = @Column(name = "serial_console_service_enabled")),
+        @AttributeOverride(name = "maxConcurrentSessions", column = @Column(name = "serial_console_max_concurrent_sessions"))
+    })
     private SerialConsole serialConsole;
 
-//    @Embedded
-//    @AttributeOverrides({
-//        @AttributeOverride(name = "serviceEnabled", column = @Column(name = "command_shell_service_enabled")),
-//        @AttributeOverride(name = "maxConcurrentSessions", column = @Column(name = "command_shell_concurrent_sessions"))
-//    })
+    @Embedded
+    @AttributeOverrides({
+        @AttributeOverride(name = "serviceEnabled", column = @Column(name = "command_shell_service_enabled")),
+        @AttributeOverride(name = "maxConcurrentSessions", column = @Column(name = "command_shell_concurrent_sessions"))
+    })
     private CommandShell commandShell;
 
 //    @SuppressEvents
-//    @ManyToMany(mappedBy = "managers", fetch = LAZY, cascade = {MERGE, PERSIST})
+    @ManyToMany(mappedBy = "managers", fetch = LAZY, cascade = {MERGE, PERSIST})
     private Set<EthernetInterface> ethernetInterfaces = new HashSet<>();
 
-//    @ManyToMany(mappedBy = "managers", fetch = LAZY, cascade = {MERGE, PERSIST})
+    @ManyToMany(mappedBy = "managers", fetch = LAZY, cascade = {MERGE, PERSIST})
     private Set<ComputerSystem> computerSystems = new HashSet<>();
 
-//    @ManyToMany(mappedBy = "managers", fetch = LAZY, cascade = {MERGE, PERSIST})
+    @ManyToMany(mappedBy = "managers", fetch = LAZY, cascade = {MERGE, PERSIST})
     private Set<Switch> fabricSwitches = new HashSet<>();
 
-//    @ManyToMany(mappedBy = "managers", fetch = LAZY, cascade = {MERGE, PERSIST})
+    @ManyToMany(mappedBy = "managers", fetch = LAZY, cascade = {MERGE, PERSIST})
     private Set<Chassis> managedChassis = new HashSet<>();
 
-//    @ManyToMany(mappedBy = "managers", fetch = LAZY, cascade = {MERGE, PERSIST})
+    @ManyToMany(mappedBy = "managers", fetch = LAZY, cascade = {MERGE, PERSIST})
     private Set<EthernetSwitch> ethernetSwitches = new HashSet<>();
 
-//    @ManyToMany(mappedBy = "managers", fetch = LAZY, cascade = {MERGE, PERSIST})
+    @ManyToMany(mappedBy = "managers", fetch = LAZY, cascade = {MERGE, PERSIST})
     private Set<StorageService> storageServices = new HashSet<>();
 
-//    @OneToOne(mappedBy = "manager", fetch = LAZY, cascade = {MERGE, PERSIST})
+    @OneToOne(mappedBy = "manager", fetch = LAZY, cascade = {MERGE, PERSIST})
     private NetworkProtocol networkProtocol;
 
-//    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinColumn(name = "in_chassis_manager_id")
+    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinColumn(name = "in_chassis_manager_id")
     private Chassis inChassisManager;
 
     @Override

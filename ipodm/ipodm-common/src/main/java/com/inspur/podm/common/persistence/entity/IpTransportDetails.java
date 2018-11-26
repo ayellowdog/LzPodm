@@ -18,56 +18,67 @@ package com.inspur.podm.common.persistence.entity;
 
 
 import static java.util.Optional.ofNullable;
+import static javax.persistence.CascadeType.MERGE;
+import static javax.persistence.CascadeType.PERSIST;
+import static javax.persistence.EnumType.STRING;
+import static javax.persistence.FetchType.LAZY;
 import static org.apache.commons.lang3.ObjectUtils.firstNonNull;
 
 import java.util.Objects;
 import java.util.Optional;
+
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
+import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.Enumerated;
+import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 import com.inspur.podm.common.intel.types.Id;
 import com.inspur.podm.common.intel.types.Protocol;
 import com.inspur.podm.common.persistence.base.Entity;
 import com.inspur.podm.common.persistence.entity.embeddables.IpV4Address;
 import com.inspur.podm.common.persistence.entity.embeddables.IpV6Address;
-
-//@javax.persistence.Entity
-//@Table(name = "ip_transport_details", indexes = @Index(name = "idx_transport_entity_id", columnList = "entity_id", unique = true))
+@javax.persistence.Entity
+@Table(name = "ip_transport_details", indexes = @Index(name = "idx_transport_entity_id", columnList = "entity_id", unique = true))
 //@SuppressWarnings({"checkstyle:MethodCount"})
 public class IpTransportDetails extends DiscoverableEntity {
-/** @Fields serialVersionUID: TODO 功能描述  */
-	private static final long serialVersionUID = 2561837011980863153L;
 
-	//    @Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
+	@Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
     private Id entityId;
 
-//    @Column(name = "transport_protocol")
-//    @Enumerated(STRING)
+    @Column(name = "transport_protocol")
+    @Enumerated(STRING)
     private Protocol transportProtocol;
 
-//    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinColumn(name = "endpoint_id")
+    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinColumn(name = "endpoint_id")
     private Endpoint endpoint;
 
-////    @Embedded
-////    @AttributeOverrides({
-//        @AttributeOverride(name = "address", column = @Column(name = "ipv4_address")),
-//        @AttributeOverride(name = "subnetMask", column = @Column(name = "ipv4_subnet_mask")),
-//        @AttributeOverride(name = "addressOrigin", column = @Column(name = "ipv4_address_origin")),
-//        @AttributeOverride(name = "gateway", column = @Column(name = "ipv4_gateway")),
-//        @AttributeOverride(name = "oem", column = @Column(name = "ipv4_oem")),
-//    })
+    @Embedded
+    @AttributeOverrides({
+        @AttributeOverride(name = "address", column = @Column(name = "ipv4_address")),
+        @AttributeOverride(name = "subnetMask", column = @Column(name = "ipv4_subnet_mask")),
+        @AttributeOverride(name = "addressOrigin", column = @Column(name = "ipv4_address_origin")),
+        @AttributeOverride(name = "gateway", column = @Column(name = "ipv4_gateway")),
+        @AttributeOverride(name = "oem", column = @Column(name = "ipv4_oem")),
+    })
     private IpV4Address ipV4Address;
 
-//    @Embedded
-//    @AttributeOverrides({
-//        @AttributeOverride(name = "address", column = @Column(name = "ipv6_address")),
-//        @AttributeOverride(name = "subnetMask", column = @Column(name = "ipv6_subnet_mask")),
-//        @AttributeOverride(name = "addressOrigin", column = @Column(name = "ipv6_address_origin")),
-//        @AttributeOverride(name = "gateway", column = @Column(name = "ipv6_gateway")),
-//        @AttributeOverride(name = "oem", column = @Column(name = "ipv6_oem")),
-//    })
+    @Embedded
+    @AttributeOverrides({
+        @AttributeOverride(name = "address", column = @Column(name = "ipv6_address")),
+        @AttributeOverride(name = "subnetMask", column = @Column(name = "ipv6_subnet_mask")),
+        @AttributeOverride(name = "addressOrigin", column = @Column(name = "ipv6_address_origin")),
+        @AttributeOverride(name = "gateway", column = @Column(name = "ipv6_gateway")),
+        @AttributeOverride(name = "oem", column = @Column(name = "ipv6_oem")),
+    })
     private IpV6Address ipV6Address;
 
-//    @Column(name = "port")
+    @Column(name = "port")
     private Integer port;
 
     @Override

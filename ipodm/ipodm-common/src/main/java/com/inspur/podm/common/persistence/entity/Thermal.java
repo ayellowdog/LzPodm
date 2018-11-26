@@ -18,42 +18,50 @@ package com.inspur.podm.common.persistence.entity;
 
 
 import static com.inspur.podm.common.utils.Contracts.requiresNonNull;
+import static javax.persistence.CascadeType.MERGE;
+import static javax.persistence.CascadeType.PERSIST;
+import static javax.persistence.FetchType.LAZY;
 
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.persistence.Column;
+import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
 import com.inspur.podm.common.intel.types.Id;
 import com.inspur.podm.common.persistence.base.Entity;
-
-//@javax.persistence.Entity
-//@Table(name = "thermal", indexes = @Index(name = "idx_thermal_entity_id", columnList = "entity_id", unique = true))
+@javax.persistence.Entity
+@Table(name = "thermal", indexes = @Index(name = "idx_thermal_entity_id", columnList = "entity_id", unique = true))
 //@SuppressWarnings({"checkstyle:MethodCount"})
 //@Eventable
 public class Thermal extends DiscoverableEntity {
-/** @Fields serialVersionUID: TODO 功能描述  */
-	private static final long serialVersionUID = -582855327302689347L;
 
-	//    @Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
+    @Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
     private Id entityId;
 
-//    @Column(name = "desired_speed_pwm")
+    @Column(name = "desired_speed_pwm")
     private Integer desiredSpeedPwm;
 
-//    @Column(name = "volumetric_air_flow_cfm")
+    @Column(name = "volumetric_air_flow_cfm")
     private Integer volumetricAirflowCfm;
 
-//    @OneToMany(mappedBy = "thermal", fetch = LAZY, cascade = {MERGE, PERSIST})
+    @OneToMany(mappedBy = "thermal", fetch = LAZY, cascade = {MERGE, PERSIST})
     private Set<ThermalTemperature> temperatures = new HashSet<>();
 
-//    @OneToMany(mappedBy = "thermal", fetch = LAZY, cascade = {MERGE, PERSIST})
+    @OneToMany(mappedBy = "thermal", fetch = LAZY, cascade = {MERGE, PERSIST})
     private Set<ThermalFan> fans = new HashSet<>();
 
-//    @OneToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinColumn(name = "chassis_id")
+    @OneToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinColumn(name = "chassis_id")
     private Chassis chassis;
 
-//    @ManyToMany(mappedBy = "cooledBy", fetch = LAZY, cascade = {MERGE, PERSIST})
+    @ManyToMany(mappedBy = "cooledBy", fetch = LAZY, cascade = {MERGE, PERSIST})
     private Set<Chassis> cooledChassis = new HashSet<>();
 
     @Override

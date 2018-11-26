@@ -22,6 +22,11 @@ import static com.inspur.podm.common.utils.Contracts.requiresNonNull;
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 import static java.util.stream.Collectors.toSet;
+import static javax.persistence.CascadeType.MERGE;
+import static javax.persistence.CascadeType.PERSIST;
+import static javax.persistence.CascadeType.REMOVE;
+import static javax.persistence.EnumType.STRING;
+import static javax.persistence.FetchType.LAZY;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -30,121 +35,131 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Embedded;
+import javax.persistence.Enumerated;
+import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.OrderColumn;
+import javax.persistence.Table;
+
 import com.inspur.podm.common.intel.types.EncryptionTypes;
 import com.inspur.podm.common.intel.types.Id;
 import com.inspur.podm.common.intel.types.StorageAccessCapability;
 import com.inspur.podm.common.intel.types.VolumeType;
 import com.inspur.podm.common.intel.types.actions.InitializeType;
-import com.inspur.podm.common.persistence.base.Entity;
 import com.inspur.podm.common.persistence.base.ComposableAsset;
+import com.inspur.podm.common.persistence.base.Entity;
 import com.inspur.podm.common.persistence.entity.embeddables.Capacity;
 import com.inspur.podm.common.persistence.entity.embeddables.Identifier;
 import com.inspur.podm.common.persistence.entity.embeddables.Operation;
-
-//@javax.persistence.Entity
-//@Table(name = "volume", indexes = @Index(name = "idx_volume_entity_id", columnList = "entity_id", unique = true))
+@javax.persistence.Entity
+@Table(name = "volume", indexes = @Index(name = "idx_volume_entity_id", columnList = "entity_id", unique = true))
 //@EntityListeners(VolumeListener.class)
 //@Eventable
 //@SuppressWarnings({"checkstyle:MethodCount", "checkstyle:ClassFanOutComplexity"})
 public class Volume extends DiscoverableEntity implements ComposableAsset {
-/** @Fields serialVersionUID: TODO 功能描述  */
-	private static final long serialVersionUID = 6507291427449363517L;
 
-	//    @Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
+    @Column(name = "entity_id", columnDefinition = ENTITY_ID_STRING_COLUMN_DEFINITION)
     private Id entityId;
 
-//    @Column(name = "capacity_bytes")
+    @Column(name = "capacity_bytes")
     private BigDecimal capacityBytes;
 
-//    @Embedded
+    @Embedded
     private Capacity capacity;
 
-//    @Column(name = "volume_type")
-//    @Enumerated(STRING)
+    @Column(name = "volume_type")
+    @Enumerated(STRING)
     private VolumeType volumeType;
 
-//    @Column(name = "encrypted")
+    @Column(name = "encrypted")
     private Boolean encrypted;
 
-//    @Column(name = "encryption_types")
-//    @Enumerated(STRING)
+    @Column(name = "encryption_types")
+    @Enumerated(STRING)
     private EncryptionTypes encryptionTypes;
 
-//    @Column(name = "block_size_bytes")
+    @Column(name = "block_size_bytes")
     private BigDecimal blockSizeBytes;
 
-//    @Column(name = "optimum_io_size_bytes")
+    @Column(name = "optimum_io_size_bytes")
     private BigDecimal optimumIoSizeBytes;
 
-//    @Column(name = "bootable")
+    @Column(name = "bootable")
     private Boolean bootable;
 
-//    @Column(name = "erase_on_detach")
+    @Column(name = "erase_on_detach")
     private Boolean eraseOnDetach;
 
-//    @Column(name = "erased")
+    @Column(name = "erased")
     private Boolean erased;
 
-//    @Column(name = "initialize_action_supported")
+    @Column(name = "initialize_action_supported")
     private Boolean initializeActionSupported;
 
-//    @Column(name = "manufacturer")
+    @Column(name = "manufacturer")
     private String manufacturer;
 
-//    @Column(name = "model")
+    @Column(name = "model")
     private String model;
 
-//    @ElementCollection
-//    @CollectionTable(name = "volume_identifier", joinColumns = @JoinColumn(name = "volume_id"))
+    @ElementCollection
+    @CollectionTable(name = "volume_identifier", joinColumns = @JoinColumn(name = "volume_id"))
     private Set<Identifier> identifiers = new HashSet<>();
 
-//    @ElementCollection
-//    @CollectionTable(name = "volume_operation", joinColumns = @JoinColumn(name = "volume_id"))
-//    @OrderColumn(name = "operation_order")
+    @ElementCollection
+    @CollectionTable(name = "volume_operation", joinColumns = @JoinColumn(name = "volume_id"))
+    @OrderColumn(name = "operation_order")
     private List<Operation> operations = new ArrayList<>();
 
-//    @ElementCollection
-//    @CollectionTable(name = "volume_access_capability", joinColumns = @JoinColumn(name = "volume_id"))
-//    @OrderColumn(name = "access_capability_order")
-//    @Column(name = "access_capability")
-//    @Enumerated(STRING)
+    @ElementCollection
+    @CollectionTable(name = "volume_access_capability", joinColumns = @JoinColumn(name = "volume_id"))
+    @OrderColumn(name = "access_capability_order")
+    @Column(name = "access_capability")
+    @Enumerated(STRING)
     private List<StorageAccessCapability> accessCapabilities = new ArrayList<>();
 
-//    @OneToMany(mappedBy = "volume", fetch = LAZY, cascade = {MERGE, PERSIST})
+    @OneToMany(mappedBy = "volume", fetch = LAZY, cascade = {MERGE, PERSIST})
     private Set<CapacitySource> capacitySources = new HashSet<>();
 
-//    @OneToMany(mappedBy = "volume", fetch = LAZY, cascade = {MERGE, PERSIST})
+    @OneToMany(mappedBy = "volume", fetch = LAZY, cascade = {MERGE, PERSIST})
     private List<ReplicaInfo> replicaInfos = new ArrayList<>();
 
-//    @OneToMany(mappedBy = "volume", fetch = LAZY, cascade = {MERGE, PERSIST})
+    @OneToMany(mappedBy = "volume", fetch = LAZY, cascade = {MERGE, PERSIST})
     private Set<Drive> drives = new HashSet<>();
 
 //    @IgnoreUnlinkingRelationship
-//    @OneToOne(fetch = LAZY, cascade = {MERGE, PERSIST, REMOVE})
-//    @JoinColumn(name = "volume_metadata_id")
+    @OneToOne(fetch = LAZY, cascade = {MERGE, PERSIST, REMOVE})
+    @JoinColumn(name = "volume_metadata_id")
     private VolumeMetadata metadata = new VolumeMetadata();
 
-//    @OneToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinColumn(name = "volume_metrics_id")
+    @OneToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinColumn(name = "volume_metrics_id")
     private VolumeMetrics metrics;
 
-//    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinColumn(name = "storage_service_id")
+    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinColumn(name = "storage_service_id")
     private StorageService storageService;
 
-//    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinColumn(name = "storage_pool_id")
+    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinColumn(name = "storage_pool_id")
     private StoragePool storagePool;
 
-//    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
-//    @JoinColumn(name = "composed_node_id")
+    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
+    @JoinColumn(name = "composed_node_id")
     private ComposedNode composedNode;
 
-//    @ElementCollection
-//    @Enumerated(STRING)
-//    @CollectionTable(name = "volume_allowable_initialize_type", joinColumns = @JoinColumn(name = "volume_id"))
-//    @Column(name = "allowable_initialize_type")
-//    @OrderColumn(name = "allowable_initialize_type_order")
+    @ElementCollection
+    @Enumerated(STRING)
+    @CollectionTable(name = "volume_allowable_initialize_type", joinColumns = @JoinColumn(name = "volume_id"))
+    @Column(name = "allowable_initialize_type")
+    @OrderColumn(name = "allowable_initialize_type_order")
     private List<InitializeType> allowableInitializeTypes = new ArrayList<>();
 
     @Override
