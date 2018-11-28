@@ -27,27 +27,27 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
-import com.inspur.podm.common.persistence.EntityNotFoundException;
-import com.inspur.podm.common.intel.logger.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Repository;
+
 import com.inspur.podm.common.intel.types.Id;
+import com.inspur.podm.common.persistence.EntityNotFoundException;
 import com.inspur.podm.common.persistence.base.Entity;
 
-@ApplicationScoped
+@Repository
 class EntityRepository {
     @PersistenceContext
     protected EntityManager entityManager;
+	private static final Logger logger = LoggerFactory.getLogger(EntityRepository.class);
 
-    @Inject
-    private Logger logger;
-
-    @Transactional(MANDATORY)
+//    @Transactional(MANDATORY)
+	@Transactional
     public <T extends Entity> T create(Class<T> entityClass) {
         requiresNonNull(entityClass, "entityClass");
 
@@ -57,7 +57,6 @@ class EntityRepository {
         } catch (InstantiationException | IllegalAccessException e) {
             throw new IllegalStateException("Couldn't instantiate entity of type: " + entityClass);
         }
-
         entityManager.persist(entity);
         return entity;
     }
@@ -90,7 +89,7 @@ class EntityRepository {
             if (entityManager.contains(entity)) {
                 entityManager.remove(entity);
             } else {
-                logger.e("Found a detached entity: {}", entity);
+                logger.info("Found a detached entity: {}", entity);
             }
         }
     }

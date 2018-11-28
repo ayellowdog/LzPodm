@@ -16,10 +16,10 @@
 
 package com.inspur.podm.service.dao;
 
+import static com.inspur.podm.common.intel.types.ChassisType.SLED;
 import static com.inspur.podm.common.persistence.entity.Chassis.GET_CHASSIS_BY_TYPE;
 import static com.inspur.podm.common.persistence.entity.Chassis.GET_CHASSIS_IDS_FROM_PRIMARY_DATA_SOURCE;
 import static com.inspur.podm.common.persistence.entity.Chassis.GET_CHASSIS_MULTI_SOURCE;
-import static com.inspur.podm.common.intel.types.ChassisType.SLED;
 import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.toSet;
 import static javax.transaction.Transactional.TxType.MANDATORY;
@@ -29,9 +29,10 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
-import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
+
+import org.springframework.stereotype.Repository;
 
 import com.inspur.podm.common.intel.types.ChassisType;
 import com.inspur.podm.common.intel.types.Id;
@@ -39,7 +40,7 @@ import com.inspur.podm.common.persistence.entity.Chassis;
 import com.inspur.podm.common.persistence.entity.ComputerSystem;
 import com.inspur.podm.common.persistence.entity.ExternalService;
 
-@ApplicationScoped
+@Repository
 public class ChassisDao extends Dao<Chassis> {
     @Transactional(MANDATORY)
     public List<Chassis> getAllByChassisType(ChassisType chassisType) {

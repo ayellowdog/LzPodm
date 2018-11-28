@@ -22,22 +22,23 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-import javax.enterprise.context.Dependent;
-import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.inspur.podm.common.intel.types.Id;
 import com.inspur.podm.common.persistence.base.Entity;
 
-@Dependent
+@Repository
 public class Dao<T extends Entity> {
     protected Class<T> entityClass;
 
     @PersistenceContext
     protected EntityManager entityManager;
 
-    @Inject
+    @Autowired
     private EntityRepository repository;
 
     @SuppressWarnings("unchecked")

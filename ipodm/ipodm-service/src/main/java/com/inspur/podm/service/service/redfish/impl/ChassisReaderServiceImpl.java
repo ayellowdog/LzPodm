@@ -41,15 +41,15 @@ import com.inspur.podm.service.dao.ChassisDao;
 import com.inspur.podm.service.service.redfish.EntityTreeTraverser;
 import com.inspur.podm.service.service.redfish.aggregation.ChassisMerger;
 
-@RequestScoped
+//@RequestScoped
 class ChassisReaderServiceImpl implements ReaderService<ChassisDto> {
-    @Inject
+//    @Inject
     private ChassisDao chassisDao;
 
-    @Inject
+//    @Inject
     private EntityTreeTraverser traverser;
 
-    @Inject
+//    @Inject
     private ChassisMerger chassisMerger;
 
     @Transactional(REQUIRED)

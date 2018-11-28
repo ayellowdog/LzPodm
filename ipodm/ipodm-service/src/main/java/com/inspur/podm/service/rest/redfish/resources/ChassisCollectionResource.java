@@ -37,11 +37,11 @@ import com.inspur.podm.api.business.services.redfish.ReaderService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
-@RestController
-@RequestMapping("/redfish/v1/Chassis")
-@Api(value = "ChassisController", description = "Chassis Controller")
+//@RestController
+//@RequestMapping("/redfish/v1/Chassis")
+//@Api(value = "ChassisController", description = "Chassis Controller")
 public class ChassisCollectionResource extends BaseResource {
-    @Inject
+//    @Inject
     private ReaderService<ChassisDto> readerService;
 
     @RequestMapping(method=RequestMethod.GET)

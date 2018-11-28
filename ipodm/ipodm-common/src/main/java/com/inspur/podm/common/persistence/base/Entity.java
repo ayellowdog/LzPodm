@@ -4,7 +4,6 @@ import static java.lang.String.format;
 import static java.util.Objects.hash;
 import static javax.persistence.GenerationType.IDENTITY;
 
-import java.io.Serializable;
 import java.net.URI;
 import java.util.Collection;
 import java.util.Iterator;
@@ -17,6 +16,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.PreRemove;
 import javax.persistence.Version;
+
 
 /**
  * 
@@ -34,18 +34,16 @@ public abstract class Entity {
 
     @javax.persistence.Id
     @GeneratedValue(strategy = IDENTITY)
-	private long id;
-	
-	/**
-	 * RSD中用于persist的插入验证，后续优化.
-	 */
+    @Column(name = "id")
+    private long id;
+
     @Version
     @Column(name = "version", columnDefinition = "integer DEFAULT 0", nullable = false)
     private long version;
-	
+
     @Column(name = "event_source_context")
     private URI eventSourceContext;
-    
+
     protected long getPrimaryKey() {
         return id;
     }
@@ -108,24 +106,8 @@ public abstract class Entity {
     public String toString() {
         return format("Entity {clazz=%s, primaryKey=%d}", getClass().getSimpleName(), getPrimaryKey());
     }
-    
-//    public long getId() {
-//		return id;
-//	}
-//
-	public void setId(long id) {
-		this.id = id;
-	}
 
-	public long getVersion() {
-		return version;
-	}
-
-	public void setVersion(long version) {
-		this.version = version;
-	}
-
-	public URI getEventSourceContext() {
+    public URI getEventSourceContext() {
         return eventSourceContext;
     }
 

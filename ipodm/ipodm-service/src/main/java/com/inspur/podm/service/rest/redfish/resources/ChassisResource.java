@@ -48,10 +48,10 @@ import com.inspur.podm.service.rest.redfish.json.templates.actions.constraints.C
 
 @SuppressWarnings({"checkstyle:ClassFanOutComplexity"})
 public class ChassisResource extends BaseResource {
-    @Inject
+//    @Inject
     private ReaderService<ChassisDto> readerService;
 
-    @Inject
+//    @Inject
     private UpdateService<RedfishChassis> updateService;
 
     @Override
