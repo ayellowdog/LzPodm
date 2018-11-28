@@ -18,7 +18,6 @@ import com.inspur.podm.common.persistence.entity.Chassis;
  * @date: 2018年11月27日 下午5:08:36
  */
 @Repository
-@org.springframework.transaction.annotation.Transactional
 public interface MyChassisDao extends JpaRepository<Chassis,Long>{
 
 }

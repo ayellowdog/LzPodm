@@ -17,7 +17,7 @@ import com.inspur.podm.service.itaskbase.service.TaskInfoService;
  * @author: liuchangbj
  * @date: 2018年11月14日 上午9:40:34
  */
-@Component
+//@Component
 //@Order(1)
 public class ServiceDetectionStartUp implements ApplicationRunner {
 	@Autowired
@@ -25,11 +25,11 @@ public class ServiceDetectionStartUp implements ApplicationRunner {
 	private static final Logger logger = LoggerFactory.getLogger(ServiceDetectionStartUp.class);
 	@Override
 	public void run(ApplicationArguments arg0) throws Exception {
-		logger.info("Service dection is starting");
-		TaskInfoModel taskModel = new TaskInfoModel("11111", "ttttt", "0/30 * * * * ? *", null, "dhcp",
-				"dhcpServiceDetector", "test", new Object[] {"一条大黄狗"}, "0");
-		taskInfoService.addITaskInfo(taskModel);
-		
+//		logger.info("Service dection is starting");
+//		TaskInfoModel taskModel = new TaskInfoModel("11111", "ttttt", "0/30 * * * * ? *", null, "dhcp",
+//				"dhcpServiceDetector", "test", new Object[] {"一条大黄狗"}, "0");
+//		taskInfoService.addITaskInfo(taskModel);
+//		
 	}
 
 }

@@ -24,7 +24,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @SpringBootApplication
 //@EnableEncryptableProperties
 @ComponentScan(basePackages = "com.inspur.podm")
-@EnableJpaRepositories(basePackages={"com.inspur.podm"})
+@EnableJpaRepositories(basePackages={"com.inspur.podm.*."})
 @EntityScan("com.inspur.podm")
 @Configuration
 public class ServiceApplication {
