@@ -57,47 +57,47 @@ public class DiscoverableEntityDao extends Dao<DiscoverableEntity> {
         }
     };
 
-    @Transactional(MANDATORY)
+//    @Transactional(MANDATORY)
     public <T extends DiscoverableEntity> T findByGlobalId(Id globalId, Class<T> clazz) {
         return singleOrNull(entityManager.createQuery("SELECT e FROM " + clazz.getSimpleName() + " e WHERE e.globalId = :globalId", clazz)
             .setParameter("globalId", globalId)
             .getResultList());
     }
 
-    @Transactional(MANDATORY)
+//    @Transactional(MANDATORY)
     public <T extends DiscoverableEntity> void removeWithConnectedExternalLinks(T entity) {
         genericDao.removeAndClear(entity.getExternalLinks());
         genericDao.remove(entity);
     }
 
-    @Transactional(MANDATORY)
+//    @Transactional(MANDATORY)
     public <T extends DiscoverableEntity> T createEntity(ExternalService externalService, Id entityId, Class<T> clazz) {
         T entity = create(clazz);
-        entity.setId(entityId);
+        entity.setTheId(entityId);
         entity.setGlobalId(entityId);
         entity.setComplementary(externalService.isComplementaryDataSource());
         return entity;
     }
 
-    @Transactional(MANDATORY)
+//    @Transactional(MANDATORY)
     public <T extends DiscoverableEntity> T findOrCreateEntity(ExternalService externalService, Id globalId, URI uri, Class<T> clazz) {
         FindOrCreateStrategy entityCreator = findOrCreateStrategyRegistry.get(clazz);
         return entityCreator.findOrCreate(externalService, globalId, uri, clazz);
     }
 
-    @Transactional(MANDATORY)
+//    @Transactional(MANDATORY)
     public <T extends DiscoverableEntity> void removeWithConnectedExternalLinks(Collection<T> discoverableEntities) {
         new HashSet<>(discoverableEntities).forEach(this::removeWithConnectedExternalLinks);
     }
 
-    @Transactional(MANDATORY)
+//    @Transactional(MANDATORY)
     public <T extends DiscoverableEntity, S extends DiscoverableEntity>
     void removeWithConnectedExternalLinks(Collection<T> entities, Function<T, Collection<S>> subResourceProvider) {
         entities.forEach(de -> removeWithConnectedExternalLinks(subResourceProvider.apply(de)));
         removeWithConnectedExternalLinks(entities);
     }
 
-    @Transactional(MANDATORY)
+//    @Transactional(MANDATORY)
     public <T extends DiscoverableEntity> T findBy(ExternalService externalService, URI sourceUri, Class<T> clazz) {
         TypedQuery<T> query = entityManager.createNamedQuery(GET_ENTITY_BY_SERVICE_AND_SOURCE_URI, clazz);
         query.setParameter("externalService", externalService);

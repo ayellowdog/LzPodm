@@ -56,7 +56,7 @@ public class DriveDao extends Dao<Drive> {
     @Inject
     private ChassisDao chassisDao;
 
-    @Transactional(MANDATORY)
+//    @Transactional(MANDATORY)
     public Set<Drive> getAchievablePcieDrives(ComputerSystem computerSystem) {
         List<String> pcieConnectionIds = computerSystem.getPcieConnectionIds();
 
@@ -66,7 +66,7 @@ public class DriveDao extends Dao<Drive> {
             .collect(toSet());
     }
 
-    @Transactional(MANDATORY)
+//    @Transactional(MANDATORY)
     public Set<Drive> getAchievablePcieDrives(Port upstreamPort) {
         Stream<Port> downstreamPorts = getDownstreamPortsThatBelongToTheSameSwitch(upstreamPort);
         return getConnectedDrives(downstreamPorts)
@@ -77,7 +77,7 @@ public class DriveDao extends Dao<Drive> {
             .collect(toSet());
     }
 
-    @Transactional(MANDATORY)
+//    @Transactional(MANDATORY)
     public List<Drive> findComplementaryDrives(Drive drive) {
         Chassis driveChassis = drive.getChassis();
         String driveDiscriminator = drive.getMultiSourceDiscriminator();
@@ -88,7 +88,7 @@ public class DriveDao extends Dao<Drive> {
             .collect(toList());
     }
 
-    @Transactional(MANDATORY)
+//    @Transactional(MANDATORY)
     public Optional<Drive> findPrimaryDrive(Drive complementaryDrive) {
         TypedQuery<Drive> query = entityManager.createNamedQuery(GET_PRIMARY_DRIVE, Drive.class);
         query.setParameter("multiSourceDiscriminator", complementaryDrive.getMultiSourceDiscriminator());

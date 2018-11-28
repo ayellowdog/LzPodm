@@ -113,12 +113,12 @@ public class Port extends DiscoverableEntity implements Resettable {
     private PortMetrics portMetrics;
 
     @Override
-    public Id getId() {
+    public Id getTheId() {
         return entityId;
     }
 
     @Override
-    public void setId(Id id) {
+    public void setTheId(Id id) {
         entityId = id;
     }
 

@@ -31,7 +31,7 @@ import com.inspur.podm.common.persistence.entity.Volume;
 @ApplicationScoped
 public class ConnectedEntityDao extends Dao<Endpoint> {
 
-    @Transactional(MANDATORY)
+//    @Transactional(MANDATORY)
     public ConnectedEntity getConnectedEntity(Endpoint endpoint, Volume volume) {
         TypedQuery<ConnectedEntity> query = entityManager.createNamedQuery(GET_CONNECTED_ENTITY_BY_ENTITY_LINK_AND_ENDPOINT, ConnectedEntity.class);
         query.setParameter("endpoint", endpoint);

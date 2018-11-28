@@ -32,7 +32,7 @@ import com.inspur.podm.common.persistence.entity.StorageController;
 
 @ApplicationScoped
 public class StorageControllerDao extends Dao<StorageController> {
-    @Transactional(MANDATORY)
+//    @Transactional(MANDATORY)
     public List<StorageController> findComplementaryStorageControllers(StorageController storageController) {
         TypedQuery<StorageController> query = entityManager.createNamedQuery(GET_STORAGE_CONTROLLER_MULTI_SOURCE, StorageController.class);
         query.setParameter("multiSourceDiscriminator", storageController.getMultiSourceDiscriminator());
@@ -40,7 +40,7 @@ public class StorageControllerDao extends Dao<StorageController> {
         return query.getResultList();
     }
 
-    @Transactional(MANDATORY)
+//    @Transactional(MANDATORY)
     public Optional<StorageController> findPrimaryStorageController(StorageController complementaryStorageController) {
         TypedQuery<StorageController> query = entityManager.createNamedQuery(GET_STORAGE_CONTROLLER_MULTI_SOURCE, StorageController.class);
         query.setParameter("multiSourceDiscriminator", complementaryStorageController.getMultiSourceDiscriminator());

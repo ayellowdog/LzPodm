@@ -43,17 +43,17 @@ import com.inspur.podm.common.persistence.entity.ComputerSystem;
 
 @ApplicationScoped
 public class ComputerSystemDao extends Dao<ComputerSystem> {
-    @Transactional(MANDATORY)
+//    @Transactional(MANDATORY)
     public List<Id> findAllComputerSystemsFromPrimaryDataSource() {
         return entityManager.createNamedQuery(GET_COMPUTER_SYSTEM_IDS_FROM_PRIMARY_DATA_SOURCE, Id.class).getResultList();
     }
 
-    @Transactional(MANDATORY)
+//    @Transactional(MANDATORY)
     public Optional<ComputerSystem> findPrimarySystem(ComputerSystem complementarySystem) {
         return findPrimarySystem(complementarySystem.getUuid());
     }
 
-    @Transactional(MANDATORY)
+//    @Transactional(MANDATORY)
     public Optional<ComputerSystem> findPrimarySystem(UUID complementarySystemUuid) {
         TypedQuery<ComputerSystem> query = entityManager.createNamedQuery(GET_PRIMARY_COMPUTER_SYSTEM, ComputerSystem.class);
         query.setParameter("uuid", complementarySystemUuid);
@@ -61,7 +61,7 @@ public class ComputerSystemDao extends Dao<ComputerSystem> {
         return ofNullable(singleOrNull(query.getResultList()));
     }
 
-    @Transactional(MANDATORY)
+//    @Transactional(MANDATORY)
     public List<ComputerSystem> findComplementarySystems(ComputerSystem computerSystem) {
         TypedQuery<ComputerSystem> query = entityManager.createNamedQuery(GET_COMPUTER_SYSTEM_MULTI_SOURCE, ComputerSystem.class);
         query.setParameter("uuid", computerSystem.getUuid());
@@ -69,7 +69,7 @@ public class ComputerSystemDao extends Dao<ComputerSystem> {
         return query.getResultList();
     }
 
-    @Transactional(MANDATORY)
+//    @Transactional(MANDATORY)
     public List<ComputerSystem> getComputerSystemsPossibleToAllocate() {
         TypedQuery<ComputerSystem> query = entityManager.createNamedQuery(GET_COMPUTER_SYSTEMS_AVAILABLE_TO_ALLOCATE, ComputerSystem.class);
         query.setParameter("allocated", false);
@@ -78,14 +78,14 @@ public class ComputerSystemDao extends Dao<ComputerSystem> {
         return query.getResultList();
     }
 
-    @Transactional(MANDATORY)
+//    @Transactional(MANDATORY)
     public ComputerSystem tryGetUniqueComputerSystemByPcieConnectionId(String connectionId) {
         TypedQuery<ComputerSystem> query = entityManager.createNamedQuery(GET_COMPUTER_SYSTEMS_MATCHING_CONNECTION_ID, ComputerSystem.class);
         query.setParameter("pcieConnectionId", connectionId);
         return getUniqueValueFromSingletonListOrNull(query.getResultList());
     }
 
-    @Transactional(MANDATORY)
+//    @Transactional(MANDATORY)
     public Optional<ComputerSystem> getUniquePhysicalComputerSystemByUuid(UUID uuid) {
         TypedQuery<ComputerSystem> query = entityManager.createNamedQuery(GET_PHYSICAL_COMPUTER_SYSTEM_BY_UUID, ComputerSystem.class);
         query.setParameter("uuid", uuid);

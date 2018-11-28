@@ -28,7 +28,7 @@ import com.inspur.podm.common.intel.types.Id;
 import com.inspur.podm.common.persistence.entity.Fabric;
 
 @Dependent
-@Transactional(MANDATORY)
+//@Transactional(MANDATORY)
 public class FabricDao extends Dao<Fabric> {
     public List<Id> getAllFabricIds() {
         return entityManager.createNamedQuery(GET_ALL_FABRIC_IDS, Id.class).getResultList();

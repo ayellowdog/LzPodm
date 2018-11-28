@@ -33,7 +33,7 @@ import static javax.transaction.Transactional.TxType.MANDATORY;
 @ApplicationScoped
 public class EndpointDao extends Dao<Endpoint> {
 
-    @Transactional(MANDATORY)
+//    @Transactional(MANDATORY)
     public List<Endpoint> findEndpointMatchingUuid(UUID uuid) {
         TypedQuery<Endpoint> query = entityManager.createNamedQuery(GET_ENDPOINT_MATCHING_UUID, Endpoint.class);
         query.setParameter("uuid", uuid);
@@ -41,7 +41,7 @@ public class EndpointDao extends Dao<Endpoint> {
         return query.getResultList();
     }
 
-    @Transactional(MANDATORY)
+//    @Transactional(MANDATORY)
     public List<Endpoint> findEndpointsWithNullUsername(UUID serviceUuid, Protocol protocol) {
         TypedQuery<Endpoint> query = entityManager.createNamedQuery(GET_ENDPOINTS_WITH_NULL_USERNAME_BY_SERVICE_UUID_AND_PROTOCOL, Endpoint.class);
         query.setParameter("serviceUuid", serviceUuid);
@@ -50,7 +50,7 @@ public class EndpointDao extends Dao<Endpoint> {
         return query.getResultList();
     }
 
-    @Transactional(MANDATORY)
+//    @Transactional(MANDATORY)
     public List<Endpoint> findEndpointsWithAssociatedComputerSystem(UUID serviceUuid, Protocol protocol) {
         TypedQuery<Endpoint> query = entityManager.createNamedQuery(GET_ENDPOINTS_ASSOCIATED_WITH_COMPUTER_SYSTEM_BY_SERVICE_UUID_AND_PROTOCOL,
             Endpoint.class);

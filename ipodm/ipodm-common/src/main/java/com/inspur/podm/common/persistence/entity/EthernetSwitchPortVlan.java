@@ -57,12 +57,12 @@ public class EthernetSwitchPortVlan extends DiscoverableEntity {
     private EthernetInterface ethernetInterface;
 
     @Override
-    public Id getId() {
+    public Id getTheId() {
         return entityId;
     }
 
     @Override
-    public void setId(Id id) {
+    public void setTheId(Id id) {
         entityId = id;
     }
 

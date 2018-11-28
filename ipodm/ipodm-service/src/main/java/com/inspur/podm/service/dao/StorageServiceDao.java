@@ -29,7 +29,7 @@ import com.inspur.podm.common.persistence.entity.StorageService;
 
 @ApplicationScoped
 public class StorageServiceDao extends Dao<StorageService> {
-    @Transactional(MANDATORY)
+//    @Transactional(MANDATORY)
     public List<Id> getAllStorageServiceIds() {
         return entityManager.createNamedQuery(GET_ALL_STORAGE_SERVICE_IDS, Id.class).getResultList();
     }

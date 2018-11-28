@@ -3,6 +3,8 @@
  */
 package com.inspur.podm.service.service.detection.dhcp;
 
+import javax.transaction.Transactional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,7 @@ import com.inspur.podm.service.dao.MyChassisDao;
  * @date: 2018年11月14日 上午11:36:43
  */
 @Service("dhcpServiceDetector")
+@org.springframework.transaction.annotation.Transactional
 public class DhcpServiceDetector {
 	@Autowired
 	ChassisDao chassisDao;
@@ -33,9 +36,9 @@ public class DhcpServiceDetector {
 //			MyChassis c = mydao.getChassisById((long) 1).get(0);
 //			System.out.println(c.getAssetTag());
 //			chassisDao.create();
-//			Chassis c = new Chassis();
-//			c.setDescription("lalalala");
-//			myDao.saveAndFlush(c);
+			Chassis c = new Chassis();
+			c.setDescription("lalalala");
+			myDao.save(c);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

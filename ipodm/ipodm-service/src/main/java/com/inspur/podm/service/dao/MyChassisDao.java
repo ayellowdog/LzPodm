@@ -4,6 +4,9 @@
 package com.inspur.podm.service.dao;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.inspur.podm.common.persistence.entity.Chassis;
 
@@ -14,6 +17,8 @@ import com.inspur.podm.common.persistence.entity.Chassis;
  * @author: liuchangbj
  * @date: 2018年11月27日 下午5:08:36
  */
+@Repository
+@org.springframework.transaction.annotation.Transactional
 public interface MyChassisDao extends JpaRepository<Chassis,Long>{
 
 }

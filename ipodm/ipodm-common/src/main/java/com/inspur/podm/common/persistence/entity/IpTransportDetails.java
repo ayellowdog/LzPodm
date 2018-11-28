@@ -82,12 +82,12 @@ public class IpTransportDetails extends DiscoverableEntity {
     private Integer port;
 
     @Override
-    public Id getId() {
+    public Id getTheId() {
         return entityId;
     }
 
     @Override
-    public void setId(Id id) {
+    public void setTheId(Id id) {
         this.entityId = id;
     }
 

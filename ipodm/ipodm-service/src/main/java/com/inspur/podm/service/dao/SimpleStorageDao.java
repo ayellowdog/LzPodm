@@ -32,7 +32,7 @@ import com.inspur.podm.common.persistence.entity.SimpleStorage;
 
 @ApplicationScoped
 public class SimpleStorageDao extends Dao<SimpleStorage> {
-    @Transactional(MANDATORY)
+//    @Transactional(MANDATORY)
     public Optional<SimpleStorage> findPrimarySimpleStorage(SimpleStorage complementarySimpleStorage) {
         TypedQuery<SimpleStorage> query = entityManager.createNamedQuery(GET_SIMPLE_STORAGE_MULTI_SOURCE, SimpleStorage.class);
         query.setParameter("multiSourceDiscriminator", complementarySimpleStorage.getMultiSourceDiscriminator());
@@ -40,7 +40,7 @@ public class SimpleStorageDao extends Dao<SimpleStorage> {
         return ofNullable(singleOrNull(query.getResultList()));
     }
 
-    @Transactional(MANDATORY)
+//    @Transactional(MANDATORY)
     public List<SimpleStorage> findComplementarySimpleStorages(SimpleStorage simpleStorage) {
         TypedQuery<SimpleStorage> query = entityManager.createNamedQuery(GET_SIMPLE_STORAGE_MULTI_SOURCE, SimpleStorage.class);
         query.setParameter("multiSourceDiscriminator", simpleStorage.getMultiSourceDiscriminator());

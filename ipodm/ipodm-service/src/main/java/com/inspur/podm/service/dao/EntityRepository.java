@@ -47,7 +47,6 @@ class EntityRepository {
 	private static final Logger logger = LoggerFactory.getLogger(EntityRepository.class);
 
 //    @Transactional(MANDATORY)
-	@Transactional
     public <T extends Entity> T create(Class<T> entityClass) {
         requiresNonNull(entityClass, "entityClass");
 
@@ -61,7 +60,7 @@ class EntityRepository {
         return entity;
     }
 
-    @Transactional(MANDATORY)
+//    @Transactional(MANDATORY)
     public <T extends Entity> Optional<T> tryFind(Class<T> entityClass, Id entityId) {
         TypedQuery<T> query = entityManager
             .createQuery("SELECT e FROM " + entityClass.getSimpleName() + " e WHERE e.entityId = :entityId", entityClass);
@@ -69,21 +68,21 @@ class EntityRepository {
         return ofNullable(singleOrNull(query.getResultList()));
     }
 
-    @Transactional(MANDATORY)
+//    @Transactional(MANDATORY)
     public <T extends Entity> T find(Class<T> entityClass, Id entityId) {
         return tryFind(entityClass, entityId).orElseThrow(
             () -> new EntityNotFoundException(entityClass, entityId)
         );
     }
 
-    @Transactional(MANDATORY)
+//    @Transactional(MANDATORY)
     public <T extends Entity> List<T> findAll(Class<T> entityClass) {
         TypedQuery<T> query =
             entityManager.createQuery("SELECT e FROM " + entityClass.getSimpleName() + " e ORDER BY e.entityId", entityClass);
         return query.getResultList();
     }
 
-    @Transactional(MANDATORY)
+//    @Transactional(MANDATORY)
     public <T extends Entity> void remove(T entity) {
         if (entity != null) {
             if (entityManager.contains(entity)) {
@@ -94,12 +93,12 @@ class EntityRepository {
         }
     }
 
-    @Transactional(MANDATORY)
+//    @Transactional(MANDATORY)
     public <T extends Entity> void removeAndClear(Collection<T> entities) {
         removeAndClear(entities, x -> true);
     }
 
-    @Transactional(MANDATORY)
+//    @Transactional(MANDATORY)
     public <T extends Entity> void removeAndClear(Collection<T> entities, Predicate<T> predicate) {
         if (entities != null) {
             //TODO: RSASW-8093

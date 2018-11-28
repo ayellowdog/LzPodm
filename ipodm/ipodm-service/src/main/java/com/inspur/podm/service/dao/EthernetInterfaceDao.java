@@ -39,7 +39,7 @@ import static javax.transaction.Transactional.TxType.MANDATORY;
 
 @ApplicationScoped
 public class EthernetInterfaceDao extends Dao<EthernetInterface> {
-    @Transactional(MANDATORY)
+//    @Transactional(MANDATORY)
     public EthernetInterface getEnabledEthernetInterfaceByMacAddress(MacAddress macAddress) throws NonUniqueResultException {
         if (macAddress == null) {
             return null;
@@ -63,7 +63,7 @@ public class EthernetInterfaceDao extends Dao<EthernetInterface> {
         }
     }
 
-    @Transactional(MANDATORY)
+//    @Transactional(MANDATORY)
     public List<EthernetInterface> findComplementaryEthernetInterfaces(EthernetInterface ethernetInterface) {
         TypedQuery<EthernetInterface> query = entityManager.createNamedQuery(GET_ETHERNET_INTERFACE_MULTI_SOURCE, EthernetInterface.class);
         query.setParameter("multiSourceDiscriminator", ethernetInterface.getMultiSourceDiscriminator());
@@ -71,7 +71,7 @@ public class EthernetInterfaceDao extends Dao<EthernetInterface> {
         return query.getResultList();
     }
 
-    @Transactional(MANDATORY)
+//    @Transactional(MANDATORY)
     public Optional<EthernetInterface> findPrimaryEthernetInterface(EthernetInterface complementaryEthernetInterface) {
         TypedQuery<EthernetInterface> query = entityManager.createNamedQuery(GET_ETHERNET_INTERFACE_MULTI_SOURCE, EthernetInterface.class);
         query.setParameter("multiSourceDiscriminator", complementaryEthernetInterface.getMultiSourceDiscriminator());

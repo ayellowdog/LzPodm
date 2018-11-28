@@ -39,7 +39,7 @@ import static javax.transaction.Transactional.TxType.MANDATORY;
 
 @ApplicationScoped
 public class PciePortDao extends Dao<Port> {
-    @Transactional(MANDATORY)
+//    @Transactional(MANDATORY)
     public Set<Port> getUpstreamPortsByCableIds(List<String> pcieConnectionIds) {
         if (pcieConnectionIds.isEmpty()) {
             return emptySet();
@@ -55,7 +55,7 @@ public class PciePortDao extends Dao<Port> {
         return ports;
     }
 
-    @Transactional(MANDATORY)
+//    @Transactional(MANDATORY)
     public Collection<Port> getUpstreamPortsByDiscoverableEntity(DiscoverableEntity entity) {
         return entity.getEntityConnections().stream()
             .filter(Objects::nonNull)

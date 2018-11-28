@@ -20,7 +20,7 @@ import com.inspur.podm.common.intel.types.Id;
 import com.inspur.podm.common.intel.types.MemoryDeviceType;
 
 public interface MemoryModule {
-    Id getId();
+    Id getTheId();
     MemoryDeviceType getMemoryDeviceType();
     Integer getCapacityMib();
     Integer getDataWidthBits();

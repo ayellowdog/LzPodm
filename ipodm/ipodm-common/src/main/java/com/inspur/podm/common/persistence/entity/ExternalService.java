@@ -98,7 +98,7 @@ public class ExternalService extends Entity {
     @OneToMany(mappedBy = "externalService", fetch = LAZY, cascade = {MERGE, PERSIST})
     private Set<ExternalLink> ownedLinks = new HashSet<>();
 
-    public Id getId() {
+    public Id getTheId() {
         return entityId;
     }
 

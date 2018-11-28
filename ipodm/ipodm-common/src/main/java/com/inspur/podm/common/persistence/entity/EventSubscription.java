@@ -79,7 +79,7 @@ public class EventSubscription extends Entity {
     @OrderColumn(name = "origin_resource_order")
     private List<String> originResources = new ArrayList<>();
 
-    public Id getId() {
+    public Id getTheId() {
         return entityId;
     }
 

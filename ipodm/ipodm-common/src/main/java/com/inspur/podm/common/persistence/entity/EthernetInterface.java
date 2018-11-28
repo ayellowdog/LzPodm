@@ -187,12 +187,12 @@ public class EthernetInterface extends DiscoverableEntity implements VlanPossess
     private List<Protocol> supportedProtocols = new ArrayList<>();
 
     @Override
-    public Id getId() {
+    public Id getTheId() {
         return entityId;
     }
 
     @Override
-    public void setId(Id id) {
+    public void setTheId(Id id) {
         entityId = id;
     }
 

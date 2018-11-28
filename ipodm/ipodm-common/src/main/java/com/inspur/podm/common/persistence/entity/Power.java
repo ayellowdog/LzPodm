@@ -66,12 +66,12 @@ public class Power extends DiscoverableEntity {
     private Chassis chassis;
 
     @Override
-    public Id getId() {
+    public Id getTheId() {
         return entityId;
     }
 
     @Override
-    public void setId(Id id) {
+    public void setTheId(Id id) {
         this.entityId = id;
     }
 

@@ -42,19 +42,19 @@ import com.inspur.podm.common.persistence.entity.ExternalService;
 
 @Repository
 public class ChassisDao extends Dao<Chassis> {
-    @Transactional(MANDATORY)
+//    @Transactional(MANDATORY)
     public List<Chassis> getAllByChassisType(ChassisType chassisType) {
         TypedQuery<Chassis> query = entityManager.createNamedQuery(GET_CHASSIS_BY_TYPE, Chassis.class);
         query.setParameter("chassisType", chassisType);
         return query.getResultList();
     }
 
-    @Transactional(MANDATORY)
+//    @Transactional(MANDATORY)
     public List<Id> findAllChassisFromPrimaryDataSource() {
         return entityManager.createNamedQuery(GET_CHASSIS_IDS_FROM_PRIMARY_DATA_SOURCE, Id.class).getResultList();
     }
 
-    @Transactional(MANDATORY)
+//    @Transactional(MANDATORY)
     public List<Chassis> findComplementaryChassis(Chassis chassis) {
         if (!Objects.equals(SLED, chassis.getChassisType())) {
             return emptyList();
@@ -73,7 +73,7 @@ public class ChassisDao extends Dao<Chassis> {
         return query.getResultList();
     }
 
-    @Transactional(MANDATORY)
+//    @Transactional(MANDATORY)
     public List<Chassis> getChassis(ChassisType chassisType, ExternalService externalService) {
         TypedQuery<Chassis> query = entityManager.createNamedQuery(Chassis.GET_CHASSIS_BY_TYPE_AND_SERVICE, Chassis.class);
         query.setParameter("chassisType", chassisType);
@@ -81,7 +81,7 @@ public class ChassisDao extends Dao<Chassis> {
         return query.getResultList();
     }
 
-    @Transactional(MANDATORY)
+//    @Transactional(MANDATORY)
     public List<Chassis> getChassis(ChassisType chassisType, String locationId) {
         return entityManager.createNamedQuery(Chassis.GET_CHASSIS_BY_TYPE_AND_LOCATION, Chassis.class)
             .setParameter("chassisType", chassisType)

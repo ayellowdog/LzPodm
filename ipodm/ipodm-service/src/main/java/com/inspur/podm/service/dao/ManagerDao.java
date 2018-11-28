@@ -29,7 +29,7 @@ import com.inspur.podm.common.persistence.entity.Manager;
 
 @ApplicationScoped
 public class ManagerDao extends Dao<Manager> {
-    @Transactional(MANDATORY)
+//    @Transactional(MANDATORY)
     public List<Id> getAllManagerIds() {
         return entityManager.createNamedQuery(GET_ALL_MANAGER_IDS, Id.class).getResultList();
     }

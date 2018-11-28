@@ -28,7 +28,7 @@ import com.inspur.podm.common.persistence.entity.DiscoverableEntity;
 import static java.util.Optional.empty;
 
 public interface LocalStorage {
-    Id getId();
+    Id getTheId();
     DiscoverableEntity getParent();
     BigDecimal getCapacityGib();
     MediaType getType();

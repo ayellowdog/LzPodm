@@ -56,12 +56,12 @@ public class Zone extends DiscoverableEntity {
     private Fabric fabric;
 
     @Override
-    public Id getId() {
+    public Id getTheId() {
         return entityId;
     }
 
     @Override
-    public void setId(Id id) {
+    public void setTheId(Id id) {
         this.entityId = id;
     }
 

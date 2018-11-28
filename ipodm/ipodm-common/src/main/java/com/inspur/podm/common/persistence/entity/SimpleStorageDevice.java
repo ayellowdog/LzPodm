@@ -116,7 +116,7 @@ public class SimpleStorageDevice extends Entity implements LocalStorage {
     private SimpleStorage simpleStorage;
 
     @Override
-    public Id getId() {
+    public Id getTheId() {
         return entityId;
     }
 

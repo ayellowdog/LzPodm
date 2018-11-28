@@ -56,12 +56,12 @@ public class NetworkDeviceFunction extends DiscoverableEntity {
     private NetworkInterface networkInterface;
 
     @Override
-    public Id getId() {
+    public Id getTheId() {
         return entityId;
     }
 
     @Override
-    public void setId(Id id) {
+    public void setTheId(Id id) {
         this.entityId = id;
     }
 

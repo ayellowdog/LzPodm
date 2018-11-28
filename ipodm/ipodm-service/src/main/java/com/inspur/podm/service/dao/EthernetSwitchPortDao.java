@@ -35,7 +35,7 @@ import static javax.transaction.Transactional.TxType.MANDATORY;
 
 @ApplicationScoped
 public class EthernetSwitchPortDao extends Dao<EthernetSwitchPort> {
-    @Transactional(MANDATORY)
+//    @Transactional(MANDATORY)
     public EthernetSwitchPort getOrThrow(Id portId) {
         Optional<EthernetSwitchPort> expectedSwitchPort = tryFind(portId);
         if (!expectedSwitchPort.isPresent()) {
@@ -44,7 +44,7 @@ public class EthernetSwitchPortDao extends Dao<EthernetSwitchPort> {
         return expectedSwitchPort.get();
     }
 
-    @Transactional(MANDATORY)
+//    @Transactional(MANDATORY)
     public EthernetSwitchPort getEnabledAndHealthyEthernetSwitchPortByNeighborMac(MacAddress neighborMac) throws NonUniqueResultException {
         if (neighborMac == null) {
             return null;

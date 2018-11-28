@@ -60,7 +60,7 @@ public abstract class DiscoverableEntityDataMerger<T extends DiscoverableEntity,
                 mergedUnknownOems = mergeOems(mergedUnknownOems, dto.getUnknownOems());
             }
         }
-        dto.setId(discoverableEntity.getId().toString());
+        dto.setId(discoverableEntity.getTheId().toString());
         dto.setUnknownOems(mergedUnknownOems);
         return dto;
     }

@@ -98,7 +98,7 @@ public class UnknownOemTranslator {
         JsonNode oDataIdJsonNode = jsonNode.get(ODATA_ID);
         if (oDataIdJsonNode != null && oDataIdJsonNode.isTextual()) {
             String sourceUriString = oDataIdJsonNode.asText();
-            Id globalId = IdFromUriGenerator.instance().getIdFromUri(URI.create(sourceUriString), externalService.getId().getValue());
+            Id globalId = IdFromUriGenerator.instance().getIdFromUri(URI.create(sourceUriString), externalService.getTheId().getValue());
             DiscoverableEntity discoverableEntity = discoverableEntityDao.findByGlobalId(globalId, DiscoverableEntity.class);
 
             if (discoverableEntity != null) {

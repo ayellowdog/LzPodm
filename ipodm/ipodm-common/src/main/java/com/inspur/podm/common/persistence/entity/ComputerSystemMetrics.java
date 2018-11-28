@@ -73,12 +73,12 @@ public class ComputerSystemMetrics extends DiscoverableEntity {
     private ComputerSystem computerSystem;
 
     @Override
-    public Id getId() {
+    public Id getTheId() {
         return entityId;
     }
 
     @Override
-    public void setId(Id entityId) {
+    public void setTheId(Id entityId) {
         this.entityId = entityId;
     }
 

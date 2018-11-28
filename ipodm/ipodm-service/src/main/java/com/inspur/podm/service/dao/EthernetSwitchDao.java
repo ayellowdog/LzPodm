@@ -29,7 +29,7 @@ import com.inspur.podm.common.persistence.entity.EthernetSwitch;
 
 @ApplicationScoped
 public class EthernetSwitchDao extends Dao<EthernetSwitch> {
-    @Transactional(MANDATORY)
+//    @Transactional(MANDATORY)
     public List<Id> getAllEthernetSwitchIds() {
         return entityManager.createNamedQuery(GET_ALL_ETHERNET_SWITCH_IDS, Id.class).getResultList();
     }

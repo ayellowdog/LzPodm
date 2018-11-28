@@ -29,7 +29,7 @@ import com.inspur.podm.common.persistence.entity.MetricDefinition;
 
 @ApplicationScoped
 public class MetricDefinitionDao extends Dao<MetricDefinition> {
-    @Transactional(MANDATORY)
+//    @Transactional(MANDATORY)
     public List<Id> getAllMetricDefinitionsIds() {
         return entityManager.createNamedQuery(GET_ALL_METRIC_DEFINITIONS_IDS, Id.class).getResultList();
     }

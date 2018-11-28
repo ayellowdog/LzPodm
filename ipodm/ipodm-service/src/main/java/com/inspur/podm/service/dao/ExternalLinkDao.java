@@ -37,7 +37,7 @@ public class ExternalLinkDao {
     @Inject
     private GenericDao genericDao;
 
-    @Transactional(MANDATORY)
+//    @Transactional(MANDATORY)
     public void removeAll(ExternalService externalService, Predicate<ExternalLink> predicate) {
         List<DiscoverableEntity> affectedEntities = externalService
             .getOwnedLinks().stream()

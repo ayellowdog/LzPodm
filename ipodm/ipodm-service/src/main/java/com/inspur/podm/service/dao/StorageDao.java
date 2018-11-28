@@ -32,7 +32,7 @@ import static javax.transaction.Transactional.TxType.MANDATORY;
 
 @ApplicationScoped
 public class StorageDao extends Dao<Storage> {
-    @Transactional(MANDATORY)
+//    @Transactional(MANDATORY)
     public List<Storage> findComplementaryStorages(Storage storage) {
         TypedQuery<Storage> query = entityManager.createNamedQuery(GET_STORAGE_MULTI_SOURCE, Storage.class);
         query.setParameter("uuid", storage.getComputerSystem().getUuid());
@@ -40,7 +40,7 @@ public class StorageDao extends Dao<Storage> {
         return query.getResultList();
     }
 
-    @Transactional(MANDATORY)
+//    @Transactional(MANDATORY)
     public Optional<Storage> findPrimaryStorage(Storage complementaryStorage) {
         TypedQuery<Storage> query = entityManager.createNamedQuery(GET_PRIMARY_STORAGE, Storage.class);
         query.setParameter("multiSourceDiscriminator", complementaryStorage.getMultiSourceDiscriminator());

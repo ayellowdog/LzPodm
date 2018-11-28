@@ -32,7 +32,7 @@ import com.inspur.podm.common.persistence.entity.Processor;
 
 @ApplicationScoped
 public class ProcessorDao extends Dao<Processor> {
-    @Transactional(MANDATORY)
+//    @Transactional(MANDATORY)
     public List<Processor> findComplementaryProcessors(Processor processor) {
         TypedQuery<Processor> query = entityManager.createNamedQuery(GET_PROCESSOR_MULTI_SOURCE, Processor.class);
         query.setParameter("multiSourceDiscriminator", processor.getMultiSourceDiscriminator());
@@ -40,7 +40,7 @@ public class ProcessorDao extends Dao<Processor> {
         return query.getResultList();
     }
 
-    @Transactional(MANDATORY)
+//    @Transactional(MANDATORY)
     public Optional<Processor> findPrimaryProcessor(Processor complementaryProcessor) {
         TypedQuery<Processor> query = entityManager.createNamedQuery(GET_PROCESSOR_MULTI_SOURCE, Processor.class);
         query.setParameter("multiSourceDiscriminator", complementaryProcessor.getMultiSourceDiscriminator());

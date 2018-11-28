@@ -38,14 +38,14 @@ import com.inspur.podm.common.persistence.entity.ExternalService;
 @ApplicationScoped
 public class ExternalServiceDao extends Dao<ExternalService> {
 
-    @Transactional(MANDATORY)
+//    @Transactional(MANDATORY)
     public ExternalService tryGetUniqueExternalServiceByUuid(UUID uuid) {
         TypedQuery<ExternalService> query = entityManager.createNamedQuery(GET_EXTERNAL_SERVICE_BY_UUID, ExternalService.class);
         query.setParameter("uuid", uuid);
         return getUniqueValueFromSingletonListOrNull(query.getResultList());
     }
 
-    @Transactional(MANDATORY)
+//    @Transactional(MANDATORY)
     public List<ExternalService> getExternalServicesByServicesTypes(Set<ServiceType> serviceTypes) {
         if (serviceTypes == null || serviceTypes.isEmpty()) {
             return emptyList();
@@ -56,7 +56,7 @@ public class ExternalServiceDao extends Dao<ExternalService> {
         return query.getResultList();
     }
 
-    @Transactional(MANDATORY)
+//    @Transactional(MANDATORY)
     public List<ExternalService> getAllUnreachableLongerThan(Duration duration) {
         return findAll().stream()
             .filter(es -> es.isUnreachableLongerThan(duration))

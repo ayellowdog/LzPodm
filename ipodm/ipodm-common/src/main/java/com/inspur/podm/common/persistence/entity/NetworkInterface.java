@@ -50,12 +50,12 @@ public class NetworkInterface extends DiscoverableEntity {
     private ComputerSystem computerSystem;
 
     @Override
-    public Id getId() {
+    public Id getTheId() {
         return entityId;
     }
 
     @Override
-    public void setId(Id id) {
+    public void setTheId(Id id) {
         entityId = id;
     }
 

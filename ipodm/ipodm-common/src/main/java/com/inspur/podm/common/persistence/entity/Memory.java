@@ -175,12 +175,12 @@ public class Memory extends DiscoverableEntity implements MemoryModule, MultiSou
     private MemoryMetrics memoryMetrics;
 
     @Override
-    public Id getId() {
+    public Id getTheId() {
         return entityId;
     }
 
     @Override
-    public void setId(Id id) {
+    public void setTheId(Id id) {
         entityId = id;
     }
 

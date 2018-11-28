@@ -37,7 +37,7 @@ public abstract class Entity {
     @Column(name = "id")
     private long id;
 
-    @Version
+	@Version
     @Column(name = "version", columnDefinition = "integer DEFAULT 0", nullable = false)
     private long version;
 
@@ -114,4 +114,19 @@ public abstract class Entity {
     public void setEventSourceContext(URI context) {
         this.eventSourceContext = context;
     }
+    public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public long getVersion() {
+		return version;
+	}
+
+	public void setVersion(long version) {
+		this.version = version;
+	}
 }

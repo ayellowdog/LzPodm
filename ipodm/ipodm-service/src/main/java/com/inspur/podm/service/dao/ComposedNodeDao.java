@@ -34,7 +34,7 @@ import static javax.transaction.Transactional.TxType.MANDATORY;
 
 @ApplicationScoped
 public class ComposedNodeDao extends Dao<ComposedNode> {
-    @Transactional(MANDATORY)
+//    @Transactional(MANDATORY)
     public Optional<ComposedNode> getComposedNodeByAssociatedSystemUuid(UUID uuid) {
         TypedQuery<ComposedNode> query = entityManager.createNamedQuery(GET_NODE_BY_ASSOCIATED_COMPUTER_SYSTEM_UUID, ComposedNode.class);
         query.setParameter("uuid", uuid);
@@ -42,12 +42,12 @@ public class ComposedNodeDao extends Dao<ComposedNode> {
         return optionalSingle(query.getResultList());
     }
 
-    @Transactional(MANDATORY)
+//    @Transactional(MANDATORY)
     public List<ComposedNode> getComposedNodesEligibleForRecovery() {
         return entityManager.createNamedQuery(GET_NODES_ELIGIBLE_FOR_RECOVERY, ComposedNode.class).getResultList();
     }
 
-    @Transactional(MANDATORY)
+//    @Transactional(MANDATORY)
     public List<Id> getAllComposedNodeIds() {
         return entityManager.createNamedQuery(GET_ALL_NODES_IDS, Id.class).getResultList();
     }

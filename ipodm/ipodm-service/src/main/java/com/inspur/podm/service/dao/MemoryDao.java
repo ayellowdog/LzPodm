@@ -33,7 +33,7 @@ import com.inspur.podm.common.persistence.entity.Memory;
 
 @ApplicationScoped
 public class MemoryDao extends Dao<Memory> {
-    @Transactional(MANDATORY)
+//    @Transactional(MANDATORY)
     public List<Memory> findComplementaryMemory(Memory memory) {
         TypedQuery<Memory> query = entityManager.createNamedQuery(GET_MEMORY_MULTI_SOURCE, Memory.class);
         query.setParameter("multiSourceDiscriminator", memory.getMultiSourceDiscriminator());
@@ -41,7 +41,7 @@ public class MemoryDao extends Dao<Memory> {
         return query.getResultList();
     }
 
-    @Transactional(MANDATORY)
+//    @Transactional(MANDATORY)
     public Optional<Memory> findPrimaryMemory(Memory complementaryMemory) {
         TypedQuery<Memory> query = entityManager.createNamedQuery(GET_MEMORY_MULTI_SOURCE, Memory.class);
         query.setParameter("multiSourceDiscriminator", complementaryMemory.getMultiSourceDiscriminator());

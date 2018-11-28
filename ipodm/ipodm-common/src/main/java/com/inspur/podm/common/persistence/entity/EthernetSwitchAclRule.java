@@ -84,12 +84,12 @@ public class EthernetSwitchAclRule extends DiscoverableEntity {
     private EthernetSwitchAcl ethernetSwitchAcl;
 
     @Override
-    public Id getId() {
+    public Id getTheId() {
         return entityId;
     }
 
     @Override
-    public void setId(Id id) {
+    public void setTheId(Id id) {
         entityId = id;
     }
 

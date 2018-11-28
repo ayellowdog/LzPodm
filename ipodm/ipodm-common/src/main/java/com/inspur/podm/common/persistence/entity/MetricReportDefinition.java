@@ -88,12 +88,12 @@ public class MetricReportDefinition extends DiscoverableEntity {
     private Set<MetricItem> metricItems = new HashSet<>();
 
     @Override
-    public Id getId() {
+    public Id getTheId() {
         return entityId;
     }
 
     @Override
-    public void setId(Id id) {
+    public void setTheId(Id id) {
         entityId = id;
     }
 
