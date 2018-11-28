@@ -34,7 +34,6 @@ import java.util.UUID;
     "@odata.context", "@odata.id", "@odata.type", "id", "name", "description", "redfishVersion", "uuid", "chassis", "systems", "managers", "eventService",
     "fabrics", "storageServices", "telemetryService", "links", "oem"
 })
-@SuppressWarnings({"checkstyle:MethodCount"})
 public final class ServiceRootDto extends RedfishDto {
     private final Links links = new Links();
     private final Oem oem = new Oem();
