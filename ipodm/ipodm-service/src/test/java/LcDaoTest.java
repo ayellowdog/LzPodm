@@ -23,13 +23,13 @@ import com.inspur.podm.service.dao.MyChassisDao;
  */
 @SpringBootTest(classes = ServiceApplication.class)
 @RunWith(SpringRunner.class)
-@Rollback(false)
 public class LcDaoTest {
 @Autowired
 ChassisDao chassisDao;
 @Autowired
 MyChassisDao myDao;
 @Test
+@Rollback(false)
 public void test() {
 //	Chassis c = chassisDao.create();
 	Chassis c = new Chassis();
