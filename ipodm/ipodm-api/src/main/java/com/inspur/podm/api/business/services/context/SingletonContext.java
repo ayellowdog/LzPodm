@@ -16,6 +16,9 @@
 
 package com.inspur.podm.api.business.services.context;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.inspur.podm.api.business.services.redfish.odataid.ODataIdFromSingletonContextHelper;
 import com.inspur.podm.common.intel.types.redfish.NavigationProperty;
 import com.inspur.podm.common.intel.types.redfish.OdataIdProvider;
@@ -25,9 +28,15 @@ import java.util.Objects;
 import static com.inspur.podm.common.intel.utils.Contracts.requiresNonNull;
 import static java.lang.String.format;
 
+import java.net.URI;
+
 public final class SingletonContext implements NavigationProperty, OdataIdProvider {
-    private final OdataIdProvider ownerContext;
+	@JsonIgnore
+	private final OdataIdProvider ownerContext;
+	@JsonIgnore
     private final String singletonName;
+    @JsonProperty("@odata.id")
+    private URI value;
 
     private SingletonContext(OdataIdProvider ownerContext, String singletonName) {
         requiresNonNull(ownerContext, "ownerContext");
@@ -35,17 +44,35 @@ public final class SingletonContext implements NavigationProperty, OdataIdProvid
         this.ownerContext = ownerContext;
         this.singletonName = singletonName;
     }
+    
+    private SingletonContext(OdataIdProvider ownerContext, String singletonName, URI value) {
+        requiresNonNull(ownerContext, "ownerContext");
+        requiresNonNull(singletonName, "singletonName");
+        this.ownerContext = ownerContext;
+        this.singletonName = singletonName;
+        this.value = value;
+    }
 
     public static SingletonContext singletonContextOf(OdataIdProvider ownerContext, String collectionName) {
         return new SingletonContext(ownerContext, collectionName);
     }
+    
+    public static SingletonContext singletonContextOf(OdataIdProvider ownerContext, String collectionName, URI value) {
+        return new SingletonContext(ownerContext, collectionName, value);
+    }
 
+    @JsonIgnore
     public OdataIdProvider getOwnerODataId() {
         return ownerContext;
     }
 
+    @JsonIgnore
     public String getSingletonName() {
         return singletonName;
+    }
+    
+    public URI getValue() {
+        return value;
     }
 
     @Override

@@ -6,7 +6,6 @@ package com.inspur.podm.service.rest.redfish.controller;
 import static com.inspur.podm.service.rest.error.PodmExceptions.notFound;
 
 import com.inspur.podm.api.business.ContextResolvingException;
-import com.inspur.podm.service.rest.redfish.resources.BaseResource.EntitySupplier;
 
 /**
  * @ClassName: BaseController

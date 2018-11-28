@@ -32,9 +32,11 @@ MyChassisDao myDao;
 @Rollback(false)
 public void test() {
 //	Chassis c = chassisDao.create();
-	Chassis c = new Chassis();
-	c.setDescription("lalalala");
-	myDao.save(c);
+//	Chassis c = new Chassis();
+//	c.setDescription("lalalala");
+//	myDao.save(c);
+	Chassis c = chassisDao.create();
+	c.setDescription("dahuanggou");
 	System.out.println("hahahahahahahaha");
 }
 }
