@@ -2,6 +2,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.inspur.podm.common.persistence.entity.Chassis;
@@ -22,6 +23,7 @@ import com.inspur.podm.service.dao.MyChassisDao;
  */
 @SpringBootTest(classes = ServiceApplication.class)
 @RunWith(SpringRunner.class)
+@Rollback(false)
 public class LcDaoTest {
 @Autowired
 ChassisDao chassisDao;
@@ -32,7 +34,7 @@ public void test() {
 //	Chassis c = chassisDao.create();
 	Chassis c = new Chassis();
 	c.setDescription("lalalala");
-	myDao.saveAndFlush(c);
+	myDao.save(c);
 	System.out.println("hahahahahahahaha");
 }
 }
