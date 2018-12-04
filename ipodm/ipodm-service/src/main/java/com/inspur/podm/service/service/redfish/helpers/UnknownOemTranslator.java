@@ -26,15 +26,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.enterprise.context.Dependent;
-import javax.inject.Inject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.inspur.podm.api.business.dto.redfish.attributes.UnknownOemDto;
 import com.inspur.podm.api.business.services.context.Context;
-import com.inspur.podm.common.intel.logger.Logger;
 import com.inspur.podm.common.intel.types.Id;
 import com.inspur.podm.common.persistence.entity.DiscoverableEntity;
 import com.inspur.podm.common.persistence.entity.ExternalService;
@@ -42,16 +43,14 @@ import com.inspur.podm.common.persistence.entity.embeddables.UnknownOem;
 import com.inspur.podm.common.utils.IdFromUriGenerator;
 import com.inspur.podm.service.dao.DiscoverableEntityDao;
 
-@Dependent
-@SuppressWarnings({"checkstyle:ClassFanOutComplexity"})
+@Component
 public class UnknownOemTranslator {
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
     private static final String ODATA_ID = "@odata.id";
 
-    @Inject
-    private Logger logger;
+    private static final Logger logger = LoggerFactory.getLogger(UnknownOemTranslator.class);
 
-    @Inject
+    @Autowired
     private DiscoverableEntityDao discoverableEntityDao;
 
     public List<UnknownOemDto> translateUnknownOemToDtos(ExternalService externalService, Collection<UnknownOem> unknownOems) {
@@ -86,7 +85,7 @@ public class UnknownOemTranslator {
             try {
                 return (ObjectNode) OBJECT_MAPPER.readTree(value);
             } catch (IOException | ClassCastException e) {
-                logger.e("Couldn't convert: [" + value + "] to ObjectNode", e);
+                logger.error("Couldn't convert: [" + value + "] to ObjectNode", e);
             }
         }
 

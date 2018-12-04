@@ -16,10 +16,13 @@
 
 package com.inspur.podm.common.config.base.dto;
 
+import org.springframework.stereotype.Component;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.inspur.podm.common.config.base.ConfigFile;
 
 @ConfigFile(filename = "discovery-service.json")
+@Component
 public class DiscoveryServiceConfig extends BaseConfig {
     @JsonProperty("DiscoveryServiceConfigurerIntervalSeconds")
     private long configurerIntervalSeconds = 300;

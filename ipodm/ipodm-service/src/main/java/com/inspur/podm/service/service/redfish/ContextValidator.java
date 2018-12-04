@@ -18,8 +18,10 @@ package com.inspur.podm.service.service.redfish;
 
 import static com.inspur.podm.common.intel.utils.Contracts.requiresNonNull;
 
-import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.inspur.podm.api.business.services.context.Context;
 import com.inspur.podm.api.business.services.context.ContextType;
@@ -30,12 +32,12 @@ import com.inspur.podm.service.dao.GenericDao;
 /**
  * Allows to verify whether given {@link ContextType} is correct
  */
-@Dependent
+@Component
 public class ContextValidator {
-    @Inject
+    @Autowired
     GenericDao genericDao;
 
-    @Inject
+    @Autowired
     ContextTypeToEntityMapper contextTypeToEntityMapper;
 
     public boolean isValid(Context context) {

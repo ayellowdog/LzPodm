@@ -1,28 +1,21 @@
 package com.inspur.podm.service.rest.redfish.controller;
 
-import static com.inspur.podm.api.business.services.redfish.ReaderService.SERVICE_ROOT_CONTEXT;
 import static com.inspur.podm.common.intel.types.ServiceKind.SINGLETON;
 import static com.inspur.podm.common.intel.types.redfish.ODataServices.ODATA_ROOT_SERVICES;
-import static com.inspur.podm.common.intel.types.redfish.ResourceNames.CHASSIS_RESOURCE_NAME;
 
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.ws.rs.Path;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.inspur.podm.api.business.dto.ChassisDto;
-import com.inspur.podm.api.business.dto.redfish.CollectionDto;
 import com.inspur.podm.api.business.dto.redfish.ODataServiceDocumentDto;
 import com.inspur.podm.api.business.dto.redfish.ServiceRootContext;
 import com.inspur.podm.api.business.dto.redfish.ServiceRootDto;
 import com.inspur.podm.api.business.dto.redfish.attributes.ODataServiceDto;
-import com.inspur.podm.api.business.services.redfish.ReaderService;
 import com.inspur.podm.api.business.services.redfish.ServiceRootService;
 import com.inspur.podm.common.intel.types.ServiceKind;
 import com.inspur.podm.service.rest.redfish.json.templates.RedfishResourceAmazingWrapper;
@@ -45,8 +38,6 @@ public class ServiceRootController extends BaseController {
 	/** @Fields readerService: readerService */
 	@Autowired
 	private ServiceRootService serviceRootReaderService;
-	@Autowired
-	private ReaderService<ChassisDto> readerService;
 	private static final String SERVICE_ROOT = "/redfish/v1/";
 	private static final String SERVICE = "Service";
 
@@ -67,20 +58,7 @@ public class ServiceRootController extends BaseController {
 	// return getResource(ComputerSystemCollectionResource.class);
 	// }
 	//
-	/**
-	 * <p> TODO 功能描述 </p>
-	 * 
-	 * @author: zhangdian
-	 * @date: 2018年11月28日 上午11:23:44
-	 * @return
-	 */
-	@ApiOperation(value = "查看redfish目录/redfish/v1/chassis", notes = "Chassis")
-	@RequestMapping(value = "/" + CHASSIS_RESOURCE_NAME, method = RequestMethod.GET)
-	public CollectionDto getChassis() {
-		CollectionDto collectionDto = getOrThrow(() -> readerService.getCollection(SERVICE_ROOT_CONTEXT));
-		return collectionDto;
-//		return new RedfishResourceAmazingWrapper(new ServiceRootContext(), collectionDto);
-	}
+
 	//
 	// @Path(MANAGERS_RESOURCE_NAME)
 	// public ManagerCollectionResource getManagers() {
@@ -124,7 +102,7 @@ public class ServiceRootController extends BaseController {
 	@ApiOperation(value = "查看redfish目录/redfish/v1/odata", notes = "/redfish/v1/odata")
 	@RequestMapping(value = "/odata", method = RequestMethod.GET)
 	public ODataServiceDocumentDto getOData() {
-		return ODataServiceDocumentDto.newBuilder().values(getODataRootServices()).build();
+		return ODataServiceDocumentDto.newBuilder().values(getODataRootServices(), "/redfish/v1/$metdata").build();
 	}
 
 	/**

@@ -22,9 +22,12 @@ import com.inspur.podm.common.config.base.ConfigFile;
 import java.util.Objects;
 import java.util.UUID;
 
+import org.springframework.stereotype.Component;
+
 import static java.util.UUID.randomUUID;
 
 @ConfigFile(filename = "service-root-uuid.json", isGeneratedByApplication = true)
+@Component
 public class ServiceConfig extends BaseConfig {
     @JsonProperty("UUID")
     private UUID uuid = randomUUID();

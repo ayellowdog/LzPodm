@@ -26,10 +26,13 @@ import static java.util.Collections.singletonList;
 
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 import static java.lang.String.format;
 
 @ConfigFile(filename = "service-connection.json")
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Component
 public class ServiceConnectionConfig extends BaseConfig {
 
     @JsonProperty("ConnectionConfiguration")

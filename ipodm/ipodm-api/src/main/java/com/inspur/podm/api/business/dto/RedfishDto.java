@@ -27,7 +27,7 @@ import static com.inspur.podm.common.intel.utils.StringRepresentation.fromIterab
 import static java.util.Collections.emptyMap;
 import static java.util.stream.Collectors.toMap;
 
-public abstract class RedfishDto implements RedfishResource {
+public  class RedfishDto implements RedfishResource {
     private static final Logger LOGGER = getLogger(RedfishDto.class);
     @JsonProperty("@odata.type")
     private final String oDataType;

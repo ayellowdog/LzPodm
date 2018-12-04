@@ -16,19 +16,17 @@
 
 package com.inspur.podm.common.config.base;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.inspur.podm.common.config.base.dto.BaseConfig;
-
+@Component
 public final class DynamicHolder<T extends BaseConfig> implements Holder<T> {
-    private final ConfigProvider configProvider;
-    private final Class<T> configClass;
+	@Autowired
+    private ConfigProvider configProvider;
 
-    public DynamicHolder(ConfigProvider configProvider, Class<T> configClass) {
-        this.configProvider = configProvider;
-        this.configClass = configClass;
-    }
-
-    @Override
-    public T get() {
-        return configProvider.get(configClass);
-    }
+	@Override
+	public T get(Class<T> clz) {
+		return configProvider.get(clz);
+	}
 }

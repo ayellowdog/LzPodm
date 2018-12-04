@@ -17,20 +17,24 @@
 package com.inspur.podm.service.service.redfish.aggregation;
 
 import static com.inspur.podm.service.service.redfish.mappers.Conditions.aggregateCondition;
-import static java.util.function.Function.identity;
 import static java.lang.String.format;
+import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.toMap;
 import static javax.transaction.Transactional.TxType.MANDATORY;
 
-import javax.inject.Inject;
-import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.inspur.podm.api.business.dto.RedfishDto;
 import com.inspur.podm.api.business.dto.redfish.attributes.UnknownOemDto;
 import com.inspur.podm.common.config.base.Config;
+import com.inspur.podm.common.config.base.ConfigHolderFactory;
+import com.inspur.podm.common.config.base.DynamicHolder;
 import com.inspur.podm.common.config.base.Holder;
 import com.inspur.podm.common.config.base.dto.InBandServiceConfig;
 import com.inspur.podm.common.persistence.entity.DiscoverableEntity;
@@ -38,11 +42,10 @@ import com.inspur.podm.service.service.redfish.mappers.DtoMapper;
 import com.inspur.podm.service.service.redfish.mappers.MapperProducer;
 
 public abstract class DiscoverableEntityDataMerger<T extends DiscoverableEntity, S extends RedfishDto> {
-    @Inject
-    @Config
-    private Holder<InBandServiceConfig> inBandServiceConfig;
+	@Autowired
+    private DynamicHolder<InBandServiceConfig> inBandServiceConfig;
 
-    @Inject
+	@Autowired
     private MapperProducer mapperProducer;
 
     @Transactional(MANDATORY)
@@ -52,7 +55,7 @@ public abstract class DiscoverableEntityDataMerger<T extends DiscoverableEntity,
         mapper.map(discoverableEntity, dto);
         List<UnknownOemDto> mergedUnknownOems = dto.getUnknownOems();
 
-        if (inBandServiceConfig.get().isInBandServiceSupportEnabled()) {
+        if (inBandServiceConfig.get(InBandServiceConfig.class).isInBandServiceSupportEnabled()) {
             mapper.setMappingConditions(aggregateCondition(true, false));
             List<T> multiSourceRepresentations = getMultiSourceRepresentations(discoverableEntity);
             for (T multiSourceRepresentation : multiSourceRepresentations) {

@@ -50,10 +50,10 @@ class ChassisReaderServiceImpl implements ReaderService<ChassisDto> {
     @Autowired
     private ChassisDao chassisDao;
 
-//    @Inject
+    @Autowired
     private EntityTreeTraverser traverser;
 
-//    @Inject
+    @Autowired
     private ChassisMerger chassisMerger;
 
     @Transactional(REQUIRED)
@@ -63,9 +63,6 @@ class ChassisReaderServiceImpl implements ReaderService<ChassisDto> {
 		List<Context> contexts = findAllChassisFromPrimaryDataSource.stream()
 				.map(id -> contextOf(id, ContextType.CHASSIS)).sorted().collect(toList());
 		return new CollectionDto(CHASSIS, contexts);
-//        List<Context> contexts = chassisDao.findAllChassisFromPrimaryDataSource().stream()
-//            .map(id -> contextOf(id, ContextType.CHASSIS)).sorted().collect(toList());
-//        return new CollectionDto(CHASSIS, contexts);
     }
 
     @Transactional(REQUIRED)

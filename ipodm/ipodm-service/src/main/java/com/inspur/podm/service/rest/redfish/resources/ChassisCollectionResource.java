@@ -21,20 +21,16 @@ import static com.inspur.podm.api.business.services.redfish.ReaderService.SERVIC
 import static com.inspur.podm.service.rest.redfish.OptionsResponseBuilder.newOptionsForResourceBuilder;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
-import javax.inject.Inject;
-import javax.ws.rs.GET;
 import javax.ws.rs.core.Response;
 
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.inspur.podm.api.business.dto.ChassisDto;
 import com.inspur.podm.api.business.dto.redfish.CollectionDto;
 import com.inspur.podm.api.business.services.redfish.ReaderService;
 
-import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 //@RestController

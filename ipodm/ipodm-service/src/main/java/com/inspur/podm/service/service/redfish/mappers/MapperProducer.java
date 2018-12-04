@@ -16,53 +16,69 @@
 
 package com.inspur.podm.service.service.redfish.mappers;
 
-import com.inspur.podm.api.business.dto.RedfishDto;
-import com.inspur.podm.common.persistence.base.Entity;
-import com.inspur.podm.service.service.redfish.helpers.UnknownOemTranslator;
-
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.inject.Instance;
-import javax.inject.Inject;
-import java.util.Collection;
-import java.util.Optional;
-
 import static java.util.Optional.empty;
 import static java.util.Optional.of;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.StreamSupport.stream;
 
-@ApplicationScoped
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Optional;
+
+import javax.annotation.PostConstruct;
+import javax.enterprise.inject.Instance;
+import javax.inject.Inject;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import com.inspur.podm.api.business.dto.ChassisDto;
+import com.inspur.podm.api.business.dto.RedfishDto;
+import com.inspur.podm.common.persistence.base.Entity;
+import com.inspur.podm.common.persistence.entity.Chassis;
+import com.inspur.podm.service.service.redfish.helpers.UnknownOemTranslator;
+
+@Component
 public class MapperProducer {
-    @Inject
-    private UnknownOemTranslator unknownOemTranslator;
+	@Autowired
+	private UnknownOemTranslator unknownOemTranslator;
 
-    @Inject
-    private Instance<DtoMapper<? extends Entity, ? extends RedfishDto>> mapperPool;
+	private Collection<DtoMapper<? extends Entity, ? extends RedfishDto>> mapperCache;
 
-    private Collection<DtoMapper<? extends Entity, ? extends RedfishDto>> mapperCache;
+	/**
+	 * <p> TODO 不依靠注入，根据日后代码手动维护mapperPool。 </p>
+	 * 
+	 * @author: zhangdian
+	 * @date: 2018年12月4日 下午4:56:59
+	 */
+	@SuppressWarnings("unchecked")
+	@PostConstruct
+	private void init() {
+		System.out.println("初始化mapper cache");
+		mapperCache = new ArrayList<DtoMapper<? extends Entity, ? extends RedfishDto>>();
+		DtoMapper mapperPool;
+		mapperPool = new DtoMapper(Chassis.class, ChassisDto.class);
+		mapperCache.add(mapperPool);
+	}
 
-    public Optional<DtoMapper<? extends Entity, ? extends RedfishDto>> tryFindDtoMapperForEntity(Class<? extends Entity> entityClass) {
-        Optional<DtoMapper<? extends Entity, ? extends RedfishDto>> possibleDtoMapper = tryGetDtoMapperFromPool(entityClass);
-        if (possibleDtoMapper.isPresent()) {
-            DtoMapper<? extends Entity, ? extends RedfishDto> dtoMapper = possibleDtoMapper.get();
-            dtoMapper.setUnknownOemTranslator(unknownOemTranslator);
-            return of(dtoMapper);
-        } else {
-            return empty();
-        }
-    }
+	public Optional<DtoMapper<? extends Entity, ? extends RedfishDto>> tryFindDtoMapperForEntity(
+			Class<? extends Entity> entityClass) {
+		Optional<DtoMapper<? extends Entity, ? extends RedfishDto>> possibleDtoMapper = tryGetDtoMapperFromPool(
+				entityClass);
+		if (possibleDtoMapper.isPresent()) {
+			DtoMapper<? extends Entity, ? extends RedfishDto> dtoMapper = possibleDtoMapper.get();
+			dtoMapper.setUnknownOemTranslator(unknownOemTranslator);
+			return of(dtoMapper);
+		} else {
+			return empty();
+		}
+	}
 
-    private Optional<DtoMapper<? extends Entity, ? extends RedfishDto>> tryGetDtoMapperFromPool(Class<? extends Entity> entityClass) {
-        return stream(getMapperPool().spliterator(), false)
-            .filter(mapper -> mapper.canMap(entityClass))
-            .findFirst();
-    }
+	private Optional<DtoMapper<? extends Entity, ? extends RedfishDto>> tryGetDtoMapperFromPool(
+			Class<? extends Entity> entityClass) {
+		return stream(mapperCache.spliterator(), false).filter(mapper -> mapper.canMap(entityClass)).findFirst();
+	}
 
-    private Iterable<DtoMapper<? extends Entity, ? extends RedfishDto>> getMapperPool() {
-        if (mapperCache == null) {
-            mapperCache = stream(mapperPool.spliterator(), false).collect(toList());
-        }
-
-        return mapperCache;
-    }
 }

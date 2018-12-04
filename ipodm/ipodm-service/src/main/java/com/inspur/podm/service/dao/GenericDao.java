@@ -16,22 +16,20 @@
 
 package com.inspur.podm.service.dao;
 
-import com.inspur.podm.common.persistence.base.Entity;
-import com.inspur.podm.common.intel.types.Id;
-
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-import javax.transaction.Transactional;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
 
-import static javax.transaction.Transactional.TxType.MANDATORY;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
-@ApplicationScoped
+import com.inspur.podm.common.intel.types.Id;
+import com.inspur.podm.common.persistence.base.Entity;
+
+@Repository
 public class GenericDao {
-    @Inject
+    @Autowired
     private EntityRepository repository;
 
 //    @Transactional(MANDATORY)

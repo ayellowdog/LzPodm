@@ -17,24 +17,22 @@
 package com.inspur.podm.service.dao;
 
 import static java.util.stream.Collectors.toList;
-import static javax.transaction.Transactional.TxType.MANDATORY;
 
 import java.net.URI;
 import java.util.List;
 import java.util.function.Predicate;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-import javax.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.inspur.podm.common.persistence.entity.DiscoverableEntity;
 import com.inspur.podm.common.persistence.entity.ExternalLink;
 import com.inspur.podm.common.persistence.entity.ExternalService;
 
-@ApplicationScoped
+@Component
 public class ExternalLinkDao {
 
-    @Inject
+    @Autowired
     private GenericDao genericDao;
 
 //    @Transactional(MANDATORY)

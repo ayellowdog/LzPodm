@@ -23,6 +23,7 @@ import com.inspur.podm.common.intel.types.ServiceType;
 import com.inspur.podm.common.intel.types.discovery.DiscoveryProtocols;
 
 import org.apache.commons.net.util.SubnetUtils;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,6 +40,7 @@ import static com.inspur.podm.common.intel.types.discovery.DiscoveryProtocols.SS
 import static java.util.Collections.singletonList;
 
 @ConfigFile(filename = "service-detection.json")
+@Component
 public class ServiceDetectionConfig extends BaseConfig {
     private static final String ALL_NETWORKS = "0.0.0.0/0";
 

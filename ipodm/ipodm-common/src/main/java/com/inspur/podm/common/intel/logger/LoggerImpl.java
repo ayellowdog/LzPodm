@@ -16,6 +16,8 @@
 
 package com.inspur.podm.common.intel.logger;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  * Implementation of {@link Logger} backed by {@link org.slf4j.Logger}.

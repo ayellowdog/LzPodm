@@ -16,17 +16,18 @@
 
 package com.inspur.podm.service.service.redfish.aggregation;
 
-import com.inspur.podm.api.business.dto.ChassisDto;
-import com.inspur.podm.service.dao.ChassisDao;
-import com.inspur.podm.common.persistence.entity.Chassis;
-
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
 import java.util.List;
 
-@ApplicationScoped
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import com.inspur.podm.api.business.dto.ChassisDto;
+import com.inspur.podm.common.persistence.entity.Chassis;
+import com.inspur.podm.service.dao.ChassisDao;
+
+@Component
 public class ChassisMerger extends DiscoverableEntityDataMerger<Chassis, ChassisDto> {
-    @Inject
+    @Autowired
     private ChassisDao chassisDao;
 
     @Override

@@ -16,18 +16,6 @@
 
 package com.inspur.podm.common.config.base;
 
-import javax.ejb.AccessTimeout;
-import javax.ejb.Lock;
-import javax.ejb.Singleton;
-import javax.inject.Inject;
-import javax.transaction.Transactional;
-
-import com.inspur.podm.common.config.base.dto.BaseConfig;
-import com.inspur.podm.common.intel.logger.Logger;
-
-import java.io.FileNotFoundException;
-import java.io.IOException;
-
 import static com.inspur.podm.common.config.base.ConfigPaths.READONLY_CONFIG_DIR;
 import static com.inspur.podm.common.config.base.ConfigPaths.WRITABLE_CONFIG_DIR;
 import static com.inspur.podm.common.intel.utils.Contracts.requires;
@@ -37,15 +25,29 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 import static javax.ejb.LockType.WRITE;
 import static javax.transaction.Transactional.TxType.SUPPORTS;
 
-@Singleton
-public class ConfigProvider {
-    @Inject
-    private Logger logger;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
-    @Inject
+import javax.ejb.AccessTimeout;
+import javax.ejb.Lock;
+import javax.transaction.Transactional;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import com.inspur.podm.common.config.base.dto.BaseConfig;
+
+@Component
+public class ConfigProvider {
+	private static final Logger logger = LoggerFactory.getLogger(ConfigProvider.class);
+
+
+    @Autowired
     private ConfigMap configMap;
 
-    @Inject
+    @Autowired
     private ConfigAccessor configAccessor;
 
     private static <T extends BaseConfig> boolean configCanBeGeneratedByApplication(Class<T> configClass) {
@@ -82,10 +84,10 @@ public class ConfigProvider {
             if (configCanBeGeneratedByApplication(configClass)) {
                 write(filePath, config);
             } else {
-                logger.w("Problem while reading config file '{}'. PODM will use defaults for this file.", filePath);
+                logger.warn("Problem while reading config file '{}'. PODM will use defaults for this file.", filePath);
             }
         } catch (IOException e) {
-            logger.e("Problem while reading config file '{}'. Please check if file has correct permissions and valid content.", filePath);
+            logger.error("Problem while reading config file '{}'. Please check if file has correct permissions and valid content.", filePath);
         }
 
         return configMap.get(filePath, configClass);
@@ -94,7 +96,7 @@ public class ConfigProvider {
     private <T extends BaseConfig> void readFileAndUpdateMap(String fileName, Class<T> configClass) throws IOException {
         T config = configAccessor.read(fileName, configClass);
         if (!configMap.update(fileName, config)) {
-            logger.e("Config file '{}' has not been updated correctly.", fileName);
+            logger.error("Config file '{}' has not been updated correctly.", fileName);
         }
     }
 
@@ -102,7 +104,7 @@ public class ConfigProvider {
         try {
             configAccessor.write(fileName, config);
         } catch (IOException e) {
-            logger.e("Problem while writing default config to '{}'", fileName);
+            logger.error("Problem while writing default config to '{}'", fileName);
         }
     }
 }

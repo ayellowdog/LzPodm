@@ -21,14 +21,15 @@ import static com.inspur.podm.api.business.services.redfish.odataid.ODataIdHelpe
 import static com.inspur.podm.service.rest.redfish.serializers.CollectionTypeToCollectionODataMapping.getOdataForCollectionType;
 import static java.util.stream.Collectors.toList;
 
-import javax.enterprise.context.Dependent;
+import org.springframework.stereotype.Component;
 
 import com.inspur.podm.api.business.dto.redfish.CollectionDto;
+import com.inspur.podm.api.business.services.redfish.odataid.ODataId;
 import com.inspur.podm.api.business.services.redfish.odataid.ODataIdFromContextHelper;
 import com.inspur.podm.service.rest.redfish.json.templates.CollectionJson;
 import com.inspur.podm.service.rest.representation.json.serializers.DtoJsonSerializer;
 
-@Dependent
+@Component
 public class CollectionDtoJsonSerializer extends DtoJsonSerializer<CollectionDto> {
     public CollectionDtoJsonSerializer() {
         super(CollectionDto.class);
@@ -47,5 +48,29 @@ public class CollectionDtoJsonSerializer extends DtoJsonSerializer<CollectionDto
         result.members.addAll(dto.getMembers().stream().map(ODataIdFromContextHelper::asOdataId).collect(toList()));
 
         return result;
+    }
+    
+    /**
+     * <p> CollectionDto 2 CollectionJson</p>
+     * 
+     * @author: zhangdian
+     * @date: 2018年11月29日 上午11:26:40
+     * @param dto
+     * @param oDataId
+     * @return
+     */
+    public CollectionJson translate(CollectionDto dto, ODataId oDataId) {
+    	ODataForCollection oData = getOdataForCollectionType(dto.getType());
+
+        CollectionJson result = new CollectionJson(oData.getODataType());
+        result.name = oData.getName();
+        result.description = oData.getName();
+        result.oDataId = oDataId;
+        result.oDataContext = getContextFromODataType(oData.getODataType());
+
+        result.members.addAll(dto.getMembers().stream().map(ODataIdFromContextHelper::asOdataId).collect(toList()));
+
+        return result;
+    	
     }
 }

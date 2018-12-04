@@ -21,7 +21,10 @@ import com.inspur.podm.common.config.base.ConfigFile;
 
 import static java.lang.String.format;
 
+import org.springframework.stereotype.Component;
+
 @ConfigFile(filename = "security.json")
+@Component
 public class SecurityConfig extends BaseConfig {
     public enum CertificateType {
         CLIENT,

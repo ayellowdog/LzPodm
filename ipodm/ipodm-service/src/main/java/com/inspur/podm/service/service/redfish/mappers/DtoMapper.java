@@ -23,24 +23,26 @@ import java.lang.reflect.ParameterizedType;
 import java.util.Collection;
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 import com.inspur.podm.api.business.dto.RedfishDto;
 import com.inspur.podm.api.business.dto.redfish.attributes.UnknownOemDto;
 import com.inspur.podm.common.intel.logger.Logger;
 import com.inspur.podm.common.persistence.base.Entity;
 import com.inspur.podm.common.persistence.entity.DiscoverableEntity;
 import com.inspur.podm.service.service.redfish.helpers.UnknownOemTranslator;
-import com.inspur.podm.service.service.redfish.mappers.BrilliantMapper;
 
-public abstract class DtoMapper<S extends Entity, T extends RedfishDto> extends BrilliantMapper<S, T> {
+public class DtoMapper<S extends Entity, T extends RedfishDto> extends BrilliantMapper<S, T> {
     private static final Logger LOGGER = getLogger(DtoMapper.class);
     protected S source;
     protected T target;
 
     private UnknownOemTranslator unknownOemTranslator;
 
-    protected DtoMapper(Class<S> sourceClass, Class<T> targetClass) {
+	public DtoMapper(Class<S> sourceClass, Class<T> targetClass) {
         super(sourceClass, targetClass);
     }
+    
 
     boolean canMap(Class clazz) {
         return getSourceClass().isAssignableFrom(clazz);
@@ -74,7 +76,8 @@ public abstract class DtoMapper<S extends Entity, T extends RedfishDto> extends 
 
     @SuppressWarnings({"unchecked"})
     public T createDto() {
-        Class<T> clazz = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[1];
+//        Class<T> clazz = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[1];
+        Class<T> clazz = (Class<T>) this.getTargetClass();
         try {
             return clazz.newInstance();
         } catch (InstantiationException | IllegalAccessException e) {

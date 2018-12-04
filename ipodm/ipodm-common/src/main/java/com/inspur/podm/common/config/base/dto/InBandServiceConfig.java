@@ -16,10 +16,13 @@
 
 package com.inspur.podm.common.config.base.dto;
 
+import org.springframework.stereotype.Component;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.inspur.podm.common.config.base.ConfigFile;
 
 @ConfigFile(filename = "inband-service-config.json")
+@Component
 public class InBandServiceConfig extends BaseConfig {
     @JsonProperty("InBandServiceSupportEnabled")
     private boolean inBandServiceSupportEnabled;

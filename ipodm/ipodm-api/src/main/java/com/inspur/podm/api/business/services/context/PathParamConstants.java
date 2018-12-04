@@ -33,7 +33,7 @@ public final class PathParamConstants {
     public static final String VOLUME_ID = "{volumeId}";
     public static final String MANAGER_ID = "{managerId}";
     public static final String STORAGE_SERVICE_ID = "{storageServiceId}";
-    public static final String CHASSIS_ID = "/{chassisId}";
+    public static final String CHASSIS_ID = "{chassisId}";
     public static final String COMPUTER_SYSTEM_ID = "{computerSystemId}";
     public static final String NETWORK_INTERFACE_ID = "{networkInterfaceId}";
     public static final String NETWORK_DEVICE_FUNCTION_ID = "{networkDeviceFunctionId}";
