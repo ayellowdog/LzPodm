@@ -5,8 +5,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.inspur.podm.ServiceApplication;
 import com.inspur.podm.common.persistence.entity.Chassis;
-import com.inspur.podm.service.ServiceApplication;
 import com.inspur.podm.service.dao.ChassisDao;
 import com.inspur.podm.service.dao.MyChassisDao;
 
