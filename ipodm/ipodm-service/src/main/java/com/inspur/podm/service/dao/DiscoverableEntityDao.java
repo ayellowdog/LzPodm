@@ -16,33 +16,33 @@
 
 package com.inspur.podm.service.dao;
 
-import com.inspur.podm.common.persistence.entity.Chassis;
-import com.inspur.podm.service.dao.ExternalLinkDao;
-import com.inspur.podm.common.persistence.entity.ExternalService;
-import com.inspur.podm.common.persistence.entity.DiscoverableEntity;
-import com.inspur.podm.common.intel.types.Id;
+import static com.inspur.podm.common.persistence.entity.DiscoverableEntity.GET_ENTITY_BY_SERVICE_AND_SOURCE_URI;
+import static com.inspur.podm.common.utils.IterableHelper.singleOrNull;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-import javax.persistence.TypedQuery;
-import javax.transaction.Transactional;
 import java.net.URI;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.function.Function;
 
-import static com.inspur.podm.common.persistence.entity.DiscoverableEntity.GET_ENTITY_BY_SERVICE_AND_SOURCE_URI;
-import static com.inspur.podm.common.utils.IterableHelper.singleOrNull;
-import static javax.transaction.Transactional.TxType.MANDATORY;
+import javax.inject.Inject;
+import javax.persistence.TypedQuery;
 
-@ApplicationScoped
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import com.inspur.podm.common.intel.types.Id;
+import com.inspur.podm.common.persistence.entity.Chassis;
+import com.inspur.podm.common.persistence.entity.DiscoverableEntity;
+import com.inspur.podm.common.persistence.entity.ExternalService;
+
+@Component
 public class DiscoverableEntityDao extends Dao<DiscoverableEntity> {
 
-    @Inject
+    @Autowired
     private GenericDao genericDao;
 
-    @Inject
+    @Autowired
     private ExternalLinkDao externalLinkDao;
 
     private HashMap<Class<?>, FindOrCreateStrategy> findOrCreateStrategyRegistry = new HashMap<Class<?>, FindOrCreateStrategy>() {

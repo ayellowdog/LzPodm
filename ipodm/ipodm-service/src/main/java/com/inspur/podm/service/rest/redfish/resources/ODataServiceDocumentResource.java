@@ -41,9 +41,10 @@ public class ODataServiceDocumentResource extends BaseResource {
     @GET
     @Override
     public ODataServiceDocumentDto get() {
-        return ODataServiceDocumentDto.newBuilder()
-            .values(getODataRootServices())
-            .build();
+    	return null;
+//        return ODataServiceDocumentDto.newBuilder()
+//            .values(getODataRootServices())
+//            .build();
     }
 
     private List<ODataServiceDto> getODataRootServices() {

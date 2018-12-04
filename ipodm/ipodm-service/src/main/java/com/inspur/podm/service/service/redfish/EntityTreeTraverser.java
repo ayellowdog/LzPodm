@@ -16,37 +16,40 @@
 
 package com.inspur.podm.service.service.redfish;
 
-import com.inspur.podm.api.business.ContextResolvingException;
-import com.inspur.podm.common.persistence.EntityNotFoundException;
-import com.inspur.podm.service.dao.GenericDao;
-import com.inspur.podm.common.persistence.base.Entity;
-import com.inspur.podm.api.business.services.context.Context;
+import static com.inspur.podm.common.intel.utils.Contracts.requiresNonNull;
+import static java.util.stream.Collectors.toSet;
+import static javax.transaction.Transactional.TxType.MANDATORY;
 
-import javax.enterprise.context.Dependent;
-import javax.inject.Inject;
-import javax.transaction.Transactional;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
-import static com.inspur.podm.common.intel.utils.Contracts.requiresNonNull;
-import static java.util.stream.Collectors.toSet;
-import static javax.transaction.Transactional.TxType.MANDATORY;
+import javax.inject.Inject;
+import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import com.inspur.podm.api.business.ContextResolvingException;
+import com.inspur.podm.api.business.services.context.Context;
+import com.inspur.podm.common.persistence.EntityNotFoundException;
+import com.inspur.podm.common.persistence.base.Entity;
+import com.inspur.podm.service.dao.GenericDao;
 
 
 /**
  * Allows to traverse path (expressed by {@link Context}) of {@link Entity} tree.
  * Throws exception if {@link Entity} is unreachable.
  */
-@Dependent
+@Component
 public class EntityTreeTraverser {
-    @Inject
+    @Autowired
     GenericDao genericDao;
 
-    @Inject
+    @Autowired
     ContextValidator validator;
 
-    @Inject
+    @Autowired
     ContextTypeToEntityMapper mapper;
 
     @Transactional(MANDATORY)

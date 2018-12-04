@@ -21,9 +21,12 @@ import com.inspur.podm.common.config.base.ConfigFile;
 
 import java.time.Duration;
 
+import org.springframework.stereotype.Component;
+
 import static java.time.Duration.ofHours;
 
 @ConfigFile(filename = "external-services.json")
+@Component
 public class ExternalServiceConfig extends BaseConfig {
 
     @JsonProperty("RetainUnavailableServicesForHours")

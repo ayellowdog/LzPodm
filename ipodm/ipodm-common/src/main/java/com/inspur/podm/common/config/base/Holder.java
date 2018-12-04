@@ -19,5 +19,5 @@ package com.inspur.podm.common.config.base;
 import com.inspur.podm.common.config.base.dto.BaseConfig;
 
 public interface Holder<T extends BaseConfig> {
-    T get();
+    T get(Class<T> clazz);
 }

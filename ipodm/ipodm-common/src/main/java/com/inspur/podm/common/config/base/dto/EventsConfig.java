@@ -23,6 +23,9 @@ import com.inspur.podm.common.config.base.ConfigFile;
 import com.inspur.podm.common.intel.types.ServiceType;
 
 import javax.ws.rs.core.UriBuilderException;
+
+import org.springframework.stereotype.Component;
+
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -44,6 +47,7 @@ import static javax.ws.rs.core.UriBuilder.fromUri;
 @ConfigFile(filename = "events.json")
 @JsonIgnoreProperties(ignoreUnknown = true)
 @SuppressWarnings({"checkstyle:MethodCount"})
+@Component
 public class EventsConfig extends BaseConfig {
     @JsonIgnore
     public static final String EVENT_RECEIVING_ENDPOINT = "/rest/EventListener";

@@ -18,13 +18,19 @@ package com.inspur.podm.api.business.dto.redfish;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.inspur.podm.api.business.dto.redfish.attributes.ODataServiceDto;
 
+@JsonPropertyOrder({"@odata.context", "values"})
 public final class ODataServiceDocumentDto {
     private final List<ODataServiceDto> values;
+    @JsonProperty("@odata.context")
+    private final String oDataContext;
 
     private ODataServiceDocumentDto(Builder builder) {
         this.values = builder.values;
+        this.oDataContext = builder.oDataContext;
     }
 
     public List<ODataServiceDto> getValues() {
@@ -37,6 +43,7 @@ public final class ODataServiceDocumentDto {
 
     public static final class Builder {
         private List<ODataServiceDto> values;
+        private String oDataContext;
 
         private Builder() {
         }
@@ -45,8 +52,9 @@ public final class ODataServiceDocumentDto {
             return new ODataServiceDocumentDto(this);
         }
 
-        public Builder values(List<ODataServiceDto> values) {
+        public Builder values(List<ODataServiceDto> values, String oDataContext) {
             this.values = values;
+            this.oDataContext = oDataContext;
             return this;
         }
     }

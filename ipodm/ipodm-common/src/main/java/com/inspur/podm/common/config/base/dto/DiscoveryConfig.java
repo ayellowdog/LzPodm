@@ -16,10 +16,13 @@
 
 package com.inspur.podm.common.config.base.dto;
 
+import org.springframework.stereotype.Component;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.inspur.podm.common.config.base.ConfigFile;
 
 @ConfigFile(filename = "discovery.json")
+@Component
 public class DiscoveryConfig extends BaseConfig {
     @JsonProperty("PodLocationId")
     private String podLocationId = "Pod1";

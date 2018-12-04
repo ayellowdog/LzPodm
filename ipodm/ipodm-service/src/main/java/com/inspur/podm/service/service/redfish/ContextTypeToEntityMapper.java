@@ -16,62 +16,6 @@
 
 package com.inspur.podm.service.service.redfish;
 
-import com.inspur.podm.common.persistence.entity.Chassis;
-import com.inspur.podm.common.persistence.entity.ComposedNode;
-import com.inspur.podm.common.persistence.entity.ComputerSystem;
-import com.inspur.podm.common.persistence.entity.ComputerSystemMetrics;
-import com.inspur.podm.common.persistence.entity.Drive;
-import com.inspur.podm.common.persistence.entity.DriveMetrics;
-import com.inspur.podm.common.persistence.entity.Endpoint;
-import com.inspur.podm.common.persistence.entity.EthernetInterface;
-import com.inspur.podm.common.persistence.entity.EthernetSwitch;
-import com.inspur.podm.common.persistence.entity.EthernetSwitchAcl;
-import com.inspur.podm.common.persistence.entity.EthernetSwitchAclRule;
-import com.inspur.podm.common.persistence.entity.EthernetSwitchMetrics;
-import com.inspur.podm.common.persistence.entity.EthernetSwitchPort;
-import com.inspur.podm.common.persistence.entity.EthernetSwitchPortMetrics;
-import com.inspur.podm.common.persistence.entity.EthernetSwitchPortVlan;
-import com.inspur.podm.common.persistence.entity.EthernetSwitchStaticMac;
-import com.inspur.podm.common.persistence.entity.EventSubscription;
-import com.inspur.podm.common.persistence.entity.Fabric;
-import com.inspur.podm.common.persistence.entity.Manager;
-import com.inspur.podm.common.persistence.entity.Memory;
-import com.inspur.podm.common.persistence.entity.MemoryMetrics;
-import com.inspur.podm.common.persistence.entity.MetricDefinition;
-import com.inspur.podm.common.persistence.entity.MetricReportDefinition;
-import com.inspur.podm.common.persistence.entity.NetworkDeviceFunction;
-import com.inspur.podm.common.persistence.entity.NetworkInterface;
-import com.inspur.podm.common.persistence.entity.NetworkProtocol;
-import com.inspur.podm.common.persistence.entity.PcieDevice;
-import com.inspur.podm.common.persistence.entity.PcieDeviceFunction;
-import com.inspur.podm.common.persistence.entity.Port;
-import com.inspur.podm.common.persistence.entity.PortMetrics;
-import com.inspur.podm.common.persistence.entity.Power;
-import com.inspur.podm.common.persistence.entity.PowerControl;
-import com.inspur.podm.common.persistence.entity.PowerSupply;
-import com.inspur.podm.common.persistence.entity.PowerVoltage;
-import com.inspur.podm.common.persistence.entity.Processor;
-import com.inspur.podm.common.persistence.entity.ProcessorMetrics;
-import com.inspur.podm.common.persistence.entity.Redundancy;
-import com.inspur.podm.common.persistence.entity.SimpleStorage;
-import com.inspur.podm.common.persistence.entity.Storage;
-import com.inspur.podm.common.persistence.entity.StoragePool;
-import com.inspur.podm.common.persistence.entity.StorageService;
-import com.inspur.podm.common.persistence.entity.Switch;
-import com.inspur.podm.common.persistence.entity.Thermal;
-import com.inspur.podm.common.persistence.entity.ThermalFan;
-import com.inspur.podm.common.persistence.entity.ThermalTemperature;
-import com.inspur.podm.common.persistence.entity.Volume;
-import com.inspur.podm.common.persistence.entity.VolumeMetrics;
-import com.inspur.podm.common.persistence.entity.Zone;
-import com.inspur.podm.common.persistence.base.Entity;
-import com.inspur.podm.api.business.services.context.ContextType;
-
-import javax.enterprise.context.ApplicationScoped;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-
 import static com.inspur.podm.api.business.services.context.ContextType.CHASSIS;
 import static com.inspur.podm.api.business.services.context.ContextType.COMPOSED_NODE;
 import static com.inspur.podm.api.business.services.context.ContextType.COMPUTER_SYSTEM;
@@ -124,7 +68,64 @@ import static com.inspur.podm.common.intel.utils.Contracts.requiresNonNull;
 import static java.lang.String.format;
 import static java.util.Collections.unmodifiableMap;
 
-@ApplicationScoped
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+
+import org.springframework.stereotype.Component;
+
+import com.inspur.podm.api.business.services.context.ContextType;
+import com.inspur.podm.common.persistence.base.Entity;
+import com.inspur.podm.common.persistence.entity.Chassis;
+import com.inspur.podm.common.persistence.entity.ComposedNode;
+import com.inspur.podm.common.persistence.entity.ComputerSystem;
+import com.inspur.podm.common.persistence.entity.ComputerSystemMetrics;
+import com.inspur.podm.common.persistence.entity.Drive;
+import com.inspur.podm.common.persistence.entity.DriveMetrics;
+import com.inspur.podm.common.persistence.entity.Endpoint;
+import com.inspur.podm.common.persistence.entity.EthernetInterface;
+import com.inspur.podm.common.persistence.entity.EthernetSwitch;
+import com.inspur.podm.common.persistence.entity.EthernetSwitchAcl;
+import com.inspur.podm.common.persistence.entity.EthernetSwitchAclRule;
+import com.inspur.podm.common.persistence.entity.EthernetSwitchMetrics;
+import com.inspur.podm.common.persistence.entity.EthernetSwitchPort;
+import com.inspur.podm.common.persistence.entity.EthernetSwitchPortMetrics;
+import com.inspur.podm.common.persistence.entity.EthernetSwitchPortVlan;
+import com.inspur.podm.common.persistence.entity.EthernetSwitchStaticMac;
+import com.inspur.podm.common.persistence.entity.EventSubscription;
+import com.inspur.podm.common.persistence.entity.Fabric;
+import com.inspur.podm.common.persistence.entity.Manager;
+import com.inspur.podm.common.persistence.entity.Memory;
+import com.inspur.podm.common.persistence.entity.MemoryMetrics;
+import com.inspur.podm.common.persistence.entity.MetricDefinition;
+import com.inspur.podm.common.persistence.entity.MetricReportDefinition;
+import com.inspur.podm.common.persistence.entity.NetworkDeviceFunction;
+import com.inspur.podm.common.persistence.entity.NetworkInterface;
+import com.inspur.podm.common.persistence.entity.NetworkProtocol;
+import com.inspur.podm.common.persistence.entity.PcieDevice;
+import com.inspur.podm.common.persistence.entity.PcieDeviceFunction;
+import com.inspur.podm.common.persistence.entity.Port;
+import com.inspur.podm.common.persistence.entity.PortMetrics;
+import com.inspur.podm.common.persistence.entity.Power;
+import com.inspur.podm.common.persistence.entity.PowerControl;
+import com.inspur.podm.common.persistence.entity.PowerSupply;
+import com.inspur.podm.common.persistence.entity.PowerVoltage;
+import com.inspur.podm.common.persistence.entity.Processor;
+import com.inspur.podm.common.persistence.entity.ProcessorMetrics;
+import com.inspur.podm.common.persistence.entity.Redundancy;
+import com.inspur.podm.common.persistence.entity.SimpleStorage;
+import com.inspur.podm.common.persistence.entity.Storage;
+import com.inspur.podm.common.persistence.entity.StoragePool;
+import com.inspur.podm.common.persistence.entity.StorageService;
+import com.inspur.podm.common.persistence.entity.Switch;
+import com.inspur.podm.common.persistence.entity.Thermal;
+import com.inspur.podm.common.persistence.entity.ThermalFan;
+import com.inspur.podm.common.persistence.entity.ThermalTemperature;
+import com.inspur.podm.common.persistence.entity.Volume;
+import com.inspur.podm.common.persistence.entity.VolumeMetrics;
+import com.inspur.podm.common.persistence.entity.Zone;
+
+@Component
 public class ContextTypeToEntityMapper {
     static final Map<ContextType, Class<? extends Entity>> MAPPING;
 

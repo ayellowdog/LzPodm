@@ -105,13 +105,13 @@ public class EventListenerResource {
     }
 
     private boolean isDifferentChannelRequiredForServiceType(SecurityContext securityContext, ServiceType serviceType) {
-        return connectionConfig.get().getConnectionSecurity().isSslEnabledForServicesOfType(serviceType) != securityContext.isSecure();
+        return connectionConfig.get(ServiceConnectionConfig.class).getConnectionSecurity().isSslEnabledForServicesOfType(serviceType) != securityContext.isSecure();
     }
 
     private URI getPodmEventServiceDestination(ServiceType serviceType, UUID serviceUuid) {
-        EventsConfig eventsConfiguration = eventsConfig.get();
+        EventsConfig eventsConfiguration = eventsConfig.get(EventsConfig.class);
         EventConfiguration serviceTypeEventConfig = eventsConfiguration.getEventConfigForServiceType(serviceType);
-        boolean sslEnabled = connectionConfig.get().getConnectionSecurity().isSslEnabledForServicesOfType(serviceType);
+        boolean sslEnabled = connectionConfig.get(ServiceConnectionConfig.class).getConnectionSecurity().isSslEnabledForServicesOfType(serviceType);
         URI baseEndpoint = sslEnabled ? serviceTypeEventConfig.getSecurePodManagerEventReceivingEndpoint()
             : serviceTypeEventConfig.getDefaultPodManagerEventReceivingEndpoint();
 

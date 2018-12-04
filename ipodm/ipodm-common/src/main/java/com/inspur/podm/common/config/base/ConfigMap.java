@@ -16,17 +16,17 @@
 
 package com.inspur.podm.common.config.base;
 
-import javax.enterprise.context.Dependent;
-
-import com.inspur.podm.common.config.base.dto.BaseConfig;
+import static com.inspur.podm.common.intel.utils.Contracts.requiresNonNull;
+import static java.lang.String.format;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.inspur.podm.common.intel.utils.Contracts.requiresNonNull;
-import static java.lang.String.format;
+import org.springframework.stereotype.Component;
 
-@Dependent
+import com.inspur.podm.common.config.base.dto.BaseConfig;
+
+@Component
 class ConfigMap {
     private final Map<String, BaseConfig> map = new HashMap<>();
 

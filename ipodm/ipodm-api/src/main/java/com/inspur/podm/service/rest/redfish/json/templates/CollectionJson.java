@@ -14,24 +14,29 @@
  * limitations under the License.
  */
 
-package com.inspur.podm.common.config.base.dto;
+package com.inspur.podm.service.rest.redfish.json.templates;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.inspur.podm.common.config.base.ConfigFile;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.inspur.podm.api.business.services.redfish.odataid.ODataId;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.stereotype.Component;
+@JsonPropertyOrder({"@odata.context", "@odata.id", "@odata.type", "name", "description", "Members@odata.count", "members"})
+@SuppressWarnings({"checkstyle:VisibilityModifier"})
+public final class CollectionJson extends BaseJson {
+    public String name;
+    public String description;
 
-@ConfigFile(filename = "allocation.json")
-@Component
-public class AllocationConfig extends BaseConfig {
+    public final List<ODataId> members = new ArrayList<>();
 
-    @JsonProperty("ReservedVlanIds")
-    private List<Integer> reservedVlanIds = new ArrayList<>();
+    public CollectionJson(String type) {
+        super(type);
+    }
 
-    public Iterable<Integer> getReservedVlanIds() {
-        return reservedVlanIds;
+    @JsonProperty("Members@odata.count")
+    private int getCount() {
+        return members.size();
     }
 }

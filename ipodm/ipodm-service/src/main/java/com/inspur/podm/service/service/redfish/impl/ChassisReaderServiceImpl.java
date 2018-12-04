@@ -24,11 +24,13 @@ import static com.inspur.podm.common.intel.types.redfish.ResourceNames.THERMAL_R
 import static java.util.stream.Collectors.toList;
 import static javax.transaction.Transactional.TxType.REQUIRED;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
 import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.inspur.podm.api.business.ContextResolvingException;
 import com.inspur.podm.api.business.dto.ChassisDto;
@@ -36,28 +38,31 @@ import com.inspur.podm.api.business.dto.redfish.CollectionDto;
 import com.inspur.podm.api.business.services.context.Context;
 import com.inspur.podm.api.business.services.context.ContextType;
 import com.inspur.podm.api.business.services.redfish.ReaderService;
+import com.inspur.podm.common.intel.types.Id;
 import com.inspur.podm.common.persistence.entity.Chassis;
 import com.inspur.podm.service.dao.ChassisDao;
+import com.inspur.podm.service.rest.redfish.json.templates.RedfishResourceAmazingWrapper;
 import com.inspur.podm.service.service.redfish.EntityTreeTraverser;
 import com.inspur.podm.service.service.redfish.aggregation.ChassisMerger;
 
-//@RequestScoped
+@Service
 class ChassisReaderServiceImpl implements ReaderService<ChassisDto> {
-//    @Inject
+    @Autowired
     private ChassisDao chassisDao;
 
-//    @Inject
+    @Autowired
     private EntityTreeTraverser traverser;
 
-//    @Inject
+    @Autowired
     private ChassisMerger chassisMerger;
 
     @Transactional(REQUIRED)
     @Override
     public CollectionDto getCollection(Context serviceRootContext) throws ContextResolvingException {
-        List<Context> contexts = chassisDao.findAllChassisFromPrimaryDataSource().stream()
-            .map(id -> contextOf(id, ContextType.CHASSIS)).sorted().collect(toList());
-        return new CollectionDto(CHASSIS, contexts);
+    	List<Id> findAllChassisFromPrimaryDataSource = chassisDao.findAllChassisFromPrimaryDataSource();
+		List<Context> contexts = findAllChassisFromPrimaryDataSource.stream()
+				.map(id -> contextOf(id, ContextType.CHASSIS)).sorted().collect(toList());
+		return new CollectionDto(CHASSIS, contexts);
     }
 
     @Transactional(REQUIRED)

@@ -18,9 +18,13 @@ package com.inspur.podm.common.config.base;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import javax.annotation.Resource;
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 import javax.inject.Named;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import static com.inspur.podm.common.intel.utils.Contracts.requiresNonNull;
 
@@ -28,9 +32,9 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-@Dependent
+@Component
 class ConfigAccessor {
-    @Inject @Named("ConfigMapper")
+    @Autowired
     private ObjectMapper mapper;
 
     public <T> T read(String fileName, Class<T> configClass) throws IOException {

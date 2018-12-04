@@ -26,9 +26,12 @@ import com.inspur.podm.common.config.base.ConfigFile;
 import java.io.IOException;
 import java.time.Duration;
 
+import org.springframework.stereotype.Component;
+
 import static java.time.Duration.ofSeconds;
 
 @ConfigFile(filename = "task-synchronization.json")
+@Component
 public class TaskCoordinatorConfig extends BaseConfig {
     @JsonDeserialize(using = DurationDeserializer.class)
     @JsonProperty("MaxTimeToWaitForAsyncTaskSeconds")

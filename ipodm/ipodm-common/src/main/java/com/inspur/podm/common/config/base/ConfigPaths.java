@@ -17,8 +17,11 @@
 package com.inspur.podm.common.config.base;
 
 final class ConfigPaths {
-    public static final String WRITABLE_CONFIG_DIR = "/var/lib/pod-manager/";
-    public static final String READONLY_CONFIG_DIR = "/etc/pod-manager/";
+//    public static final String WRITABLE_CONFIG_DIR = "/var/lib/pod-manager/";
+//    public static final String READONLY_CONFIG_DIR = "/etc/pod-manager/";
+    
+    public static final String WRITABLE_CONFIG_DIR = "C:\\Users\\zhangdian\\git\\intelRSD\\PODM\\SW\\pod-manager\\os-package\\contents\\etc\\pod-manager\\";
+    public static final String READONLY_CONFIG_DIR = "C:\\Users\\zhangdian\\git\\intelRSD\\PODM\\SW\\pod-manager\\os-package\\contents\\etc\\pod-manager\\";
 
     private ConfigPaths() {
     }

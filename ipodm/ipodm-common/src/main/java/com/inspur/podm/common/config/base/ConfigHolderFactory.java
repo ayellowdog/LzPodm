@@ -16,33 +16,38 @@
 
 package com.inspur.podm.common.config.base;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.inject.Produces;
-import javax.enterprise.inject.spi.InjectionPoint;
-import javax.inject.Inject;
-
-import com.inspur.podm.common.config.base.dto.BaseConfig;
-
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
-@ApplicationScoped
-public class ConfigHolderFactory {
-    @Inject
-    private ConfigProvider configProvider;
+import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.inject.Produces;
+import javax.enterprise.inject.spi.InjectionPoint;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.inspur.podm.common.config.base.dto.BaseConfig;
+
+//@ApplicationScoped
+public class ConfigHolderFactory {
+    @Autowired
+    private static ConfigProvider configProvider;
+
+//    public static <T extends BaseConfig> Holder<T> createStaticHolder2(Class<T> clz) {
+//    	 System.out.println("mmmmmmmmmmmmmmmmmmmmm" + configProvider);
+//    	 return new StaticHolder<>(configProvider.get(clz));
+//    }
     @Produces
     @Config(refreshable = true)
     public <T extends BaseConfig> Holder<T> createDynamicHolder(InjectionPoint injectionPoint) {
         Class<T> configClass = getConfigClass(injectionPoint);
-        return new DynamicHolder<>(configProvider, configClass);
+        return new DynamicHolder<>();
     }
 
     @Produces
     @Config(refreshable = false)
     public <T extends BaseConfig> Holder<T> createStaticHolder(InjectionPoint injectionPoint) {
         Class<T> configClass = getConfigClass(injectionPoint);
-        return new StaticHolder<>(configProvider.get(configClass));
+        return null;//new StaticHolder<>(configProvider.get(configClass));
     }
 
     Class getConfigClass(InjectionPoint injectionPoint) {
