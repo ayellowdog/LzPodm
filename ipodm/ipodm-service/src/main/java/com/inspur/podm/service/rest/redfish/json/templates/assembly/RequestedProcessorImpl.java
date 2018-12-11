@@ -27,10 +27,10 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.inspur.podm.api.business.services.context.Context;
 import com.inspur.podm.api.business.services.redfish.odataid.ODataId;
 import com.inspur.podm.api.business.services.redfish.requests.RequestedNode;
-import com.inspur.podm.common.intel.types.InstructionSet;
-import com.inspur.podm.common.intel.types.ProcessorBrand;
-import com.inspur.podm.common.intel.types.ProcessorType;
-import com.inspur.podm.common.intel.types.deserialization.PositiveIntegerDeserializer;
+import com.intel.podm.common.types.InstructionSet;
+import com.intel.podm.common.types.ProcessorBrand;
+import com.intel.podm.common.types.ProcessorType;
+import com.intel.podm.common.types.deserialization.PositiveIntegerDeserializer;
 
 public final class RequestedProcessorImpl implements RequestedNode.Processor {
     @JsonProperty

@@ -7,28 +7,28 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.inspur.podm.api.business.dto.redfish.attributes.UnknownOemDto;
-import com.inspur.podm.common.intel.logger.Logger;
-import com.inspur.podm.common.intel.types.redfish.OemType;
-import com.inspur.podm.common.intel.types.redfish.RedfishResource;
+import com.intel.podm.common.types.redfish.OemType;
+import com.intel.podm.common.types.redfish.RedfishResource;
 
 import org.atteo.classindex.IndexSubclasses;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import static com.inspur.podm.api.business.services.OemSerializeHelper.oemDtosToUnknownOems;
-import static com.inspur.podm.common.intel.logger.LoggerFactory.getLogger;
-import static com.inspur.podm.common.intel.types.redfish.OemType.OEM_ELEMENT_SEPARATOR;
-import static com.inspur.podm.common.intel.types.redfish.OemType.Type.OEM_IN_ACTIONS;
-import static com.inspur.podm.common.intel.types.redfish.OemType.Type.OEM_IN_LINKS;
-import static com.inspur.podm.common.intel.types.redfish.OemType.Type.TOP_LEVEL_OEM;
-import static com.inspur.podm.common.intel.utils.StringRepresentation.fromIterable;
+import static com.intel.podm.common.types.redfish.OemType.OEM_ELEMENT_SEPARATOR;
+import static com.intel.podm.common.types.redfish.OemType.Type.OEM_IN_ACTIONS;
+import static com.intel.podm.common.types.redfish.OemType.Type.OEM_IN_LINKS;
+import static com.intel.podm.common.types.redfish.OemType.Type.TOP_LEVEL_OEM;
+import static com.intel.podm.common.utils.StringRepresentation.fromIterable;
 import static java.util.Collections.emptyMap;
 import static java.util.stream.Collectors.toMap;
 
 public  class RedfishDto implements RedfishResource {
-    private static final Logger LOGGER = getLogger(RedfishDto.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(RedfishDto.class);
     @JsonProperty("@odata.type")
     private final String oDataType;
     @JsonProperty("Id")
@@ -92,7 +92,7 @@ public  class RedfishDto implements RedfishResource {
         public Map<String, Object> handleUnknownOems() throws JsonProcessingException {
             OemType oemType = getClass().getAnnotation(OemType.class);
             if (oemType == null) {
-                LOGGER.e("Mandatory OemType annotation is not defined for: " + getClass().getName());
+                LOGGER.error("Mandatory OemType annotation is not defined for: " + getClass().getName());
                 return emptyMap();
             }
 

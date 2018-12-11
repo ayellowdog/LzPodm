@@ -19,7 +19,7 @@ package com.inspur.podm.api.business.services.redfish;
 import com.inspur.podm.api.business.ContextResolvingException;
 import com.inspur.podm.api.business.dto.redfish.CollectionDto;
 import com.inspur.podm.api.business.services.context.Context;
-import com.inspur.podm.common.intel.types.redfish.RedfishResource;
+import com.intel.podm.common.types.redfish.RedfishResource;
 
 public interface ReaderService<T extends RedfishResource> {
     Context SERVICE_ROOT_CONTEXT = null;

@@ -21,7 +21,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.inspur.podm.api.business.dto.redfish.CapacityDto;
 import com.inspur.podm.api.business.dto.redfish.CapacitySourceDto;
 import com.inspur.podm.api.business.services.context.SingletonContext;
-import com.inspur.podm.common.intel.types.Status;
+import com.intel.podm.common.types.Status;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;

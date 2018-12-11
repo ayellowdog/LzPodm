@@ -20,15 +20,15 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.inspur.podm.api.business.services.context.SingletonContext;
-import com.inspur.podm.common.intel.types.BaseModuleType;
-import com.inspur.podm.common.intel.types.ErrorCorrection;
-import com.inspur.podm.common.intel.types.MemoryClassification;
-import com.inspur.podm.common.intel.types.MemoryDeviceType;
-import com.inspur.podm.common.intel.types.MemoryMedia;
-import com.inspur.podm.common.intel.types.MemoryType;
-import com.inspur.podm.common.intel.types.OperatingMemoryMode;
-import com.inspur.podm.common.intel.types.Status;
-import com.inspur.podm.common.intel.types.redfish.OemType;
+import com.intel.podm.common.types.BaseModuleType;
+import com.intel.podm.common.types.ErrorCorrection;
+import com.intel.podm.common.types.MemoryClassification;
+import com.intel.podm.common.types.MemoryDeviceType;
+import com.intel.podm.common.types.MemoryMedia;
+import com.intel.podm.common.types.MemoryType;
+import com.intel.podm.common.types.OperatingMemoryMode;
+import com.intel.podm.common.types.Status;
+import com.intel.podm.common.types.redfish.OemType;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -37,7 +37,7 @@ import java.util.List;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.ALWAYS;
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
-import static com.inspur.podm.common.intel.types.redfish.OemType.Type.TOP_LEVEL_OEM;
+import static com.intel.podm.common.types.redfish.OemType.Type.TOP_LEVEL_OEM;
 
 @JsonPropertyOrder({
     "@odata.context", "@odata.id", "@odata.type", "name", "id", "description", "memoryType", "memoryDeviceType", "baseModuleType", "memoryMedia",

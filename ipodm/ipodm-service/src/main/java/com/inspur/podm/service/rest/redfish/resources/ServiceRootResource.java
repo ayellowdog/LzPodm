@@ -27,16 +27,16 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
-import static com.inspur.podm.common.intel.types.redfish.ResourceNames.CHASSIS_RESOURCE_NAME;
-import static com.inspur.podm.common.intel.types.redfish.ResourceNames.COMPOSED_NODES_RESOURCE_NAME;
-import static com.inspur.podm.common.intel.types.redfish.ResourceNames.COMPUTER_SYSTEM_RESOURCE_NAME;
-import static com.inspur.podm.common.intel.types.redfish.ResourceNames.ETHERNET_SWITCHES_RESOURCE_NAME;
-import static com.inspur.podm.common.intel.types.redfish.ResourceNames.EVENT_SERVICE_RESOURCE_NAME;
-import static com.inspur.podm.common.intel.types.redfish.ResourceNames.FABRIC_RESOURCE_NAME;
-import static com.inspur.podm.common.intel.types.redfish.ResourceNames.MANAGERS_RESOURCE_NAME;
-import static com.inspur.podm.common.intel.types.redfish.ResourceNames.STORAGE_SERVICES_RESOURCE_NAME;
-import static com.inspur.podm.common.intel.types.redfish.ResourceNames.TELEMETRY_SERVICE_RESOURCE_NAME;
 import static com.inspur.podm.service.rest.redfish.OptionsResponseBuilder.newOptionsForResourceBuilder;
+import static com.intel.podm.common.types.redfish.ResourceNames.CHASSIS_RESOURCE_NAME;
+import static com.intel.podm.common.types.redfish.ResourceNames.COMPOSED_NODES_RESOURCE_NAME;
+import static com.intel.podm.common.types.redfish.ResourceNames.COMPUTER_SYSTEM_RESOURCE_NAME;
+import static com.intel.podm.common.types.redfish.ResourceNames.ETHERNET_SWITCHES_RESOURCE_NAME;
+import static com.intel.podm.common.types.redfish.ResourceNames.EVENT_SERVICE_RESOURCE_NAME;
+import static com.intel.podm.common.types.redfish.ResourceNames.FABRIC_RESOURCE_NAME;
+import static com.intel.podm.common.types.redfish.ResourceNames.MANAGERS_RESOURCE_NAME;
+import static com.intel.podm.common.types.redfish.ResourceNames.STORAGE_SERVICES_RESOURCE_NAME;
+import static com.intel.podm.common.types.redfish.ResourceNames.TELEMETRY_SERVICE_RESOURCE_NAME;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
 

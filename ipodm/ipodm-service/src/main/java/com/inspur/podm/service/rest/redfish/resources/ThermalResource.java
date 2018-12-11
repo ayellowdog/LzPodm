@@ -27,8 +27,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
 import static com.inspur.podm.api.business.services.context.SingletonContext.singletonContextOf;
-import static com.inspur.podm.common.intel.types.redfish.ResourceNames.THERMAL_RESOURCE_NAME;
 import static com.inspur.podm.service.rest.redfish.OptionsResponseBuilder.newOptionsForResourceBuilder;
+import static com.intel.podm.common.types.redfish.ResourceNames.THERMAL_RESOURCE_NAME;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
 

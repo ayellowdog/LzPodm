@@ -17,7 +17,7 @@
 package com.inspur.podm.service.rest.redfish.json.templates.actions;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.inspur.podm.common.intel.types.redfish.RedfishDrive;
+import com.intel.podm.common.types.redfish.RedfishDrive;
 
 @SuppressWarnings({"checkstyle:VisibilityModifier"})
 public class DrivePartialRepresentation implements RedfishDrive {

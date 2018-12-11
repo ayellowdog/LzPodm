@@ -17,7 +17,7 @@
 package com.inspur.podm.service.rest.redfish.json.templates.actions;
 
 import com.inspur.podm.api.business.services.redfish.requests.ResetRequest;
-import com.inspur.podm.common.intel.types.actions.ResetType;
+import com.intel.podm.common.types.actions.ResetType;
 
 public class ResetActionJson implements ResetRequest {
     private ResetType resetType;

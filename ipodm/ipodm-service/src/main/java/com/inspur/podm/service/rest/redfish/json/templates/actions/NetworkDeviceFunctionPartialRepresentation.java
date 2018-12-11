@@ -17,16 +17,16 @@
 package com.inspur.podm.service.rest.redfish.json.templates.actions;
 
 import com.fasterxml.jackson.annotation.JsonSetter;
-import com.inspur.podm.common.intel.types.AuthenticationMethod;
-import com.inspur.podm.common.intel.types.IpAddressType;
-import com.inspur.podm.common.intel.types.Ref;
-import com.inspur.podm.common.intel.types.redfish.RedfishNetworkDeviceFunction;
+import com.intel.podm.common.types.AuthenticationMethod;
+import com.intel.podm.common.types.IpAddressType;
+import com.intel.podm.common.types.Ref;
+import com.intel.podm.common.types.redfish.RedfishNetworkDeviceFunction;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import static com.fasterxml.jackson.annotation.Nulls.AS_EMPTY;
-import static com.inspur.podm.common.intel.types.Ref.unassigned;
+import static com.intel.podm.common.types.Ref.unassigned;
 
 public final class NetworkDeviceFunctionPartialRepresentation implements RedfishNetworkDeviceFunction {
     @JsonSetter(value = "DeviceEnabled", nulls = AS_EMPTY)

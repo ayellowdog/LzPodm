@@ -19,7 +19,7 @@ package com.inspur.podm.service.rest.redfish.json.templates.actions;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.inspur.podm.api.business.services.context.Context;
 import com.inspur.podm.api.business.services.redfish.odataid.ODataId;
-import com.inspur.podm.common.intel.types.redfish.ZoneCreationInterface;
+import com.intel.podm.common.types.redfish.ZoneCreationInterface;
 
 import static com.inspur.podm.api.business.services.context.ContextType.ENDPOINT;
 import static com.inspur.podm.api.business.services.context.UriToContextConverter.getContextFromUri;

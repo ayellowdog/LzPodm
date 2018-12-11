@@ -17,9 +17,9 @@
 package com.inspur.podm.service.rest.redfish.json.templates.actions;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.inspur.podm.common.intel.types.AdministrativeState;
-import com.inspur.podm.common.intel.types.DcbxState;
-import com.inspur.podm.common.intel.types.redfish.RedfishEthernetSwitchPort;
+import com.intel.podm.common.types.AdministrativeState;
+import com.intel.podm.common.types.DcbxState;
+import com.intel.podm.common.types.redfish.RedfishEthernetSwitchPort;
 
 import java.util.List;
 

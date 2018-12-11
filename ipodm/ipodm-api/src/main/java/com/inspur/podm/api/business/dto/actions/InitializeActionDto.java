@@ -18,7 +18,7 @@ package com.inspur.podm.api.business.dto.actions;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.inspur.podm.api.business.services.redfish.requests.InitializeRequest;
-import com.inspur.podm.common.intel.types.actions.InitializeType;
+import com.intel.podm.common.types.actions.InitializeType;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 

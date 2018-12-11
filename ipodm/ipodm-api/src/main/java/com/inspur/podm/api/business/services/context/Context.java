@@ -17,14 +17,14 @@
 package com.inspur.podm.api.business.services.context;
 
 import com.inspur.podm.api.business.services.redfish.odataid.ODataIdFromContextHelper;
-import com.inspur.podm.common.intel.types.Id;
-import com.inspur.podm.common.intel.types.redfish.NavigationProperty;
-import com.inspur.podm.common.intel.types.redfish.OdataIdProvider;
+import com.intel.podm.common.types.Id;
+import com.intel.podm.common.types.redfish.NavigationProperty;
+import com.intel.podm.common.types.redfish.OdataIdProvider;
 
 import java.util.Objects;
 
-import static com.inspur.podm.common.intel.utils.Contracts.requires;
-import static com.inspur.podm.common.intel.utils.Contracts.requiresNonNull;
+import static com.intel.podm.common.utils.Contracts.requires;
+import static com.intel.podm.common.utils.Contracts.requiresNonNull;
 import static java.lang.String.format;
 import static java.util.Comparator.comparing;
 import static java.util.Objects.hash;

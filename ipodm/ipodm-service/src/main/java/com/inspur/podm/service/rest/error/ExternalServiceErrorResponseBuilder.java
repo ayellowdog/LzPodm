@@ -17,20 +17,20 @@
 package com.inspur.podm.service.rest.error;
 
 import com.inspur.podm.api.business.BusinessApiException;
-import com.inspur.podm.common.intel.logger.Logger;
-import com.inspur.podm.common.intel.types.net.HttpStatusCode;
-import com.inspur.podm.common.intel.types.redfish.ExternalServiceError;
 import com.inspur.podm.service.rest.representation.json.exceptionmappers.LogMessageBuilder;
+import com.intel.podm.common.logger.Logger;
+import com.intel.podm.common.types.net.HttpStatusCode;
+import com.intel.podm.common.types.redfish.ExternalServiceError;
 
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 import javax.ws.rs.core.Response;
 import java.util.Optional;
 
-import static com.inspur.podm.common.intel.enterprise.utils.exceptions.RootCauseInvestigator.tryGetExternalServiceErrorInExceptionStack;
 import static com.inspur.podm.service.rest.error.ErrorResponseBuilder.newErrorResponseBuilder;
 import static com.inspur.podm.service.rest.error.ExternalServiceErrorMessageBuilder.newExternalServiceErrorMessageBuilder;
 import static com.inspur.podm.service.rest.representation.json.exceptionmappers.LogMessageBuilder.newLogMessageBuilder;
+import static com.intel.podm.common.enterprise.utils.exceptions.RootCauseInvestigator.tryGetExternalServiceErrorInExceptionStack;
 import static java.util.Collections.singletonList;
 import static java.util.Optional.empty;
 

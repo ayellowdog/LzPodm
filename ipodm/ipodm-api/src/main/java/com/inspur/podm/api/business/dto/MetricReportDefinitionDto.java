@@ -18,10 +18,10 @@ package com.inspur.podm.api.business.dto;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.inspur.podm.api.business.services.context.Context;
-import com.inspur.podm.common.intel.types.MetricReportActionType;
-import com.inspur.podm.common.intel.types.MetricReportType;
-import com.inspur.podm.common.intel.types.Status;
-import com.inspur.podm.common.intel.types.TransmitFormat;
+import com.intel.podm.common.types.MetricReportActionType;
+import com.intel.podm.common.types.MetricReportType;
+import com.intel.podm.common.types.Status;
+import com.intel.podm.common.types.TransmitFormat;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;

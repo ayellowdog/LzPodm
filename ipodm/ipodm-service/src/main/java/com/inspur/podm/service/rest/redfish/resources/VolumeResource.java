@@ -25,9 +25,9 @@ import com.inspur.podm.api.business.services.redfish.ReaderService;
 import com.inspur.podm.api.business.services.redfish.RemovalService;
 import com.inspur.podm.api.business.services.redfish.UpdateService;
 import com.inspur.podm.api.business.services.redfish.requests.InitializeRequest;
-import com.inspur.podm.common.intel.types.redfish.RedfishVolume;
 import com.inspur.podm.service.rest.redfish.json.templates.RedfishResourceAmazingWrapper;
 import com.inspur.podm.service.rest.redfish.json.templates.actions.VolumePartialRepresentation;
+import com.intel.podm.common.types.redfish.RedfishVolume;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -40,9 +40,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 import java.util.concurrent.TimeoutException;
 
-import static com.inspur.podm.common.intel.types.redfish.ActionsResourceNames.ACTIONS_VOLUME_INITIALIZE;
-import static com.inspur.podm.common.intel.types.redfish.ResourceNames.VOLUME_METRICS_RESOURCE_NAME;
 import static com.inspur.podm.service.rest.redfish.OptionsResponseBuilder.newOptionsForResourceBuilder;
+import static com.intel.podm.common.types.redfish.ActionsResourceNames.ACTIONS_VOLUME_INITIALIZE;
+import static com.intel.podm.common.types.redfish.ResourceNames.VOLUME_METRICS_RESOURCE_NAME;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static javax.ws.rs.core.Response.noContent;
 import static javax.ws.rs.core.Response.ok;

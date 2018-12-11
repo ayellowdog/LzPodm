@@ -20,16 +20,16 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.inspur.podm.api.business.services.context.SingletonContext;
-import com.inspur.podm.common.intel.types.FpgaType;
-import com.inspur.podm.common.intel.types.HssiConfig;
-import com.inspur.podm.common.intel.types.HssiSideband;
-import com.inspur.podm.common.intel.types.InstructionSet;
-import com.inspur.podm.common.intel.types.ProcessorArchitecture;
-import com.inspur.podm.common.intel.types.ProcessorBrand;
-import com.inspur.podm.common.intel.types.ProcessorMemoryType;
-import com.inspur.podm.common.intel.types.ProcessorType;
-import com.inspur.podm.common.intel.types.Status;
-import com.inspur.podm.common.intel.types.redfish.OemType;
+import com.intel.podm.common.types.FpgaType;
+import com.intel.podm.common.types.HssiConfig;
+import com.intel.podm.common.types.HssiSideband;
+import com.intel.podm.common.types.InstructionSet;
+import com.intel.podm.common.types.ProcessorArchitecture;
+import com.intel.podm.common.types.ProcessorBrand;
+import com.intel.podm.common.types.ProcessorMemoryType;
+import com.intel.podm.common.types.ProcessorType;
+import com.intel.podm.common.types.Status;
+import com.intel.podm.common.types.redfish.OemType;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -37,7 +37,7 @@ import java.util.List;
 import java.util.Map;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
-import static com.inspur.podm.common.intel.types.redfish.OemType.Type.TOP_LEVEL_OEM;
+import static com.intel.podm.common.types.redfish.OemType.Type.TOP_LEVEL_OEM;
 
 @JsonPropertyOrder({
     "@odata.context", "@odata.id", "@odata.type", "name", "description", "id", "socket", "processorType", "processorArchitecture", "instructionSet",

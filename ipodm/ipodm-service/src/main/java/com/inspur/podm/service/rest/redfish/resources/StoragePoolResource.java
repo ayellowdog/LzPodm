@@ -27,9 +27,9 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
-import static com.inspur.podm.common.intel.types.redfish.NotMappedResourceNames.ALLOCATED_POOLS_RESOURCE_NAME;
-import static com.inspur.podm.common.intel.types.redfish.NotMappedResourceNames.ALLOCATED_VOLUMES_RESOURCE_NAME;
 import static com.inspur.podm.service.rest.redfish.OptionsResponseBuilder.newOptionsForResourceBuilder;
+import static com.intel.podm.common.types.redfish.NotMappedResourceNames.ALLOCATED_POOLS_RESOURCE_NAME;
+import static com.intel.podm.common.types.redfish.NotMappedResourceNames.ALLOCATED_VOLUMES_RESOURCE_NAME;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
 

@@ -22,12 +22,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.inspur.podm.api.business.services.context.Context;
 import com.inspur.podm.api.business.services.context.SingletonContext;
-import com.inspur.podm.common.intel.types.GeneralConnectType;
-import com.inspur.podm.common.intel.types.GraphicalConnectType;
-import com.inspur.podm.common.intel.types.ManagerType;
-import com.inspur.podm.common.intel.types.PowerState;
-import com.inspur.podm.common.intel.types.Status;
-import com.inspur.podm.common.intel.types.redfish.OemType;
+import com.intel.podm.common.types.GeneralConnectType;
+import com.intel.podm.common.types.GraphicalConnectType;
+import com.intel.podm.common.types.ManagerType;
+import com.intel.podm.common.types.PowerState;
+import com.intel.podm.common.types.Status;
+import com.intel.podm.common.types.redfish.OemType;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -41,7 +41,7 @@ import java.util.UUID;
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_DEFAULT;
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_EMPTY;
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
-import static com.inspur.podm.common.intel.types.redfish.OemType.Type.OEM_IN_LINKS;
+import static com.intel.podm.common.types.redfish.OemType.Type.OEM_IN_LINKS;
 
 @JsonPropertyOrder({
     "@odata.context", "@odata.id", "@odata.type", "id", "name", "managerType", "description", "serviceEntryPointUuid", "uuid", "model", "dateTime",

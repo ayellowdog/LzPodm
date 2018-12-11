@@ -16,12 +16,12 @@
 
 package com.inspur.podm.api.business.dto;
 
-import static com.inspur.podm.common.intel.types.redfish.OemType.Type.TOP_LEVEL_OEM;
+import static com.intel.podm.common.types.redfish.OemType.Type.TOP_LEVEL_OEM;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.inspur.podm.common.intel.types.Status;
-import com.inspur.podm.common.intel.types.redfish.OemType;
+import com.intel.podm.common.types.Status;
+import com.intel.podm.common.types.redfish.OemType;
 
 @JsonPropertyOrder({"@odata.context", "@odata.id", "@odata.type", "id", "name", "description", "vlanEnable", "vlanId", "oem"})
 public final class VlanNetworkInterfaceDto extends RedfishDto {

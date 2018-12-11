@@ -36,9 +36,9 @@ import com.inspur.podm.api.business.dto.redfish.CollectionDto;
 import com.inspur.podm.api.business.services.context.Context;
 import com.inspur.podm.api.business.services.redfish.CreationService;
 import com.inspur.podm.api.business.services.redfish.ReaderService;
-import com.inspur.podm.common.intel.types.redfish.RedfishEthernetSwitchStaticMac;
 import com.inspur.podm.service.rest.redfish.json.templates.actions.EthernetSwitchStaticMacJson;
 import com.inspur.podm.service.rest.redfish.json.templates.actions.constraints.EthernetSwitchStaticMacConstraint;
+import com.intel.podm.common.types.redfish.RedfishEthernetSwitchStaticMac;
 
 
 @Produces(APPLICATION_JSON)

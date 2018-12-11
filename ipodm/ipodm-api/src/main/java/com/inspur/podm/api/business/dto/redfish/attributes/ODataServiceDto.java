@@ -18,7 +18,7 @@ package com.inspur.podm.api.business.dto.redfish.attributes;
 
 import java.net.URI;
 
-import com.inspur.podm.common.intel.types.ServiceKind;
+import com.intel.podm.common.types.ServiceKind;
 
 public final class ODataServiceDto {
     private final String name;

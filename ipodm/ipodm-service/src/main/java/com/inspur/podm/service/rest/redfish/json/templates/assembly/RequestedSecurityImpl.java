@@ -18,7 +18,7 @@ package com.inspur.podm.service.rest.redfish.json.templates.assembly;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.inspur.podm.api.business.services.redfish.requests.RequestedNode;
-import com.inspur.podm.common.intel.types.InterfaceType;
+import com.intel.podm.common.types.InterfaceType;
 
 public class RequestedSecurityImpl implements RequestedNode.Security {
     @JsonProperty

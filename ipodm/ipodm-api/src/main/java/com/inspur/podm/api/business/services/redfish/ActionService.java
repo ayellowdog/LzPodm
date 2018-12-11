@@ -21,7 +21,7 @@ import java.util.concurrent.TimeoutException;
 import com.inspur.podm.api.business.BusinessApiException;
 import com.inspur.podm.api.business.dto.actions.actionInfo.ActionInfoDto;
 import com.inspur.podm.api.business.services.context.Context;
-import com.inspur.podm.common.intel.types.redfish.RedfishAction;
+import com.intel.podm.common.types.redfish.RedfishAction;
 
 public interface ActionService<T extends RedfishAction> {
     void perform(Context target, T request) throws BusinessApiException, TimeoutException;

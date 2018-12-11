@@ -19,7 +19,7 @@ package com.inspur.podm.api.business.dto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.inspur.podm.api.business.services.context.Context;
-import com.inspur.podm.common.intel.types.Status;
+import com.intel.podm.common.types.Status;
 
 import java.util.HashSet;
 import java.util.Set;

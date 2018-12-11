@@ -21,11 +21,11 @@ import java.util.Set;
 import javax.validation.ConstraintValidatorContext;
 
 import com.inspur.podm.api.business.services.context.Context;
-import com.inspur.podm.common.intel.types.ActionType;
-import com.inspur.podm.common.intel.types.MirrorType;
-import com.inspur.podm.common.intel.types.Ref;
-import com.inspur.podm.common.intel.types.redfish.RedfishEthernetSwitchAclRule.AclRuleCondition;
 import com.inspur.podm.service.rest.redfish.json.templates.actions.AclRuleModificationJson;
+import com.intel.podm.common.types.ActionType;
+import com.intel.podm.common.types.MirrorType;
+import com.intel.podm.common.types.Ref;
+import com.intel.podm.common.types.redfish.RedfishEthernetSwitchAclRule.AclRuleCondition;
 
 public final class EthernetSwitchAclRuleConstraintValidatorHelper {
 

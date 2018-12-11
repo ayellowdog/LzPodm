@@ -16,10 +16,10 @@
 
 package com.inspur.podm.service.rest.redfish.resources;
 
-import static com.inspur.podm.common.intel.types.redfish.ResourceNames.ENDPOINTS_RESOURCE_NAME;
-import static com.inspur.podm.common.intel.types.redfish.ResourceNames.SWITCHES_RESOURCE_NAME;
-import static com.inspur.podm.common.intel.types.redfish.ResourceNames.ZONES_RESOURCE_NAME;
 import static com.inspur.podm.service.rest.redfish.OptionsResponseBuilder.newOptionsForResourceBuilder;
+import static com.intel.podm.common.types.redfish.ResourceNames.ENDPOINTS_RESOURCE_NAME;
+import static com.intel.podm.common.types.redfish.ResourceNames.SWITCHES_RESOURCE_NAME;
+import static com.intel.podm.common.types.redfish.ResourceNames.ZONES_RESOURCE_NAME;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
 import javax.inject.Inject;

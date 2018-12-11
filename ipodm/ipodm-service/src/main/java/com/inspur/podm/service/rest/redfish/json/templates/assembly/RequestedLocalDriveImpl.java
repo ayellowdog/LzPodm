@@ -27,8 +27,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.inspur.podm.api.business.services.context.Context;
 import com.inspur.podm.api.business.services.redfish.odataid.ODataId;
 import com.inspur.podm.api.business.services.redfish.requests.RequestedNode;
-import com.inspur.podm.common.intel.types.MediaType;
-import com.inspur.podm.common.intel.types.Protocol;
+import com.intel.podm.common.types.MediaType;
+import com.intel.podm.common.types.Protocol;
 
 public final class RequestedLocalDriveImpl implements RequestedNode.LocalDrive {
     @JsonProperty("CapacityGiB")

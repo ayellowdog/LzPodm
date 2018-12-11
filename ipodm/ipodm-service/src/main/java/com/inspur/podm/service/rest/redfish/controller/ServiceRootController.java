@@ -1,7 +1,7 @@
 package com.inspur.podm.service.rest.redfish.controller;
 
-import static com.inspur.podm.common.intel.types.ServiceKind.SINGLETON;
-import static com.inspur.podm.common.intel.types.redfish.ODataServices.ODATA_ROOT_SERVICES;
+import static com.intel.podm.common.types.ServiceKind.SINGLETON;
+import static com.intel.podm.common.types.redfish.ODataServices.ODATA_ROOT_SERVICES;
 
 import java.net.URI;
 import java.util.ArrayList;
@@ -17,8 +17,8 @@ import com.inspur.podm.api.business.dto.redfish.ServiceRootContext;
 import com.inspur.podm.api.business.dto.redfish.ServiceRootDto;
 import com.inspur.podm.api.business.dto.redfish.attributes.ODataServiceDto;
 import com.inspur.podm.api.business.services.redfish.ServiceRootService;
-import com.inspur.podm.common.intel.types.ServiceKind;
 import com.inspur.podm.service.rest.redfish.json.templates.RedfishResourceAmazingWrapper;
+import com.intel.podm.common.types.ServiceKind;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

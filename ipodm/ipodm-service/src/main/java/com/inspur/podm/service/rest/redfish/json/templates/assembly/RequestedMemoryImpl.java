@@ -27,8 +27,8 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.inspur.podm.api.business.services.context.Context;
 import com.inspur.podm.api.business.services.redfish.odataid.ODataId;
 import com.inspur.podm.api.business.services.redfish.requests.RequestedNode;
-import com.inspur.podm.common.intel.types.MemoryDeviceType;
-import com.inspur.podm.common.intel.types.deserialization.PositiveIntegerDeserializer;
+import com.intel.podm.common.types.MemoryDeviceType;
+import com.intel.podm.common.types.deserialization.PositiveIntegerDeserializer;
 
 public final class RequestedMemoryImpl implements RequestedNode.Memory {
     @JsonProperty("CapacityMiB")

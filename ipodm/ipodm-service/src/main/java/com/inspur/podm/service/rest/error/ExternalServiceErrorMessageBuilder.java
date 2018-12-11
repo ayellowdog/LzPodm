@@ -19,8 +19,8 @@ package com.inspur.podm.service.rest.error;
 import static com.inspur.podm.api.business.errors.ErrorDto.ErrorBuilder.newErrorBuilder;
 import static com.inspur.podm.api.business.errors.ExtendedInfoDto.ExtendedInfoBuilder.newExtendedInfoBuilder;
 
-import com.inspur.podm.common.intel.types.redfish.ExternalServiceError;
-import com.inspur.podm.common.intel.types.redfish.RedfishErrorResponse;
+import com.intel.podm.common.types.redfish.ExternalServiceError;
+import com.intel.podm.common.types.redfish.RedfishErrorResponse;
 
 public final class ExternalServiceErrorMessageBuilder {
     private static final String MESSAGE_ID = "Base.1.0.ExternalServiceError";

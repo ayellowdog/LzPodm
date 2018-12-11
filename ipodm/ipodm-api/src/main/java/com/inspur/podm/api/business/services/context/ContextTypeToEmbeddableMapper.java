@@ -22,7 +22,7 @@ import static com.inspur.podm.api.business.services.context.ContextType.POWER_VO
 import static com.inspur.podm.api.business.services.context.ContextType.REDUNDANCY;
 import static com.inspur.podm.api.business.services.context.ContextType.THERMAL_FAN;
 import static com.inspur.podm.api.business.services.context.ContextType.THERMAL_TEMPERATURE;
-import static com.inspur.podm.common.intel.utils.Contracts.requiresNonNull;
+import static com.intel.podm.common.utils.Contracts.requiresNonNull;
 import static java.util.Collections.unmodifiableSet;
 
 import java.util.HashSet;

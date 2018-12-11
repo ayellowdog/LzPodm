@@ -22,9 +22,9 @@ import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.inspur.podm.api.business.services.context.Context;
 import com.inspur.podm.api.business.services.redfish.odataid.ODataId;
-import com.inspur.podm.common.intel.types.PowerLimitException;
-import com.inspur.podm.common.intel.types.Status;
-import com.inspur.podm.common.intel.types.redfish.IgnoreAutomaticOem;
+import com.intel.podm.common.types.PowerLimitException;
+import com.intel.podm.common.types.Status;
+import com.intel.podm.common.types.redfish.IgnoreAutomaticOem;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;

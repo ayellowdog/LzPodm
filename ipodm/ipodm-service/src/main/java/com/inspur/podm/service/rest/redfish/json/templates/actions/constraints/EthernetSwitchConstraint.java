@@ -21,16 +21,16 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import javax.validation.Payload;
 
-import com.inspur.podm.common.intel.types.redfish.RedfishEthernetSwitch;
+import com.intel.podm.common.types.redfish.RedfishEthernetSwitch;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 import java.util.List;
 
-import static com.inspur.podm.common.intel.types.redfish.RedfishEthernetSwitch.DcbxConfiguration;
-import static com.inspur.podm.common.intel.types.redfish.RedfishEthernetSwitch.DcbxConfiguration.ApplicationProtocolType;
-import static com.inspur.podm.common.intel.types.redfish.RedfishEthernetSwitch.DcbxConfiguration.BandwidthMapping;
-import static com.inspur.podm.common.intel.types.redfish.RedfishEthernetSwitch.DcbxConfiguration.PriorityClassMapping;
+import static com.intel.podm.common.types.redfish.RedfishEthernetSwitch.DcbxConfiguration;
+import static com.intel.podm.common.types.redfish.RedfishEthernetSwitch.DcbxConfiguration.ApplicationProtocolType;
+import static com.intel.podm.common.types.redfish.RedfishEthernetSwitch.DcbxConfiguration.BandwidthMapping;
+import static com.intel.podm.common.types.redfish.RedfishEthernetSwitch.DcbxConfiguration.PriorityClassMapping;
 import static java.lang.annotation.ElementType.PARAMETER;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 

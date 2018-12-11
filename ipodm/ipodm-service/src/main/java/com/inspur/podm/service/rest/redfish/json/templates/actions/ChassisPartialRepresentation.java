@@ -17,7 +17,7 @@
 package com.inspur.podm.service.rest.redfish.json.templates.actions;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.inspur.podm.common.intel.types.redfish.RedfishChassis;
+import com.intel.podm.common.types.redfish.RedfishChassis;
 
 public final class ChassisPartialRepresentation implements RedfishChassis {
     @JsonProperty("AssetTag")

@@ -18,7 +18,7 @@ package com.inspur.podm.api.business.services.redfish;
 
 import com.inspur.podm.api.business.BusinessApiException;
 import com.inspur.podm.api.business.services.context.Context;
-import com.inspur.podm.common.intel.types.redfish.RedfishResource;
+import com.intel.podm.common.types.redfish.RedfishResource;
 
 import java.util.concurrent.TimeoutException;
 

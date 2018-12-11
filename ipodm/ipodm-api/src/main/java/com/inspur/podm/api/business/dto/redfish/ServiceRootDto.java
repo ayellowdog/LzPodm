@@ -22,9 +22,9 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.inspur.podm.api.business.dto.RedfishDto;
 import com.inspur.podm.api.business.dto.redfish.attributes.UnknownOemDto;
 import com.inspur.podm.api.business.services.context.SingletonContext;
-import com.inspur.podm.common.intel.types.redfish.OemType;
+import com.intel.podm.common.types.redfish.OemType;
 
-import static com.inspur.podm.common.intel.types.redfish.OemType.Type.TOP_LEVEL_OEM;
+import static com.intel.podm.common.types.redfish.OemType.Type.TOP_LEVEL_OEM;
 
 import java.util.ArrayList;
 import java.util.List;

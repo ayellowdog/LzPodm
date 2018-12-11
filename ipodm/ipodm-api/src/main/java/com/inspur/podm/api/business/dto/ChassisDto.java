@@ -23,19 +23,19 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.inspur.podm.api.business.services.context.Context;
 import com.inspur.podm.api.business.services.context.SingletonContext;
-import com.inspur.podm.common.intel.types.ChassisType;
-import com.inspur.podm.common.intel.types.IndicatorLed;
-import com.inspur.podm.common.intel.types.PowerState;
-import com.inspur.podm.common.intel.types.Status;
-import com.inspur.podm.common.intel.types.redfish.OemType;
+import com.intel.podm.common.types.ChassisType;
+import com.intel.podm.common.types.IndicatorLed;
+import com.intel.podm.common.types.PowerState;
+import com.intel.podm.common.types.Status;
+import com.intel.podm.common.types.redfish.OemType;
 
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
-import static com.inspur.podm.common.intel.types.redfish.OemType.Type.OEM_IN_LINKS;
-import static com.inspur.podm.common.intel.types.redfish.OemType.Type.TOP_LEVEL_OEM;
+import static com.intel.podm.common.types.redfish.OemType.Type.OEM_IN_LINKS;
+import static com.intel.podm.common.types.redfish.OemType.Type.TOP_LEVEL_OEM;
 
 @JsonPropertyOrder({
     "@odata.context", "@odata.id", "@odata.type", "id", "chassisType", "name", "description", "manufacturer", "model", "sku", "serialNumber", "partNumber",

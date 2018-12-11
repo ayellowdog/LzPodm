@@ -23,8 +23,8 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
-import com.inspur.podm.common.intel.logger.Logger;
-import com.inspur.podm.common.intel.types.exceptions.NoRetriesLeftException;
+import com.intel.podm.common.logger.Logger;
+import com.intel.podm.common.types.exceptions.NoRetriesLeftException;
 
 import static com.inspur.podm.service.rest.error.ErrorResponseBuilder.newErrorResponseBuilder;
 import static com.inspur.podm.service.rest.error.ErrorType.SERVICE_UNAVAILABLE;

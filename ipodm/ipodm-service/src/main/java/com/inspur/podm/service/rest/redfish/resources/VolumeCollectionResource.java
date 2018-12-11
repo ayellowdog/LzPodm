@@ -22,9 +22,9 @@ import com.inspur.podm.api.business.dto.redfish.VolumeDto;
 import com.inspur.podm.api.business.services.context.Context;
 import com.inspur.podm.api.business.services.redfish.CreationService;
 import com.inspur.podm.api.business.services.redfish.ReaderService;
-import com.inspur.podm.common.intel.types.redfish.StorageServiceVolume;
 import com.inspur.podm.service.rest.redfish.json.templates.actions.CreateStorageServiceVolumeJson;
 import com.inspur.podm.service.rest.redfish.json.templates.actions.constraints.VolumeCreationConstraint;
+import com.intel.podm.common.types.redfish.StorageServiceVolume;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;

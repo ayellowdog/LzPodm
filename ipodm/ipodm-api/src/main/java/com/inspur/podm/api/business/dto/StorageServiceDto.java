@@ -21,14 +21,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.inspur.podm.api.business.services.context.Context;
 import com.inspur.podm.api.business.services.context.SingletonContext;
-import com.inspur.podm.common.intel.types.Status;
-import com.inspur.podm.common.intel.types.redfish.OemType;
+import com.intel.podm.common.types.Status;
+import com.intel.podm.common.types.redfish.OemType;
 
 import java.util.HashSet;
 import java.util.Set;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
-import static com.inspur.podm.common.intel.types.redfish.OemType.Type.OEM_IN_LINKS;
+import static com.intel.podm.common.types.redfish.OemType.Type.OEM_IN_LINKS;
 
 @JsonPropertyOrder({
     "@odata.context", "@odata.id", "@odata.type", "id", "name", "description", "status", "drives", "storagePools",

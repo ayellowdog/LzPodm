@@ -18,7 +18,7 @@ package com.inspur.podm.api.business.dto;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.inspur.podm.api.business.services.context.SingletonContext;
-import com.inspur.podm.common.intel.types.Status;
+import com.intel.podm.common.types.Status;
 
 @JsonPropertyOrder({"@odata.context", "@odata.id", "@odata.type", "name", "description", "id", "status", "networkDeviceFunctions", "links", "oem"})
 public final class NetworkInterfaceDto extends RedfishDto {

@@ -17,7 +17,7 @@
 package com.inspur.podm.service.rest.redfish.json.templates.actions;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.inspur.podm.common.intel.types.redfish.RedfishEthernetSwitchStaticMac;
+import com.intel.podm.common.types.redfish.RedfishEthernetSwitchStaticMac;
 
 public class EthernetSwitchStaticMacJson implements RedfishEthernetSwitchStaticMac {
     @JsonProperty("MACAddress")

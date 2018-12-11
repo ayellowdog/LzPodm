@@ -17,10 +17,10 @@
 package com.inspur.podm.service.rest.redfish.resources;
 
 import static com.inspur.podm.api.business.services.context.SingletonContext.singletonContextOf;
-import static com.inspur.podm.common.intel.types.actions.ActionInfoNames.ATTACH_RESOURCE_ACTION_INFO;
-import static com.inspur.podm.common.intel.types.actions.ActionInfoNames.DETACH_RESOURCE_ACTION_INFO;
 import static com.inspur.podm.service.rest.error.PodmExceptions.invalidHttpMethod;
 import static com.inspur.podm.service.rest.redfish.OptionsResponseBuilder.newOptionsForResourceActionBuilder;
+import static com.intel.podm.common.types.actions.ActionInfoNames.ATTACH_RESOURCE_ACTION_INFO;
+import static com.intel.podm.common.types.actions.ActionInfoNames.DETACH_RESOURCE_ACTION_INFO;
 import static java.lang.String.format;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static javax.ws.rs.core.Response.noContent;

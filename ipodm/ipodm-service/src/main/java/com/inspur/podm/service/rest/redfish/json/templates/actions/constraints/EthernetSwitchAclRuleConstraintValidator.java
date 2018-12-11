@@ -16,8 +16,6 @@
 
 package com.inspur.podm.service.rest.redfish.json.templates.actions.constraints;
 
-import static com.inspur.podm.common.intel.types.ActionType.FORWARD;
-import static com.inspur.podm.common.intel.types.ActionType.MIRROR;
 import static com.inspur.podm.service.rest.redfish.json.templates.actions.constraints.EthernetSwitchAclRuleConstraintValidatorHelper.checkNonNulls;
 import static com.inspur.podm.service.rest.redfish.json.templates.actions.constraints.EthernetSwitchAclRuleConstraintValidatorHelper.getActionType;
 import static com.inspur.podm.service.rest.redfish.json.templates.actions.constraints.EthernetSwitchAclRuleConstraintValidatorHelper.getForwardMirrorInterfaceContext;
@@ -25,6 +23,8 @@ import static com.inspur.podm.service.rest.redfish.json.templates.actions.constr
 import static com.inspur.podm.service.rest.redfish.json.templates.actions.constraints.EthernetSwitchAclRuleConstraintValidatorHelper.getMirrorType;
 import static com.inspur.podm.service.rest.redfish.json.templates.actions.constraints.EthernetSwitchAclRuleConstraintValidatorHelper.isNotEmptyRequest;
 import static com.inspur.podm.service.rest.redfish.json.templates.actions.constraints.EthernetSwitchAclRuleConstraintValidatorHelper.refAssignedAndNotNull;
+import static com.intel.podm.common.types.ActionType.FORWARD;
+import static com.intel.podm.common.types.ActionType.MIRROR;
 import static org.apache.commons.collections4.CollectionUtils.isEmpty;
 
 import java.util.Set;
@@ -35,16 +35,16 @@ import javax.validation.ConstraintValidatorContext;
 import org.apache.commons.validator.routines.IntegerValidator;
 
 import com.inspur.podm.api.business.services.context.Context;
-import com.inspur.podm.common.intel.types.ActionType;
-import com.inspur.podm.common.intel.types.MirrorType;
-import com.inspur.podm.common.intel.types.Ref;
-import com.inspur.podm.common.intel.types.redfish.RedfishEthernetSwitchAclRule.AclRuleCondition;
-import com.inspur.podm.common.intel.types.redfish.RedfishEthernetSwitchAclRule.AclRuleConditionId;
-import com.inspur.podm.common.intel.types.redfish.RedfishEthernetSwitchAclRule.AclRuleConditionIp;
-import com.inspur.podm.common.intel.types.redfish.RedfishEthernetSwitchAclRule.AclRuleConditionMacAddress;
-import com.inspur.podm.common.intel.types.redfish.RedfishEthernetSwitchAclRule.AclRuleConditionPort;
 import com.inspur.podm.service.rest.redfish.json.templates.actions.AclRuleModificationJson;
 import com.inspur.podm.service.rest.redfish.json.templates.actions.AclRuleModificationJson.AclRuleConditionImpl;
+import com.intel.podm.common.types.ActionType;
+import com.intel.podm.common.types.MirrorType;
+import com.intel.podm.common.types.Ref;
+import com.intel.podm.common.types.redfish.RedfishEthernetSwitchAclRule.AclRuleCondition;
+import com.intel.podm.common.types.redfish.RedfishEthernetSwitchAclRule.AclRuleConditionId;
+import com.intel.podm.common.types.redfish.RedfishEthernetSwitchAclRule.AclRuleConditionIp;
+import com.intel.podm.common.types.redfish.RedfishEthernetSwitchAclRule.AclRuleConditionMacAddress;
+import com.intel.podm.common.types.redfish.RedfishEthernetSwitchAclRule.AclRuleConditionPort;
 
 public class EthernetSwitchAclRuleConstraintValidator implements ConstraintValidator<EthernetSwitchAclRuleConstraint, AclRuleModificationJson> {
 

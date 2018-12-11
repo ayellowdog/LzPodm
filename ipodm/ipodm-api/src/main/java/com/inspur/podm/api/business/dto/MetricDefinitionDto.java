@@ -18,17 +18,17 @@ package com.inspur.podm.api.business.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.inspur.podm.common.intel.types.Calculable;
-import com.inspur.podm.common.intel.types.CalculationAlgorithm;
-import com.inspur.podm.common.intel.types.DataType;
-import com.inspur.podm.common.intel.types.Implementation;
-import com.inspur.podm.common.intel.types.MetricType;
-import com.inspur.podm.common.intel.types.MetricValueType;
-import com.inspur.podm.common.intel.types.PhysicalContext;
-import com.inspur.podm.common.intel.types.SensorType;
-import com.inspur.podm.common.intel.types.redfish.OemType;
+import com.intel.podm.common.types.Calculable;
+import com.intel.podm.common.types.CalculationAlgorithm;
+import com.intel.podm.common.types.DataType;
+import com.intel.podm.common.types.Implementation;
+import com.intel.podm.common.types.MetricType;
+import com.intel.podm.common.types.MetricValueType;
+import com.intel.podm.common.types.PhysicalContext;
+import com.intel.podm.common.types.SensorType;
+import com.intel.podm.common.types.redfish.OemType;
 
-import static com.inspur.podm.common.intel.types.redfish.OemType.Type.TOP_LEVEL_OEM;
+import static com.intel.podm.common.types.redfish.OemType.Type.TOP_LEVEL_OEM;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;

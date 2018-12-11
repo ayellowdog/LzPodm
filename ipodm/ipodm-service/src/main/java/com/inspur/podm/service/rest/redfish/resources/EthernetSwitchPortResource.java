@@ -16,12 +16,12 @@
 
 package com.inspur.podm.service.rest.redfish.resources;
 
-import static com.inspur.podm.common.intel.types.PortClass.LOGICAL;
-import static com.inspur.podm.common.intel.types.redfish.ResourceNames.ETHERNET_SWITCH_PORT_METRICS_RESOURCE_NAME;
-import static com.inspur.podm.common.intel.types.redfish.ResourceNames.ETHERNET_SWITCH_PORT_VLANS_RESOURCE_NAME;
-import static com.inspur.podm.common.intel.types.redfish.ResourceNames.ETHERNET_SWITCH_STATIC_MACS_RESOURCE_NAME;
 import static com.inspur.podm.service.rest.error.PodmExceptions.invalidHttpMethod;
 import static com.inspur.podm.service.rest.redfish.OptionsResponseBuilder.newOptionsForResourceBuilder;
+import static com.intel.podm.common.types.PortClass.LOGICAL;
+import static com.intel.podm.common.types.redfish.ResourceNames.ETHERNET_SWITCH_PORT_METRICS_RESOURCE_NAME;
+import static com.intel.podm.common.types.redfish.ResourceNames.ETHERNET_SWITCH_PORT_VLANS_RESOURCE_NAME;
+import static com.intel.podm.common.types.redfish.ResourceNames.ETHERNET_SWITCH_STATIC_MACS_RESOURCE_NAME;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static javax.ws.rs.core.Response.noContent;
 import static javax.ws.rs.core.Response.ok;
@@ -45,11 +45,11 @@ import com.inspur.podm.api.business.services.context.Context;
 import com.inspur.podm.api.business.services.redfish.ReaderService;
 import com.inspur.podm.api.business.services.redfish.RemovalService;
 import com.inspur.podm.api.business.services.redfish.UpdateService;
-import com.inspur.podm.common.intel.logger.Logger;
-import com.inspur.podm.common.intel.types.redfish.RedfishEthernetSwitchPort;
 import com.inspur.podm.service.rest.redfish.OptionsResponseBuilder;
 import com.inspur.podm.service.rest.redfish.json.templates.RedfishResourceAmazingWrapper;
 import com.inspur.podm.service.rest.redfish.json.templates.actions.UpdateEthernetSwitchPortActionJson;
+import com.intel.podm.common.logger.Logger;
+import com.intel.podm.common.types.redfish.RedfishEthernetSwitchPort;
 
 
 @Produces(APPLICATION_JSON)

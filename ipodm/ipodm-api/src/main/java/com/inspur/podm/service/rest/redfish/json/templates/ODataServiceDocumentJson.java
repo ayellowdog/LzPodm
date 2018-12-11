@@ -19,7 +19,7 @@ package com.inspur.podm.service.rest.redfish.json.templates;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.inspur.podm.common.intel.types.ServiceKind;
+import com.intel.podm.common.types.ServiceKind;
 
 import java.net.URI;
 import java.util.ArrayList;

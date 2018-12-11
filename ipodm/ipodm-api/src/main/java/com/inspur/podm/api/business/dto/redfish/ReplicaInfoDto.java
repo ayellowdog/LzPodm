@@ -19,8 +19,8 @@ package com.inspur.podm.api.business.dto.redfish;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.inspur.podm.api.business.services.context.Context;
-import com.inspur.podm.common.intel.types.ReplicaRole;
-import com.inspur.podm.common.intel.types.ReplicaType;
+import com.intel.podm.common.types.ReplicaRole;
+import com.intel.podm.common.types.ReplicaType;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 

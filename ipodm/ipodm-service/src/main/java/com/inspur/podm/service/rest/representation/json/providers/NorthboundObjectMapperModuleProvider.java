@@ -16,7 +16,7 @@
 
 package com.inspur.podm.service.rest.representation.json.providers;
 
-import static com.inspur.podm.common.intel.types.EnumeratedType.SUB_TYPES;
+import static com.intel.podm.common.types.EnumeratedType.SUB_TYPES;
 
 import java.time.OffsetDateTime;
 
@@ -26,25 +26,25 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.inspur.podm.api.business.services.context.Context;
 import com.inspur.podm.api.business.services.context.SingletonContext;
-import com.inspur.podm.common.intel.types.Id;
-import com.inspur.podm.common.intel.types.NeighborInfo;
-import com.inspur.podm.common.intel.types.Ref;
-import com.inspur.podm.common.intel.types.Status;
-import com.inspur.podm.common.intel.types.deserialization.BooleanDeserializer;
-import com.inspur.podm.common.intel.types.deserialization.MacAddressDeserializer;
-import com.inspur.podm.common.intel.types.deserialization.RefDeserializer;
-import com.inspur.podm.common.intel.types.deserialization.StrictEnumeratedTypeDeserializer;
-import com.inspur.podm.common.intel.types.net.MacAddress;
-import com.inspur.podm.common.intel.types.serialization.EnumeratedTypeSerializer;
-import com.inspur.podm.common.intel.types.serialization.IdSerializer;
-import com.inspur.podm.common.intel.types.serialization.MacAddressSerializer;
-import com.inspur.podm.common.intel.types.serialization.NeighborInfoSerializer;
-import com.inspur.podm.common.intel.types.serialization.OffsetDateTimeSerializer;
-import com.inspur.podm.common.intel.types.serialization.StatusSerializer;
 import com.inspur.podm.service.rest.representation.json.serializers.ContextAwareSerializer;
 import com.inspur.podm.service.rest.representation.json.serializers.ContextSerializer;
 import com.inspur.podm.service.rest.representation.json.serializers.DtoSerializerContext;
 import com.inspur.podm.service.rest.representation.json.serializers.SingletonContextSerializer;
+import com.intel.podm.common.types.Id;
+import com.intel.podm.common.types.NeighborInfo;
+import com.intel.podm.common.types.Ref;
+import com.intel.podm.common.types.Status;
+import com.intel.podm.common.types.deserialization.BooleanDeserializer;
+import com.intel.podm.common.types.deserialization.MacAddressDeserializer;
+import com.intel.podm.common.types.deserialization.RefDeserializer;
+import com.intel.podm.common.types.deserialization.StrictEnumeratedTypeDeserializer;
+import com.intel.podm.common.types.net.MacAddress;
+import com.intel.podm.common.types.serialization.EnumeratedTypeSerializer;
+import com.intel.podm.common.types.serialization.IdSerializer;
+import com.intel.podm.common.types.serialization.MacAddressSerializer;
+import com.intel.podm.common.types.serialization.NeighborInfoSerializer;
+import com.intel.podm.common.types.serialization.OffsetDateTimeSerializer;
+import com.intel.podm.common.types.serialization.StatusSerializer;
 
 @SuppressWarnings({"checkstyle:ClassFanOutComplexity"})
 class NorthboundObjectMapperModuleProvider {

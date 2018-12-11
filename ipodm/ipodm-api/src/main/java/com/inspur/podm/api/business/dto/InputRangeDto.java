@@ -18,8 +18,8 @@ package com.inspur.podm.api.business.dto;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.inspur.podm.common.intel.types.PowerInputType;
-import com.inspur.podm.common.intel.types.redfish.IgnoreAutomaticOem;
+import com.intel.podm.common.types.PowerInputType;
+import com.intel.podm.common.types.redfish.IgnoreAutomaticOem;
 
 import java.math.BigDecimal;
 

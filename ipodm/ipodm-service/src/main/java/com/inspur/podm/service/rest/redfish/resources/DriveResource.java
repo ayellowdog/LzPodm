@@ -16,8 +16,8 @@
 
 package com.inspur.podm.service.rest.redfish.resources;
 
-import static com.inspur.podm.common.intel.types.redfish.ResourceNames.DRIVE_METRICS_RESOURCE_NAME;
 import static com.inspur.podm.service.rest.redfish.OptionsResponseBuilder.newOptionsForResourceBuilder;
+import static com.intel.podm.common.types.redfish.ResourceNames.DRIVE_METRICS_RESOURCE_NAME;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static javax.ws.rs.core.Response.ok;
 
@@ -35,10 +35,10 @@ import com.inspur.podm.api.business.dto.DriveDto;
 import com.inspur.podm.api.business.services.context.Context;
 import com.inspur.podm.api.business.services.redfish.ReaderService;
 import com.inspur.podm.api.business.services.redfish.UpdateService;
-import com.inspur.podm.common.intel.types.redfish.RedfishDrive;
 import com.inspur.podm.service.rest.redfish.json.templates.RedfishResourceAmazingWrapper;
 import com.inspur.podm.service.rest.redfish.json.templates.actions.DrivePartialRepresentation;
 import com.inspur.podm.service.rest.redfish.json.templates.actions.constraints.DriveConstraint;
+import com.intel.podm.common.types.redfish.RedfishDrive;
 
 
 @Produces(APPLICATION_JSON)

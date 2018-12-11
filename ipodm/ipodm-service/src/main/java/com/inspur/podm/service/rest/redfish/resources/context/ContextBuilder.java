@@ -18,7 +18,7 @@ package com.inspur.podm.service.rest.redfish.resources.context;
 
 import static com.inspur.podm.api.business.services.context.Context.contextOf;
 import static com.inspur.podm.api.business.services.context.Context.isAcceptableChildOf;
-import static com.inspur.podm.common.intel.utils.Contracts.requiresNonNull;
+import static com.intel.podm.common.utils.Contracts.requiresNonNull;
 import static java.lang.String.format;
 
 import java.util.LinkedHashMap;
@@ -27,7 +27,7 @@ import java.util.Map;
 import com.inspur.podm.api.business.services.context.Context;
 import com.inspur.podm.api.business.services.context.ContextType;
 import com.inspur.podm.api.business.services.context.ParamNameContextTypeMapper;
-import com.inspur.podm.common.intel.types.Id;
+import com.intel.podm.common.types.Id;
 
 public final class ContextBuilder {
     private final ParamNameContextTypeMapper mapper = new ParamNameContextTypeMapper();

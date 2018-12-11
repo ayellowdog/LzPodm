@@ -16,8 +16,8 @@
 
 package com.inspur.podm.api.business.services.redfish.requests;
 
-import com.inspur.podm.common.intel.types.InterfaceType;
-import com.inspur.podm.common.intel.types.redfish.RedfishAction;
+import com.intel.podm.common.types.InterfaceType;
+import com.intel.podm.common.types.redfish.RedfishAction;
 
 public interface ChangeTpmStateRequest extends RedfishAction {
     Boolean getDeviceEnabled();

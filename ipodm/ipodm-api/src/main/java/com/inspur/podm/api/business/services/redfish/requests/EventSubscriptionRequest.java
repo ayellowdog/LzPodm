@@ -17,8 +17,8 @@
 package com.inspur.podm.api.business.services.redfish.requests;
 
 import com.inspur.podm.api.business.services.redfish.odataid.ODataId;
-import com.inspur.podm.common.intel.types.events.EventType;
-import com.inspur.podm.common.intel.types.redfish.RedfishResource;
+import com.intel.podm.common.types.events.EventType;
+import com.intel.podm.common.types.redfish.RedfishResource;
 
 import java.net.URI;
 import java.util.EnumSet;

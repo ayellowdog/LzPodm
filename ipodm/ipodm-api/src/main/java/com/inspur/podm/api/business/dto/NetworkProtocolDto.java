@@ -18,8 +18,8 @@ package com.inspur.podm.api.business.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.inspur.podm.common.intel.types.NotifyIpV6Scope;
-import com.inspur.podm.common.intel.types.Status;
+import com.intel.podm.common.types.NotifyIpV6Scope;
+import com.intel.podm.common.types.Status;
 
 @JsonPropertyOrder({
     "@odata.context", "@odata.id", "@odata.type", "id", "name", "description", "status", "hostName", "fqdn", "http", "https", "ipmi", "ssh", "snmp",

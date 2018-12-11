@@ -22,8 +22,8 @@ import com.inspur.podm.api.business.dto.redfish.CollectionDto;
 import com.inspur.podm.api.business.services.context.Context;
 import com.inspur.podm.api.business.services.redfish.CreationService;
 import com.inspur.podm.api.business.services.redfish.ReaderService;
-import com.inspur.podm.common.intel.types.redfish.ZoneCreationInterface;
 import com.inspur.podm.service.rest.redfish.json.templates.actions.CreateZoneJson;
+import com.intel.podm.common.types.redfish.ZoneCreationInterface;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;

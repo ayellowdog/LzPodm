@@ -26,20 +26,20 @@ import com.inspur.podm.api.business.dto.IpAddresses.IpV6AddressDto;
 import com.inspur.podm.api.business.dto.IpAddresses.IpV6AddressPolicyDto;
 import com.inspur.podm.api.business.services.context.Context;
 import com.inspur.podm.api.business.services.context.SingletonContext;
-import com.inspur.podm.common.intel.types.LinkStatus;
-import com.inspur.podm.common.intel.types.Protocol;
-import com.inspur.podm.common.intel.types.Status;
-import com.inspur.podm.common.intel.types.net.MacAddress;
-import com.inspur.podm.common.intel.types.redfish.OemType;
-import com.inspur.podm.common.intel.types.redfish.RedfishErrorResponse.Error.ExtendedInfo;
+import com.intel.podm.common.types.LinkStatus;
+import com.intel.podm.common.types.Protocol;
+import com.intel.podm.common.types.Status;
+import com.intel.podm.common.types.net.MacAddress;
+import com.intel.podm.common.types.redfish.OemType;
+import com.intel.podm.common.types.redfish.RedfishErrorResponse.Error.ExtendedInfo;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
-import static com.inspur.podm.common.intel.types.redfish.OemType.Type.OEM_IN_LINKS;
-import static com.inspur.podm.common.intel.types.redfish.OemType.Type.TOP_LEVEL_OEM;
-import static com.inspur.podm.common.intel.utils.Collections.nullOrEmpty;
+import static com.intel.podm.common.types.redfish.OemType.Type.OEM_IN_LINKS;
+import static com.intel.podm.common.types.redfish.OemType.Type.TOP_LEVEL_OEM;
+import static com.intel.podm.common.utils.Collections.nullOrEmpty;
 
 @JsonPropertyOrder({
     "@odata.context", "@odata.id", "@odata.type", "id", "name", "description", "status", "linkStatus", "interfaceEnabled", "permanentMacAddress",

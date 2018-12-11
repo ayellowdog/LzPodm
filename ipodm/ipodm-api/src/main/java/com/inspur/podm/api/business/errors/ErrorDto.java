@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.inspur.podm.common.intel.types.redfish.RedfishErrorResponse.Error;
+import com.intel.podm.common.types.redfish.RedfishErrorResponse.Error;
 
 public final class ErrorDto implements Error {
     @JsonProperty("code")

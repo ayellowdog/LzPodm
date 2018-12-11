@@ -17,10 +17,10 @@
 package com.inspur.podm.api.business.dto.actions.actionInfo;
 
 import com.inspur.podm.api.business.services.redfish.odataid.ODataId;
-import com.inspur.podm.common.intel.types.Protocol;
+import com.intel.podm.common.types.Protocol;
 
-import static com.inspur.podm.common.intel.types.actions.ParameterDataType.OBJECT;
-import static com.inspur.podm.common.intel.types.actions.ParameterDataType.STRING;
+import static com.intel.podm.common.types.actions.ParameterDataType.OBJECT;
+import static com.intel.podm.common.types.actions.ParameterDataType.STRING;
 
 import java.util.Set;
 

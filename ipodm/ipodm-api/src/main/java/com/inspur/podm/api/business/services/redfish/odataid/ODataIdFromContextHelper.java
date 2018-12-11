@@ -19,7 +19,7 @@ package com.inspur.podm.api.business.services.redfish.odataid;
 import com.inspur.podm.api.business.services.context.Context;
 import com.inspur.podm.api.business.services.context.ContextType;
 import com.inspur.podm.api.business.services.context.ContextTypeToEmbeddableMapper;
-import com.inspur.podm.common.intel.types.Id;
+import com.intel.podm.common.types.Id;
 
 import static com.inspur.podm.api.business.services.redfish.odataid.ODataIdHelper.oDataIdFromString;
 import static java.lang.String.format;

@@ -17,7 +17,7 @@
 package com.inspur.podm.api.business.services.redfish.odataid;
 
 import com.inspur.podm.api.business.services.context.SingletonContext;
-import com.inspur.podm.common.intel.types.redfish.OdataIdProvider;
+import com.intel.podm.common.types.redfish.OdataIdProvider;
 
 import static java.lang.String.format;
 

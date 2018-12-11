@@ -21,7 +21,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.inspur.podm.api.business.services.context.Context;
 import com.inspur.podm.api.business.services.redfish.odataid.ODataId;
-import com.inspur.podm.common.intel.types.Status;
+import com.intel.podm.common.types.Status;
 
 import java.util.HashSet;
 import java.util.Set;

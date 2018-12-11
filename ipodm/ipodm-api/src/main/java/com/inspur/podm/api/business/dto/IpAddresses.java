@@ -19,10 +19,10 @@ package com.inspur.podm.api.business.dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.inspur.podm.common.intel.types.AddressState;
-import com.inspur.podm.common.intel.types.IpV4AddressOrigin;
-import com.inspur.podm.common.intel.types.IpV6AddressOrigin;
-import com.inspur.podm.common.intel.types.redfish.IgnoreAutomaticOem;
+import com.intel.podm.common.types.AddressState;
+import com.intel.podm.common.types.IpV4AddressOrigin;
+import com.intel.podm.common.types.IpV6AddressOrigin;
+import com.intel.podm.common.types.redfish.IgnoreAutomaticOem;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 

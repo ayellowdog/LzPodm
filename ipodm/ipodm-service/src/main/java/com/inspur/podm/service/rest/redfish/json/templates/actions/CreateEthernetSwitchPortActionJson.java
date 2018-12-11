@@ -17,8 +17,8 @@
 package com.inspur.podm.service.rest.redfish.json.templates.actions;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.inspur.podm.common.intel.types.PortMode;
-import com.inspur.podm.common.intel.types.redfish.RedfishEthernetSwitchPort;
+import com.intel.podm.common.types.PortMode;
+import com.intel.podm.common.types.redfish.RedfishEthernetSwitchPort;
 
 @SuppressWarnings({"checkstyle:VisibilityModifier"})
 public class CreateEthernetSwitchPortActionJson implements RedfishEthernetSwitchPort {

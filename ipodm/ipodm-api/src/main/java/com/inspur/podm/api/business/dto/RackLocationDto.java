@@ -17,7 +17,7 @@
 package com.inspur.podm.api.business.dto;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.inspur.podm.common.intel.types.rmm.RackUnitType;
+import com.intel.podm.common.types.rmm.RackUnitType;
 
 @JsonPropertyOrder({"uLocation", "uHeight", "xLocation", "rackUnits"})
 public final class RackLocationDto {

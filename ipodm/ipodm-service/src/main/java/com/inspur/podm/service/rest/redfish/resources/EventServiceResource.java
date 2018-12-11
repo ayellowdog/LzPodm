@@ -18,9 +18,9 @@ package com.inspur.podm.service.rest.redfish.resources;
 
 import static com.inspur.podm.api.business.services.context.Context.contextOf;
 import static com.inspur.podm.api.business.services.context.ContextType.EVENT_SERVICE;
-import static com.inspur.podm.common.intel.types.Id.id;
-import static com.inspur.podm.common.intel.types.redfish.ResourceNames.EVENT_SUBSCRIPTION_RESOURCE_NAME;
 import static com.inspur.podm.service.rest.redfish.OptionsResponseBuilder.newOptionsForResourceBuilder;
+import static com.intel.podm.common.types.Id.id;
+import static com.intel.podm.common.types.redfish.ResourceNames.EVENT_SUBSCRIPTION_RESOURCE_NAME;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
 import javax.inject.Inject;

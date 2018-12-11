@@ -17,8 +17,8 @@
 package com.inspur.podm.service.rest.redfish.resources;
 
 import static com.inspur.podm.api.business.services.context.PathParamConstants.getPathParameterNames;
-import static com.inspur.podm.common.intel.types.Id.fromString;
 import static com.inspur.podm.service.rest.error.PodmExceptions.notFound;
+import static com.intel.podm.common.types.Id.fromString;
 import static java.lang.String.format;
 import static org.apache.commons.lang3.StringUtils.removeEnd;
 import static org.apache.commons.lang3.StringUtils.removeStart;
@@ -41,9 +41,9 @@ import javax.ws.rs.core.UriInfo;
 
 import com.inspur.podm.api.business.BusinessApiException;
 import com.inspur.podm.api.business.ContextResolvingException;
-import com.inspur.podm.common.intel.types.Id;
 import com.inspur.podm.service.rest.redfish.resources.context.ContextBuilder;
 import com.inspur.podm.service.rest.redfish.resources.context.ContextBuilderException;
+import com.intel.podm.common.types.Id;
 
 @SuppressWarnings({"checkstyle:ClassFanOutComplexity", "checkstyle:MethodCount"})
 public abstract class BaseResource {

@@ -18,10 +18,10 @@ package com.inspur.podm.service.rest.redfish.json.templates.actions;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.inspur.podm.common.intel.types.ProtocolType;
+import com.intel.podm.common.types.ProtocolType;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
-import static com.inspur.podm.common.intel.types.redfish.RedfishEthernetSwitch.DcbxConfiguration.ApplicationProtocolType;
+import static com.intel.podm.common.types.redfish.RedfishEthernetSwitch.DcbxConfiguration.ApplicationProtocolType;
 
 @JsonInclude(NON_NULL)
 public class ApplicationProtocolTypePartialRepresentation implements ApplicationProtocolType {

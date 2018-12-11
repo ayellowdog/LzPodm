@@ -18,9 +18,9 @@ package com.inspur.podm.service.rest.redfish.json.templates.actions;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.inspur.podm.api.business.services.redfish.odataid.ODataId;
-import com.inspur.podm.common.intel.types.ReplicaType;
-import com.inspur.podm.common.intel.types.StorageAccessCapability;
-import com.inspur.podm.common.intel.types.redfish.StorageServiceVolume;
+import com.intel.podm.common.types.ReplicaType;
+import com.intel.podm.common.types.StorageAccessCapability;
+import com.intel.podm.common.types.redfish.StorageServiceVolume;
 
 import java.util.List;
 import java.util.Set;

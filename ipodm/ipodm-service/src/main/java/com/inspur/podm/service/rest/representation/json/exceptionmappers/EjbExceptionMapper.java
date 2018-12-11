@@ -24,7 +24,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
-import com.inspur.podm.common.intel.logger.Logger;
+import com.intel.podm.common.logger.Logger;
 
 import java.util.concurrent.RejectedExecutionException;
 

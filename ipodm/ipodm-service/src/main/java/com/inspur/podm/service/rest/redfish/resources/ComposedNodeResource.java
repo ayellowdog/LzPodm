@@ -38,10 +38,10 @@ import com.inspur.podm.api.business.services.context.Context;
 import com.inspur.podm.api.business.services.redfish.ReaderService;
 import com.inspur.podm.api.business.services.redfish.RemovalService;
 import com.inspur.podm.api.business.services.redfish.UpdateService;
-import com.inspur.podm.common.intel.types.redfish.RedfishComputerSystem;
 import com.inspur.podm.service.rest.redfish.json.templates.RedfishResourceAmazingWrapper;
 import com.inspur.podm.service.rest.redfish.json.templates.actions.ComposedNodePartialRepresentation;
 import com.inspur.podm.service.rest.redfish.json.templates.actions.constraints.ComposedNodeConstraint;
+import com.intel.podm.common.types.redfish.RedfishComputerSystem;
 
 
 @Produces(APPLICATION_JSON)

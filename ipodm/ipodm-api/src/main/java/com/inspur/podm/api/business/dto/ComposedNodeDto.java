@@ -22,13 +22,13 @@ import com.inspur.podm.api.business.dto.actions.ResetActionDto;
 import com.inspur.podm.api.business.services.context.Context;
 import com.inspur.podm.api.business.services.context.SingletonContext;
 import com.inspur.podm.api.business.services.redfish.odataid.ODataId;
-import com.inspur.podm.common.intel.types.BootSourceMode;
-import com.inspur.podm.common.intel.types.BootSourceState;
-import com.inspur.podm.common.intel.types.BootSourceType;
-import com.inspur.podm.common.intel.types.ComposedNodeState;
-import com.inspur.podm.common.intel.types.PowerState;
-import com.inspur.podm.common.intel.types.Status;
-import com.inspur.podm.common.intel.types.redfish.IgnoreAutomaticOem;
+import com.intel.podm.common.types.BootSourceMode;
+import com.intel.podm.common.types.BootSourceState;
+import com.intel.podm.common.types.BootSourceType;
+import com.intel.podm.common.types.ComposedNodeState;
+import com.intel.podm.common.types.PowerState;
+import com.intel.podm.common.types.Status;
+import com.intel.podm.common.types.redfish.IgnoreAutomaticOem;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -36,7 +36,7 @@ import java.util.Set;
 import java.util.UUID;
 
 import static com.inspur.podm.api.business.services.redfish.odataid.ODataIdFromSingletonContextHelper.asOdataId;
-import static com.inspur.podm.common.intel.utils.Contracts.requiresNonNull;
+import static com.intel.podm.common.utils.Contracts.requiresNonNull;
 
 @JsonPropertyOrder({
     "@odata.context", "@odata.id", "@odata.type", "id", "name", "description", "uuid", "powerState", "status", "composedNodeState",

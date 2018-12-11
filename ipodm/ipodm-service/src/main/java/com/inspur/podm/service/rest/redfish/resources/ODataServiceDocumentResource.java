@@ -18,7 +18,7 @@ package com.inspur.podm.service.rest.redfish.resources;
 
 import com.inspur.podm.api.business.dto.redfish.ODataServiceDocumentDto;
 import com.inspur.podm.api.business.dto.redfish.attributes.ODataServiceDto;
-import com.inspur.podm.common.intel.types.ServiceKind;
+import com.intel.podm.common.types.ServiceKind;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Produces;
@@ -27,9 +27,9 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.inspur.podm.common.intel.types.ServiceKind.SINGLETON;
-import static com.inspur.podm.common.intel.types.redfish.ODataServices.ODATA_ROOT_SERVICES;
 import static com.inspur.podm.service.rest.redfish.OptionsResponseBuilder.newOptionsForResourceBuilder;
+import static com.intel.podm.common.types.ServiceKind.SINGLETON;
+import static com.intel.podm.common.types.redfish.ODataServices.ODATA_ROOT_SERVICES;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
 

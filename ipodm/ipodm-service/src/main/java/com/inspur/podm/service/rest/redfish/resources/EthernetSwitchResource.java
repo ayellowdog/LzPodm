@@ -16,10 +16,10 @@
 
 package com.inspur.podm.service.rest.redfish.resources;
 
-import static com.inspur.podm.common.intel.types.redfish.ResourceNames.ACLS_RESOURCE_NAME;
-import static com.inspur.podm.common.intel.types.redfish.ResourceNames.ETHERNET_SWITCH_METRICS_RESOURCE_NAME;
-import static com.inspur.podm.common.intel.types.redfish.ResourceNames.PORTS_RESOURCE_NAME;
 import static com.inspur.podm.service.rest.redfish.OptionsResponseBuilder.newOptionsForResourceBuilder;
+import static com.intel.podm.common.types.redfish.ResourceNames.ACLS_RESOURCE_NAME;
+import static com.intel.podm.common.types.redfish.ResourceNames.ETHERNET_SWITCH_METRICS_RESOURCE_NAME;
+import static com.intel.podm.common.types.redfish.ResourceNames.PORTS_RESOURCE_NAME;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static javax.ws.rs.core.Response.ok;
 
@@ -38,10 +38,10 @@ import com.inspur.podm.api.business.dto.EthernetSwitchDto;
 import com.inspur.podm.api.business.services.context.Context;
 import com.inspur.podm.api.business.services.redfish.ReaderService;
 import com.inspur.podm.api.business.services.redfish.UpdateService;
-import com.inspur.podm.common.intel.types.redfish.RedfishEthernetSwitch;
 import com.inspur.podm.service.rest.redfish.json.templates.RedfishResourceAmazingWrapper;
 import com.inspur.podm.service.rest.redfish.json.templates.actions.EthernetSwitchPartialRepresentation;
 import com.inspur.podm.service.rest.redfish.json.templates.actions.constraints.EthernetSwitchConstraint;
+import com.intel.podm.common.types.redfish.RedfishEthernetSwitch;
 
 
 @Produces(APPLICATION_JSON)

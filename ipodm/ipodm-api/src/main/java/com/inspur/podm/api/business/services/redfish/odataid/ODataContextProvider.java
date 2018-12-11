@@ -18,7 +18,7 @@ package com.inspur.podm.api.business.services.redfish.odataid;
 
 import java.net.URI;
 
-import static com.inspur.podm.common.intel.types.redfish.OdataTypeVersions.VERSION_PATTERN;
+import static com.intel.podm.common.types.redfish.OdataTypeVersions.VERSION_PATTERN;
 import static java.lang.String.format;
 
 public final class ODataContextProvider {

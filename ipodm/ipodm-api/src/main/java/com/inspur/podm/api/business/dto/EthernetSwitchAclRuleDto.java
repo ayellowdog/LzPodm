@@ -20,8 +20,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.inspur.podm.api.business.services.context.Context;
-import com.inspur.podm.common.intel.types.ActionType;
-import com.inspur.podm.common.intel.types.MirrorType;
+import com.intel.podm.common.types.ActionType;
+import com.intel.podm.common.types.MirrorType;
 
 import java.util.HashSet;
 import java.util.Set;

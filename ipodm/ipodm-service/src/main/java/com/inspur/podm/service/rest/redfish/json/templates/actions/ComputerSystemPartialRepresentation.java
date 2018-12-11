@@ -17,10 +17,10 @@
 package com.inspur.podm.service.rest.redfish.json.templates.actions;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.inspur.podm.common.intel.types.BootSourceMode;
-import com.inspur.podm.common.intel.types.BootSourceState;
-import com.inspur.podm.common.intel.types.BootSourceType;
-import com.inspur.podm.common.intel.types.redfish.RedfishComputerSystem;
+import com.intel.podm.common.types.BootSourceMode;
+import com.intel.podm.common.types.BootSourceState;
+import com.intel.podm.common.types.BootSourceType;
+import com.intel.podm.common.types.redfish.RedfishComputerSystem;
 
 import java.util.HashSet;
 import java.util.Set;

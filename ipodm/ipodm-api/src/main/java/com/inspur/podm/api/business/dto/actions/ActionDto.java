@@ -20,7 +20,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.inspur.podm.api.business.services.context.SingletonContext;
 
 import static com.inspur.podm.api.business.services.redfish.odataid.ODataIdFromSingletonContextHelper.asOdataId;
-import static com.inspur.podm.common.intel.utils.Contracts.requiresNonNull;
+import static com.intel.podm.common.utils.Contracts.requiresNonNull;
 
 public class ActionDto {
     @JsonProperty("target")

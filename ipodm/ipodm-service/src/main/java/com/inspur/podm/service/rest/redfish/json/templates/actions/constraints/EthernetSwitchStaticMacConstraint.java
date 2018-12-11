@@ -21,7 +21,7 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import javax.validation.Payload;
 
-import com.inspur.podm.common.intel.types.redfish.RedfishEthernetSwitchStaticMac;
+import com.intel.podm.common.types.redfish.RedfishEthernetSwitchStaticMac;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;

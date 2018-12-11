@@ -22,11 +22,11 @@ import com.inspur.podm.api.business.services.context.Context;
 import com.inspur.podm.api.business.services.redfish.ReaderService;
 import com.inspur.podm.api.business.services.redfish.RemovalService;
 import com.inspur.podm.api.business.services.redfish.UpdateService;
-import com.inspur.podm.common.intel.types.redfish.RedfishVlanNetworkInterface;
 import com.inspur.podm.service.rest.redfish.OptionsResponseBuilder;
 import com.inspur.podm.service.rest.redfish.json.templates.RedfishResourceAmazingWrapper;
 import com.inspur.podm.service.rest.redfish.json.templates.actions.UpdateVlanJson;
 import com.inspur.podm.service.rest.redfish.json.templates.actions.constraints.VlanConstraint;
+import com.intel.podm.common.types.redfish.RedfishVlanNetworkInterface;
 
 import javax.inject.Inject;
 import javax.ws.rs.DELETE;

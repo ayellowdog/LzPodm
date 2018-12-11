@@ -25,12 +25,12 @@ import com.inspur.podm.api.business.dto.IpAddresses.IpV4AddressDto;
 import com.inspur.podm.api.business.dto.IpAddresses.IpV6AddressDto;
 import com.inspur.podm.api.business.services.context.Context;
 import com.inspur.podm.api.business.services.redfish.odataid.ODataId;
-import com.inspur.podm.common.intel.types.DurableNameFormat;
-import com.inspur.podm.common.intel.types.EntityRole;
-import com.inspur.podm.common.intel.types.Protocol;
-import com.inspur.podm.common.intel.types.Status;
-import com.inspur.podm.common.intel.types.redfish.DurableIdentifier;
-import com.inspur.podm.common.intel.types.redfish.OemType;
+import com.intel.podm.common.types.DurableNameFormat;
+import com.intel.podm.common.types.EntityRole;
+import com.intel.podm.common.types.Protocol;
+import com.intel.podm.common.types.Status;
+import com.intel.podm.common.types.redfish.DurableIdentifier;
+import com.intel.podm.common.types.redfish.OemType;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -38,8 +38,8 @@ import java.util.Set;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 import static com.inspur.podm.api.business.services.context.UriToContextConverter.getContextFromUri;
-import static com.inspur.podm.common.intel.types.redfish.OemType.Type.OEM_IN_LINKS;
-import static com.inspur.podm.common.intel.types.redfish.OemType.Type.TOP_LEVEL_OEM;
+import static com.intel.podm.common.types.redfish.OemType.Type.OEM_IN_LINKS;
+import static com.intel.podm.common.types.redfish.OemType.Type.TOP_LEVEL_OEM;
 
 @JsonPropertyOrder({
     "@odata.context", "@odata.id", "@odata.type", "id", "name", "description", "status", "protocol", "pciId", "identifiers", "connectedEntities",

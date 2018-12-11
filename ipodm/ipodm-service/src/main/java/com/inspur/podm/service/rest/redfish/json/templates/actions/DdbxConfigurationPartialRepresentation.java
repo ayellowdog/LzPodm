@@ -20,7 +20,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
-import static com.inspur.podm.common.intel.types.redfish.RedfishEthernetSwitch.DcbxConfiguration;
+import static com.intel.podm.common.types.redfish.RedfishEthernetSwitch.DcbxConfiguration;
 
 import java.util.List;
 

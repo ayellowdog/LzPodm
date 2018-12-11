@@ -17,7 +17,7 @@
 package com.inspur.podm.service.rest.error;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.inspur.podm.common.intel.types.redfish.RedfishErrorResponse;
+import com.intel.podm.common.types.redfish.RedfishErrorResponse;
 
 public class RedfishErrorResponseWrapper implements RedfishErrorResponse {
     @JsonProperty("error")

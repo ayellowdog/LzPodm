@@ -7,7 +7,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.context.ApplicationContext;
 
-import com.inspur.podm.common.utils.ThreadUtil;
+import com.intel.podm.common.utils.ThreadUtil;
 
 /**
  * AppContext.

@@ -20,7 +20,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.inspur.podm.api.business.dto.RedfishDto;
-import com.inspur.podm.common.intel.types.redfish.OdataIdProvider;
+import com.intel.podm.common.types.redfish.OdataIdProvider;
 
 import static com.inspur.podm.api.business.services.redfish.odataid.ODataContextProvider.getContextFromODataType;
 

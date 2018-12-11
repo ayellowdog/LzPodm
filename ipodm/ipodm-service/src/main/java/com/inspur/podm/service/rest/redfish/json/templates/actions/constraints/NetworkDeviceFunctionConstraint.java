@@ -28,9 +28,9 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import javax.validation.Payload;
 
-import com.inspur.podm.common.intel.types.Ref;
-import com.inspur.podm.common.intel.types.redfish.RedfishNetworkDeviceFunction;
 import com.inspur.podm.service.rest.redfish.json.templates.actions.NetworkDeviceFunctionPartialRepresentation;
+import com.intel.podm.common.types.Ref;
+import com.intel.podm.common.types.redfish.RedfishNetworkDeviceFunction;
 
 @Constraint(validatedBy = NetworkDeviceFunctionConstraint.NetworkDeviceFunctionConstraintValidator.class)
 @Target(ElementType.PARAMETER)

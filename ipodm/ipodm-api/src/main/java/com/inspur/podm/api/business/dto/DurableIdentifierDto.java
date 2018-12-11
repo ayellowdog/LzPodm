@@ -17,7 +17,7 @@
 package com.inspur.podm.api.business.dto;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.inspur.podm.common.intel.types.DurableNameFormat;
+import com.intel.podm.common.types.DurableNameFormat;
 
 @JsonPropertyOrder({"durableName", "durableNameFormat"})
 public final class DurableIdentifierDto {

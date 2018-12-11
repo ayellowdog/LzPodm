@@ -18,11 +18,11 @@ package com.inspur.podm.api.business.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.inspur.podm.common.intel.types.AuthenticationMethod;
-import com.inspur.podm.common.intel.types.IpAddressType;
-import com.inspur.podm.common.intel.types.Status;
-import com.inspur.podm.common.intel.types.net.MacAddress;
-import com.inspur.podm.common.intel.types.redfish.IgnoreAutomaticOem;
+import com.intel.podm.common.types.AuthenticationMethod;
+import com.intel.podm.common.types.IpAddressType;
+import com.intel.podm.common.types.Status;
+import com.intel.podm.common.types.net.MacAddress;
+import com.intel.podm.common.types.redfish.IgnoreAutomaticOem;
 
 @JsonPropertyOrder({
     "@odata.context", "@odata.id", "@odata.type", "name", "description", "id", "status", "deviceEnabled", "ethernet", "iscsiBoot", "links", "oem"

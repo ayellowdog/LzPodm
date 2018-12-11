@@ -20,12 +20,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.inspur.podm.api.business.services.redfish.odataid.ODataIdFromSingletonContextHelper;
-import com.inspur.podm.common.intel.types.redfish.NavigationProperty;
-import com.inspur.podm.common.intel.types.redfish.OdataIdProvider;
+import com.intel.podm.common.types.redfish.NavigationProperty;
+import com.intel.podm.common.types.redfish.OdataIdProvider;
 
 import java.util.Objects;
 
-import static com.inspur.podm.common.intel.utils.Contracts.requiresNonNull;
+import static com.intel.podm.common.utils.Contracts.requiresNonNull;
 import static java.lang.String.format;
 
 import java.net.URI;

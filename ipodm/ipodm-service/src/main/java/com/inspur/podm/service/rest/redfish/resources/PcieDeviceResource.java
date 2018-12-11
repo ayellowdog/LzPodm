@@ -21,10 +21,10 @@ import com.inspur.podm.api.business.dto.PcieDeviceDto;
 import com.inspur.podm.api.business.services.context.Context;
 import com.inspur.podm.api.business.services.redfish.ReaderService;
 import com.inspur.podm.api.business.services.redfish.UpdateService;
-import com.inspur.podm.common.intel.types.redfish.RedfishPcieDevice;
 import com.inspur.podm.service.rest.redfish.json.templates.RedfishResourceAmazingWrapper;
 import com.inspur.podm.service.rest.redfish.json.templates.actions.PcieDevicePartialRepresentation;
 import com.inspur.podm.service.rest.redfish.json.templates.actions.constraints.PcieDeviceConstraint;
+import com.intel.podm.common.types.redfish.RedfishPcieDevice;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -35,8 +35,8 @@ import javax.ws.rs.core.Response;
 import java.util.concurrent.TimeoutException;
 
 import static com.inspur.podm.api.business.services.context.PathParamConstants.PCIE_DEVICE_FUNCTION_ID;
-import static com.inspur.podm.common.intel.types.redfish.ResourceNames.PCIE_DEVICE_FUNCTIONS_RESOURCE_NAME;
 import static com.inspur.podm.service.rest.redfish.OptionsResponseBuilder.newOptionsForResourceBuilder;
+import static com.intel.podm.common.types.redfish.ResourceNames.PCIE_DEVICE_FUNCTIONS_RESOURCE_NAME;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static javax.ws.rs.core.Response.ok;
 

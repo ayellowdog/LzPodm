@@ -21,15 +21,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.inspur.podm.api.business.services.context.Context;
 import com.inspur.podm.api.business.services.context.SingletonContext;
-import com.inspur.podm.common.intel.types.EncryptionAbility;
-import com.inspur.podm.common.intel.types.EncryptionStatus;
-import com.inspur.podm.common.intel.types.HotspareType;
-import com.inspur.podm.common.intel.types.IndicatorLed;
-import com.inspur.podm.common.intel.types.MediaType;
-import com.inspur.podm.common.intel.types.Protocol;
-import com.inspur.podm.common.intel.types.Status;
-import com.inspur.podm.common.intel.types.StatusIndicator;
-import com.inspur.podm.common.intel.types.redfish.OemType;
+import com.intel.podm.common.types.EncryptionAbility;
+import com.intel.podm.common.types.EncryptionStatus;
+import com.intel.podm.common.types.HotspareType;
+import com.intel.podm.common.types.IndicatorLed;
+import com.intel.podm.common.types.MediaType;
+import com.intel.podm.common.types.Protocol;
+import com.intel.podm.common.types.Status;
+import com.intel.podm.common.types.StatusIndicator;
+import com.intel.podm.common.types.redfish.OemType;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -40,7 +40,7 @@ import java.util.Set;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 import static com.inspur.podm.api.business.services.redfish.odataid.ODataIdFromSingletonContextHelper.asOdataId;
-import static com.inspur.podm.common.intel.types.redfish.OemType.Type.TOP_LEVEL_OEM;
+import static com.intel.podm.common.types.redfish.OemType.Type.TOP_LEVEL_OEM;
 
 @JsonPropertyOrder({
     "@odata.context", "@odata.id", "@odata.type", "id", "name", "description", "indicatorLed", "model", "status", "capacityBytes", "protocol", "mediaType",

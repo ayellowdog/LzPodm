@@ -17,7 +17,7 @@
 package com.inspur.podm.api.business.dto.actions.actionInfo;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.inspur.podm.common.intel.types.actions.ParameterDataType;
+import com.intel.podm.common.types.actions.ParameterDataType;
 
 import java.util.HashSet;
 import java.util.Set;

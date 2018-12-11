@@ -21,7 +21,7 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import javax.validation.Payload;
 
-import com.inspur.podm.common.intel.types.redfish.RedfishChassis;
+import com.intel.podm.common.types.redfish.RedfishChassis;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;

@@ -17,8 +17,8 @@
 package com.inspur.podm.service.rest.representation.json.exceptionmappers;
 
 import com.inspur.podm.api.business.EntityOperationException;
-import com.inspur.podm.common.intel.logger.Logger;
 import com.inspur.podm.service.rest.error.ExternalServiceErrorResponseBuilder;
+import com.intel.podm.common.logger.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;

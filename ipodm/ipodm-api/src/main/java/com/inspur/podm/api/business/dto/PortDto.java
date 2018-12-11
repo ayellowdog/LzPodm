@@ -21,12 +21,12 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.inspur.podm.api.business.dto.actions.ResetActionDto;
 import com.inspur.podm.api.business.services.context.Context;
 import com.inspur.podm.api.business.services.context.SingletonContext;
-import com.inspur.podm.common.intel.types.PciePortType;
-import com.inspur.podm.common.intel.types.Protocol;
-import com.inspur.podm.common.intel.types.Status;
-import com.inspur.podm.common.intel.types.redfish.OemType;
+import com.intel.podm.common.types.PciePortType;
+import com.intel.podm.common.types.Protocol;
+import com.intel.podm.common.types.Status;
+import com.intel.podm.common.types.redfish.OemType;
 
-import static com.inspur.podm.common.intel.types.redfish.OemType.Type.TOP_LEVEL_OEM;
+import static com.intel.podm.common.types.redfish.OemType.Type.TOP_LEVEL_OEM;
 
 import java.util.ArrayList;
 import java.util.Collection;

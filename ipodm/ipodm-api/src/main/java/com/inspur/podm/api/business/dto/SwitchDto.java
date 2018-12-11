@@ -21,10 +21,10 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.inspur.podm.api.business.dto.actions.ResetActionDto;
 import com.inspur.podm.api.business.services.context.Context;
 import com.inspur.podm.api.business.services.context.SingletonContext;
-import com.inspur.podm.common.intel.types.IndicatorLed;
-import com.inspur.podm.common.intel.types.PowerState;
-import com.inspur.podm.common.intel.types.Protocol;
-import com.inspur.podm.common.intel.types.Status;
+import com.intel.podm.common.types.IndicatorLed;
+import com.intel.podm.common.types.PowerState;
+import com.intel.podm.common.types.Protocol;
+import com.intel.podm.common.types.Status;
 
 import java.util.HashSet;
 import java.util.Set;

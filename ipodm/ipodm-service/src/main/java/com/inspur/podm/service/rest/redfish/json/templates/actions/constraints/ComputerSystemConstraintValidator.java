@@ -23,9 +23,9 @@ import java.util.Set;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-import com.inspur.podm.common.intel.types.redfish.RedfishComputerSystem.Boot;
-import com.inspur.podm.common.intel.types.redfish.RedfishComputerSystem.TrustedModule;
 import com.inspur.podm.service.rest.redfish.json.templates.actions.ComputerSystemPartialRepresentation;
+import com.intel.podm.common.types.redfish.RedfishComputerSystem.Boot;
+import com.intel.podm.common.types.redfish.RedfishComputerSystem.TrustedModule;
 
 @SuppressWarnings({"checkstyle:CyclomaticComplexity", "checkstyle:BooleanExpressionComplexity", "checkstyle:ExecutableStatementCount",
     "checkstyle:NPathComplexity"})

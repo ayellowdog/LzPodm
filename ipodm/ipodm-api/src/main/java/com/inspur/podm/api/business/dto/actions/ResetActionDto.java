@@ -18,7 +18,7 @@ package com.inspur.podm.api.business.dto.actions;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.inspur.podm.common.intel.types.actions.ResetType;
+import com.intel.podm.common.types.actions.ResetType;
 
 import java.util.ArrayList;
 import java.util.List;

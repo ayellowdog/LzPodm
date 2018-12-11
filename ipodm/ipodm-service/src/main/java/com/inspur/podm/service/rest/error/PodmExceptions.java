@@ -19,8 +19,8 @@ package com.inspur.podm.service.rest.error;
 import com.inspur.podm.api.business.BusinessApiException;
 import com.inspur.podm.api.business.Violations;
 import com.inspur.podm.api.business.ViolationsDisclosingException;
-import com.inspur.podm.common.intel.logger.Logger;
-import com.inspur.podm.common.intel.logger.LoggerFactory;
+import com.intel.podm.common.logger.Logger;
+import com.intel.podm.common.logger.LoggerFactory;
 
 import javax.ws.rs.WebApplicationException;
 

@@ -23,7 +23,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.inspur.podm.api.business.services.context.Context;
 import com.inspur.podm.api.business.services.redfish.odataid.ODataId;
 import com.inspur.podm.api.business.services.redfish.requests.RequestedNode;
-import com.inspur.podm.common.intel.types.ReplicaType;
+import com.intel.podm.common.types.ReplicaType;
 
 public final class RequestedMasterDriveImpl implements RequestedNode.RemoteDrive.MasterDrive {
     @JsonProperty

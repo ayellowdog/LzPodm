@@ -19,7 +19,7 @@ package com.inspur.podm.api.business.dto.redfish;
 import static com.inspur.podm.api.business.services.redfish.odataid.ODataIdFromContextHelper.oDataIdOfServiceRoot;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.inspur.podm.common.intel.types.redfish.OdataIdProvider;
+import com.intel.podm.common.types.redfish.OdataIdProvider;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class ServiceRootContext implements OdataIdProvider {

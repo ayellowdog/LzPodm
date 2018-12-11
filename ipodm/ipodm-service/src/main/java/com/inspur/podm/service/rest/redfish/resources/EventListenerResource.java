@@ -16,10 +16,10 @@
 
 package com.inspur.podm.service.rest.redfish.resources;
 
-import static com.inspur.podm.common.config.base.dto.EventsConfig.EVENT_RECEIVING_ENDPOINT;
-import static com.inspur.podm.common.intel.types.ServiceType.LUI;
-import static com.inspur.podm.common.intel.types.ServiceType.valueOf;
 import static com.inspur.podm.service.rest.error.PodmExceptions.notFound;
+import static com.intel.podm.common.types.ServiceType.LUI;
+import static com.intel.podm.common.types.ServiceType.valueOf;
+import static com.intel.podm.config.base.dto.EventsConfig.EVENT_RECEIVING_ENDPOINT;
 import static java.lang.String.format;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static javax.ws.rs.core.Response.noContent;
@@ -40,14 +40,14 @@ import javax.ws.rs.core.SecurityContext;
 
 import com.inspur.podm.api.business.EventDispatchingException;
 import com.inspur.podm.api.business.services.redfish.EventReceivingService;
-import com.inspur.podm.common.config.base.Config;
-import com.inspur.podm.common.config.base.Holder;
-import com.inspur.podm.common.config.base.dto.EventsConfig;
-import com.inspur.podm.common.config.base.dto.ServiceConnectionConfig;
-import com.inspur.podm.common.config.base.dto.EventsConfig.EventConfiguration;
-import com.inspur.podm.common.intel.logger.Logger;
-import com.inspur.podm.common.intel.types.ServiceType;
 import com.inspur.podm.service.rest.redfish.json.templates.actions.EventArrayJson;
+import com.intel.podm.common.logger.Logger;
+import com.intel.podm.common.types.ServiceType;
+import com.intel.podm.config.base.Config;
+import com.intel.podm.config.base.Holder;
+import com.intel.podm.config.base.dto.EventsConfig;
+import com.intel.podm.config.base.dto.ServiceConnectionConfig;
+import com.intel.podm.config.base.dto.EventsConfig.EventConfiguration;
 
 
 @Path(EVENT_RECEIVING_ENDPOINT)

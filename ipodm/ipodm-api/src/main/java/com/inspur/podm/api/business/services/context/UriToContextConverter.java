@@ -17,8 +17,8 @@
 package com.inspur.podm.api.business.services.context;
 
 import com.inspur.podm.api.business.services.redfish.odataid.ContextTypeToResourceNameMapper;
-import com.inspur.podm.common.intel.types.Id;
-import com.inspur.podm.common.intel.types.Pair;
+import com.intel.podm.common.types.Id;
+import com.intel.podm.common.types.Pair;
 
 import java.net.URI;
 import java.util.ArrayDeque;
@@ -34,10 +34,10 @@ import java.util.regex.Pattern;
 
 import static com.google.common.collect.Lists.reverse;
 import static com.inspur.podm.api.business.services.context.Context.contextOf;
-import static com.inspur.podm.common.intel.types.Id.id;
-import static com.inspur.podm.common.intel.types.Pair.pairOf;
-import static com.inspur.podm.common.intel.utils.Contracts.requires;
-import static com.inspur.podm.common.intel.utils.Contracts.requiresNonNull;
+import static com.intel.podm.common.types.Id.id;
+import static com.intel.podm.common.types.Pair.pairOf;
+import static com.intel.podm.common.utils.Contracts.requires;
+import static com.intel.podm.common.utils.Contracts.requiresNonNull;
 import static java.lang.String.format;
 import static java.util.Arrays.stream;
 import static java.util.Collections.emptyList;

@@ -21,10 +21,10 @@ import com.inspur.podm.api.business.dto.NetworkDeviceFunctionDto;
 import com.inspur.podm.api.business.services.context.Context;
 import com.inspur.podm.api.business.services.redfish.ReaderService;
 import com.inspur.podm.api.business.services.redfish.UpdateService;
-import com.inspur.podm.common.intel.types.redfish.RedfishNetworkDeviceFunction;
 import com.inspur.podm.service.rest.redfish.json.templates.RedfishResourceAmazingWrapper;
 import com.inspur.podm.service.rest.redfish.json.templates.actions.NetworkDeviceFunctionPartialRepresentation;
 import com.inspur.podm.service.rest.redfish.json.templates.actions.constraints.NetworkDeviceFunctionConstraint;
+import com.intel.podm.common.types.redfish.RedfishNetworkDeviceFunction;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;

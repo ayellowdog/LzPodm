@@ -18,7 +18,7 @@ package com.inspur.podm.service.rest.representation.json.exceptionmappers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.inspur.podm.common.intel.types.redfish.ExternalServiceError;
+import com.intel.podm.common.types.redfish.ExternalServiceError;
 
 import static java.lang.String.format;
 

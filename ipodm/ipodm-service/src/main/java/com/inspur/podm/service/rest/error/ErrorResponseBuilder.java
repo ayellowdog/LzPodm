@@ -17,9 +17,9 @@
 package com.inspur.podm.service.rest.error;
 
 import com.inspur.podm.api.business.errors.ErrorDto;
-import com.inspur.podm.common.intel.types.redfish.RedfishErrorResponse;
-import com.inspur.podm.common.intel.types.redfish.RedfishErrorResponse.Error;
-import com.inspur.podm.common.intel.types.redfish.RedfishErrorResponse.Error.ExtendedInfo;
+import com.intel.podm.common.types.redfish.RedfishErrorResponse;
+import com.intel.podm.common.types.redfish.RedfishErrorResponse.Error;
+import com.intel.podm.common.types.redfish.RedfishErrorResponse.Error.ExtendedInfo;
 
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
@@ -28,7 +28,7 @@ import java.util.List;
 
 import static com.inspur.podm.api.business.errors.ErrorDto.ErrorBuilder.newErrorBuilder;
 import static com.inspur.podm.api.business.errors.ExtendedInfoDto.ExtendedInfoBuilder.newExtendedInfoBuilder;
-import static com.inspur.podm.common.intel.utils.Contracts.requires;
+import static com.intel.podm.common.utils.Contracts.requires;
 import static java.util.Collections.emptyList;
 import static java.util.Optional.ofNullable;
 import static java.util.stream.Collectors.toList;

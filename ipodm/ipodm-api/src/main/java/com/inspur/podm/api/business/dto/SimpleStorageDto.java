@@ -19,8 +19,8 @@ package com.inspur.podm.api.business.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.inspur.podm.common.intel.types.Status;
-import com.inspur.podm.common.intel.types.redfish.IgnoreAutomaticOem;
+import com.intel.podm.common.types.Status;
+import com.intel.podm.common.types.redfish.IgnoreAutomaticOem;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;

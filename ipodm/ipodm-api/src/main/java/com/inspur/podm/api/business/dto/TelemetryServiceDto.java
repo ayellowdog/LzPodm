@@ -20,7 +20,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.inspur.podm.api.business.services.context.SingletonContext;
-import com.inspur.podm.common.intel.types.Status;
+import com.intel.podm.common.types.Status;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 

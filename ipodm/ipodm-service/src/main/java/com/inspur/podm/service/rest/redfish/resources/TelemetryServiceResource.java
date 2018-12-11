@@ -28,10 +28,10 @@ import javax.ws.rs.core.Response;
 
 import static com.inspur.podm.api.business.services.context.Context.contextOf;
 import static com.inspur.podm.api.business.services.context.ContextType.TELEMETRY_SERVICE;
-import static com.inspur.podm.common.intel.types.Id.id;
-import static com.inspur.podm.common.intel.types.redfish.ResourceNames.METRIC_DEFINITION_RESOURCE_NAME;
-import static com.inspur.podm.common.intel.types.redfish.ResourceNames.METRIC_REPORT_DEFINITION_RESOURCE_NAME;
 import static com.inspur.podm.service.rest.redfish.OptionsResponseBuilder.newOptionsForResourceBuilder;
+import static com.intel.podm.common.types.Id.id;
+import static com.intel.podm.common.types.redfish.ResourceNames.METRIC_DEFINITION_RESOURCE_NAME;
+import static com.intel.podm.common.types.redfish.ResourceNames.METRIC_REPORT_DEFINITION_RESOURCE_NAME;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
 

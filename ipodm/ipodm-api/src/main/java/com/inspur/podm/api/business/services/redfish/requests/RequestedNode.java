@@ -22,14 +22,14 @@ import java.util.Optional;
 
 import com.inspur.podm.api.business.dto.redfish.ContextPossessor;
 import com.inspur.podm.api.business.services.context.Context;
-import com.inspur.podm.common.intel.types.InstructionSet;
-import com.inspur.podm.common.intel.types.InterfaceType;
-import com.inspur.podm.common.intel.types.MediaType;
-import com.inspur.podm.common.intel.types.MemoryDeviceType;
-import com.inspur.podm.common.intel.types.ProcessorBrand;
-import com.inspur.podm.common.intel.types.ProcessorType;
-import com.inspur.podm.common.intel.types.Protocol;
-import com.inspur.podm.common.intel.types.ReplicaType;
+import com.intel.podm.common.types.InstructionSet;
+import com.intel.podm.common.types.InterfaceType;
+import com.intel.podm.common.types.MediaType;
+import com.intel.podm.common.types.MemoryDeviceType;
+import com.intel.podm.common.types.ProcessorBrand;
+import com.intel.podm.common.types.ProcessorType;
+import com.intel.podm.common.types.Protocol;
+import com.intel.podm.common.types.ReplicaType;
 
 /**
  * Interface providing requirements for a Composed Node. Contains all data necessary

@@ -17,7 +17,7 @@
 package com.inspur.podm.service.rest.redfish.json.templates.actions;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.inspur.podm.common.intel.types.redfish.RedfishEndpoint;
+import com.intel.podm.common.types.redfish.RedfishEndpoint;
 
 @SuppressWarnings({"checkstyle:VisibilityModifier"})
 public class UpdateEndpointJson implements RedfishEndpoint {

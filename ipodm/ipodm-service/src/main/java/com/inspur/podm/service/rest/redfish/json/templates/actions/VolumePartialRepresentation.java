@@ -17,7 +17,7 @@
 package com.inspur.podm.service.rest.redfish.json.templates.actions;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.inspur.podm.common.intel.types.redfish.RedfishVolume;
+import com.intel.podm.common.types.redfish.RedfishVolume;
 
 @SuppressWarnings({"checkstyle:VisibilityModifier"})
 public class VolumePartialRepresentation implements RedfishVolume {

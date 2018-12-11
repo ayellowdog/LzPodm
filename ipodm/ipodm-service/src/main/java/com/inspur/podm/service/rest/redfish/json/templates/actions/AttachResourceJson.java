@@ -22,7 +22,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.inspur.podm.api.business.services.context.Context;
 import com.inspur.podm.api.business.services.redfish.odataid.ODataId;
 import com.inspur.podm.api.business.services.redfish.requests.AttachResourceRequest;
-import com.inspur.podm.common.intel.types.Protocol;
+import com.intel.podm.common.types.Protocol;
 
 public class AttachResourceJson implements AttachResourceRequest {
     @JsonProperty("Resource")

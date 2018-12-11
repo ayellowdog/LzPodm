@@ -32,7 +32,7 @@ import static com.inspur.podm.api.business.services.context.ContextType.PROCESSO
 import static com.inspur.podm.api.business.services.context.ContextType.TELEMETRY_SERVICE;
 import static com.inspur.podm.api.business.services.context.ContextType.THERMAL;
 import static com.inspur.podm.api.business.services.context.ContextType.VOLUME_METRICS;
-import static com.inspur.podm.common.intel.utils.Contracts.requiresNonNull;
+import static com.intel.podm.common.utils.Contracts.requiresNonNull;
 import static java.util.Collections.unmodifiableSet;
 
 class ContextTypeToSingletonResourceMapper {

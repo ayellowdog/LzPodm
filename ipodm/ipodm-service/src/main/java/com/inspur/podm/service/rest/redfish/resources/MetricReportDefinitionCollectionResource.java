@@ -34,8 +34,8 @@ import static com.inspur.podm.api.business.services.context.ContextType.METRIC_R
 import static com.inspur.podm.api.business.services.context.ContextType.TELEMETRY_SERVICE;
 import static com.inspur.podm.api.business.services.context.PathParamConstants.METRIC_REPORT_DEFINITION_ID;
 import static com.inspur.podm.api.business.services.redfish.ReaderService.SERVICE_ROOT_CONTEXT;
-import static com.inspur.podm.common.intel.types.Id.id;
 import static com.inspur.podm.service.rest.redfish.OptionsResponseBuilder.newOptionsForResourceBuilder;
+import static com.intel.podm.common.types.Id.id;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
 

@@ -26,10 +26,10 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
-import static com.inspur.podm.common.intel.types.redfish.ResourceNames.DRIVES_RESOURCE_NAME;
-import static com.inspur.podm.common.intel.types.redfish.ResourceNames.STORAGE_POOL_RESOURCE_NAME;
-import static com.inspur.podm.common.intel.types.redfish.ResourceNames.VOLUMES_RESOURCE_NAME;
 import static com.inspur.podm.service.rest.redfish.OptionsResponseBuilder.newOptionsForResourceBuilder;
+import static com.intel.podm.common.types.redfish.ResourceNames.DRIVES_RESOURCE_NAME;
+import static com.intel.podm.common.types.redfish.ResourceNames.STORAGE_POOL_RESOURCE_NAME;
+import static com.intel.podm.common.types.redfish.ResourceNames.VOLUMES_RESOURCE_NAME;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
 

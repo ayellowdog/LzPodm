@@ -20,10 +20,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.inspur.podm.api.business.services.context.Context;
 import com.inspur.podm.api.business.services.redfish.odataid.ODataId;
-import com.inspur.podm.common.intel.types.ActionType;
-import com.inspur.podm.common.intel.types.MirrorType;
-import com.inspur.podm.common.intel.types.Ref;
-import com.inspur.podm.common.intel.types.redfish.RedfishEthernetSwitchAclRule;
+import com.intel.podm.common.types.ActionType;
+import com.intel.podm.common.types.MirrorType;
+import com.intel.podm.common.types.Ref;
+import com.intel.podm.common.types.redfish.RedfishEthernetSwitchAclRule;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 
@@ -34,7 +34,7 @@ import java.util.Set;
 import static com.fasterxml.jackson.annotation.Nulls.AS_EMPTY;
 import static com.inspur.podm.api.business.services.context.ContextType.ETHERNET_SWITCH_PORT;
 import static com.inspur.podm.api.business.services.context.UriToContextConverter.getContextFromUri;
-import static com.inspur.podm.common.intel.types.Ref.unassigned;
+import static com.intel.podm.common.types.Ref.unassigned;
 
 public final class AclRuleModificationJson implements RedfishEthernetSwitchAclRule {
     @JsonSetter(value = "RuleId", nulls = AS_EMPTY)

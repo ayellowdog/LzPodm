@@ -22,7 +22,7 @@ import com.inspur.podm.service.rest.redfish.json.templates.actions.constraints.V
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-import static com.inspur.podm.common.intel.types.EntityRole.TARGET;
+import static com.intel.podm.common.types.EntityRole.TARGET;
 
 import java.util.Objects;
 

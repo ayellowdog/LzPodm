@@ -16,7 +16,7 @@
 
 package com.inspur.podm.api.business.dto.redfish.attributes;
 
-import com.inspur.podm.common.intel.types.redfish.RedfishDrive;
+import com.intel.podm.common.types.redfish.RedfishDrive;
 
 public final class RedfishLocationDto implements RedfishDrive.Location {
     private final String info;

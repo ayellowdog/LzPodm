@@ -17,7 +17,7 @@
 package com.inspur.podm.api.business.services.redfish;
 
 import com.inspur.podm.api.business.EventDispatchingException;
-import com.inspur.podm.common.intel.types.redfish.RedfishEventArray;
+import com.intel.podm.common.types.redfish.RedfishEventArray;
 
 import java.util.UUID;
 

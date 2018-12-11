@@ -18,7 +18,7 @@ package com.inspur.podm.api.business.services.redfish.odataid;
 
 import java.net.URI;
 
-import com.inspur.podm.common.intel.types.Id;
+import com.intel.podm.common.types.Id;
 
 import static com.google.common.base.Strings.isNullOrEmpty;
 import static org.apache.commons.lang3.StringUtils.removeEnd;

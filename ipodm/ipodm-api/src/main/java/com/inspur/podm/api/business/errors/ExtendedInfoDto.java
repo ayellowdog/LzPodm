@@ -18,7 +18,7 @@ package com.inspur.podm.api.business.errors;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.inspur.podm.common.intel.types.redfish.RedfishErrorResponse.Error.ExtendedInfo;
+import com.intel.podm.common.types.redfish.RedfishErrorResponse.Error.ExtendedInfo;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 

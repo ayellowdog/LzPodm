@@ -24,19 +24,19 @@ import com.inspur.podm.api.business.dto.actions.ChangeTpmStateActionDto;
 import com.inspur.podm.api.business.dto.actions.ResetActionDto;
 import com.inspur.podm.api.business.services.context.Context;
 import com.inspur.podm.api.business.services.context.SingletonContext;
-import com.inspur.podm.common.intel.types.BootSourceMode;
-import com.inspur.podm.common.intel.types.BootSourceState;
-import com.inspur.podm.common.intel.types.BootSourceType;
-import com.inspur.podm.common.intel.types.DiscoveryState;
-import com.inspur.podm.common.intel.types.HostingRole;
-import com.inspur.podm.common.intel.types.IndicatorLed;
-import com.inspur.podm.common.intel.types.InterfaceType;
-import com.inspur.podm.common.intel.types.InterfaceTypeSelection;
-import com.inspur.podm.common.intel.types.PowerState;
-import com.inspur.podm.common.intel.types.Status;
-import com.inspur.podm.common.intel.types.SystemType;
-import com.inspur.podm.common.intel.types.redfish.IgnoreAutomaticOem;
-import com.inspur.podm.common.intel.types.redfish.OemType;
+import com.intel.podm.common.types.BootSourceMode;
+import com.intel.podm.common.types.BootSourceState;
+import com.intel.podm.common.types.BootSourceType;
+import com.intel.podm.common.types.DiscoveryState;
+import com.intel.podm.common.types.HostingRole;
+import com.intel.podm.common.types.IndicatorLed;
+import com.intel.podm.common.types.InterfaceType;
+import com.intel.podm.common.types.InterfaceTypeSelection;
+import com.intel.podm.common.types.PowerState;
+import com.intel.podm.common.types.Status;
+import com.intel.podm.common.types.SystemType;
+import com.intel.podm.common.types.redfish.IgnoreAutomaticOem;
+import com.intel.podm.common.types.redfish.OemType;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -47,8 +47,8 @@ import java.util.Set;
 import java.util.UUID;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
-import static com.inspur.podm.common.intel.types.redfish.OemType.Type.OEM_IN_ACTIONS;
-import static com.inspur.podm.common.intel.types.redfish.OemType.Type.TOP_LEVEL_OEM;
+import static com.intel.podm.common.types.redfish.OemType.Type.OEM_IN_ACTIONS;
+import static com.intel.podm.common.types.redfish.OemType.Type.TOP_LEVEL_OEM;
 
 @JsonPropertyOrder({
     "@odata.context", "@odata.id", "@odata.type", "id", "name", "description", "systemType", "assetTag", "manufacturer", "model", "sku", "serialNumber",

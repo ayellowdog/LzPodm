@@ -18,7 +18,7 @@ package com.inspur.podm.service.rest.redfish.json.templates.actions;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.inspur.podm.common.intel.types.redfish.RedfishEthernetSwitch.DcbxConfiguration.BandwidthMapping;
+import com.intel.podm.common.types.redfish.RedfishEthernetSwitch.DcbxConfiguration.BandwidthMapping;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 

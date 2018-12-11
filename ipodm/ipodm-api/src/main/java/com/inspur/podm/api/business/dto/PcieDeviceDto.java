@@ -20,8 +20,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.inspur.podm.api.business.services.context.Context;
-import com.inspur.podm.common.intel.types.DeviceType;
-import com.inspur.podm.common.intel.types.Status;
+import com.intel.podm.common.types.DeviceType;
+import com.intel.podm.common.types.Status;
 
 import java.util.Collection;
 import java.util.HashSet;

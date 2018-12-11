@@ -16,14 +16,14 @@
 
 package com.inspur.podm.service.rest.redfish.resources;
 
-import static com.inspur.podm.common.intel.types.redfish.ResourceNames.COMPUTER_SYSTEM_METRICS_RESOURCE_NAME;
-import static com.inspur.podm.common.intel.types.redfish.ResourceNames.ETHERNET_INTERFACES_RESOURCE_NAME;
-import static com.inspur.podm.common.intel.types.redfish.ResourceNames.MEMORY_RESOURCE_NAME;
-import static com.inspur.podm.common.intel.types.redfish.ResourceNames.NETWORK_INTERFACES_RESOURCE_NAME;
-import static com.inspur.podm.common.intel.types.redfish.ResourceNames.PROCESSORS_RESOURCE_NAME;
-import static com.inspur.podm.common.intel.types.redfish.ResourceNames.SIMPLE_STORAGE_RESOURCE_NAME;
-import static com.inspur.podm.common.intel.types.redfish.ResourceNames.STORAGE_RESOURCE_NAME;
 import static com.inspur.podm.service.rest.redfish.OptionsResponseBuilder.newOptionsForResourceBuilder;
+import static com.intel.podm.common.types.redfish.ResourceNames.COMPUTER_SYSTEM_METRICS_RESOURCE_NAME;
+import static com.intel.podm.common.types.redfish.ResourceNames.ETHERNET_INTERFACES_RESOURCE_NAME;
+import static com.intel.podm.common.types.redfish.ResourceNames.MEMORY_RESOURCE_NAME;
+import static com.intel.podm.common.types.redfish.ResourceNames.NETWORK_INTERFACES_RESOURCE_NAME;
+import static com.intel.podm.common.types.redfish.ResourceNames.PROCESSORS_RESOURCE_NAME;
+import static com.intel.podm.common.types.redfish.ResourceNames.SIMPLE_STORAGE_RESOURCE_NAME;
+import static com.intel.podm.common.types.redfish.ResourceNames.STORAGE_RESOURCE_NAME;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static javax.ws.rs.core.Response.ok;
 
@@ -41,10 +41,10 @@ import com.inspur.podm.api.business.dto.ComputerSystemDto;
 import com.inspur.podm.api.business.services.context.Context;
 import com.inspur.podm.api.business.services.redfish.ReaderService;
 import com.inspur.podm.api.business.services.redfish.UpdateService;
-import com.inspur.podm.common.intel.types.redfish.RedfishComputerSystem;
 import com.inspur.podm.service.rest.redfish.json.templates.RedfishResourceAmazingWrapper;
 import com.inspur.podm.service.rest.redfish.json.templates.actions.ComputerSystemPartialRepresentation;
 import com.inspur.podm.service.rest.redfish.json.templates.actions.constraints.ComputerSystemConstraint;
+import com.intel.podm.common.types.redfish.RedfishComputerSystem;
 
 
 @Produces(APPLICATION_JSON)

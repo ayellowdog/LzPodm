@@ -17,7 +17,7 @@
 package com.inspur.podm.api.business.services.redfish.odataid;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.inspur.podm.common.intel.types.redfish.OdataIdProvider;
+import com.intel.podm.common.types.redfish.OdataIdProvider;
 
 import java.net.URI;
 import java.util.Objects;

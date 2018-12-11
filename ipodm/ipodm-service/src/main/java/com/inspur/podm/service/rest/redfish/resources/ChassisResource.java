@@ -18,11 +18,11 @@ package com.inspur.podm.service.rest.redfish.resources;
 
 import static com.inspur.podm.api.business.services.context.PathParamConstants.PCIE_DEVICE_ID;
 import static com.inspur.podm.api.business.services.context.PathParamConstants.PCIE_DRIVE_ID;
-import static com.inspur.podm.common.intel.types.redfish.ResourceNames.DRIVES_RESOURCE_NAME;
-import static com.inspur.podm.common.intel.types.redfish.ResourceNames.PCIE_DEVICES_RESOURCE_NAME;
-import static com.inspur.podm.common.intel.types.redfish.ResourceNames.POWER_RESOURCE_NAME;
-import static com.inspur.podm.common.intel.types.redfish.ResourceNames.THERMAL_RESOURCE_NAME;
 import static com.inspur.podm.service.rest.redfish.OptionsResponseBuilder.newOptionsForResourceBuilder;
+import static com.intel.podm.common.types.redfish.ResourceNames.DRIVES_RESOURCE_NAME;
+import static com.intel.podm.common.types.redfish.ResourceNames.PCIE_DEVICES_RESOURCE_NAME;
+import static com.intel.podm.common.types.redfish.ResourceNames.POWER_RESOURCE_NAME;
+import static com.intel.podm.common.types.redfish.ResourceNames.THERMAL_RESOURCE_NAME;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static javax.ws.rs.core.Response.ok;
 
@@ -40,10 +40,10 @@ import com.inspur.podm.api.business.dto.ChassisDto;
 import com.inspur.podm.api.business.services.context.Context;
 import com.inspur.podm.api.business.services.redfish.ReaderService;
 import com.inspur.podm.api.business.services.redfish.UpdateService;
-import com.inspur.podm.common.intel.types.redfish.RedfishChassis;
 import com.inspur.podm.service.rest.redfish.json.templates.RedfishResourceAmazingWrapper;
 import com.inspur.podm.service.rest.redfish.json.templates.actions.ChassisPartialRepresentation;
 import com.inspur.podm.service.rest.redfish.json.templates.actions.constraints.ChassisConstraint;
+import com.intel.podm.common.types.redfish.RedfishChassis;
 
 
 @SuppressWarnings({"checkstyle:ClassFanOutComplexity"})
