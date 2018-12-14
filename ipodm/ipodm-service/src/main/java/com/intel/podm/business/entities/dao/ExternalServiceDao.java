@@ -30,9 +30,10 @@ import java.util.UUID;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.TypedQuery;
-import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.intel.podm.business.entities.redfish.ExternalService;
 import com.intel.podm.common.types.ServiceType;
@@ -42,6 +43,7 @@ import com.intel.podm.common.types.ServiceType;
 public class ExternalServiceDao extends Dao<ExternalService> {
 
 //    @Transactional(MANDATORY)
+    @Transactional(propagation = Propagation.MANDATORY) 
     public ExternalService tryGetUniqueExternalServiceByUuid(UUID uuid) {
         TypedQuery<ExternalService> query = entityManager.createNamedQuery(GET_EXTERNAL_SERVICE_BY_UUID, ExternalService.class);
         query.setParameter("uuid", uuid);
@@ -49,6 +51,7 @@ public class ExternalServiceDao extends Dao<ExternalService> {
     }
 
 //    @Transactional(MANDATORY)
+    @Transactional(propagation = Propagation.MANDATORY) 
     public List<ExternalService> getExternalServicesByServicesTypes(Set<ServiceType> serviceTypes) {
         if (serviceTypes == null || serviceTypes.isEmpty()) {
             return emptyList();
@@ -60,6 +63,7 @@ public class ExternalServiceDao extends Dao<ExternalService> {
     }
 
 //    @Transactional(MANDATORY)
+    @Transactional(propagation = Propagation.MANDATORY) 
     public List<ExternalService> getAllUnreachableLongerThan(Duration duration) {
         return findAll().stream()
             .filter(es -> es.isUnreachableLongerThan(duration))

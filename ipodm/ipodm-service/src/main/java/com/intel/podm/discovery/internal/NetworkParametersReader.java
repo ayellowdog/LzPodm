@@ -60,11 +60,13 @@ class NetworkParametersReader {
         try {
             networkInterfaces = list(NetworkInterface.getNetworkInterfaces());
             for (NetworkInterface networkInterface : networkInterfaces) {
-                if (shouldBeOmitted(networkInterface)) {
+                if (shouldBeOmitted(networkInterface)) { //忽略loopback网卡
                     continue;
                 }
+                //根据networkInterface是否为vlan，将其分别放入networkInterfacesMap，或者vlanEthernetInterfaceDtos中
                 processNetworkInterface(networkInterfacesMap, vlanEthernetInterfaceDtos, networkInterface);
             }
+            //给vlanEthernetInterfaceDtos里面的对象添加vlan和IPV4地址
             mapVlansToNetworkInterfaces(networkInterfacesMap, vlanEthernetInterfaceDtos);
         } catch (SocketException e) {
             logger.error("Could not discover system network interfaces", e);
@@ -76,11 +78,13 @@ class NetworkParametersReader {
     private void processNetworkInterface(Map<String, EthernetInterfaceDto> networkInterfacesMap,
                                          List<EthernetInterfaceDto> vlanEthernetInterfaceDtos,
                                          NetworkInterface networkInterface) {
+    	//把networkInterface转化为dto对象
         EthernetInterfaceDto ethernetInterfaceDto = getNetworkInterfaceDto(networkInterface);
 
-        if (isVlan(networkInterface)) {
+        if (isVlan(networkInterface)) { //根据名称是否有"."判断其是否是vlan
             vlanEthernetInterfaceDtos.add(ethernetInterfaceDto);
         } else {
+        	//否则放入map当中去
             EthernetInterfaceDto oldEthernetInterfaceDto = networkInterfacesMap.put(ethernetInterfaceDto.getName(), ethernetInterfaceDto);
             if (oldEthernetInterfaceDto != null) {
                 logger.warn("Duplicated network interface: {}", oldEthernetInterfaceDto.getName());

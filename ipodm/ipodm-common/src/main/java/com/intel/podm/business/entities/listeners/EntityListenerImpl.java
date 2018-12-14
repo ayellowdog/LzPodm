@@ -32,6 +32,6 @@ public class EntityListenerImpl extends EntityListener {
 //    }
 	@PostPersist
 	public void postPersist(Entity entity) {
-		System.out.println("实体已经保存：" + entity);
+		System.out.println("postPersist:实体已经保存：" + entity);
 	}
 }

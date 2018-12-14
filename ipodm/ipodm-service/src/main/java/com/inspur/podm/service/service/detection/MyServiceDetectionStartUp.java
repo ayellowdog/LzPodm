@@ -19,10 +19,10 @@ import com.inspur.podm.service.itaskbase.service.TaskInfoService;
  */
 //@Component
 //@Order(1)
-public class ServiceDetectionStartUp implements ApplicationRunner {
+public class MyServiceDetectionStartUp implements ApplicationRunner {
 	@Autowired
 	TaskInfoService taskInfoService;
-	private static final Logger logger = LoggerFactory.getLogger(ServiceDetectionStartUp.class);
+	private static final Logger logger = LoggerFactory.getLogger(MyServiceDetectionStartUp.class);
 	@Override
 	public void run(ApplicationArguments arg0) throws Exception {
 //		logger.info("Service dection is starting");

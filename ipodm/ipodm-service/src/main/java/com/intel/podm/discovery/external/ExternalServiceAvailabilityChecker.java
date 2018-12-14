@@ -23,11 +23,13 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
 @Component
+@Lazy
 class ExternalServiceAvailabilityChecker {
     @Autowired
     private BeanFactory beanFactory;

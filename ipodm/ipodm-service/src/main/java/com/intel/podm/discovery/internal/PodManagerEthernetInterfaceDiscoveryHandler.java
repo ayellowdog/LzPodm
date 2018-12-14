@@ -54,10 +54,10 @@ class PodManagerEthernetInterfaceDiscoveryHandler {
 
     @Autowired
     private GenericDao genericDao;
-
+    //从系统获取EthernetInterfaceDto集合，并绑定到manager上
     public void addNetworkInterfaces(Manager manager) {
         for (EthernetInterfaceDto interfaceDto : networkParametersReader.discoverEnabledSystemNetworkInterfaces()) {
-            addNetworkInterface(manager, interfaceDto);
+            addNetworkInterface(manager, interfaceDto);//在数据库内存入实体与关系
         }
     }
 
@@ -73,6 +73,7 @@ class PodManagerEthernetInterfaceDiscoveryHandler {
         addNetworkIpV4Addresses(fromSystem, ethernetInterface);
         addNetworkInterfaceVlans(fromSystem, ethernetInterface);
 
+        //这里，需要从/temp/pod-manager/config/{ethernetInterface.name}.json中读取相应的信息，赋值给entity。这些个文件咋来的？
         enhanceFromConfig(ethernetInterface);
         manager.addEthernetInterface(ethernetInterface);
     }

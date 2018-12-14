@@ -42,14 +42,17 @@ import com.intel.podm.common.types.net.MacAddress;
 //@SuppressWarnings({"checkstyle:ClassFanOutComplexity"})
 //@Dependent
 @Component
+//！！！！！！！！！！！！！！！！！！已经改写，目前全都是读取的一样的假配置
 public class NetworkConfigurationReader {
 
-    public static final String DEFAULT_PATH_TO_CONFIGURATION_FILES = "/tmp/pod-manager/config";
+//    public static final String DEFAULT_PATH_TO_CONFIGURATION_FILES = "/tmp/pod-manager/config";
+    public static final String DEFAULT_PATH_TO_CONFIGURATION_FILES = "C:\\pod-manager\\config\\";
 
     private static final Logger logger = LoggerFactory.getLogger(NetworkConfigurationReader.class);
 
     public <T> T readConfiguration(String configurationName, Class<T> type) throws NetworkConfigurationIOException {
-        String path = DEFAULT_PATH_TO_CONFIGURATION_FILES + "/" + configurationName + ".json";
+//        String path = DEFAULT_PATH_TO_CONFIGURATION_FILES + "/" + configurationName + ".json";
+    	String path = DEFAULT_PATH_TO_CONFIGURATION_FILES + "interface-ens33.json";
         try (InputStream is = new FileInputStream(path)) {
             ObjectMapper mapper = new ObjectMapper();
             mapper.registerModule(getDeserializersModule());

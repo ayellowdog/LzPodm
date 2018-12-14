@@ -18,24 +18,33 @@ package com.intel.podm.discovery.external;
 
 import java.util.UUID;
 
+import org.springframework.context.ApplicationEvent;
+
 import static com.intel.podm.discovery.external.ExternalServiceMonitoringEvent.MonitoringState.STARTED;
 import static com.intel.podm.discovery.external.ExternalServiceMonitoringEvent.MonitoringState.STOPPED;
 
-public final class ExternalServiceMonitoringEvent {
-    private final UUID uuid;
+public final class ExternalServiceMonitoringEvent extends ApplicationEvent{
+    /** @Fields serialVersionUID: TODO 功能描述  */
+	private static final long serialVersionUID = -2799224748075311881L;
+	private final UUID uuid;
     private final MonitoringState monitoringState;
 
-    private ExternalServiceMonitoringEvent(UUID externalServiceUuid, MonitoringState monitoringState) {
-        this.uuid = externalServiceUuid;
+    public ExternalServiceMonitoringEvent(Object source,UUID externalServiceUuid, MonitoringState monitoringState) {
+    	super(source);
+    	this.uuid = externalServiceUuid;
         this.monitoringState = monitoringState;
     }
+//    private ExternalServiceMonitoringEvent(UUID externalServiceUuid, MonitoringState monitoringState) {
+//        this.uuid = externalServiceUuid;
+//        this.monitoringState = monitoringState;
+//    }
 
-    static ExternalServiceMonitoringEvent externalServiceMonitoringStartedEvent(UUID externalServiceUuid) {
-        return new ExternalServiceMonitoringEvent(externalServiceUuid, STARTED);
+    public static ExternalServiceMonitoringEvent externalServiceMonitoringStartedEvent(Object source, UUID externalServiceUuid) {
+        return new ExternalServiceMonitoringEvent(source, externalServiceUuid, STARTED);
     }
 
-    static ExternalServiceMonitoringEvent externalServiceMonitoringStoppedEvent(UUID externalServiceUuid) {
-        return new ExternalServiceMonitoringEvent(externalServiceUuid, STOPPED);
+    static ExternalServiceMonitoringEvent externalServiceMonitoringStoppedEvent(Object source, UUID externalServiceUuid) {
+        return new ExternalServiceMonitoringEvent(source, externalServiceUuid, STOPPED);
     }
 
     public UUID getExternalServiceUuid() {

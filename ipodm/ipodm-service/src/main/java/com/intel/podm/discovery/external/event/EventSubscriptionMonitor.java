@@ -34,6 +34,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import com.intel.podm.config.base.Config;
+import com.intel.podm.config.base.ConfigProvider;
 import com.intel.podm.config.base.Holder;
 import com.intel.podm.config.base.dto.EventsConfig;
 
@@ -44,9 +45,12 @@ public class EventSubscriptionMonitor {
     private Map<UUID, ScheduledFuture<?>> eventSubscriptionTasks = new HashMap<>();
     private static final Logger logger = LoggerFactory.getLogger(EventSubscriptionMonitor.class);
 
-    @Autowired
+//    @Autowired
+//    @Config
+//    private Holder<EventsConfig> eventsConfig;
     @Config
-    private Holder<EventsConfig> eventsConfig;
+    @Resource(name="podmConfigProvider")
+    private ConfigProvider eventsConfig;
 
 //    @Inject
 //    @Named(EVENT_SUBSCRIPTION_TASK_EXECUTOR)

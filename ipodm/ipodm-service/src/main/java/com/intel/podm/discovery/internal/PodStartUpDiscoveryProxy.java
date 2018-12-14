@@ -53,7 +53,7 @@ public class PodStartUpDiscoveryProxy {
             logger.info("Creating POD at location {}", podLocation);
             podChassis = createPod(podLocation);
         }
-//        podManagerDiscoveryHandler.getManagerForPod(podChassis);
+        podManagerDiscoveryHandler.getManagerForPod(podChassis);
     }
 	
     public Chassis createPod(String podLocation) {

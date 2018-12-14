@@ -16,6 +16,8 @@
 
 package com.intel.podm.discovery.external;
 
+import com.inspur.podm.common.context.AppContext;
+import com.inspur.podm.common.context.ApplicationContextUtil;
 import com.intel.podm.business.entities.redfish.ExternalService;
 import com.intel.podm.discovery.external.event.EventSubscriptionMonitor;
 
@@ -24,7 +26,14 @@ import javax.ejb.Lock;
 import javax.ejb.Singleton;
 import javax.enterprise.inject.spi.BeanManager;
 import javax.inject.Inject;
-import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.event.TransactionalEventListener;
+
 import java.util.UUID;
 
 import static com.intel.podm.discovery.external.ExternalServiceMonitoringEvent.externalServiceMonitoringStartedEvent;
@@ -33,26 +42,29 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 import static javax.ejb.LockType.WRITE;
 import static javax.transaction.Transactional.TxType.SUPPORTS;
 
-@Singleton
+//@Singleton
+@Component
+@Lazy
 public class ExternalServiceMonitor {
-    @Inject
+    @Autowired
     private ExternalServiceRepository externalServiceRepository;
 
-    @Inject
+    @Autowired
     private ScheduledDiscoveryManager scheduledDiscoveryManager;
 
-    @Inject
+    @Autowired
     private EventSubscriptionMonitor eventSubscriptionMonitor;
 
-    @Inject
-    private BeanManager beanManager;
+//    @Autowired
+//    private BeanManager beanManager;
 
     /**
      * LockType.WRITE used due to concurrent access to discovery manager and subscription monitor.
      */
-    @Lock(WRITE)
-    @Transactional(SUPPORTS)
-    @AccessTimeout(value = 5, unit = SECONDS)
+//    @Lock(WRITE)
+//    @Transactional(SUPPORTS)
+//    @AccessTimeout(value = 5, unit = SECONDS)
+    @Transactional(propagation = Propagation.REQUIRED, timeout = 5)
     public void monitorService(UUID serviceUuid) {
         ExternalService service = externalServiceRepository.find(serviceUuid);
         if (service.isEventingAvailable()) {
@@ -62,18 +74,23 @@ public class ExternalServiceMonitor {
         } else {
             scheduledDiscoveryManager.scheduleDiscovery(serviceUuid);
         }
-        beanManager.fireEvent(externalServiceMonitoringStartedEvent(serviceUuid));
+//        beanManager.fireEvent(externalServiceMonitoringStartedEvent(serviceUuid));
+        AppContext.context().publishEvent(externalServiceMonitoringStartedEvent(this, serviceUuid));
     }
 
     /**
      * LockType.WRITE used due to concurrent access to discovery manager and subscription monitor.
      */
-    @Lock(WRITE)
-    @Transactional(SUPPORTS)
-    @AccessTimeout(value = 5, unit = SECONDS)
+//    @Lock(WRITE)
+//    @Transactional(SUPPORTS)
+//    @AccessTimeout(value = 5, unit = SECONDS)
+    @Transactional(propagation = Propagation.REQUIRED, timeout = 5)
     public void stopMonitoringOfService(UUID serviceUuid) {
         eventSubscriptionMonitor.cancelMonitoring(serviceUuid);
         scheduledDiscoveryManager.cancelDiscovery(serviceUuid);
-        beanManager.fireEvent(externalServiceMonitoringStoppedEvent(serviceUuid));
+//        beanManager.fireEvent(externalServiceMonitoringStoppedEvent(serviceUuid));
+        AppContext.context().publishEvent(externalServiceMonitoringStoppedEvent(this, serviceUuid));
     }
+
+    
 }

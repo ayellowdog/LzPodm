@@ -17,18 +17,27 @@
 package com.intel.podm.discovery.external;
 
 import com.intel.podm.common.enterprise.utils.beans.BeanFactory;
-import com.intel.podm.common.logger.Logger;
 import com.intel.podm.common.synchronization.TaskCoordinator;
 import com.intel.podm.config.base.Config;
+import com.intel.podm.config.base.ConfigProvider;
 import com.intel.podm.config.base.Holder;
 import com.intel.podm.config.base.dto.DiscoveryConfig;
 
+import javax.annotation.Resource;
 import javax.ejb.AccessTimeout;
 import javax.ejb.Lock;
 import javax.ejb.Singleton;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.transaction.Transactional;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -40,57 +49,66 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 import static javax.ejb.LockType.WRITE;
 import static javax.transaction.Transactional.TxType.SUPPORTS;
 
-@Singleton
+//@Singleton
+@Component
+@Lazy
 public class ScheduledDiscoveryManager {
     private Map<UUID, ScheduledFuture<?>> discoveryTasks = new HashMap<>();
     private Map<UUID, DiscoveryRunner> discoveryRunners = new HashMap<>();
 
-    @Inject
-    @Named(SYNCHRONIZED_TASK_EXECUTOR)
+//    @Inject
+//    @Named(SYNCHRONIZED_TASK_EXECUTOR)
+    @Autowired
+    @Resource(name=SYNCHRONIZED_TASK_EXECUTOR)
     private ScheduledExecutorService discoveryTaskExecutor;
 
-    @Inject
+    @Autowired
     private TaskCoordinator taskCoordinator;
 
-    @Inject
+//    @Inject
+//    @Config
+//    private Holder<DiscoveryConfig> discoveryConfigHolder;
     @Config
-    private Holder<DiscoveryConfig> discoveryConfigHolder;
+    @Resource(name="podmConfigProvider")
+    private ConfigProvider discoveryConfigHolder;
 
-    @Inject
+    @Autowired
     private BeanFactory beanFactory;
 
-    @Inject
-    private Logger logger;
+    private static final Logger logger = LoggerFactory.getLogger(ScheduledDiscoveryManager.class);
+
 
     /**
      * LockType.WRITE used due to concurrent access to discovery tasks map that modifies it (put operation)
      */
-    @Lock(WRITE)
-    @Transactional(SUPPORTS)
-    @AccessTimeout(value = 5, unit = SECONDS)
+//    @Lock(WRITE)
+//    @Transactional(SUPPORTS)
+//    @AccessTimeout(value = 5, unit = SECONDS)
+    @Transactional(propagation = Propagation.SUPPORTS, timeout = 5)
     public void scheduleDiscovery(UUID serviceUuid) {
         if (!discoveryTasks.containsKey(serviceUuid)) {
             ScheduledFuture<?> discoveryTask = scheduleDiscoveryTask(serviceUuid);
             discoveryTasks.put(serviceUuid, discoveryTask);
         } else {
-            logger.w("Discovery is already scheduled for service {}", serviceUuid);
+            logger.warn("Discovery is already scheduled for service {}", serviceUuid);
         }
     }
 
     /**
      * LockType.WRITE used due to concurrent access to discovery tasks map that modifies it (remove operation)
      */
-    @Lock(WRITE)
-    @Transactional(SUPPORTS)
-    @AccessTimeout(value = 5, unit = SECONDS)
+//    @Lock(WRITE)
+//    @Transactional(SUPPORTS)
+//    @AccessTimeout(value = 5, unit = SECONDS)
+    @Transactional(propagation = Propagation.SUPPORTS, timeout = 5)
     public void cancelDiscovery(UUID serviceUuid) {
         discoveryRunners.remove(serviceUuid);
         ScheduledFuture discoveryTask = discoveryTasks.remove(serviceUuid);
         if (discoveryTask != null) {
-            logger.d("Discovery cancelled for service {}", serviceUuid);
+            logger.debug("Discovery cancelled for service {}", serviceUuid);
             discoveryTask.cancel(false);
         } else {
-            logger.w("Discovery was already cancelled for service {} or was not scheduled", serviceUuid);
+            logger.warn("Discovery was already cancelled for service {} or was not scheduled", serviceUuid);
         }
     }
 

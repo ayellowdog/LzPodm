@@ -94,8 +94,10 @@ class PodManagerDiscoveryHandler {
         manager.setCommandShell(createDisabledCommandShell());
         manager.setManagerType(MANAGEMENT_CONTROLLER);
         manager.setInChassisManager(podChassis);
+        //从配置文件读取uuid
         manager.setServiceEntryPointUuid(config.get(ServiceConfig.class).getUuid());
         manager.setPowerState(ON);
+        //给podChassis的manager进行网络初始化
         podManagerNetworkDiscoveryHandler.initializeNetworking(manager);
         return manager;
     }

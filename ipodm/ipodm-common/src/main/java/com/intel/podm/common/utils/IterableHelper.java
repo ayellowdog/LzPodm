@@ -39,7 +39,7 @@ public final class IterableHelper {
     public static <T> T single(Iterable<T> iterable) {
         return optionalSingle(iterable).orElseThrow(() -> new IllegalStateException("Iterator is empty. Only iterator with 1 element is accepted!"));
     }
-
+	//入参必须含有唯一元素或0个元素，否则抛异常
     public static <T> Optional<T> optionalSingle(Iterable<T> iterable) {
         requiresNonNull(iterable, "iterable");
         Iterator<T> iterator = iterable.iterator();

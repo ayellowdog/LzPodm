@@ -19,26 +19,35 @@ package com.intel.podm.discovery.external;
 import com.intel.podm.common.enterprise.utils.beans.BeanFactory;
 import com.intel.podm.discovery.ServiceExplorer;
 
-import javax.ejb.Stateless;
+//import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.UUID;
 
 import static javax.transaction.Transactional.TxType.SUPPORTS;
 
-@Stateless
+//@Stateless
+@Component
+@Lazy
 public class ServiceExplorerImpl implements ServiceExplorer {
-    @Inject
+    @Autowired
     private BeanFactory beanFactory;
 
-    @Inject
+    @Autowired
     private ExternalServiceMonitor externalServiceMonitor;
 
-    @Inject
+    @Autowired
     private ExternalServiceAvailabilityChecker availabilityChecker;
 
     @Override
-    @Transactional(SUPPORTS)
+//    @Transactional(SUPPORTS)
+    @Transactional(propagation = Propagation.SUPPORTS)    
     public void discover(UUID serviceUuid) {
         DiscoveryRunner discoveryRunner = beanFactory.create(DiscoveryRunner.class);
         discoveryRunner.setServiceUuid(serviceUuid);
@@ -46,19 +55,19 @@ public class ServiceExplorerImpl implements ServiceExplorer {
     }
 
     @Override
-    @Transactional(SUPPORTS)
+    @Transactional(propagation = Propagation.SUPPORTS) 
     public void startMonitoringOfService(UUID serviceUuid) {
         externalServiceMonitor.monitorService(serviceUuid);
     }
 
     @Override
-    @Transactional(SUPPORTS)
+    @Transactional(propagation = Propagation.SUPPORTS) 
     public void enqueueVerification(UUID serviceUuid) {
         availabilityChecker.verifyServiceAvailabilityByUuid(serviceUuid);
     }
 
     @Override
-    @Transactional(SUPPORTS)
+    @Transactional(propagation = Propagation.SUPPORTS) 
     public void forgetService(UUID serviceUuid) {
         externalServiceMonitor.stopMonitoringOfService(serviceUuid);
     }

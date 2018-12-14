@@ -10,9 +10,9 @@ package com.inspur.podm.service.service.detection.dhcp;
  * @author: liuchangbj
  * @date: 2018年11月28日 下午2:31:36
  */
-public interface DhcpServiceDetectorInterface {
+public interface MyDhcpServiceDetectorInterface {
 
-	void test(String str);
+	void test(String str) throws Exception;
 
 }
 

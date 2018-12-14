@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.inspur.podm.service.service.detection.ServiceDetectionStartUp;
+import com.inspur.podm.service.service.detection.MyServiceDetectionStartUp;
 import com.intel.podm.business.entities.redfish.ExternalService;
 import com.intel.podm.client.WebClientRequestException;
 import com.intel.podm.client.reader.ExternalServiceReader;

@@ -22,12 +22,13 @@ import static javax.transaction.Transactional.TxType.MANDATORY;
 
 import java.util.UUID;
 
-import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.intel.podm.business.entities.dao.ExternalServiceDao;
 import com.intel.podm.business.entities.redfish.ExternalService;
@@ -41,7 +42,7 @@ public class ExternalServiceRepository {
     private ExternalServiceDao externalServiceDao;
 
 //    @Transactional(MANDATORY)
-    @org.springframework.transaction.annotation.Transactional
+    @Transactional(propagation = Propagation.MANDATORY) 
     public ExternalService find(UUID uuid) {
         ExternalService service = findOrNull(uuid);
         if (service == null) {
@@ -53,14 +54,14 @@ public class ExternalServiceRepository {
     }
 
 //    @Transactional(MANDATORY)
-    @org.springframework.transaction.annotation.Transactional
+    @Transactional(propagation = Propagation.MANDATORY) 
     public ExternalService findOrNull(UUID uuid) {
         requiresNonNull(uuid, "uuid");
         return externalServiceDao.tryGetUniqueExternalServiceByUuid(uuid);
     }
 
 //    @Transactional(MANDATORY)
-    @org.springframework.transaction.annotation.Transactional
+    @Transactional(propagation = Propagation.MANDATORY) 
     public ExternalService create(ServiceEndpoint endpoint) {
         UUID uuid = endpoint.getServiceUuid();
 
