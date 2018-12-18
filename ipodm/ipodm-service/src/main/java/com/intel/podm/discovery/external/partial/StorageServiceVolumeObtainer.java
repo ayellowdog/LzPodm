@@ -16,6 +16,18 @@
 
 package com.intel.podm.discovery.external.partial;
 
+import static com.intel.podm.common.utils.Contracts.requiresNonNull;
+
+import java.net.URI;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.intel.podm.business.entities.redfish.CapacitySource;
 import com.intel.podm.business.entities.redfish.ExternalService;
 import com.intel.podm.business.entities.redfish.ReplicaInfo;
@@ -32,28 +44,16 @@ import com.intel.podm.client.resources.redfish.StoragePoolResource;
 import com.intel.podm.client.resources.redfish.VolumeResource;
 import com.intel.podm.discovery.external.EntityMultiMapper;
 
-import javax.enterprise.context.Dependent;
-import javax.inject.Inject;
-import javax.transaction.Transactional;
-import java.net.URI;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
-
-import static com.intel.podm.common.utils.Contracts.requiresNonNull;
-import static javax.transaction.Transactional.TxType.MANDATORY;
-
-@Dependent
-@SuppressWarnings("checkstyle:ClassFanOutComplexity")
+@Component
 // TODO remove fan-out, clean up class
 public class StorageServiceVolumeObtainer {
-    @Inject
+    @Autowired
     private WebClientBuilder webClientBuilder;
 
-    @Inject
+    @Autowired
     private EntityMultiMapper entityMultiMapper;
 
-    @Transactional(MANDATORY)
+    @Transactional(propagation = Propagation.MANDATORY)
     public Volume discoverStorageServiceVolume(StorageService storageService, URI volumeUri) throws WebClientRequestException {
         requiresNonNull(volumeUri, "volumeUri", "There is no Volume to discover");
 

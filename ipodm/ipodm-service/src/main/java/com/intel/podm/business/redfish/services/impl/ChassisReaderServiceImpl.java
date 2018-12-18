@@ -45,7 +45,7 @@ import com.intel.podm.business.redfish.services.EntityTreeTraverser;
 import com.intel.podm.business.redfish.services.aggregation.ChassisMerger;
 import com.intel.podm.common.types.Id;
 
-@Service
+@Service("chassisReaderService")
 class ChassisReaderServiceImpl implements ReaderService<ChassisDto> {
     @Autowired
     private ChassisDao chassisDao;

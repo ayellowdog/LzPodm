@@ -16,30 +16,29 @@
 
 package com.intel.podm.business.entities.dao;
 
+import static com.intel.podm.business.entities.redfish.EthernetSwitchPort.GET_ETHERNET_SWITCH_PORT_BY_NEIGHBOR_MAC;
+import static com.intel.podm.business.entities.redfish.base.StatusControl.statusOf;
+import static java.lang.String.format;
+import static java.util.stream.Collectors.toList;
+
+import java.util.List;
+import java.util.Optional;
+
+import javax.persistence.TypedQuery;
+
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.intel.podm.business.entities.NonUniqueResultException;
 import com.intel.podm.business.entities.redfish.EthernetSwitchPort;
 import com.intel.podm.common.types.Id;
 import com.intel.podm.common.types.net.MacAddress;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.persistence.TypedQuery;
-import javax.transaction.Transactional;
-
-import org.springframework.stereotype.Component;
-
-import java.util.List;
-import java.util.Optional;
-
-import static com.intel.podm.business.entities.redfish.EthernetSwitchPort.GET_ETHERNET_SWITCH_PORT_BY_NEIGHBOR_MAC;
-import static com.intel.podm.business.entities.redfish.base.StatusControl.statusOf;
-import static java.lang.String.format;
-import static java.util.stream.Collectors.toList;
-import static javax.transaction.Transactional.TxType.MANDATORY;
-
 //@ApplicationScoped
 @Component
 public class EthernetSwitchPortDao extends Dao<EthernetSwitchPort> {
-//    @Transactional(MANDATORY)
+	@Transactional(propagation = Propagation.MANDATORY)
     public EthernetSwitchPort getOrThrow(Id portId) {
         Optional<EthernetSwitchPort> expectedSwitchPort = tryFind(portId);
         if (!expectedSwitchPort.isPresent()) {
@@ -48,7 +47,7 @@ public class EthernetSwitchPortDao extends Dao<EthernetSwitchPort> {
         return expectedSwitchPort.get();
     }
 
-//    @Transactional(MANDATORY)
+    @Transactional(propagation = Propagation.MANDATORY)
     public EthernetSwitchPort getEnabledAndHealthyEthernetSwitchPortByNeighborMac(MacAddress neighborMac) throws NonUniqueResultException {
         if (neighborMac == null) {
             return null;

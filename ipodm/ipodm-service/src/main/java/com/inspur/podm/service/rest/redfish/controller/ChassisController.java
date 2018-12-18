@@ -6,6 +6,7 @@ package com.inspur.podm.service.rest.redfish.controller;
 import static com.inspur.podm.api.business.services.context.PathParamConstants.CHASSIS_ID;
 import static com.inspur.podm.api.business.services.redfish.ReaderService.SERVICE_ROOT_CONTEXT;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +39,7 @@ import io.swagger.annotations.ApiOperation;
 @Api(value = "ChassisController", description = "/redfish/v1/Chassis控制器")
 public class ChassisController extends BaseController {
 	
-	@Autowired
+	@Resource(name = "chassisReaderService")
 	private ReaderService<ChassisDto> readerService;
 	@Autowired
 	private CollectionDtoJsonSerializer collectionDtoJsonSerializer;

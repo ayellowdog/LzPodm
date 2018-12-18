@@ -16,6 +16,22 @@
 
 package com.intel.podm.business.redfish.services.actions;
 
+import static com.intel.podm.common.utils.Contracts.requiresNonNull;
+
+import java.util.Optional;
+
+import javax.persistence.OptimisticLockException;
+import javax.transaction.RollbackException;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.Retryable;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.intel.podm.business.entities.dao.ComputerSystemDao;
 import com.intel.podm.business.entities.redfish.ComputerSystem;
 import com.intel.podm.business.entities.redfish.embeddables.Boot;
@@ -26,26 +42,6 @@ import com.intel.podm.client.resources.redfish.ComputerSystemResource;
 import com.intel.podm.common.types.Id;
 import com.intel.podm.mappers.subresources.TrustedModuleMapper;
 
-import javax.enterprise.context.Dependent;
-import javax.inject.Inject;
-import javax.interceptor.Interceptors;
-import javax.persistence.OptimisticLockException;
-import javax.transaction.RollbackException;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.retry.annotation.Retryable;
-import org.springframework.retry.annotation.Backoff;
-import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Optional;
-
-import static com.intel.podm.common.utils.Contracts.requiresNonNull;
-import static javax.transaction.Transactional.TxType.REQUIRES_NEW;
-
 //@Dependent
 //@Interceptors(RetryOnRollbackInterceptor.class)
 @Component
@@ -55,7 +51,7 @@ class ComputerSystemUpdater {
 	@Autowired
     private ComputerSystemDao computerSystemDao;
 
-    @Inject
+	@Autowired
     private TrustedModuleMapper trustedModuleMapper;
 
     private static final Logger logger = LoggerFactory.getLogger(ComputerSystemUpdater.class);

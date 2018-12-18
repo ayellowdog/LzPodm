@@ -16,19 +16,21 @@
 
 package com.intel.podm.common.enterprise.utils.tasks;
 
+import java.util.Map;
+
 import javax.enterprise.concurrent.ManagedTask;
 import javax.enterprise.concurrent.ManagedTaskListener;
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
-import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  * Provides implementation of ManagedTask interface
  * to be used by all Managed Tasks
  */
-@RequestScoped
+@Component
 public class DefaultManagedTask implements ManagedTask {
-    @Inject
+    @Autowired
     private LoggingTaskListener loggingTaskListener;
 
     @Override

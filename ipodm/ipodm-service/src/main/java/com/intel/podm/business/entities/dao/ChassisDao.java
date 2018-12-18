@@ -19,12 +19,9 @@ package com.intel.podm.business.entities.dao;
 import static com.intel.podm.business.entities.redfish.Chassis.GET_CHASSIS_BY_TYPE;
 import static com.intel.podm.business.entities.redfish.Chassis.GET_CHASSIS_IDS_FROM_PRIMARY_DATA_SOURCE;
 import static com.intel.podm.business.entities.redfish.Chassis.GET_CHASSIS_MULTI_SOURCE;
-import static com.intel.podm.common.types.ChassisType.POD;
 import static com.intel.podm.common.types.ChassisType.SLED;
-import static com.intel.podm.common.utils.IterableHelper.singleOrNull;
 import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.toSet;
-import static javax.transaction.Transactional.TxType.MANDATORY;
 
 import java.util.List;
 import java.util.Objects;
@@ -34,7 +31,6 @@ import java.util.UUID;
 import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,7 +39,6 @@ import com.intel.podm.business.entities.redfish.ComputerSystem;
 import com.intel.podm.business.entities.redfish.ExternalService;
 import com.intel.podm.common.types.ChassisType;
 import com.intel.podm.common.types.Id;
-import com.intel.podm.config.base.dto.DiscoveryConfig;
 
 //@Repository
 @Component

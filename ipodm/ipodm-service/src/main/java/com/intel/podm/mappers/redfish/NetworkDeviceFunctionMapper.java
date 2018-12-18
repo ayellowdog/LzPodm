@@ -16,15 +16,15 @@
 
 package com.intel.podm.mappers.redfish;
 
+import org.springframework.stereotype.Component;
+
 import com.intel.podm.business.entities.redfish.NetworkDeviceFunction;
 import com.intel.podm.business.entities.redfish.embeddables.Ethernet;
 import com.intel.podm.business.entities.redfish.embeddables.IscsiBoot;
 import com.intel.podm.client.resources.redfish.NetworkDeviceFunctionResource;
 import com.intel.podm.mappers.EntityMapper;
 
-import javax.enterprise.context.Dependent;
-
-@Dependent
+@Component
 public class NetworkDeviceFunctionMapper extends EntityMapper<NetworkDeviceFunctionResource, NetworkDeviceFunction> {
 
     public NetworkDeviceFunctionMapper() {

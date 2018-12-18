@@ -16,13 +16,13 @@
 
 package com.intel.podm.mappers.redfish;
 
+import org.springframework.stereotype.Component;
+
 import com.intel.podm.business.entities.redfish.Zone;
 import com.intel.podm.client.resources.redfish.ZoneResource;
 import com.intel.podm.mappers.EntityMapper;
 
-import javax.enterprise.context.Dependent;
-
-@Dependent
+@Component
 public class ZoneMapper extends EntityMapper<ZoneResource, Zone> {
 
     protected ZoneMapper() {

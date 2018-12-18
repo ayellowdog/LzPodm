@@ -34,43 +34,36 @@ public class GenericDao {
     @Autowired
     private EntityRepository repository;
 
-//    @Transactional(MANDATORY)
     @Transactional(propagation = Propagation.MANDATORY)
     public <T extends Entity> T create(Class<T> entityClass) {
         return repository.create(entityClass);
     }
 
-//    @Transactional(MANDATORY)
     @Transactional(propagation = Propagation.MANDATORY)
     public <T extends Entity> Optional<T> tryFind(Class<T> entityClass, Id id) {
         return repository.tryFind(entityClass, id);
     }
 
-//    @Transactional(MANDATORY)
     @Transactional(propagation = Propagation.MANDATORY)
     public <T extends Entity> T find(Class<T> entityClass, Id id) {
         return repository.find(entityClass, id);
     }
 
-//    @Transactional(MANDATORY)
     @Transactional(propagation = Propagation.MANDATORY)
     public <T extends Entity> List<T> findAll(Class<T> entityClass) {
         return repository.findAll(entityClass);
     }
 
-//    @Transactional(MANDATORY)
     @Transactional(propagation = Propagation.MANDATORY)
     public <T extends Entity> void remove(T entity) {
         repository.remove(entity);
     }
 
-//    @Transactional(MANDATORY)
     @Transactional(propagation = Propagation.MANDATORY)
     public <T extends Entity> void removeAndClear(Collection<T> entities) {
         repository.removeAndClear(entities);
     }
 
-//    @Transactional(MANDATORY)
     @Transactional(propagation = Propagation.MANDATORY)
     public <T extends Entity> void removeAndClear(Collection<T> entities, Predicate<T> predicate) {
         repository.removeAndClear(entities, predicate);

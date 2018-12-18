@@ -16,17 +16,10 @@
 
 package com.intel.podm.business.entities.dao;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.persistence.TypedQuery;
-import javax.transaction.Transactional;
-
-import org.springframework.stereotype.Component;
-
-import com.intel.podm.business.entities.redfish.ConnectedEntity;
-import com.intel.podm.business.entities.redfish.DiscoverableEntity;
-import com.intel.podm.business.entities.redfish.Endpoint;
-import com.intel.podm.business.entities.redfish.Port;
-import com.intel.podm.business.entities.redfish.Zone;
+import static com.intel.podm.business.entities.redfish.Port.GET_PORTS_BY_PCIE_CONNECTION_ID;
+import static com.intel.podm.common.types.EntityRole.INITIATOR;
+import static java.util.Collections.emptySet;
+import static java.util.stream.Collectors.toSet;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -34,16 +27,22 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
-import static com.intel.podm.business.entities.redfish.Port.GET_PORTS_BY_PCIE_CONNECTION_ID;
-import static com.intel.podm.common.types.EntityRole.INITIATOR;
-import static java.util.Collections.emptySet;
-import static java.util.stream.Collectors.toSet;
-import static javax.transaction.Transactional.TxType.MANDATORY;
+import javax.persistence.TypedQuery;
+
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.intel.podm.business.entities.redfish.ConnectedEntity;
+import com.intel.podm.business.entities.redfish.DiscoverableEntity;
+import com.intel.podm.business.entities.redfish.Endpoint;
+import com.intel.podm.business.entities.redfish.Port;
+import com.intel.podm.business.entities.redfish.Zone;
 
 //@ApplicationScoped
 @Component
 public class PciePortDao extends Dao<Port> {
-//    @Transactional(MANDATORY)
+    @Transactional(propagation = Propagation.MANDATORY)
     public Set<Port> getUpstreamPortsByCableIds(List<String> pcieConnectionIds) {
         if (pcieConnectionIds.isEmpty()) {
             return emptySet();
@@ -59,7 +58,7 @@ public class PciePortDao extends Dao<Port> {
         return ports;
     }
 
-//    @Transactional(MANDATORY)
+    @Transactional(propagation = Propagation.MANDATORY)
     public Collection<Port> getUpstreamPortsByDiscoverableEntity(DiscoverableEntity entity) {
         return entity.getEntityConnections().stream()
             .filter(Objects::nonNull)

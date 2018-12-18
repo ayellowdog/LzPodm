@@ -18,17 +18,15 @@ package com.intel.podm.business.redfish.services;
 
 import static com.intel.podm.common.utils.Contracts.requiresNonNull;
 import static java.util.stream.Collectors.toSet;
-import static javax.transaction.Transactional.TxType.MANDATORY;
 
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
-import javax.inject.Inject;
-import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.inspur.podm.api.business.ContextResolvingException;
 import com.inspur.podm.api.business.services.context.Context;
@@ -52,7 +50,7 @@ public class EntityTreeTraverser {
     @Autowired
     ContextTypeToEntityMapper mapper;
 
-    @Transactional(MANDATORY)
+    @Transactional(propagation = Propagation.MANDATORY)
     public Optional<Entity> tryTraverse(Context context) {
         requiresNonNull(context, "context");
 
@@ -64,7 +62,7 @@ public class EntityTreeTraverser {
         return Optional.of(genericDao.find(entityClass, context.getId()));
     }
 
-    @Transactional(MANDATORY)
+    @Transactional(propagation = Propagation.MANDATORY)
     public Entity traverse(Context context) throws ContextResolvingException {
         requiresNonNull(context, "context");
 
@@ -80,7 +78,7 @@ public class EntityTreeTraverser {
         }
     }
 
-    @Transactional(MANDATORY)
+    @Transactional(propagation = Propagation.MANDATORY)
     @SuppressWarnings({"unchecked"})
     public <T extends Entity> Set<Optional<T>> tryTraverse(Set<Context> contexts) {
         requiresNonNull(contexts, "contexts");
@@ -90,7 +88,7 @@ public class EntityTreeTraverser {
             .collect(toSet());
     }
 
-    @Transactional(MANDATORY)
+    @Transactional(propagation = Propagation.MANDATORY)
     @SuppressWarnings({"unchecked"})
     public <T extends Entity> Set<T> traverse(Set<Context> contexts) throws ContextResolvingException {
         requiresNonNull(contexts, "contexts");

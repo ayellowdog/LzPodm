@@ -16,29 +16,29 @@
 
 package com.intel.podm.business.entities.dao;
 
-import com.intel.podm.business.entities.redfish.ComposedNode;
-import com.intel.podm.common.types.Id;
-
-import javax.enterprise.context.ApplicationScoped;
-import javax.persistence.TypedQuery;
-import javax.transaction.Transactional;
-
-import org.springframework.stereotype.Component;
+import static com.intel.podm.business.entities.redfish.ComposedNode.GET_ALL_NODES_IDS;
+import static com.intel.podm.business.entities.redfish.ComposedNode.GET_NODES_ELIGIBLE_FOR_RECOVERY;
+import static com.intel.podm.business.entities.redfish.ComposedNode.GET_NODE_BY_ASSOCIATED_COMPUTER_SYSTEM_UUID;
+import static com.intel.podm.common.utils.IterableHelper.optionalSingle;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import static com.intel.podm.business.entities.redfish.ComposedNode.GET_ALL_NODES_IDS;
-import static com.intel.podm.business.entities.redfish.ComposedNode.GET_NODES_ELIGIBLE_FOR_RECOVERY;
-import static com.intel.podm.business.entities.redfish.ComposedNode.GET_NODE_BY_ASSOCIATED_COMPUTER_SYSTEM_UUID;
-import static com.intel.podm.common.utils.IterableHelper.optionalSingle;
-import static javax.transaction.Transactional.TxType.MANDATORY;
+import javax.persistence.TypedQuery;
+
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.intel.podm.business.entities.redfish.ComposedNode;
+import com.intel.podm.common.types.Id;
 
 //@ApplicationScoped
 @Component
 public class ComposedNodeDao extends Dao<ComposedNode> {
 //    @Transactional(MANDATORY)
+	@Transactional(propagation = Propagation.MANDATORY)
     public Optional<ComposedNode> getComposedNodeByAssociatedSystemUuid(UUID uuid) {
         TypedQuery<ComposedNode> query = entityManager.createNamedQuery(GET_NODE_BY_ASSOCIATED_COMPUTER_SYSTEM_UUID, ComposedNode.class);
         query.setParameter("uuid", uuid);
@@ -47,11 +47,13 @@ public class ComposedNodeDao extends Dao<ComposedNode> {
     }
 
 //    @Transactional(MANDATORY)
+	@Transactional(propagation = Propagation.MANDATORY)
     public List<ComposedNode> getComposedNodesEligibleForRecovery() {
         return entityManager.createNamedQuery(GET_NODES_ELIGIBLE_FOR_RECOVERY, ComposedNode.class).getResultList();
     }
 
 //    @Transactional(MANDATORY)
+	@Transactional(propagation = Propagation.MANDATORY)
     public List<Id> getAllComposedNodeIds() {
         return entityManager.createNamedQuery(GET_ALL_NODES_IDS, Id.class).getResultList();
     }

@@ -24,7 +24,6 @@ import com.intel.podm.common.types.BootSourceState;
 import com.intel.podm.common.types.BootSourceType;
 import com.intel.podm.common.types.redfish.RedfishComputerSystem.TrustedModule;
 
-@SuppressWarnings({"checkstyle:MethodCount"})
 public class ComputerSystemUpdateDefinition {
     private String assetTag;
     private BootSourceMode bootSourceMode;

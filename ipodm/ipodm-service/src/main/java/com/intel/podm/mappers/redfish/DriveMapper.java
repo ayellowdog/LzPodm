@@ -16,21 +16,23 @@
 
 package com.intel.podm.mappers.redfish;
 
+import javax.inject.Inject;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.intel.podm.business.entities.redfish.Drive;
 import com.intel.podm.client.resources.redfish.DriveResource;
 import com.intel.podm.mappers.EntityMapper;
 import com.intel.podm.mappers.subresources.IdentifierMapper;
 import com.intel.podm.mappers.subresources.RedfishLocationMapper;
 
-import javax.enterprise.context.Dependent;
-import javax.inject.Inject;
-
-@Dependent
+@Component
 public class DriveMapper extends EntityMapper<DriveResource, Drive> {
-    @Inject
+    @Autowired
     IdentifierMapper identifierMapper;
 
-    @Inject
+    @Autowired
     RedfishLocationMapper redfishLocationMapper;
 
     public DriveMapper() {

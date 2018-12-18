@@ -16,11 +16,9 @@
 
 package com.intel.podm.mappers.subresources.strategies;
 
-import javax.enterprise.context.Dependent;
+import java.util.Collection;
 
 import org.springframework.stereotype.Component;
-
-import java.util.Collection;
 
 //@Dependent
 @Component
