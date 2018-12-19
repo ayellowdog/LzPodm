@@ -16,17 +16,23 @@
 
 package com.intel.podm.client.typeidresolver;
 
+import com.inspur.podm.common.utils.ClassUtil;
 import com.intel.podm.client.resources.ExternalServiceResource;
 import com.intel.podm.client.resources.MembersListResource;
+import com.intel.podm.client.resources.redfish.ChassisResource;
 import com.intel.podm.client.resources.redfish.ManagerResource;
 import com.intel.podm.client.resources.redfish.OemVendor;
 import com.intel.podm.client.resources.redfish.ProcessorResource;
-import com.intel.podm.common.logger.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.inject.Inject;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
+
 import java.util.function.Predicate;
 
 import static com.intel.podm.client.typeidresolver.OdataTypeMatcher.odataTypePatternMatcher;
@@ -36,22 +42,23 @@ import static java.lang.reflect.Modifier.isAbstract;
 import static java.util.stream.StreamSupport.stream;
 import static org.atteo.classindex.ClassIndex.getSubclasses;
 
-@Singleton
-@Startup
+//@Singleton
+//@Startup
+@Component
 public class ResourceProvider {
-    @Inject
-    private Logger logger;
+	private static final Logger logger = LoggerFactory.getLogger(ResourceProvider.class);
 
     @PostConstruct
     private void resourceProvider() {
-        logger.d("Registering supported OData types...");
+        logger.debug("Registering supported OData types...");
         registerKnownOdataTypes(ExternalServiceResource.class);
         registerKnownOdataTypes(OemVendor.class);
         registerKnownIncorrectOdataTypes();
     }
 
     private void registerKnownOdataTypes(Class<?> clazz) {
-        stream(getSubclasses(clazz).spliterator(), false)
+//        stream(getSubclasses(clazz).spliterator(), false)
+    	 stream(ClassUtil.getAllClassByParent(clazz).spliterator(), false)
             .filter(byConcreteClass())
             .forEach(ResourceResolver::registerResource);
     }

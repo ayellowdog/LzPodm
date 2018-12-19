@@ -28,6 +28,11 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.context.Dependent;
 import javax.ws.rs.client.Client;
 
+import org.apache.http.client.config.RequestConfig;
+import org.apache.http.conn.ssl.NoopHostnameVerifier;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
 import org.jboss.resteasy.plugins.providers.jackson.ResteasyJackson2Provider;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +43,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.intel.podm.client.redfish.RedfishClient;
 import com.intel.podm.client.redfish.SocketErrorAwareHttpClient;
+import com.intel.podm.client.redfish.http.BaseHttpClient;
 import com.intel.podm.client.redfish.http.SimpleHttpClient;
 import com.intel.podm.common.types.ConnectionParameters;
 import com.intel.podm.config.base.Config;
@@ -57,12 +63,16 @@ public class WebClientBuilder {
 	@Autowired
     private SslContextProvider sslContextProvider;
     private ConnectionParameters connectionParameters;
-    private final ResteasyJackson2Provider jackson2Provider = initializeProvider();
+    private ObjectMapper objMapper = initMapper();
+//    private final ResteasyJackson2Provider jackson2Provider = initializeProvider();
 
+    @Autowired
+    private PoolingHttpClientConnectionManager httpClientConnectionManager;
+    @Autowired
+    private  RequestConfig.Builder cfgBuilder;
     @PostConstruct
     public void init() {
     	 this.connectionParameters = configHolder.get(ServiceConnectionConfig.class).getConnectionConfiguration().getConnectionParameters();
-    	 System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" + connectionParameters);
     }
 
     public Builder newInstance(URI baseUri) {
@@ -74,34 +84,53 @@ public class WebClientBuilder {
      *
      * @return configured client with jackson provider
      */
-    private Client getClientWithJacksonProvider() {
-        ResteasyClientBuilder clientBuilder = ((ResteasyClientBuilder) ResteasyClientBuilder.newBuilder())
-            .connectionPoolSize(connectionParameters.getConnectionPoolSize())
-            .maxPooledPerRoute(connectionParameters.getMaxPooledPerRoute())
-            .register(jackson2Provider);
-//            .sslContext(sslContextProvider.getContext())
-//            .hostnameVerification(ANY);
+//    private Client getClientWithJacksonProvider() {
+//        ResteasyClientBuilder clientBuilder = ((ResteasyClientBuilder) ResteasyClientBuilder.newBuilder())
+//            .connectionPoolSize(connectionParameters.getConnectionPoolSize())
+//            .maxPooledPerRoute(connectionParameters.getMaxPooledPerRoute())
+//            .register(jackson2Provider);
+////            .sslContext(sslContextProvider.getContext())
+////            .hostnameVerification(ANY);
+//
+//        clientBuilder
+//            .establishConnectionTimeout(connectionParameters.getServiceConnectionTimeout(), SECONDS)
+//            .socketTimeout(connectionParameters.getServiceSocketTimeout(), SECONDS);
+//
+//        return clientBuilder.build();
+//    }
+	  private BaseHttpClient getBaseClient() {
+		  httpClientConnectionManager.setMaxTotal(connectionParameters.getConnectionPoolSize());
+		  httpClientConnectionManager.setDefaultMaxPerRoute(connectionParameters.getMaxPooledPerRoute());
+	      HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
+	      httpClientBuilder.setConnectionManager(httpClientConnectionManager);
+//	      httpClientBuilder.setSSLContext(sslContextProvider.getContext());
+//	      httpClientBuilder.setSSLHostnameVerifier(new NoopHostnameVerifier());
+	      CloseableHttpClient client = httpClientBuilder.build();
+	      RequestConfig requestConfig = cfgBuilder.build();
+	      return new BaseHttpClient(client, requestConfig, objMapper);
+	}
 
-        clientBuilder
-            .establishConnectionTimeout(connectionParameters.getServiceConnectionTimeout(), SECONDS)
-            .socketTimeout(connectionParameters.getServiceSocketTimeout(), SECONDS);
-
-        return clientBuilder.build();
-    }
-
-    private ResteasyJackson2Provider initializeProvider() {
-        ResteasyJackson2Provider jackson2Provider = new CustomResteasyJackson2Provider();
+//    private ResteasyJackson2Provider initializeProvider() {
+//        ResteasyJackson2Provider jackson2Provider = new CustomResteasyJackson2Provider();
+//        ObjectMapper mapper = new ObjectMapper()
+//            .setPropertyNamingStrategy(UPPER_CAMEL_CASE)
+//            .registerModule(new JavaTimeModule())
+//            .registerModule(new SerializersProvider().getSerializersModule())
+//            .disable(FAIL_ON_UNKNOWN_PROPERTIES)
+//            .enable(FAIL_ON_NULL_FOR_PRIMITIVES);
+//        jackson2Provider.setMapper(mapper);
+//
+//        return jackson2Provider;
+//    }
+	  private ObjectMapper initMapper() {
         ObjectMapper mapper = new ObjectMapper()
-            .setPropertyNamingStrategy(UPPER_CAMEL_CASE)
-            .registerModule(new JavaTimeModule())
-            .registerModule(new SerializersProvider().getSerializersModule())
-            .disable(FAIL_ON_UNKNOWN_PROPERTIES)
-            .enable(FAIL_ON_NULL_FOR_PRIMITIVES);
-        jackson2Provider.setMapper(mapper);
-
-        return jackson2Provider;
-    }
-
+	        .setPropertyNamingStrategy(UPPER_CAMEL_CASE)
+	        .registerModule(new JavaTimeModule())
+	        .registerModule(new SerializersProvider().getSerializersModule())
+	        .disable(FAIL_ON_UNKNOWN_PROPERTIES)
+	        .enable(FAIL_ON_NULL_FOR_PRIMITIVES);
+        return mapper;
+	  }
     public class Builder {
         private URI baseUri;
         private boolean retryable;
@@ -122,7 +151,7 @@ public class WebClientBuilder {
         }
 
         public WebClient build() {
-            Client client = getClientWithJacksonProvider();
+        	BaseHttpClient client = getBaseClient();
             SimpleHttpClient httpClient = new SimpleHttpClient(client);
             SocketErrorAwareHttpClient socketErrorAwareHttpClient = new SocketErrorAwareHttpClient(httpClient);
             RedfishClient redfishClient = new RedfishClient(baseUri, socketErrorAwareHttpClient);
@@ -138,12 +167,12 @@ public class WebClientBuilder {
         }
     }
 
-    public class CustomResteasyJackson2Provider extends ResteasyJackson2Provider {
-        /*
-         * Workaround for:
-         *
-         * RESTEASY002155: Provider class org.jboss.resteasy.plugins.providers.jackson.ResteasyJackson2Provider is already registered.
-         *     2nd registration is being ignored.
-         */
-    }
+//    public class CustomResteasyJackson2Provider extends ResteasyJackson2Provider {
+//        /*
+//         * Workaround for:
+//         *
+//         * RESTEASY002155: Provider class org.jboss.resteasy.plugins.providers.jackson.ResteasyJackson2Provider is already registered.
+//         *     2nd registration is being ignored.
+//         */
+//    }
 }

@@ -31,6 +31,8 @@ import org.atteo.classindex.IndexSubclasses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.inspur.podm.common.utils.ClassUtil;
+
 
 /**
  * All enums which implement this interface will be automatically deserialized to String value got from method getValue();
@@ -41,8 +43,8 @@ public interface EnumeratedType {
     // Priority defines order of enums. Default value is 1 - this is the highest priority enum can have.
     // Priority is mainly used in allocation algorithms to specify default selection of resources.
     Integer DEFAULT_PRIORITY = 1;
-
-    Set<Class<? extends EnumeratedType>> SUB_TYPES = stream(getSubclasses(EnumeratedType.class).spliterator(), false).collect(toSet());
+//    Set<Class<? extends EnumeratedType>> SUB_TYPES = stream(getSubclasses(EnumeratedType.class).spliterator(), false).collect(toSet());
+    Set<Class<? extends EnumeratedType>> SUB_TYPES = stream(ClassUtil.myGetAllClassByParent(EnumeratedType.class).spliterator(), false).collect(toSet());
     static <T extends EnumeratedType> T stringToEnum(Class<T> enumType, String text) {
         T foundEnumeration = findEnum(enumType, text);
         if (foundEnumeration == null) {

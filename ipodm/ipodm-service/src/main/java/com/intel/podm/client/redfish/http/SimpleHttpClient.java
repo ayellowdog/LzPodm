@@ -16,22 +16,16 @@
 
 package com.intel.podm.client.redfish.http;
 
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.Invocation;
-import javax.ws.rs.core.Response;
-
-import com.intel.podm.common.types.net.HttpMethod;
+import static com.intel.podm.common.utils.Contracts.requiresNonNull;
 
 import java.net.URI;
 
-import static com.intel.podm.common.utils.Contracts.requiresNonNull;
-import static javax.ws.rs.client.Entity.entity;
-import static javax.ws.rs.core.MediaType.APPLICATION_JSON_TYPE;
+import com.intel.podm.common.types.net.HttpMethod;
 
 public class SimpleHttpClient implements AutoCloseable {
-    private final Client client;
+    private final BaseHttpClient client;
 
-    public SimpleHttpClient(Client client) {
+    public SimpleHttpClient(BaseHttpClient client) {
         this.client = requiresNonNull(client, "client");
     }
 
@@ -42,35 +36,15 @@ public class SimpleHttpClient implements AutoCloseable {
         requiresNonNull(method, "method");
         requiresNonNull(uri, "uri");
         requiresNonNull(responseEntityClass, "responseEntityClass");
-
-        Response response = buildInvocation(uri, method, requestEntity).invoke();
-
-        try {
-            return toHttpResponse(responseEntityClass, response);
-        } finally {
-            response.close();
-        }
+        return client.call(method, uri, requestEntity, responseEntityClass);
     }
 
     @Override
     public void close() {
-        client.close();
-    }
-
-    @SuppressWarnings({"unchecked"})
-    private HttpResponse toHttpResponse(Class responseEntityClass, Response response) {
-        Object responseEntity = response.hasEntity()
-            ? response.readEntity(responseEntityClass)
-            : null;
-
-        return new HttpResponse(response.getStatus(), responseEntity, response.getLocation());
-    }
-
-    private Invocation buildInvocation(URI uri, HttpMethod method, Object requestEntity) {
-        Invocation.Builder request = client.target(uri).request(APPLICATION_JSON_TYPE);
-
-        return requestEntity != null
-            ? request.build(method.name(), entity(requestEntity, APPLICATION_JSON_TYPE))
-            : request.build(method.name());
+        try {
+			this.client.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
     }
 }

@@ -41,6 +41,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 import static com.fasterxml.jackson.annotation.JsonTypeInfo.As.PROPERTY;
@@ -59,221 +60,240 @@ import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toSet;
 
-@JsonTypeInfo(
-    use = NAME,
-    include = PROPERTY,
-    property = "@odata.type",
-    visible = true
-)
+@JsonTypeInfo(use = NAME, include = PROPERTY, property = "@odata.type", visible = true)
 @JsonTypeIdResolver(ResourceResolver.class)
-@SuppressWarnings({"checkstyle:MethodCount", "checkstyle:ClassFanOutComplexity"})
-public abstract class ExternalServiceResourceImpl extends RedfishEntityResponseBodyImpl implements ExternalServiceResource {
-    private static final Logger LOGGER = getLogger(ExternalServiceResourceImpl.class);
+@SuppressWarnings({ "checkstyle:MethodCount", "checkstyle:ClassFanOutComplexity" })
+public abstract class ExternalServiceResourceImpl extends RedfishEntityResponseBodyImpl
+		implements ExternalServiceResource {
+	private static final Logger LOGGER = getLogger(ExternalServiceResourceImpl.class);
 
-    @JsonProperty("Id")
-    private String id;
-    @JsonProperty("Name")
-    private String name;
-    @JsonProperty("Description")
-    private String description;
+	@JsonProperty("Id")
+	private String id;
+	@JsonProperty("Name")
+	private String name;
+	@JsonProperty("Description")
+	private String description;
 
-    @JsonIgnore
-    private WebClient webClient;
+	@JsonIgnore
+	private WebClient webClient;
 
-    @JsonIgnore
-    private URI uri;
+	@JsonIgnore
+	private URI uri;
 
-    @JsonIgnore
-    private List<UnknownOemObject> unknownOems = new ArrayList<>();
+	@JsonIgnore
+	private List<UnknownOemObject> unknownOems = new ArrayList<>();
 
-    @Override
-    public URI getUri() {
-        return uri;
-    }
+	@Override
+	public URI getUri() {
+		return uri;
+	}
 
-    @Override
-    public void setUri(URI uri) {
-        this.uri = uri;
-    }
+	@Override
+	public void setUri(URI uri) {
+		this.uri = uri;
+	}
 
-    public String getId() {
-        return id;
-    }
+	public String getId() {
+		return id;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public String getDescription() {
-        return description;
-    }
+	public String getDescription() {
+		return description;
+	}
 
-    @Override
-    public void setWebClient(WebClient webClient) {
-        this.webClient = webClient;
-    }
+	@Override
+	public void setWebClient(WebClient webClient) {
+		this.webClient = webClient;
+	}
 
-    @Override
-    public ResourceLinks getLinks() {
-        return new ResourceLinks(this);
-    }
+	@Override
+	public ResourceLinks getLinks() {
+		return new ResourceLinks(this);
+	}
 
-    public void addUnknownOem(UnknownOemObject unknownOemObject) {
-        unknownOems.add(unknownOemObject);
-    }
+	public void addUnknownOem(UnknownOemObject unknownOemObject) {
+		unknownOems.add(unknownOemObject);
+	}
 
-    @Override
-    public List<UnknownOemObject> getUnknownOems() {
-        return unknownOems;
-    }
+	@Override
+	public List<UnknownOemObject> getUnknownOems() {
+		return unknownOems;
+	}
 
-    protected Iterable<ResourceSupplier> processMembersListResource(ODataId membersListResource) throws WebClientRequestException {
-        if (membersListResource == null || membersListResource.toUri() == null) {
-            return emptyList();
-        }
+	protected Iterable<ResourceSupplier> processMembersListResource(ODataId membersListResource)
+			throws WebClientRequestException {
+		if (membersListResource == null || membersListResource.toUri() == null) {
+			return emptyList();
+		}
 
-        Iterable<ODataId> members = ((MembersListResource) toSupplier(membersListResource).get())
-            .getMembers();
-        return toSuppliers(members);
-    }
+		Iterable<ODataId> members = ((MembersListResource) toSupplier(membersListResource).get()).getMembers();
+		return toSuppliers(members);
+	}
 
-    protected Iterable<ResourceSupplier> toSuppliers(Iterable<ODataId> collection) throws WebClientRequestException {
-        if (collection == null) {
-            return emptyList();
-        }
+	protected Iterable<ResourceSupplier> toSuppliers(Iterable<ODataId> collection) throws WebClientRequestException {
+		if (collection == null) {
+			return emptyList();
+		}
 
-        return StreamSupport.stream(collection.spliterator(), false)
-            .map(this::toSupplier)
-            .collect(toList());
-    }
+		return StreamSupport.stream(collection.spliterator(), false).map(this::toSupplier).collect(toList());
+	}
 
-    protected ResourceSupplier toSupplier(ODataId oDataId) {
-        return toSupplier(webClient, oDataId);
-    }
+	protected ResourceSupplier toSupplier(ODataId oDataId) {
+		return toSupplier(webClient, oDataId);
+	}
 
-    protected <T extends ExternalServiceResource> Iterable<ResourceSupplier> toSuppliersFromResources(Iterable<T> resourcesCollection) {
-        return StreamSupport.stream(requiresNonNull(resourcesCollection, "resourcesCollection").spliterator(), false)
-            .map(item -> new ResourceSupplier() {
-                @Override
-                public ExternalServiceResource get() throws WebClientRequestException {
-                    item.setWebClient(webClient);
-                    return item;
-                }
+	protected <T extends ExternalServiceResource> Iterable<ResourceSupplier> toSuppliersFromResources(
+			Iterable<T> resourcesCollection) {
+		// return StreamSupport.stream(requiresNonNull(resourcesCollection,
+		// "resourcesCollection").spliterator(), false)
+		// .map(item -> new ResourceSupplier() {
+		// @Override
+		// public ExternalServiceResource get() throws WebClientRequestException
+		// {
+		// item.setWebClient(webClient);
+		// return item;
+		// }
+		//
+		// @Override
+		// public URI getUri() {
+		// return item.getUri();
+		// }
+		// }).collect(toList());
+		Stream<T> stream2 = StreamSupport
+				.stream(requiresNonNull(resourcesCollection, "resourcesCollection").spliterator(), false);
+		Stream<Object> map = stream2.map(item -> new ResourceSupplier() {
+			@Override
+			public ExternalServiceResource get() throws WebClientRequestException {
+				item.setWebClient(webClient);
+				return item;
+			}
 
-                @Override
-                public URI getUri() {
-                    return item.getUri();
-                }
-            }).collect(toList());
-    }
+			@Override
+			public URI getUri() {
+				return item.getUri();
+			}
+		});
+		List<Object> list = map.collect(toList());
+		List<ResourceSupplier> list2 = new ArrayList<>();
+		for (Object object : list) {
+			list2.add((ResourceSupplier) object);
+		}
+		return list2;
+	}
 
-    protected <T extends ExternalServiceResource> Iterable<ResourceSupplier> toSuppliersFromEmbeddableResourceElement(
-        List<T> resourcesCollection, String embeddableUriSegmentName) {
-        return resourcesCollection.stream()
-            .map(resource -> createResourceSupplier(resource, resourcesCollection.indexOf(resource), embeddableUriSegmentName))
-            .collect(toSet());
-    }
+	protected <T extends ExternalServiceResource> Iterable<ResourceSupplier> toSuppliersFromEmbeddableResourceElement(
+			List<T> resourcesCollection, String embeddableUriSegmentName) {
+		return resourcesCollection.stream().map(resource -> createResourceSupplier(resource,
+				resourcesCollection.indexOf(resource), embeddableUriSegmentName)).collect(toSet());
+	}
 
-    private <T extends ExternalServiceResource> ResourceSupplier createResourceSupplier(T item, int resourceId, String embeddableUriSegmentName) {
-        return new ResourceSupplier() {
-            String uriString = uri.getPath() + "#/" + embeddableUriSegmentName + "/" + resourceId;
+	private <T extends ExternalServiceResource> ResourceSupplier createResourceSupplier(T item, int resourceId,
+			String embeddableUriSegmentName) {
+		return new ResourceSupplier() {
+			String uriString = uri.getPath() + "#/" + embeddableUriSegmentName + "/" + resourceId;
 
-            @Override
-            public ExternalServiceResource get() throws WebClientRequestException {
-                item.setWebClient(webClient);
-                item.setUri(URI.create(uriString));
-                return item;
-            }
+			@Override
+			public ExternalServiceResource get() throws WebClientRequestException {
+				item.setWebClient(webClient);
+				item.setUri(URI.create(uriString));
+				return item;
+			}
 
-            @Override
-            public URI getUri() {
-                return URI.create(uriString);
-            }
-        };
-    }
+			@Override
+			public URI getUri() {
+				return URI.create(uriString);
+			}
+		};
+	}
 
-    //FIXME: delete when links to Computer system are available in child resources
-    protected ODataId getComputerSystemODataId() {
-        if (!oDataId.contains("Systems")) {
-            return null;
-        }
+	// FIXME: delete when links to Computer system are available in child
+	// resources
+	protected ODataId getComputerSystemODataId() {
+		if (!oDataId.contains("Systems")) {
+			return null;
+		}
 
-        String[] uriChunks = oDataId.split("/");
-        LinkedList<String> linkedList = new LinkedList<>(asList(uriChunks));
-        linkedList.removeLast();
-        linkedList.removeLast();
+		String[] uriChunks = oDataId.split("/");
+		LinkedList<String> linkedList = new LinkedList<>(asList(uriChunks));
+		linkedList.removeLast();
+		linkedList.removeLast();
 
-        String computerSystemUri = linkedList.stream().collect(joining("/"));
-        return new ODataId(computerSystemUri);
-    }
+		String computerSystemUri = linkedList.stream().collect(joining("/"));
+		return new ODataId(computerSystemUri);
+	}
 
-    protected Matcher createMatcher(String uriFragement, String... uriFragmentGroups) {
-        Pattern pattern = Pattern.compile(
-            stream(uriFragmentGroups)
-                .map(groupName -> format("(?<%s>\\w+)", groupName))
-                .collect(joining("/", "/?", ""))
-        );
+	protected Matcher createMatcher(String uriFragement, String... uriFragmentGroups) {
+		Pattern pattern = Pattern.compile(stream(uriFragmentGroups).map(groupName -> format("(?<%s>\\w+)", groupName))
+				.collect(joining("/", "/?", "")));
 
-        return pattern.matcher(uriFragement);
-    }
+		return pattern.matcher(uriFragement);
+	}
 
-    @JsonAnySetter
-    private void addUnknownOemFromExistingOemObject(String oemName, JsonNode oemValue) throws JsonProcessingException {
-        if (oemValue == null) {
-            return;
-        }
+	@JsonAnySetter
+	private void addUnknownOemFromExistingOemObject(String oemName, JsonNode oemValue) throws JsonProcessingException {
+		if (oemValue == null) {
+			return;
+		}
 
-        switch (oemName) {
-            case "Oem":
-                extractUnknownOemsFromOemObject(oemName, oemValue).forEach(ExternalServiceResourceImpl.this::addUnknownOem);
-                break;
-            case "Links":
-                extractUnknownOemsFromLinksOemObject("Oem", oemValue.findValue("Oem")).forEach(ExternalServiceResourceImpl.this::addUnknownOem);
-                break;
-            case "Actions":
-                extractUnknownOemsFromActionsOemObject("Oem", oemValue.findValue("Oem")).forEach(ExternalServiceResourceImpl.this::addUnknownOem);
-                break;
-            default:
-                break;
-        }
-    }
+		switch (oemName) {
+		case "Oem":
+			extractUnknownOemsFromOemObject(oemName, oemValue).forEach(ExternalServiceResourceImpl.this::addUnknownOem);
+			break;
+		case "Links":
+			extractUnknownOemsFromLinksOemObject("Oem", oemValue.findValue("Oem"))
+					.forEach(ExternalServiceResourceImpl.this::addUnknownOem);
+			break;
+		case "Actions":
+			extractUnknownOemsFromActionsOemObject("Oem", oemValue.findValue("Oem"))
+					.forEach(ExternalServiceResourceImpl.this::addUnknownOem);
+			break;
+		default:
+			break;
+		}
+	}
 
-    @IndexSubclasses
-    public abstract class RedfishOem {
-        @JsonAnySetter
-        @SuppressWarnings({"checkstyle:ReturnCount"})
-        private void addUnknownOemFromOemObject(String oemName, ObjectNode oemValue) throws JsonProcessingException {
-            if (handleKnownVendor(oemName, oemValue)) {
-                return;
-            }
+	@IndexSubclasses
+	public abstract class RedfishOem {
+		@JsonAnySetter
+		@SuppressWarnings({ "checkstyle:ReturnCount" })
+		private void addUnknownOemFromOemObject(String oemName, ObjectNode oemValue) throws JsonProcessingException {
+			if (handleKnownVendor(oemName, oemValue)) {
+				return;
+			}
 
-            OemType oemType = getClass().getAnnotation(OemType.class);
-            if (oemType == null) {
-                LOGGER.e("Mandatory OemType annotation is not defined for: " + getClass().getName());
-                return;
-            }
+			OemType oemType = getClass().getAnnotation(OemType.class);
+			if (oemType == null) {
+				LOGGER.e("Mandatory OemType annotation is not defined for: " + getClass().getName());
+				return;
+			}
 
-            createUnknownOemObject(oemType.value().getPath(), oemName, oemValue).ifPresent(ExternalServiceResourceImpl.this::addUnknownOem);
-        }
+			createUnknownOemObject(oemType.value().getPath(), oemName, oemValue)
+					.ifPresent(ExternalServiceResourceImpl.this::addUnknownOem);
+		}
 
-        public boolean handleKnownVendor(String oemName, ObjectNode oemValue) throws JsonProcessingException {
-            return false;
-        }
-    }
+		public boolean handleKnownVendor(String oemName, ObjectNode oemValue) throws JsonProcessingException {
+			return false;
+		}
+	}
 
-    public abstract class RedfishLinks {
-        @JsonAnySetter
-        private void addUnknownOemFromLinksOemObject(String oemName, JsonNode oemValue) throws JsonProcessingException {
-            extractUnknownOemsFromLinksOemObject(oemName, oemValue)
-                .forEach(ExternalServiceResourceImpl.this::addUnknownOem);
-        }
-    }
+	public abstract class RedfishLinks {
+		@JsonAnySetter
+		private void addUnknownOemFromLinksOemObject(String oemName, JsonNode oemValue) throws JsonProcessingException {
+			extractUnknownOemsFromLinksOemObject(oemName, oemValue)
+					.forEach(ExternalServiceResourceImpl.this::addUnknownOem);
+		}
+	}
 
-    public abstract class RedfishActions {
-        @JsonAnySetter
-        private void addUnknownOemFromActionsOemObject(String oemName, JsonNode oemValue) throws JsonProcessingException {
-            extractUnknownOemsFromActionsOemObject(oemName, oemValue)
-                .forEach(ExternalServiceResourceImpl.this::addUnknownOem);
-        }
-    }
+	public abstract class RedfishActions {
+		@JsonAnySetter
+		private void addUnknownOemFromActionsOemObject(String oemName, JsonNode oemValue)
+				throws JsonProcessingException {
+			extractUnknownOemsFromActionsOemObject(oemName, oemValue)
+					.forEach(ExternalServiceResourceImpl.this::addUnknownOem);
+		}
+	}
 }

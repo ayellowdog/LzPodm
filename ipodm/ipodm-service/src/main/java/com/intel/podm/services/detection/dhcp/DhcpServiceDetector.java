@@ -49,10 +49,7 @@ public class DhcpServiceDetector {
 
 //    @Inject
     private RecheckFailedUrisScheduledTask recheckFailedUrisScheduledTask;
-    @PostConstruct
-    public void lcTest() {
-    	System.out.println("lalalala" + managedExecutorService);
-    }
+
     public void init(Dhcp dhcp) {
         logger.i("Initializing DHCP based service detector...");
         try {
