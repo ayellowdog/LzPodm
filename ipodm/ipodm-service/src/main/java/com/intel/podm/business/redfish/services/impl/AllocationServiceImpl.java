@@ -63,11 +63,11 @@ class AllocationServiceImpl implements AllocationService {
         }
         
 //       发送http请求，先注释掉
-//        try {
-//            nodeTasksCoordinator.setTasksForNode(composedNodeId, nodeAllocator.getAssemblyTasks());
-//        } catch (IllegalStateException e) {
-//            throw new EntityOperationException(baseExceptionMessage + "Composed Node [" + composedNodeId + "] has been already allocated.", e);
-//        }
+        try {
+            nodeTasksCoordinator.setTasksForNode(composedNodeId, nodeAllocator.getAssemblyTasks());
+        } catch (IllegalStateException e) {
+            throw new EntityOperationException(baseExceptionMessage + "Composed Node [" + composedNodeId + "] has been already allocated.", e);
+        }
 
         composedNodeStateChanger.change(composedNodeId, ALLOCATED);
         return contextOf(composedNodeId, COMPOSED_NODE);
