@@ -17,33 +17,42 @@
 package com.intel.podm.services.detection.dhcp;
 
 import com.intel.podm.common.logger.Logger;
+import com.intel.podm.common.logger.LoggerFactory;
 import com.intel.podm.common.types.ServiceType;
 import com.intel.podm.config.base.Config;
+import com.intel.podm.config.base.ConfigProvider;
 import com.intel.podm.config.base.Holder;
 import com.intel.podm.config.base.dto.ServiceConnectionConfig;
 import com.intel.podm.services.detection.dhcp.filesystem.TmpLeasesRecord;
 
+import javax.annotation.Resource;
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
+
+import org.springframework.stereotype.Component;
+
 import java.net.URI;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
 import static javax.ws.rs.core.UriBuilder.fromUri;
 
-@Dependent
+//@Dependent
+@Component
 public class UrlProvider {
 
     private static final String DEFAULT_ROOT = "/redfish/v1";
     private static final String HTTP_SCHEME = "http";
     private static final String HTTPS_SCHEME = "https";
 
-    @Inject
-    private Logger logger;
+    private static final Logger logger = LoggerFactory.getLogger(UrlProvider.class);
 
-    @Inject
+//    @Inject
+//    @Config
+//    private Holder<ServiceConnectionConfig> connectionConfig;
     @Config
-    private Holder<ServiceConnectionConfig> connectionConfig;
+    @Resource(name="podmConfigProvider")
+    private ConfigProvider connectionConfig;
 
     public URI getEndpointUri(String urlString) {
         return fromUri(urlString).build();

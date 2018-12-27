@@ -22,9 +22,10 @@ import static javax.transaction.Transactional.TxType.MANDATORY;
 import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.intel.podm.business.entities.redfish.MetricDefinition;
 import com.intel.podm.common.types.Id;
@@ -33,6 +34,7 @@ import com.intel.podm.common.types.Id;
 @Component
 public class MetricDefinitionDao extends Dao<MetricDefinition> {
 //    @Transactional(MANDATORY)
+    @Transactional(propagation = Propagation.MANDATORY)
     public List<Id> getAllMetricDefinitionsIds() {
         return entityManager.createNamedQuery(GET_ALL_METRIC_DEFINITIONS_IDS, Id.class).getResultList();
     }

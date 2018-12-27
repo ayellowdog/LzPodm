@@ -22,9 +22,10 @@ import static javax.transaction.Transactional.TxType.MANDATORY;
 import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.intel.podm.business.entities.redfish.Manager;
 import com.intel.podm.common.types.Id;
@@ -33,6 +34,7 @@ import com.intel.podm.common.types.Id;
 @Component
 public class ManagerDao extends Dao<Manager> {
 //    @Transactional(MANDATORY)
+    @Transactional(propagation = Propagation.MANDATORY)
     public List<Id> getAllManagerIds() {
         return entityManager.createNamedQuery(GET_ALL_MANAGER_IDS, Id.class).getResultList();
     }

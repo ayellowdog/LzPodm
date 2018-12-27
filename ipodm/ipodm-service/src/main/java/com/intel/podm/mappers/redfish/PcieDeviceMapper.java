@@ -16,13 +16,14 @@
 
 package com.intel.podm.mappers.redfish;
 
+import org.springframework.stereotype.Component;
+
 import com.intel.podm.business.entities.redfish.PcieDevice;
 import com.intel.podm.client.resources.redfish.PcieDeviceResource;
 import com.intel.podm.mappers.EntityMapper;
 
-import javax.enterprise.context.Dependent;
-
-@Dependent
+//@Dependent
+@Component
 public class PcieDeviceMapper extends EntityMapper<PcieDeviceResource, PcieDevice> {
     public PcieDeviceMapper() {
         super(PcieDeviceResource.class, PcieDevice.class);

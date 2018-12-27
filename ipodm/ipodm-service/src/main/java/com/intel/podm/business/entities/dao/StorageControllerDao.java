@@ -26,9 +26,10 @@ import java.util.Optional;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.TypedQuery;
-import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.intel.podm.business.entities.redfish.StorageController;
 
@@ -36,6 +37,7 @@ import com.intel.podm.business.entities.redfish.StorageController;
 @Component
 public class StorageControllerDao extends Dao<StorageController> {
 //    @Transactional(MANDATORY)
+    @Transactional(propagation = Propagation.MANDATORY)
     public List<StorageController> findComplementaryStorageControllers(StorageController storageController) {
         TypedQuery<StorageController> query = entityManager.createNamedQuery(GET_STORAGE_CONTROLLER_MULTI_SOURCE, StorageController.class);
         query.setParameter("multiSourceDiscriminator", storageController.getMultiSourceDiscriminator());
@@ -44,6 +46,7 @@ public class StorageControllerDao extends Dao<StorageController> {
     }
 
 //    @Transactional(MANDATORY)
+    @Transactional(propagation = Propagation.MANDATORY)
     public Optional<StorageController> findPrimaryStorageController(StorageController complementaryStorageController) {
         TypedQuery<StorageController> query = entityManager.createNamedQuery(GET_STORAGE_CONTROLLER_MULTI_SOURCE, StorageController.class);
         query.setParameter("multiSourceDiscriminator", complementaryStorageController.getMultiSourceDiscriminator());

@@ -18,6 +18,7 @@ package com.intel.podm.services.detection.dhcp.filesystem;
 
 import com.intel.podm.common.types.ServiceType;
 import org.apache.commons.validator.routines.UrlValidator;
+import org.springframework.stereotype.Component;
 
 import javax.enterprise.context.Dependent;
 import java.util.Collection;
@@ -28,7 +29,8 @@ import static java.util.stream.Collectors.toList;
 import static org.apache.commons.lang3.StringUtils.split;
 import static org.apache.commons.validator.routines.UrlValidator.ALLOW_LOCAL_URLS;
 
-@Dependent
+//@Dependent
+@Component
 public class ServiceListFileRecordsParser {
 
     private static final int SERVICE_LIST_PARTS_LENGTH = 2;

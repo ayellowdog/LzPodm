@@ -24,6 +24,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
+import java.util.UUID;
 
 import javax.annotation.Resource;
 //import javax.interceptor.Interceptors;
@@ -75,13 +76,15 @@ public class EntityGraphMapper {
 //    @AccessTimeout(value = 10, unit = MINUTES)
 //    @RetryOnRollback(3)
 //    @TimeMeasured(tag = "[Discovery]")
-	@Transactional(propagation=Propagation.REQUIRES_NEW, timeout=5)
+	@Transactional(propagation=Propagation.REQUIRES_NEW, timeout=500)
 	@Retryable(value= {RollbackException.class, OptimisticLockException.class},maxAttempts = 3,backoff = @Backoff(delay = 100l,multiplier = 1))
     public void map(RestGraph graph) {
+		System.out.println("开始尝试Map》》》》》》》》》》》》》》》》》》");
         requiresNonNull(graph, "graph");
-
-        ExternalService service = repository.find(graph.findServiceUuid());
-        Map<ExternalServiceResource, DiscoverableEntity> map = filterNonNullValues(multiMapper.map(graph.getResources(), service));
+        UUID serviceUuid = graph.findServiceUuid();
+        ExternalService service = repository.find(serviceUuid);
+        Map<ExternalServiceResource, DiscoverableEntity> tmpMap = multiMapper.map(graph.getResources(), service);
+        Map<ExternalServiceResource, DiscoverableEntity> map = filterNonNullValues(tmpMap);
 
         updateLinks(graph, map);
 

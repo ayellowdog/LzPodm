@@ -71,7 +71,7 @@ public class VolumeAllocationStrategy extends ResourceAllocationStrategy {
             composedNode.addEndpoint(endpointToAllocate);
             return emptyList();
         } else {
-            return singletonList(endpointTaskFactory.create(volumeToAllocate.getTheId(), TARGET, toContext(volumeToAllocate)));
+            return singletonList(endpointTaskFactory.create(volumeToAllocate.getId(), TARGET, toContext(volumeToAllocate)));
         }
     }
 

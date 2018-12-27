@@ -44,12 +44,12 @@ import static org.atteo.classindex.ClassIndex.getSubclasses;
 
 //@Singleton
 //@Startup
-@Component
+@Component("ResourceProvider")
 public class ResourceProvider {
 	private static final Logger logger = LoggerFactory.getLogger(ResourceProvider.class);
 
-    @PostConstruct
-    private void resourceProvider() {
+//    @PostConstruct
+    public void resourceProvider() {
         logger.debug("Registering supported OData types...");
         registerKnownOdataTypes(ExternalServiceResource.class);
         registerKnownOdataTypes(OemVendor.class);

@@ -29,33 +29,43 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.codahale.metrics.MetricRegistry;
 import com.intel.podm.common.synchronization.monitoring.MetricRegistryFactory;
 
+/**
+ * 
+ * @ClassName: SerialExecutorRegistry
+ * @Description: 此类被改写，去除了InstrumentedSerialExecutor这一层的封装。
+ *
+ * @author: liuchangbj
+ * @date: 2018年12月26日 上午9:08:23
+ */
 //@Singleton
 @Component
-@Lazy
 public class SerialExecutorRegistry {
     private static final Logger log = LoggerFactory.getLogger(SerialExecutorRegistry.class);
 
 //    @Inject
 //    @Named(SYNCHRONIZED_TASK_EXECUTOR)
-//    @Resource(name = SYNCHRONIZED_TASK_EXECUTOR)
+    @Resource(name = SYNCHRONIZED_TASK_EXECUTOR)
     private ExecutorService executorService;
 
-    @Autowired
-    private MetricRegistryFactory metricRegistryFactory;
-
-    private MetricRegistry metricRegistry;
+//去除了InstrumentedSerialExecutor这一层的封装
+//    @Autowired
+//    private MetricRegistryFactory metricRegistryFactory;
+//
+//    private MetricRegistry metricRegistry;
 
     private HashMap<Object, SerialExecutor> registry = new HashMap<>();
 
-    @PostConstruct
-    private void init() {
-        this.metricRegistry = metricRegistryFactory.getOrRegisterNew("PodM.Synchronization");
-    }
+  //去除了InstrumentedSerialExecutor这一层的封装
+//    @PostConstruct
+//    private void init() {
+////        this.metricRegistry = metricRegistryFactory.getOrRegisterNew("PodM.Synchronization");
+//    }
 
     /**
      * LockType.WRITE used due to concurrent access to registry map that modifies it (put operation).
@@ -63,7 +73,7 @@ public class SerialExecutorRegistry {
 //    @Lock(WRITE)
 //    @Transactional(SUPPORTS)
 //    @AccessTimeout(value = 5, unit = SECONDS)
-    @Transactional(timeout = 5)
+    @Transactional(propagation = Propagation.SUPPORTS, timeout = 5)
     public SerialExecutor getExecutor(Object key) {
         if (!registry.containsKey(key)) {
             log.info("Creating serial executorService for {}", key);
@@ -78,15 +88,17 @@ public class SerialExecutorRegistry {
 //    @Lock(WRITE)
 //    @Transactional(SUPPORTS)
 //    @AccessTimeout(value = 5, unit = SECONDS)
-    @Transactional(timeout = 5)
+    @Transactional(propagation = Propagation.SUPPORTS, timeout = 5)
     public void unregisterExecutor(Object synchronizationKey) {
         registry.remove(synchronizationKey);
     }
 
+  //去除了InstrumentedSerialExecutor这一层的封装
     private SerialExecutor createExecutor(Object key) {
-        return new InstrumentedSerialExecutor(
-            new SerialExecutorImpl(key, executorService),
-            metricRegistry
-        );
+//        return new InstrumentedSerialExecutor(
+//            new SerialExecutorImpl(key, executorService),
+//            metricRegistry
+//        );
+    	return new SerialExecutorImpl(key, executorService);
     }
 }

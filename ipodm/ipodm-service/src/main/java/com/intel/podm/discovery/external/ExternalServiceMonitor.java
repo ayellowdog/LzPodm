@@ -28,6 +28,7 @@ import javax.enterprise.inject.spi.BeanManager;
 import javax.inject.Inject;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
@@ -64,18 +65,22 @@ public class ExternalServiceMonitor {
 //    @Lock(WRITE)
 //    @Transactional(SUPPORTS)
 //    @AccessTimeout(value = 5, unit = SECONDS)
-    @Transactional(propagation = Propagation.REQUIRED, timeout = 5)
+    @Transactional(propagation = Propagation.SUPPORTS, timeout = 5)
     public void monitorService(UUID serviceUuid) {
         ExternalService service = externalServiceRepository.find(serviceUuid);
         if (service.isEventingAvailable()) {
-            eventSubscriptionMonitor.monitorService(serviceUuid);
+        	/**
+        	 * 暂时注释掉eventMonitor
+        	 */
+//            eventSubscriptionMonitor.monitorService(serviceUuid);
             scheduledDiscoveryManager.cancelDiscovery(serviceUuid);
             scheduledDiscoveryManager.scheduleDiscovery(serviceUuid);
         } else {
             scheduledDiscoveryManager.scheduleDiscovery(serviceUuid);
         }
 //        beanManager.fireEvent(externalServiceMonitoringStartedEvent(serviceUuid));
-        AppContext.context().publishEvent(externalServiceMonitoringStartedEvent(this, serviceUuid));
+        ApplicationContext context = AppContext.context();
+        context.publishEvent(externalServiceMonitoringStartedEvent(this, serviceUuid));
     }
 
     /**
@@ -84,7 +89,7 @@ public class ExternalServiceMonitor {
 //    @Lock(WRITE)
 //    @Transactional(SUPPORTS)
 //    @AccessTimeout(value = 5, unit = SECONDS)
-    @Transactional(propagation = Propagation.REQUIRED, timeout = 5)
+    @Transactional(propagation = Propagation.SUPPORTS, timeout = 5)
     public void stopMonitoringOfService(UUID serviceUuid) {
         eventSubscriptionMonitor.cancelMonitoring(serviceUuid);
         scheduledDiscoveryManager.cancelDiscovery(serviceUuid);

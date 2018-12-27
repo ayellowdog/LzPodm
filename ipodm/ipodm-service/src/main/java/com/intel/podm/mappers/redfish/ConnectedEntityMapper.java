@@ -25,12 +25,15 @@ import com.intel.podm.mappers.subresources.IdentifierMapper;
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 
-@Dependent
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+@Component
 public class ConnectedEntityMapper extends EntityMapper<ConnectedEntityResource, ConnectedEntity> {
-    @Inject
+    @Autowired
     private PciIdMapper pciIdMapper;
 
-    @Inject
+    @Autowired
     private IdentifierMapper identifierMapper;
 
     protected ConnectedEntityMapper() {

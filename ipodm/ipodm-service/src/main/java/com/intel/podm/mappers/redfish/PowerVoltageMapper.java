@@ -16,13 +16,14 @@
 
 package com.intel.podm.mappers.redfish;
 
+import org.springframework.stereotype.Component;
+
 import com.intel.podm.business.entities.redfish.PowerVoltage;
 import com.intel.podm.client.resources.redfish.VoltageItem;
 import com.intel.podm.mappers.EntityMapper;
 
-import javax.enterprise.context.Dependent;
-
-@Dependent
+//@Dependent
+@Component
 public class PowerVoltageMapper extends EntityMapper<VoltageItem, PowerVoltage> {
     protected PowerVoltageMapper() {
         super(VoltageItem.class, PowerVoltage.class);

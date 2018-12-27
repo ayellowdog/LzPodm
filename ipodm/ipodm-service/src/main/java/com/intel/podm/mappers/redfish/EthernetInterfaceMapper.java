@@ -27,18 +27,22 @@ import com.intel.podm.mappers.subresources.SimpleTypeMapper;
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 
-@Dependent
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+//@Dependent
+@Component
 public class EthernetInterfaceMapper extends EntityMapper<EthernetInterfaceResource, EthernetInterface> {
-    @Inject
+	@Autowired
     private IpV4AddressMapper ipV4AddressMapper;
 
-    @Inject
+	@Autowired
     private IpV6AddressPolicyTableMapper ipV6AddressPolicyTableMapper;
 
-    @Inject
+	@Autowired
     private IpV6AddressMapper ipV6AddressMapper;
 
-    @Inject
+	@Autowired
     private SimpleTypeMapper simpleTypeMapper;
 
     public EthernetInterfaceMapper() {

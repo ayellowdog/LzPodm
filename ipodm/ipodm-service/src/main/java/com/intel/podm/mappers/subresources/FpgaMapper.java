@@ -16,17 +16,19 @@
 
 package com.intel.podm.mappers.subresources;
 
+import java.util.Objects;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.intel.podm.business.entities.redfish.embeddables.Fpga;
 import com.intel.podm.client.resources.redfish.FpgaObject;
 import com.intel.podm.mappers.subresources.strategies.EmbeddableCleanAndCreateStrategy;
 
-import javax.enterprise.context.Dependent;
-import javax.inject.Inject;
-import java.util.Objects;
-
-@Dependent
+//@Dependent
+@Component
 public class FpgaMapper extends SubresourceMapper<FpgaObject, Fpga> {
-    @Inject
+	@Autowired
     public FpgaMapper(EmbeddableCleanAndCreateStrategy<Fpga> embeddableCleanAndCreateStrategy) {
         super(Fpga.class, embeddableCleanAndCreateStrategy);
     }

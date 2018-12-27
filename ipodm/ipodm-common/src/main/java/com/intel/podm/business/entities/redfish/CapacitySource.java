@@ -65,12 +65,12 @@ public class CapacitySource extends DiscoverableEntity {
     private Set<Drive> drives = new HashSet<>();
 
     @Override
-    public Id getTheId() {
+    public Id getId() {
         return entityId;
     }
 
     @Override
-    public void setTheId(Id entityId) {
+    public void setId(Id entityId) {
         this.entityId = entityId;
     }
 

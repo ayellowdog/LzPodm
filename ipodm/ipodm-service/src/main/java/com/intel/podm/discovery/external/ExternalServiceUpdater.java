@@ -24,7 +24,12 @@ import com.intel.podm.common.types.discovery.ServiceEndpoint;
 
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
-import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.EnumSet;
 import java.util.Objects;
 
@@ -33,7 +38,8 @@ import static com.intel.podm.common.types.ServiceType.LUI;
 import static java.util.EnumSet.of;
 import static javax.transaction.Transactional.TxType.REQUIRES_NEW;
 
-@Dependent
+//@Dependent
+@Component
 public class ExternalServiceUpdater {
     private static final EnumSet<ServiceType> INBAND_TYPES = of(INBAND, LUI);
 
@@ -41,10 +47,14 @@ public class ExternalServiceUpdater {
 //    @ServiceLifecycle
 //    private ServiceLifecycleLogger logger;
 
-    @Inject
+    @Autowired
     private ExternalServiceRepository repository;
 
-    @Transactional(REQUIRES_NEW)
+    /**
+     * 这个Transactional注解其实是没用的，因为它只在线程中被调用了。而在spring中，线程对象必须是被spring管理的bean，
+     * 且在run上加上transactional注解，才有事务，因此需要用beanFactory创建线程对象，并且在run上加上transactional
+     */
+    @Transactional(propagation = Propagation.REQUIRED)
     void updateExternalService(ServiceEndpoint serviceEndpoint) {
         ExternalService service = repository.findOrNull(serviceEndpoint.getServiceUuid());
         if (service == null) {

@@ -22,7 +22,10 @@ import com.intel.podm.mappers.EntityMapper;
 
 import javax.enterprise.context.Dependent;
 
-@Dependent
+import org.springframework.stereotype.Component;
+
+//@Dependent
+@Component
 public class NetworkProtocolMapper extends EntityMapper<NetworkProtocolResource, NetworkProtocol> {
     protected NetworkProtocolMapper() {
         super(NetworkProtocolResource.class, NetworkProtocol.class);

@@ -22,13 +22,16 @@ import static javax.transaction.Transactional.TxType.MANDATORY;
 import java.util.List;
 
 import javax.enterprise.context.Dependent;
-import javax.transaction.Transactional;
+
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.intel.podm.business.entities.redfish.Fabric;
 import com.intel.podm.common.types.Id;
 
 @Dependent
 //@Transactional(MANDATORY)
+@Transactional(propagation = Propagation.MANDATORY)
 public class FabricDao extends Dao<Fabric> {
     public List<Id> getAllFabricIds() {
         return entityManager.createNamedQuery(GET_ALL_FABRIC_IDS, Id.class).getResultList();

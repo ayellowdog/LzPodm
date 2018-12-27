@@ -19,13 +19,16 @@ package com.intel.podm.mappers;
 import com.intel.podm.business.entities.redfish.DiscoverableEntity;
 import com.intel.podm.client.resources.ExternalServiceResource;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.Dependent;
 import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.StreamSupport;
 
@@ -35,8 +38,8 @@ import static java.util.stream.StreamSupport.stream;
 //@Dependent
 @Component
 public class MapperFinder {
-//    @Inject
-    private Instance<EntityMapper<? extends ExternalServiceResource, ? extends DiscoverableEntity>> mapperPool;
+	@Autowired
+    private List<EntityMapper<? extends ExternalServiceResource, ? extends DiscoverableEntity>> mapperPool;
 
     private Collection<EntityMapper<? extends ExternalServiceResource, ? extends DiscoverableEntity>> cache;
 
@@ -45,7 +48,10 @@ public class MapperFinder {
             .filter(mapper -> mapper.canMap(resource))
             .findFirst();
     }
-
+    @PostConstruct
+    private void init() {
+    	System.out.println("MapperFinder size is:" + mapperPool.size());
+    }
     private Iterable<EntityMapper<? extends ExternalServiceResource, ? extends DiscoverableEntity>> getMapperPool() {
         if (cache == null) {
             cache = stream(mapperPool.spliterator(), false).collect(toList());

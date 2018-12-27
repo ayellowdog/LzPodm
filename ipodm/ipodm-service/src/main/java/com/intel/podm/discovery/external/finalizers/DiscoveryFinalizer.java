@@ -22,6 +22,7 @@ import static java.util.stream.StreamSupport.stream;
 //import static javax.transaction.Transactional.TxType.MANDATORY;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -30,6 +31,7 @@ import javax.enterprise.inject.Instance;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
 
 import com.intel.podm.business.entities.redfish.DiscoverableEntity;
 import com.intel.podm.business.entities.redfish.ExternalService;
@@ -37,13 +39,13 @@ import com.intel.podm.business.entities.redfish.ExternalService;
 //@ApplicationScoped
 @Component
 public class DiscoveryFinalizer {
-//    @Autowired
-    private Instance<ServiceTypeSpecializedDiscoveryFinalizer> discoveryFinalizers;
+    @Autowired
+    private List<ServiceTypeSpecializedDiscoveryFinalizer> discoveryFinalizers;
 
     private Collection<ServiceTypeSpecializedDiscoveryFinalizer> finalizers;
 
 //    @Transactional(MANDATORY)
-    @org.springframework.transaction.annotation.Transactional
+    @org.springframework.transaction.annotation.Transactional(propagation = Propagation.MANDATORY)
     public void finalizeDiscovery(Set<DiscoverableEntity> discoveredEntities, ExternalService service) {
         service.markAsReachable();
         tryFindFinalizer(service)
@@ -58,6 +60,7 @@ public class DiscoveryFinalizer {
 
     @PostConstruct
     private void init() {
-//        finalizers = stream(discoveryFinalizers.spliterator(), false).collect(toList());
+        finalizers = stream(discoveryFinalizers.spliterator(), false).collect(toList());
+        System.out.println("DiscoveryFinalizer: size is " + finalizers.size());
     }
 }

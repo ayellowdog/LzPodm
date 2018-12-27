@@ -25,6 +25,7 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
 
 import com.intel.podm.business.entities.redfish.Chassis;
 import com.intel.podm.business.entities.redfish.ComputerSystem;
@@ -50,7 +51,7 @@ public class PsmeDiscoveryFinalizer extends ServiceTypeSpecializedDiscoveryFinal
 
     @Override
 //    @Transactional(MANDATORY)
-    @org.springframework.transaction.annotation.Transactional
+    @org.springframework.transaction.annotation.Transactional(propagation = Propagation.MANDATORY)
     public void finalize(Set<DiscoverableEntity> discoveredEntities, ExternalService service) {
         chassisHierarchyMaintainer.maintain(filterByType(discoveredEntities, Chassis.class));
         endpointLinker.linkSystemToRelatedEndpoint(filterByType(discoveredEntities, ComputerSystem.class));

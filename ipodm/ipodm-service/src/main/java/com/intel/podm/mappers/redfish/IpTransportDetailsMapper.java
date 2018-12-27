@@ -16,6 +16,9 @@
 
 package com.intel.podm.mappers.redfish;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.intel.podm.business.entities.redfish.IpTransportDetails;
 import com.intel.podm.business.entities.redfish.embeddables.IpV4Address;
 import com.intel.podm.business.entities.redfish.embeddables.IpV6Address;
@@ -24,16 +27,14 @@ import com.intel.podm.mappers.EntityMapper;
 import com.intel.podm.mappers.subresources.IpV4AddressMapper;
 import com.intel.podm.mappers.subresources.IpV6AddressMapper;
 
-import javax.enterprise.context.Dependent;
-import javax.inject.Inject;
-
-@Dependent
+//@Dependent
+@Component
 public class IpTransportDetailsMapper extends EntityMapper<IpTransportDetailsResource, IpTransportDetails> {
 
-    @Inject
+	@Autowired
     private IpV4AddressMapper ipV4AddressMapper;
 
-    @Inject
+    @Autowired
     private IpV6AddressMapper ipV6AddressMapper;
 
     public IpTransportDetailsMapper() {

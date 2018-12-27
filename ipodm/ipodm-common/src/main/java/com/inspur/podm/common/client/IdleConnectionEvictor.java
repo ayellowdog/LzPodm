@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
  * @author: liuchangbj
  * @date: 2018年12月17日 上午11:31:47
  */
-@Component
+//@Component
 public class IdleConnectionEvictor extends Thread {
 
     @Autowired

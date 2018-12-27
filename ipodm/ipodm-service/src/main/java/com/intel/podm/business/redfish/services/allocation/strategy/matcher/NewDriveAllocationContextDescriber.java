@@ -54,9 +54,9 @@ public class NewDriveAllocationContextDescriber implements RemoteDriveAllocation
 
         StoragePool selectedPool = pool.get();
 
-        resource.setStoragePoolId(selectedPool.getTheId());
+        resource.setStoragePoolId(selectedPool.getId());
         resource.setStoragePoolUri(selectedPool.getSourceUri());
-        resource.setStorageServiceId(selectedPool.getStorageService().getTheId());
+        resource.setStorageServiceId(selectedPool.getStorageService().getId());
         resource.setCapacity(remoteDrive.getCapacityGib());
         resource.setViolations(violations);
         resource.setProtocol(remoteDrive.getProtocol());

@@ -18,12 +18,20 @@ package com.intel.podm.discovery.external;
 
 import java.util.UUID;
 
-public final class DiscoveryFinishedEvent {
-    private final UUID serviceUuid;
+import org.springframework.context.ApplicationEvent;
 
-    public DiscoveryFinishedEvent(UUID serviceUuid) {
-        this.serviceUuid = serviceUuid;
-    }
+public final class DiscoveryFinishedEvent extends ApplicationEvent{
+    /** @Fields serialVersionUID: TODO 功能描述  */
+	private static final long serialVersionUID = 5071088385368881798L;
+	private final UUID serviceUuid;
+
+	  public DiscoveryFinishedEvent(Object source, UUID serviceUuid) {
+		  super(source);
+		  this.serviceUuid = serviceUuid;
+	  }
+//    public DiscoveryFinishedEvent(UUID serviceUuid) {
+//        this.serviceUuid = serviceUuid;
+//    }
 
     public UUID getServiceUuid() {
         return serviceUuid;

@@ -23,11 +23,12 @@ import static javax.transaction.Transactional.TxType.MANDATORY;
 
 import java.util.Set;
 
-import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.intel.podm.business.entities.redfish.Chassis;
 import com.intel.podm.business.entities.redfish.DiscoverableEntity;
@@ -53,7 +54,8 @@ public class RssDiscoveryFinalizer extends ServiceTypeSpecializedDiscoveryFinali
     }
 
     @Override
-    @Transactional(MANDATORY)
+//    @Transactional(MANDATORY)
+    @Transactional(propagation = Propagation.MANDATORY)
     public void finalize(Set<DiscoverableEntity> discoveredEntities, ExternalService service) {
         chassisHierarchyMaintainer.maintain(filterByType(discoveredEntities, Chassis.class));
         endpointLinker.linkEndpointToRelatedSystem(filterByType(discoveredEntities, Endpoint.class));

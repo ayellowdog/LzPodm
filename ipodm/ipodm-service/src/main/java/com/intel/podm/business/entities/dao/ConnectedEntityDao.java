@@ -22,9 +22,10 @@ import static javax.transaction.Transactional.TxType.MANDATORY;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.TypedQuery;
-import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.intel.podm.business.entities.redfish.ConnectedEntity;
 import com.intel.podm.business.entities.redfish.Endpoint;
@@ -35,6 +36,7 @@ import com.intel.podm.business.entities.redfish.Volume;
 public class ConnectedEntityDao extends Dao<Endpoint> {
 
 //    @Transactional(MANDATORY)
+    @Transactional(propagation = Propagation.MANDATORY)
     public ConnectedEntity getConnectedEntity(Endpoint endpoint, Volume volume) {
         TypedQuery<ConnectedEntity> query = entityManager.createNamedQuery(GET_CONNECTED_ENTITY_BY_ENTITY_LINK_AND_ENDPOINT, ConnectedEntity.class);
         query.setParameter("endpoint", endpoint);

@@ -16,13 +16,14 @@
 
 package com.intel.podm.mappers.redfish;
 
+import org.springframework.stereotype.Component;
+
 import com.intel.podm.business.entities.redfish.PortMetrics;
 import com.intel.podm.client.resources.redfish.PortMetricsResource;
 import com.intel.podm.mappers.EntityMapper;
 
-import javax.enterprise.context.Dependent;
-
-@Dependent
+//@Dependent
+@Component
 public class PortMetricsMapper extends EntityMapper<PortMetricsResource, PortMetrics> {
     protected PortMetricsMapper() {
         super(PortMetricsResource.class, PortMetrics.class);

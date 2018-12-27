@@ -22,11 +22,16 @@ import com.intel.podm.mappers.subresources.strategies.EmbeddableCleanAndCreateSt
 
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import java.util.Objects;
 
-@Dependent
+//@Dependent
+@Component
 public class RackLocationMapper extends SubresourceMapper<RackLocationObject, RackLocation> {
-    @Inject
+	@Autowired
     public RackLocationMapper(EmbeddableCleanAndCreateStrategy<RackLocation> embeddableCleanAndCreateStrategy) {
         super(RackLocation.class, embeddableCleanAndCreateStrategy);
     }

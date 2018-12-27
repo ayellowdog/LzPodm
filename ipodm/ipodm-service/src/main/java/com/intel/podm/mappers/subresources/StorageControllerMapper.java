@@ -16,25 +16,28 @@
 
 package com.intel.podm.mappers.subresources;
 
+import javax.inject.Inject;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.intel.podm.business.entities.redfish.StorageController;
 import com.intel.podm.client.resources.redfish.StorageControllerResource;
 import com.intel.podm.mappers.EntityMapper;
 import com.intel.podm.mappers.subresources.strategies.EmbeddableCleanAndCreateStrategy;
 
-import javax.enterprise.context.Dependent;
-import javax.inject.Inject;
-
-@Dependent
+//@Dependent
+@Component
 public class StorageControllerMapper extends EntityMapper<StorageControllerResource, StorageController> {
-    @Inject
+	@Autowired
     private IdentifierMapper identifierMapper;
 
-    @Inject
+	@Autowired
     private SimpleTypeMapper simpleTypeMapper;
 
     private UnknownOemMapper unknownOemMapper = new UnknownOemMapper(new EmbeddableCleanAndCreateStrategy<>());
 
-    @Inject
+    @Autowired
     public StorageControllerMapper() {
         super(StorageControllerResource.class, StorageController.class);
     }

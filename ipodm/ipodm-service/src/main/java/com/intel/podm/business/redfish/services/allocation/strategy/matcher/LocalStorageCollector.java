@@ -55,7 +55,7 @@ public class LocalStorageCollector {
 
     private static LocalDrive toLocalDrive(Drive drive) {
         LocalDrive driveLocalStorage = new LocalDrive();
-        driveLocalStorage.setId(drive.getTheId());
+        driveLocalStorage.setId(drive.getId());
         driveLocalStorage.setParent(drive.getChassis());
         driveLocalStorage.setCapacityGib(convertBytesToGib(drive.getCapacityBytes()));
         driveLocalStorage.setSerialNumber(drive.getSerialNumber());
@@ -114,7 +114,7 @@ public class LocalStorageCollector {
 
     private PcieLocalStorage convertToPcieLocalStorage(Drive drive, Port upstreamPort) {
         PcieLocalStorage pcieLocalStorage = new PcieLocalStorage();
-        pcieLocalStorage.setId(drive.getTheId());
+        pcieLocalStorage.setId(drive.getId());
         pcieLocalStorage.setParent(drive.getChassis());
         pcieLocalStorage.setCapacityGib(convertBytesToGib(drive.getCapacityBytes()));
         pcieLocalStorage.setType(drive.getMediaType());

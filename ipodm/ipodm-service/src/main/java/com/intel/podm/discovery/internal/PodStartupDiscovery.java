@@ -21,7 +21,7 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-@Component
+@Component("PodStartupDiscovery")
 //@DependsOn({"DatabaseSchemaUpdateFinalizer"})
 public class PodStartupDiscovery {
     @Autowired
@@ -32,7 +32,7 @@ public class PodStartupDiscovery {
      * for public methods in singleton bean.
      * In real-life scenario it is called only once and does not need any locking mechanism.
      */
-    @PostConstruct
+//    @PostConstruct
     public void initInitialPod() {
     	podStartUpDiscoveryProxy.initInitialPod();
     }

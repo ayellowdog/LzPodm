@@ -17,22 +17,26 @@
 package com.intel.podm.services.configuration;
 
 import com.intel.podm.common.logger.Logger;
+import com.intel.podm.common.logger.LoggerFactory;
 import com.intel.podm.common.types.discovery.ServiceEndpoint;
 
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import static com.intel.podm.common.types.ServiceType.DISCOVERY_SERVICE;
 import static com.intel.podm.common.utils.Contracts.requires;
 import static java.lang.String.format;
 
-@Dependent
+//@Dependent
+@Component
 public class DiscoveryServiceDetectionHandler {
-    @Inject
-    private Logger logger;
+	private static final Logger logger = LoggerFactory.getLogger(DiscoveryServiceDetectionHandler.class);
 
-    @Inject
-    private ConfigurationTasksManager configurationManager;
+	@Autowired
+	private ConfigurationTasksManager configurationManager;
 
     public void onServiceDetected(ServiceEndpoint serviceEndpoint) {
         requires(DISCOVERY_SERVICE.equals(serviceEndpoint.getServiceType()), format("Only %s ServiceType is supported.", DISCOVERY_SERVICE));

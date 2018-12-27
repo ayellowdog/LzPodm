@@ -22,15 +22,21 @@ import com.intel.podm.services.detection.dhcp.ServiceChecker;
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 
-@Dependent
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+//@Dependent
+@Component
 public class ProvideEndpointsScheduledTask extends DefaultManagedTask implements Runnable {
 
-    @Inject
-    private ServiceChecker serviceChecker;
+	@Autowired
+	private ServiceChecker serviceChecker;
 
     @Override
     public void run() {
+    	//从checker的failedMap里拿出未达到重试上限的元素重试，如果还是失败，则fail次数++
         serviceChecker.retryFailedEndpointCandidates();
+        
         serviceChecker.triggerEndpointCandidatesCheck();
     }
 }

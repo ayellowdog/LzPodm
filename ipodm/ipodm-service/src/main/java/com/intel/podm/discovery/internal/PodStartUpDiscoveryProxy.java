@@ -62,7 +62,7 @@ public class PodStartUpDiscoveryProxy {
         pod.setName(discoveryConfig.get(DiscoveryConfig.class).getPodName());
         pod.setChassisType(POD);
         pod.setLocationId(podLocation);
-        pod.setTheId(id("pod"));
+        pod.setId(id("pod"));
         pod.setStatus(new Status(ENABLED, OK, null));
 
         return pod;

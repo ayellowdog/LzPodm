@@ -25,6 +25,7 @@ import java.util.function.Predicate;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
 
 import com.intel.podm.business.entities.redfish.Chassis;
 import com.intel.podm.business.entities.redfish.ExternalService;
@@ -48,7 +49,7 @@ public class ChassisHierarchyMaintainer {
     private TopLevelChassisLocationGuard topLevelChassisLocationGuard;
 
 //    @Transactional(MANDATORY)
-    @org.springframework.transaction.annotation.Transactional
+    @org.springframework.transaction.annotation.Transactional(propagation = Propagation.MANDATORY)
     public void maintain(Collection<Chassis> discoveredChassis) {
         Collection<Chassis> topLevelChassis = getTopLevelChassis(discoveredChassis);
         chassisLinker.linkToModel(topLevelChassis);

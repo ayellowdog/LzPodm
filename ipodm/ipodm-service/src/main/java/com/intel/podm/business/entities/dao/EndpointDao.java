@@ -21,9 +21,10 @@ import com.intel.podm.common.types.Protocol;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.TypedQuery;
-import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
@@ -38,6 +39,7 @@ import static javax.transaction.Transactional.TxType.MANDATORY;
 public class EndpointDao extends Dao<Endpoint> {
 
 //    @Transactional(MANDATORY)
+	@Transactional(propagation = Propagation.MANDATORY)
     public List<Endpoint> findEndpointMatchingUuid(UUID uuid) {
         TypedQuery<Endpoint> query = entityManager.createNamedQuery(GET_ENDPOINT_MATCHING_UUID, Endpoint.class);
         query.setParameter("uuid", uuid);
@@ -46,7 +48,8 @@ public class EndpointDao extends Dao<Endpoint> {
     }
 
 //    @Transactional(MANDATORY)
-    public List<Endpoint> findEndpointsWithNullUsername(UUID serviceUuid, Protocol protocol) {
+	@Transactional(propagation = Propagation.MANDATORY)
+	public List<Endpoint> findEndpointsWithNullUsername(UUID serviceUuid, Protocol protocol) {
         TypedQuery<Endpoint> query = entityManager.createNamedQuery(GET_ENDPOINTS_WITH_NULL_USERNAME_BY_SERVICE_UUID_AND_PROTOCOL, Endpoint.class);
         query.setParameter("serviceUuid", serviceUuid);
         query.setParameter("protocol", protocol);
@@ -55,6 +58,7 @@ public class EndpointDao extends Dao<Endpoint> {
     }
 
 //    @Transactional(MANDATORY)
+	@Transactional(propagation = Propagation.MANDATORY)
     public List<Endpoint> findEndpointsWithAssociatedComputerSystem(UUID serviceUuid, Protocol protocol) {
         TypedQuery<Endpoint> query = entityManager.createNamedQuery(GET_ENDPOINTS_ASSOCIATED_WITH_COMPUTER_SYSTEM_BY_SERVICE_UUID_AND_PROTOCOL,
             Endpoint.class);

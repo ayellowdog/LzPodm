@@ -40,7 +40,6 @@ import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
 //@ApplicationScoped
 @Service
-@Lazy
 public class TaskCoordinatorImpl implements TaskCoordinator {
 	private static final Logger logger = LoggerFactory.getLogger(TaskCoordinatorImpl.class);
     @Autowired
@@ -53,7 +52,7 @@ public class TaskCoordinatorImpl implements TaskCoordinator {
 
 //    @Inject
 //    @Named(SYNCHRONIZED_TASK_EXECUTOR)
-//    @Resource(name = SYNCHRONIZED_TASK_EXECUTOR)
+    @Resource(name = SYNCHRONIZED_TASK_EXECUTOR)
     private ScheduledExecutorService synchronizedTaskExecutor;
 
     @Override

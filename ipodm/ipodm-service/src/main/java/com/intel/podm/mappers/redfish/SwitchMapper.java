@@ -16,17 +16,20 @@
 
 package com.intel.podm.mappers.redfish;
 
+import javax.inject.Inject;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.intel.podm.business.entities.redfish.Switch;
 import com.intel.podm.client.resources.redfish.SwitchResource;
 import com.intel.podm.mappers.EntityMapper;
 import com.intel.podm.mappers.subresources.SimpleTypeMapper;
 
-import javax.enterprise.context.Dependent;
-import javax.inject.Inject;
-
-@Dependent
+//@Dependent
+@Component
 public class SwitchMapper extends EntityMapper<SwitchResource, Switch> {
-    @Inject
+	@Autowired
     SimpleTypeMapper simpleTypeMapper;
 
     public SwitchMapper() {

@@ -36,7 +36,7 @@ public class ExternalServiceReaderFactory {
     public ExternalServiceReader createExternalServiceReaderWithCacheAndRetries(URI baseUri) {
         return new ExternalServiceReader(webClientBuilder.newInstance(baseUri)
             .cachable()
-            .retryable()
+//            .retryable()
             .build()
         );
     }

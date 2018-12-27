@@ -17,6 +17,9 @@
 package com.intel.podm.services.detection.dhcp.filesystem;
 
 import javax.enterprise.context.Dependent;
+
+import org.springframework.stereotype.Component;
+
 import java.util.Collection;
 import java.util.List;
 
@@ -26,7 +29,8 @@ import static java.util.stream.Collectors.toList;
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 import static org.apache.commons.lang3.StringUtils.split;
 
-@Dependent
+//@Dependent
+@Component
 public class TmpLeasesFileRecordsParser {
 
     private static final int TMP_LEASES_MIN_PARTS_LENGTH = 4;

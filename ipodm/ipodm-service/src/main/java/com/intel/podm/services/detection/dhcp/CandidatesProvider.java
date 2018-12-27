@@ -24,6 +24,10 @@ import com.intel.podm.services.detection.dhcp.filesystem.TmpLeasesRecord;
 
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import java.nio.file.Path;
 import java.util.Collection;
 import java.util.HashSet;
@@ -37,19 +41,20 @@ import static java.nio.file.Paths.get;
 import static java.util.Collections.emptySet;
 import static java.util.stream.Collectors.toSet;
 
-@Dependent
+//@Dependent
+@Component
 public class CandidatesProvider {
 
     private static final String TMP_LEASES_LOCATION = "/tmp/leases";
     private static final String SERVICES_LIST_LOCATION = "/tmp/services.list";
 
-    @Inject
+    @Autowired
     private UrlProvider urlProvider;
 
-    @Inject
+    @Autowired
     private TmpLeasesFileRecordsParser tmpLeasesFileRecordsParser;
 
-    @Inject
+    @Autowired
     private ServiceListFileRecordsParser serviceListFileRecordsParser;
 
     Set<DhcpServiceCandidate> getEndpointCandidates() {

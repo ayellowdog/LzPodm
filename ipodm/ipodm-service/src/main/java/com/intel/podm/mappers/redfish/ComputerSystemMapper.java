@@ -29,21 +29,24 @@ import com.intel.podm.mappers.subresources.TrustedModuleMapper;
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import static com.intel.podm.common.types.DeepDiscoveryState.DONE;
 import static com.intel.podm.common.types.DeepDiscoveryState.INITIAL;
 import static com.intel.podm.common.types.DiscoveryState.BASIC;
 import static com.intel.podm.common.types.DiscoveryState.DEEP;
 import static java.util.Optional.ofNullable;
 
-@Dependent
+@Component
 public class ComputerSystemMapper extends EntityMapper<ComputerSystemResource, ComputerSystem> {
-    @Inject
+    @Autowired
     ComputerSystemDeviceMapper computerSystemDeviceMapper;
 
-    @Inject
+    @Autowired
     SimpleTypeMapper simpleTypeMapper;
 
-    @Inject
+    @Autowired
     TrustedModuleMapper trustedModuleMapper;
 
     public ComputerSystemMapper() {

@@ -88,10 +88,10 @@ public class PcieLocalStorageAllocator {
     private Map<Id, Id> getZoneToEndpointsMapping(Set<PcieLocalStorage> pcieLocalStorages) {
         Map<Id, Id> zoneToEndpointsMapping = new HashMap<>();
         for (PcieLocalStorage pcieLocalStorage : pcieLocalStorages) {
-            Id zoneId = pcieLocalStorage.getZone().getTheId();
+            Id zoneId = pcieLocalStorage.getZone().getId();
             Id endpointId = zoneToEndpointsMapping.get(zoneId);
             if (endpointId == null) {
-                endpointId = pcieLocalStorage.getEndpoint().getTheId();
+                endpointId = pcieLocalStorage.getEndpoint().getId();
             }
             zoneToEndpointsMapping.put(zoneId, endpointId);
         }

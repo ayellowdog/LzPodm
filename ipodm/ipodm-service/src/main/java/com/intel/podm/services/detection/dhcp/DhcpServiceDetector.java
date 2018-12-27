@@ -16,7 +16,6 @@
 
 package com.intel.podm.services.detection.dhcp;
 
-import com.intel.podm.common.logger.Logger;
 import com.intel.podm.config.base.dto.ServiceDetectionConfig.Protocols.Dhcp;
 import com.intel.podm.services.detection.dhcp.tasks.ProvideEndpointsScheduledTask;
 import com.intel.podm.services.detection.dhcp.tasks.RecheckFailedUrisScheduledTask;
@@ -27,39 +26,45 @@ import javax.enterprise.concurrent.ManagedScheduledExecutorService;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.RejectedExecutionException;
+import java.util.concurrent.ScheduledExecutorService;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 
 //@ApplicationScoped
 @Component
 public class DhcpServiceDetector {
-//    @Resource
-//	@Autowired
-    private ManagedScheduledExecutorService managedExecutorService;
+    @Resource(name = "managedExecutorService")
+    private ScheduledExecutorService managedExecutorService;
 
-//    @Inject
-    private Logger logger;
+	private static final Logger logger = LoggerFactory.getLogger(DhcpServiceDetector.class);
 
-//    @Inject
-    private ProvideEndpointsScheduledTask provideEndpointsScheduledTask;
+	@Autowired
+	private ProvideEndpointsScheduledTask provideEndpointsScheduledTask;
 
-//    @Inject
+	@Autowired
     private RecheckFailedUrisScheduledTask recheckFailedUrisScheduledTask;
 
     public void init(Dhcp dhcp) {
-        logger.i("Initializing DHCP based service detector...");
+        logger.info("Initializing DHCP based service detector...");
         try {
             long checkInterval = dhcp.getFilesCheckIntervalInSeconds();
+            /**
+             * 1.从checker的failedMap里拿出未达到重试上限的元素重试，如果还是失败，则fail次数++
+             * 2.
+             * **/
             managedExecutorService.scheduleWithFixedDelay(provideEndpointsScheduledTask, checkInterval, checkInterval, SECONDS);
 
             long recheckInterval = dhcp.getFailedEndpointRecheckInterval();
+            //这个任务仅仅将failedMap中的那些超过重试次数的元素，统统从knownMap和failedMap中删除。这样为啥能够触发元素被recheck？
             managedExecutorService.scheduleWithFixedDelay(recheckFailedUrisScheduledTask, recheckInterval, recheckInterval, SECONDS);
         } catch (RejectedExecutionException e) {
-            logger.e("Application failed to start properly. Service polling is disabled.", e);
+            logger.error("Application failed to start properly. Service polling is disabled.", e);
             throw e;
         }
     }

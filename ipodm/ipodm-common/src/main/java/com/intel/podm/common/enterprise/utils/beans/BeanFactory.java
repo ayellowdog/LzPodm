@@ -20,6 +20,7 @@ import static com.intel.podm.common.utils.IterableHelper.single;
 
 import java.io.Serializable;
 import java.util.Set;
+import java.util.UUID;
 
 import javax.enterprise.context.spi.CreationalContext;
 import javax.enterprise.inject.Any;
@@ -44,6 +45,9 @@ import com.inspur.podm.common.context.AppContext;
 public class BeanFactory implements Serializable {
     private static final long serialVersionUID = -6691592134302488258L;
     /**
+     * Creates new instance of specified CDI bean class.
+     */
+    /**
      * CDI转Spring框架改写之后的方法，利用spring context动态创建bean,从源码看来，目的是为了完成bean属性的自动注入？.
      * <p> TODO 功能描述 </p>
      * 
@@ -65,8 +69,12 @@ public class BeanFactory implements Serializable {
         //dataSourceBuider.setScope("");   同配置 scope
         //将实例注册spring容器中   bs 等同于  id配置
         AbstractBeanDefinition beanDefinition = dataSourceBuider.getBeanDefinition();
-        dbf.registerBeanDefinition(beanClass.getSimpleName(), beanDefinition);
-        return (T) context.getBean(beanClass.getSimpleName());
+        String beanName = beanClass.getSimpleName() + UUID.randomUUID();
+        dbf.registerBeanDefinition(beanName, beanDefinition);
+        T existingBean = (T) context.getBean(beanName);
+        //完成注入
+        dbf.autowireBean(existingBean);
+        return existingBean;
     }
 //    @Inject
 //    BeanManager beanManager;

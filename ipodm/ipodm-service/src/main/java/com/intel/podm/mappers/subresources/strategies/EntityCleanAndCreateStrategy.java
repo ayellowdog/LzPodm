@@ -21,11 +21,15 @@ import com.intel.podm.business.entities.redfish.base.Entity;
 
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import java.util.Collection;
 
-@Dependent
+@Component
 public class EntityCleanAndCreateStrategy<T extends Entity> implements CleanAndCreateStrategy<T> {
-    @Inject
+    @Autowired
     private GenericDao genericDao;
 
     @Override

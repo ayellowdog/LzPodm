@@ -32,6 +32,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.intel.podm.config.base.Config;
 import com.intel.podm.config.base.ConfigProvider;
@@ -66,7 +68,7 @@ public class EventSubscriptionMonitor {
 //    @Lock(WRITE)
 //    @Transactional(SUPPORTS)
 //    @AccessTimeout(value = 5, unit = SECONDS)
-    @org.springframework.transaction.annotation.Transactional(timeout = 5)
+    @Transactional(propagation = Propagation.SUPPORTS, timeout = 5)
     public void monitorService(UUID serviceUuid) {
         if (!eventSubscriptionTasks.containsKey(serviceUuid)) {
             EventSubscriptionTask subscriptionTask = eventSubscriptionTaskFactory.create(serviceUuid);
@@ -86,7 +88,7 @@ public class EventSubscriptionMonitor {
 //    @Lock(WRITE)
 //    @Transactional(SUPPORTS)
 //    @AccessTimeout(value = 5, unit = SECONDS)
-    @org.springframework.transaction.annotation.Transactional(timeout = 5)
+    @Transactional(propagation = Propagation.SUPPORTS, timeout = 5)
     public void cancelMonitoring(UUID serviceUuid) {
         ScheduledFuture<?> monitoringTask = eventSubscriptionTasks.remove(serviceUuid);
         if (monitoringTask != null) {

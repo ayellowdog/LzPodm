@@ -16,10 +16,12 @@
 
 package com.intel.podm.discovery.external.linker;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Component;
 
 import com.intel.podm.business.entities.redfish.base.Entity;
@@ -33,10 +35,15 @@ import static java.lang.String.format;
  */
 //@Dependent
 @Component
+@DependsOn({"LinkerCollectionProducer"})
 public class EntityLinker {
 //	@Autowired
 	private Collection<Linker> linkers;
-
+	@PostConstruct
+	public void init() {
+		this.linkers = LinkerCollectionProducer.create();
+		System.out.println("linkers size is " + linkers.size());
+	}
     public void link(Entity source, Entity target, String linkName) {
         for (Linker linker : linkers) {
             if (linker.tryLink(source, target, linkName)) {

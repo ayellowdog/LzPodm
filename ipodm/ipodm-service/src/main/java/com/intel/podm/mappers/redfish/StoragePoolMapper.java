@@ -16,21 +16,22 @@
 
 package com.intel.podm.mappers.redfish;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.intel.podm.business.entities.redfish.StoragePool;
 import com.intel.podm.business.entities.redfish.embeddables.Capacity;
 import com.intel.podm.client.resources.redfish.StoragePoolResource;
 import com.intel.podm.mappers.EntityMapper;
 import com.intel.podm.mappers.subresources.IdentifierMapper;
 
-import javax.enterprise.context.Dependent;
-import javax.inject.Inject;
-
-@Dependent
+//@Dependent
+@Component
 public class StoragePoolMapper extends EntityMapper<StoragePoolResource, StoragePool> {
-    @Inject
+	@Autowired
     private CapacityMapper capacityMapper;
 
-    @Inject
+	@Autowired
     private IdentifierMapper identifierMapper;
 
     protected StoragePoolMapper() {

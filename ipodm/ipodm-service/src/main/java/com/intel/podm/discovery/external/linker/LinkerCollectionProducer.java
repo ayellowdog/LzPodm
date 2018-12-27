@@ -80,7 +80,7 @@ import com.intel.podm.business.entities.redfish.Zone;
 import com.intel.podm.business.entities.redfish.base.Entity;
 
 //@Dependent
-@Component
+@Component("LinkerCollectionProducer")
 public class LinkerCollectionProducer {
     private static final Collection<Linker> LINKERS = new ArrayList<>();
 
@@ -218,8 +218,9 @@ public class LinkerCollectionProducer {
         LINKERS.add(new Linker(sourceClass, targetClass, linkName, method));
     }
 
-    @Produces
-    public Collection<Linker> create() {
+//    @Produces
+    //修改为static方法
+    public static Collection<Linker> create() {
         return unmodifiableCollection(LINKERS);
     }
 }

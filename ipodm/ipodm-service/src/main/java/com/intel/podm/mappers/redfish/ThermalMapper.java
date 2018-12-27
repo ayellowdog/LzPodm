@@ -16,13 +16,14 @@
 
 package com.intel.podm.mappers.redfish;
 
+import org.springframework.stereotype.Component;
+
 import com.intel.podm.business.entities.redfish.Thermal;
 import com.intel.podm.client.resources.redfish.ThermalResource;
 import com.intel.podm.mappers.EntityMapper;
 
-import javax.enterprise.context.Dependent;
-
-@Dependent
+//@Dependent
+@Component
 public class ThermalMapper extends EntityMapper<ThermalResource, Thermal> {
     protected ThermalMapper() {
         super(ThermalResource.class, Thermal.class);

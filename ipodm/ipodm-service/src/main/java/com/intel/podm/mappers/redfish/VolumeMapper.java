@@ -16,6 +16,13 @@
 
 package com.intel.podm.mappers.redfish;
 
+import static java.lang.Boolean.TRUE;
+
+import javax.inject.Inject;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.intel.podm.business.entities.redfish.Volume;
 import com.intel.podm.business.entities.redfish.embeddables.Capacity;
 import com.intel.podm.client.resources.redfish.VolumeResource;
@@ -23,23 +30,19 @@ import com.intel.podm.mappers.EntityMapper;
 import com.intel.podm.mappers.subresources.IdentifierMapper;
 import com.intel.podm.mappers.subresources.SimpleTypeMapper;
 
-import javax.enterprise.context.Dependent;
-import javax.inject.Inject;
-
-import static java.lang.Boolean.TRUE;
-
-@Dependent
+//@Dependent
+@Component
 public class VolumeMapper extends EntityMapper<VolumeResource, Volume> {
-    @Inject
+	@Autowired
     private CapacityMapper capacityMapper;
 
-    @Inject
+	@Autowired
     private IdentifierMapper identifierMapper;
 
-    @Inject
+	@Autowired
     private OperationMapper operationsMapper;
 
-    @Inject
+	@Autowired
     private SimpleTypeMapper simpleTypeMapper;
 
     public VolumeMapper() {

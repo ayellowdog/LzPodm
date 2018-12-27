@@ -22,6 +22,7 @@ import com.codahale.metrics.Timer;
 import java.time.Duration;
 import java.util.concurrent.TimeoutException;
 
+//这个类目前没用到了，详见SerialExecutorRegistry.java
 //@SuppressWarnings({"checkstyle:ClassFanOutComplexity"})
 class InstrumentedSerialExecutor implements SerialExecutor {
     private Timer duration;

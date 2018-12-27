@@ -18,9 +18,10 @@ package com.intel.podm.business.entities.dao;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.TypedQuery;
-import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.intel.podm.business.entities.redfish.Storage;
 
@@ -37,6 +38,7 @@ import static javax.transaction.Transactional.TxType.MANDATORY;
 @Component
 public class StorageDao extends Dao<Storage> {
 //    @Transactional(MANDATORY)
+    @Transactional(propagation = Propagation.MANDATORY)
     public List<Storage> findComplementaryStorages(Storage storage) {
         TypedQuery<Storage> query = entityManager.createNamedQuery(GET_STORAGE_MULTI_SOURCE, Storage.class);
         query.setParameter("uuid", storage.getComputerSystem().getUuid());
@@ -45,6 +47,7 @@ public class StorageDao extends Dao<Storage> {
     }
 
 //    @Transactional(MANDATORY)
+    @Transactional(propagation = Propagation.MANDATORY)
     public Optional<Storage> findPrimaryStorage(Storage complementaryStorage) {
         TypedQuery<Storage> query = entityManager.createNamedQuery(GET_PRIMARY_STORAGE, Storage.class);
         query.setParameter("multiSourceDiscriminator", complementaryStorage.getMultiSourceDiscriminator());

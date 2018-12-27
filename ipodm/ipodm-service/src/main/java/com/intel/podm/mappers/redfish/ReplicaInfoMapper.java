@@ -16,13 +16,14 @@
 
 package com.intel.podm.mappers.redfish;
 
+import org.springframework.stereotype.Component;
+
 import com.intel.podm.business.entities.redfish.ReplicaInfo;
 import com.intel.podm.client.resources.redfish.ReplicaInfoResource;
 import com.intel.podm.mappers.EntityMapper;
 
-import javax.enterprise.context.Dependent;
-
-@Dependent
+//@Dependent
+@Component
 public class ReplicaInfoMapper extends EntityMapper<ReplicaInfoResource, ReplicaInfo> {
     protected ReplicaInfoMapper() {
         super(ReplicaInfoResource.class, ReplicaInfo.class);

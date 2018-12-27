@@ -24,12 +24,18 @@ import com.intel.podm.client.redfish.response.UnexpectedRedirectionException;
 import com.intel.podm.client.resources.redfish.ServiceRootResource;
 import com.intel.podm.common.types.ServiceType;
 import com.intel.podm.config.base.Config;
+import com.intel.podm.config.base.ConfigProvider;
 import com.intel.podm.config.base.Holder;
 import com.intel.podm.config.base.dto.ServiceDetectionConfig;
 import com.intel.podm.common.types.discovery.ServiceEndpoint;
 
+import javax.annotation.Resource;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import java.net.URI;
 import java.util.Iterator;
 import java.util.Objects;
@@ -44,18 +50,22 @@ import static org.apache.commons.lang3.StringUtils.stripEnd;
  * Service Detection implementation based on obtaining UUID of service
  * being detected at given URI using REST client.
  */
-@ApplicationScoped
-@SuppressWarnings({"checkstyle:ClassFanOutComplexity"})
+//@ApplicationScoped
+//@SuppressWarnings({"checkstyle:ClassFanOutComplexity"})
+@Component
 public class ServiceDescriptor {
     private static final String LUI_COMPUTER_SYSTEM_URI_PART = "/redfish/v1/Systems/1";
     private static final ServiceType UNDEFINED_SERVICE_TYPE = null;
 
-    @Inject
+    @Autowired
     private WebClientBuilder webClientBuilder;
 
+//    @Config
+//    @Inject
+//    private Holder<ServiceDetectionConfig> serviceDetectionConfig;
     @Config
-    @Inject
-    private Holder<ServiceDetectionConfig> serviceDetectionConfig;
+    @Resource(name="podmConfigProvider")
+    private ConfigProvider serviceDetectionConfig;
 
     public ServiceEndpoint describe(URI serviceUri) throws UnrecognizedServiceTypeException {
         return describe(serviceUri, UNDEFINED_SERVICE_TYPE);

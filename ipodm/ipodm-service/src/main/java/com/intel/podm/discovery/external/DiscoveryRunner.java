@@ -21,13 +21,15 @@ import javax.annotation.Resource;
 import javax.enterprise.context.Dependent;
 import javax.enterprise.event.Event;
 import javax.inject.Inject;
-import javax.transaction.Transactional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.inspur.podm.common.context.AppContext;
 import com.inspur.podm.service.service.detection.MyServiceDetectionStartUp;
 import com.intel.podm.business.entities.redfish.ExternalService;
 import com.intel.podm.client.WebClientRequestException;
@@ -80,6 +82,11 @@ public class DiscoveryRunner extends CancelableRunnable {
     @Resource(name="podmConfigProvider")
     private ConfigProvider discoveryConfig;
 
+    /**
+     * Spring在注册bean的时候，需要调用hashcode方法，而本类的hashcode与uuid有关，因此需要
+     * 赋一个初始值，防止空指针异常。此外，本类的equals与hashcode方法都重写了，调用spring的bean工厂的
+     * registerBeanDefinition(beanName, beanDefinition)时，注意潜在问题。
+     */
     private UUID serviceUuid;
 
     @Autowired
@@ -89,8 +96,9 @@ public class DiscoveryRunner extends CancelableRunnable {
     private Event<DiscoveryFinishedEvent> discoveryFinishedEvent;
 
     @Override
-    @Transactional(REQUIRES_NEW)
+//    @Transactional(REQUIRES_NEW)
 //    @TimeMeasured(tag = "[DiscoveryTask]")
+    @Transactional(propagation = Propagation.REQUIRED)
     public void run() {
         try {
             requiresNonNull(serviceUuid, "Service UUID cannot be null, discovery action has not been configured correctly");
@@ -131,7 +139,8 @@ public class DiscoveryRunner extends CancelableRunnable {
             logger.error("Error while polling data from " + service, e);
         }
 
-        discoveryFinishedEvent.fire(new DiscoveryFinishedEvent(serviceUuid));
+//        discoveryFinishedEvent.fire(new DiscoveryFinishedEvent(serviceUuid));
+        AppContext.context().publishEvent(new DiscoveryFinishedEvent(this,serviceUuid));
     }
 
     private void triggerAvailabilityCheckOnConnectionException(ExternalService service, WebClientRequestException e) {
@@ -165,6 +174,9 @@ public class DiscoveryRunner extends CancelableRunnable {
 
     @Override
     public int hashCode() {
+    	if(serviceUuid == null) {
+    		return super.hashCode();
+    	}
         return serviceUuid.hashCode();
     }
 

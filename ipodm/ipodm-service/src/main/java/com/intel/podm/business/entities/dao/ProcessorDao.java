@@ -26,9 +26,10 @@ import java.util.Optional;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.TypedQuery;
-import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.intel.podm.business.entities.redfish.Processor;
 
@@ -36,6 +37,7 @@ import com.intel.podm.business.entities.redfish.Processor;
 @Component
 public class ProcessorDao extends Dao<Processor> {
 //    @Transactional(MANDATORY)
+    @Transactional(propagation = Propagation.MANDATORY)
     public List<Processor> findComplementaryProcessors(Processor processor) {
         TypedQuery<Processor> query = entityManager.createNamedQuery(GET_PROCESSOR_MULTI_SOURCE, Processor.class);
         query.setParameter("multiSourceDiscriminator", processor.getMultiSourceDiscriminator());
@@ -44,6 +46,7 @@ public class ProcessorDao extends Dao<Processor> {
     }
 
 //    @Transactional(MANDATORY)
+    @Transactional(propagation = Propagation.MANDATORY)
     public Optional<Processor> findPrimaryProcessor(Processor complementaryProcessor) {
         TypedQuery<Processor> query = entityManager.createNamedQuery(GET_PROCESSOR_MULTI_SOURCE, Processor.class);
         query.setParameter("multiSourceDiscriminator", complementaryProcessor.getMultiSourceDiscriminator());

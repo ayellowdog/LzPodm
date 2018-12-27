@@ -45,8 +45,8 @@ import com.intel.podm.common.types.Status;
 
 //@Singleton
 //@Startup
-//@Component
-//@DependsOn({"ResourceProvider", "PodStartupDiscovery"})
+@Component("DiscoveryStartup")
+@DependsOn({"ResourceProvider", "PodStartupDiscovery"})
 public class DiscoveryStartup {
 	private static final Logger logger = LoggerFactory.getLogger(DiscoveryStartup.class);
 
@@ -54,15 +54,15 @@ public class DiscoveryStartup {
     private DiscoverablesDelegalizer delegalizer;
 
     @Autowired
-    private ServiceExplorer serviceExplorer;
+    private ServiceExplorerProxy serviceExplorerProxy;
 
-    @PostConstruct
-    private void initialize() {
+//    @PostConstruct
+   public void initialize() {
         logger.debug("Sanitizing existing external services");
         Set<UUID> sanitizedServicesUuids = delegalizer.delegalizeExternalServicesResources();
 
         for (UUID serviceUuid : sanitizedServicesUuids) {
-            serviceExplorer.startMonitoringOfService(serviceUuid);
+        	serviceExplorerProxy.startMonitoringOfService(serviceUuid);
         }
     }
 

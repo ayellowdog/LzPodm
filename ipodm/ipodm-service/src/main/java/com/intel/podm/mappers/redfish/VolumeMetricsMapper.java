@@ -16,13 +16,14 @@
 
 package com.intel.podm.mappers.redfish;
 
+import org.springframework.stereotype.Component;
+
 import com.intel.podm.business.entities.redfish.VolumeMetrics;
 import com.intel.podm.client.resources.redfish.VolumeMetricsResource;
 import com.intel.podm.mappers.EntityMapper;
 
-import javax.enterprise.context.Dependent;
-
-@Dependent
+//@Dependent
+@Component
 public class VolumeMetricsMapper extends EntityMapper<VolumeMetricsResource, VolumeMetrics> {
     public VolumeMetricsMapper() {
         super(VolumeMetricsResource.class, VolumeMetrics.class);

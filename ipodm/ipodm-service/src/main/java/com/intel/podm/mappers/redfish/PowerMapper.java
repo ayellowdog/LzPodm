@@ -16,13 +16,14 @@
 
 package com.intel.podm.mappers.redfish;
 
+import org.springframework.stereotype.Component;
+
 import com.intel.podm.business.entities.redfish.Power;
 import com.intel.podm.client.resources.redfish.PowerResource;
 import com.intel.podm.mappers.EntityMapper;
 
-import javax.enterprise.context.Dependent;
-
-@Dependent
+//@Dependent
+@Component
 public class PowerMapper extends EntityMapper<PowerResource, Power> {
 
     protected PowerMapper() {

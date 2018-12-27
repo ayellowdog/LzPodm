@@ -16,13 +16,14 @@
 
 package com.intel.podm.mappers.redfish;
 
+import org.springframework.stereotype.Component;
+
 import com.intel.podm.business.entities.redfish.Storage;
 import com.intel.podm.client.resources.redfish.StorageResource;
 import com.intel.podm.mappers.EntityMapper;
 
-import javax.enterprise.context.Dependent;
-
-@Dependent
+//@Dependent
+@Component
 public class StorageMapper extends EntityMapper<StorageResource, Storage> {
 
     protected StorageMapper() {

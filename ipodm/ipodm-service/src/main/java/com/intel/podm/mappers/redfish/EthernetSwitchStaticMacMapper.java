@@ -22,7 +22,10 @@ import com.intel.podm.mappers.EntityMapper;
 
 import javax.enterprise.context.Dependent;
 
-@Dependent
+import org.springframework.stereotype.Component;
+
+//@Dependent
+@Component
 public class EthernetSwitchStaticMacMapper extends EntityMapper<EthernetSwitchStaticMacResource, EthernetSwitchStaticMac> {
     public EthernetSwitchStaticMacMapper() {
         super(EthernetSwitchStaticMacResource.class, EthernetSwitchStaticMac.class);

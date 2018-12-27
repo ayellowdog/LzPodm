@@ -26,9 +26,10 @@ import java.util.Optional;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.TypedQuery;
-import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.intel.podm.business.entities.redfish.SimpleStorage;
 
@@ -36,6 +37,7 @@ import com.intel.podm.business.entities.redfish.SimpleStorage;
 @Component
 public class SimpleStorageDao extends Dao<SimpleStorage> {
 //    @Transactional(MANDATORY)
+    @Transactional(propagation = Propagation.MANDATORY)
     public Optional<SimpleStorage> findPrimarySimpleStorage(SimpleStorage complementarySimpleStorage) {
         TypedQuery<SimpleStorage> query = entityManager.createNamedQuery(GET_SIMPLE_STORAGE_MULTI_SOURCE, SimpleStorage.class);
         query.setParameter("multiSourceDiscriminator", complementarySimpleStorage.getMultiSourceDiscriminator());
@@ -44,6 +46,7 @@ public class SimpleStorageDao extends Dao<SimpleStorage> {
     }
 
 //    @Transactional(MANDATORY)
+    @Transactional(propagation = Propagation.MANDATORY)
     public List<SimpleStorage> findComplementarySimpleStorages(SimpleStorage simpleStorage) {
         TypedQuery<SimpleStorage> query = entityManager.createNamedQuery(GET_SIMPLE_STORAGE_MULTI_SOURCE, SimpleStorage.class);
         query.setParameter("multiSourceDiscriminator", simpleStorage.getMultiSourceDiscriminator());

@@ -86,12 +86,12 @@ public class Storage extends DiscoverableEntity implements MultiSourceResource {
     private Chassis chassis;
 
     @Override
-    public Id getTheId() {
+    public Id getId() {
         return entityId;
     }
 
     @Override
-    public void setTheId(Id id) {
+    public void setId(Id id) {
         this.entityId = id;
     }
 

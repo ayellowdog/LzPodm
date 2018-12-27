@@ -17,14 +17,20 @@
 package com.intel.podm.services.detection.dhcp;
 
 import com.intel.podm.common.logger.Logger;
+import com.intel.podm.common.logger.LoggerFactory;
 import com.intel.podm.config.base.Config;
+import com.intel.podm.config.base.ConfigProvider;
 import com.intel.podm.config.base.Holder;
 import com.intel.podm.config.base.dto.ServiceDetectionConfig;
 import com.intel.podm.config.base.dto.ServiceDetectionConfig.Protocols.Dhcp;
 import com.intel.podm.common.types.discovery.ServiceEndpoint;
 
+import javax.annotation.Resource;
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
+
+import org.springframework.stereotype.Component;
+
 import java.net.URI;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -40,18 +46,21 @@ import static java.util.Objects.isNull;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toSet;
 
-@Dependent
+//@Dependent
+@Component
 class ServiceEndpointsProcessor {
 
     private final ConcurrentMap<URI, ServiceEndpoint> knownServiceEndpointsMap = new ConcurrentHashMap<>();
     private final ConcurrentMap<URI, DhcpServiceCandidate> failedServiceEndpointsMap = new ConcurrentHashMap<>();
 
-    @Inject
+//    @Inject
+//    @Config
+//    private Holder<ServiceDetectionConfig> configHolder;
     @Config
-    private Holder<ServiceDetectionConfig> configHolder;
+    @Resource(name="podmConfigProvider")
+    private ConfigProvider configHolder;
 
-    @Inject
-    private Logger logger;
+    private static final Logger logger = LoggerFactory.getLogger(ServiceEndpointsProcessor.class);
 
     public Set<URI> getKnownUrisNotPresentInFreshCandidateSet(Set<DhcpServiceCandidate> freshCandidateSet) {
         Set<URI> knownUris = knownServiceEndpointsMap.keySet();
@@ -148,6 +157,7 @@ class ServiceEndpointsProcessor {
      *
      * @param candidate
      */
+    //当发现结束后，发现这个设备不是一个可用服务，则调用此方法
     public void failServiceEndpointCandidate(DhcpServiceCandidate candidate) {
         DhcpServiceCandidate addedCandidate = failedServiceEndpointsMap.putIfAbsent(candidate.getEndpointUri(), candidate);
         String message;

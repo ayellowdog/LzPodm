@@ -16,17 +16,18 @@
 
 package com.intel.podm.mappers.redfish;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.intel.podm.business.entities.redfish.SimpleStorage;
 import com.intel.podm.client.resources.redfish.SimpleStorageResource;
 import com.intel.podm.mappers.EntityMapper;
 import com.intel.podm.mappers.subresources.SimpleStorageDeviceMapper;
 
-import javax.enterprise.context.Dependent;
-import javax.inject.Inject;
-
-@Dependent
+//@Dependent
+@Component
 public class SimpleStorageMapper extends EntityMapper<SimpleStorageResource, SimpleStorage> {
-    @Inject
+	@Autowired
     private SimpleStorageDeviceMapper simpleStorageDeviceMapper;
 
     public SimpleStorageMapper() {

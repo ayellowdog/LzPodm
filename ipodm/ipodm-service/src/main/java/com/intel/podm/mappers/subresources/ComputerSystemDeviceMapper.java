@@ -22,11 +22,15 @@ import com.intel.podm.mappers.subresources.strategies.EmbeddableCleanAndCreateSt
 
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import java.util.Objects;
 
-@Dependent
+@Component
 public class ComputerSystemDeviceMapper extends SubresourceMapper<RedfishComputerSystem.Device, ComputerSystemDevice> {
-    @Inject
+    @Autowired
     public ComputerSystemDeviceMapper(EmbeddableCleanAndCreateStrategy<ComputerSystemDevice> embeddableCleanAndCreateStrategy) {
         super(ComputerSystemDevice.class, embeddableCleanAndCreateStrategy);
     }

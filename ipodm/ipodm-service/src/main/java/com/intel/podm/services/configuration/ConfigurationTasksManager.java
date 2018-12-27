@@ -18,17 +18,25 @@ package com.intel.podm.services.configuration;
 
 import com.intel.podm.common.enterprise.utils.beans.BeanFactory;
 import com.intel.podm.common.logger.Logger;
+import com.intel.podm.common.logger.LoggerFactory;
 import com.intel.podm.common.types.discovery.ServiceEndpoint;
 import com.intel.podm.config.base.Config;
+import com.intel.podm.config.base.ConfigProvider;
 import com.intel.podm.config.base.Holder;
 import com.intel.podm.config.base.dto.DiscoveryServiceConfig;
 
+import javax.annotation.Resource;
 import javax.ejb.AccessTimeout;
 import javax.ejb.Lock;
 import javax.ejb.Singleton;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -38,32 +46,37 @@ import java.util.concurrent.ScheduledFuture;
 import static com.intel.podm.common.enterprise.utils.beans.JndiNames.SYNCHRONIZED_TASK_EXECUTOR;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static javax.ejb.LockType.WRITE;
-import static javax.transaction.Transactional.TxType.SUPPORTS;
+//import static javax.transaction.Transactional.TxType.SUPPORTS;
 
-@Singleton
+//@Singleton
+@Component
 public class ConfigurationTasksManager {
     private final Map<UUID, ScheduledFuture<?>> configurationTasks = new HashMap<>();
 
-    @Inject
-    @Named(SYNCHRONIZED_TASK_EXECUTOR)
+//    @Inject
+//    @Named(SYNCHRONIZED_TASK_EXECUTOR)
+    @Resource(name = SYNCHRONIZED_TASK_EXECUTOR)
     private ScheduledExecutorService configurationTaskExecutor;
 
-    @Inject
+//    @Inject
+//    @Config
+//    private Holder<DiscoveryServiceConfig> discoveryServiceConfigHolder;
     @Config
-    private Holder<DiscoveryServiceConfig> discoveryServiceConfigHolder;
+    @Resource(name="podmConfigProvider")
+    private ConfigProvider discoveryServiceConfigHolder;
 
-    @Inject
+    @Autowired
     private BeanFactory beanFactory;
 
-    @Inject
-    private Logger logger;
+    private static final Logger logger = LoggerFactory.getLogger(ConfigurationTasksManager.class);
 
     /**
      * LockType.WRITE used due to concurrent access to configuration tasks map that modifies it (put operation)
      */
-    @Lock(WRITE)
-    @Transactional(SUPPORTS)
-    @AccessTimeout(value = 5, unit = SECONDS)
+//    @Lock(WRITE)
+//    @Transactional(SUPPORTS)
+//    @AccessTimeout(value = 5, unit = SECONDS)
+    @Transactional(propagation = Propagation.SUPPORTS, timeout = 5)
     public void scheduleConfigurer(ServiceEndpoint serviceEndpoint) {
         UUID serviceUuid = serviceEndpoint.getServiceUuid();
         if (!configurationTasks.containsKey(serviceUuid)) {
@@ -77,9 +90,10 @@ public class ConfigurationTasksManager {
     /**
      * LockType.WRITE used due to concurrent access to configuration tasks map that modifies it (remove operation)
      */
-    @Lock(WRITE)
-    @Transactional(SUPPORTS)
-    @AccessTimeout(value = 5, unit = SECONDS)
+//    @Lock(WRITE)
+//    @Transactional(SUPPORTS)
+//    @AccessTimeout(value = 5, unit = SECONDS)
+    @Transactional(propagation = Propagation.SUPPORTS, timeout = 5)
     public void cancelConfigurer(UUID serviceUuid) {
         ScheduledFuture<?> configurationTask = configurationTasks.remove(serviceUuid);
         if (configurationTask != null) {
@@ -106,6 +120,15 @@ public class ConfigurationTasksManager {
 
     private DiscoveryServiceConfigurationTask createDiscoveryServiceConfigurationTask(ServiceEndpoint serviceEndpoint) {
         DiscoveryServiceConfigurationTask task = beanFactory.create(DiscoveryServiceConfigurationTask.class);
+        try {
+			DiscoveryServiceConfigurationTask aa = task.getClass().newInstance();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         task.setServiceEndpoint(serviceEndpoint);
         return task;
     }

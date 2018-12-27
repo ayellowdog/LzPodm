@@ -23,11 +23,16 @@ import com.intel.podm.mappers.subresources.strategies.EmbeddableCleanAndCreateSt
 
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import java.util.Objects;
 
-@Dependent
+//@Dependent
+@Component
 public class OperationMapper extends SubresourceMapper<OperationResource, Operation> {
-    @Inject
+	@Autowired
     public OperationMapper(EmbeddableCleanAndCreateStrategy<Operation> embeddableCleanAndCreateStrategy) {
         super(Operation.class, embeddableCleanAndCreateStrategy);
     }

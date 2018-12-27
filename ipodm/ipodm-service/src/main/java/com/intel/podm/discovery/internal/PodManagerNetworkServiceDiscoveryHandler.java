@@ -43,7 +43,7 @@ class PodManagerNetworkServiceDiscoveryHandler {
         );
 
         NetworkProtocol networkProtocol = genericDao.create(NetworkProtocol.class);
-        networkProtocol.setTheId(id("network-protocol"));
+        networkProtocol.setId(id("network-protocol"));
         networkProtocol.setName(networkServiceDto.getName());
         networkProtocol.setDescription(networkServiceDto.getDescription());
         networkProtocol.setStatus(networkServiceDto.getStatus());

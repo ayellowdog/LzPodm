@@ -23,11 +23,15 @@ import com.intel.podm.mappers.subresources.strategies.EmbeddableCleanAndCreateSt
 
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import java.util.Objects;
 
-@Dependent
+@Component
 public class AlarmTripsMapper extends SubresourceMapper<AlarmTripsObject, AlarmTrips> {
-    @Inject
+    @Autowired
     public AlarmTripsMapper(EmbeddableCleanAndCreateStrategy<AlarmTrips> embeddableCleanAndCreateStrategy) {
         super(AlarmTrips.class, embeddableCleanAndCreateStrategy);
     }

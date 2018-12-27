@@ -100,7 +100,7 @@ public class ExistingRemoteDriveAllocationStrategy implements RemoteDriveAllocat
         ComputerSystem computerSystem = composedNode.getComputerSystem();
         Volume volume = any(composedNode.getVolumes());
         if (endpointObtainer.getInitiatorEndpoint(computerSystem, volumeHelper.retrieveFabricFromVolume(volume)) == null) {
-            tasks.add(endpointTaskFactory.create(volume.getTheId(), INITIATOR, toContext(computerSystem)));
+            tasks.add(endpointTaskFactory.create(volume.getId(), INITIATOR, toContext(computerSystem)));
         }
         if (computerSystem.hasNetworkInterfaceWithNetworkDeviceFunction() && ISCSI.equals(volumeHelper.retrieveProtocolFromVolume(volume))) {
             tasks.addAll(iscsiAssemblyTasksProvider.createTasks());

@@ -63,7 +63,7 @@ class PodManagerEthernetInterfaceDiscoveryHandler {
 
     private void addNetworkInterface(Manager manager, EthernetInterfaceDto fromSystem) {
         EthernetInterface ethernetInterface = genericDao.create(EthernetInterface.class);
-        ethernetInterface.setTheId(id(fromSystem.getName()));
+        ethernetInterface.setId(id(fromSystem.getName()));
         ethernetInterface.setName(fromSystem.getName());
         ethernetInterface.setDescription(fromSystem.getDescription());
         ethernetInterface.setMacAddress(fromSystem.getMacAddress());
@@ -81,7 +81,7 @@ class PodManagerEthernetInterfaceDiscoveryHandler {
     private void addNetworkInterfaceVlans(EthernetInterfaceDto fromSystem, EthernetInterface ethernetInterface) {
         for (VlanEthernetInterfaceDto vlan : fromSystem.getVlans()) {
             EthernetSwitchPortVlan ethernetSwitchPortVlan = genericDao.create(EthernetSwitchPortVlan.class);
-            ethernetSwitchPortVlan.setTheId(id(vlan.getVlanId()));
+            ethernetSwitchPortVlan.setId(id(vlan.getVlanId()));
             ethernetSwitchPortVlan.setName(vlan.getName());
             ethernetSwitchPortVlan.setDescription(vlan.getDescription());
             ethernetSwitchPortVlan.setVlanId(vlan.getVlanId());

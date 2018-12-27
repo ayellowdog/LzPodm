@@ -16,7 +16,9 @@
 
 package com.intel.podm.discovery.external;
 
+import com.intel.podm.common.enterprise.utils.beans.BeanFactory;
 import com.intel.podm.common.logger.Logger;
+import com.intel.podm.common.logger.LoggerFactory;
 import com.intel.podm.common.synchronization.TaskCoordinator;
 import com.intel.podm.common.types.discovery.ServiceEndpoint;
 import com.intel.podm.discovery.ServiceExplorer;
@@ -25,42 +27,55 @@ import com.intel.podm.services.configuration.DiscoveryServiceDetectionHandler;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import java.util.UUID;
 
-@ApplicationScoped
+//@ApplicationScoped
+@Component
 public class ServiceDetectionListenerImpl implements ServiceDetectionListener {
-    @Inject
-    private Logger logger;
+	private static final Logger logger = LoggerFactory.getLogger(ServiceDetectionListenerImpl.class);
 
-    @Inject
+	@Autowired
     private ServiceExplorer serviceExplorer;
 
-    @Inject
+	@Autowired
     private ExternalServiceUpdater externalServiceUpdater;
 
-    @Inject
+	@Autowired
     private TaskCoordinator taskCoordinator;
 
-    @Inject
+	@Autowired
     private DiscoveryServiceDetectionHandler discoveryServiceDetectionHandler;
 
+	@Autowired
+	private BeanFactory beanFactory;
     @Override
     public void onServiceDetected(ServiceEndpoint serviceEndpoint) {
         UUID serviceUuid = serviceEndpoint.getServiceUuid();
-        taskCoordinator.registerAsync(serviceUuid, () -> {
-            // Do not change form of this log, as this is being used in developer tools!
-            logger.i("Service {} detected", serviceEndpoint);
-
-            switch (serviceEndpoint.getServiceType()) {
-                case DISCOVERY_SERVICE:
-                    discoveryServiceDetectionHandler.onServiceDetected(serviceEndpoint);
-                    break;
-                default:
-                    externalServiceUpdater.updateExternalService(serviceEndpoint);
-                    serviceExplorer.startMonitoringOfService(serviceUuid);
-                    break;
-            }
-        });
+//        taskCoordinator.registerAsync(serviceUuid, () -> {
+//            // Do not change form of this log, as this is being used in developer tools!
+//            logger.i("Service {} detected", serviceEndpoint);
+//
+//            switch (serviceEndpoint.getServiceType()) {
+//                case DISCOVERY_SERVICE:
+//                    discoveryServiceDetectionHandler.onServiceDetected(serviceEndpoint);
+//                    break;
+//                default:
+//                	/*
+//                	 * 根据UUID判断是否数据库里存在这个数据，如果没有则插入，有了的话，更新一下baseUrl
+//                	 * 同时，还会根据类型判断这个数据源会不会event，是不是ComplementaryDataSource
+//                	 * */
+//                    externalServiceUpdater.updateExternalService(serviceEndpoint);
+//                    serviceExplorer.startMonitoringOfService(serviceUuid);
+//                    break;
+//            }
+//        });
+        OnServiceDetectRunner runner = beanFactory.create(OnServiceDetectRunner.class);
+        runner.setServiceEndpoint(serviceEndpoint);
+        taskCoordinator.registerAsync(serviceUuid,runner);
     }
 
     @Override

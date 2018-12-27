@@ -16,17 +16,21 @@
 
 package com.intel.podm.mappers.subresources;
 
+import java.util.Objects;
+
+import javax.inject.Inject;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.intel.podm.business.entities.redfish.embeddables.OnPackageMemory;
 import com.intel.podm.client.resources.redfish.ProcessorMemoryObject;
 import com.intel.podm.mappers.subresources.strategies.EmbeddableCleanAndCreateStrategy;
 
-import javax.enterprise.context.Dependent;
-import javax.inject.Inject;
-import java.util.Objects;
-
-@Dependent
+//@Dependent
+@Component
 public class OnPackageMemoryMapper extends SubresourceMapper<ProcessorMemoryObject, OnPackageMemory> {
-    @Inject
+	@Autowired
     public OnPackageMemoryMapper(EmbeddableCleanAndCreateStrategy<OnPackageMemory> embeddableCleanAndCreateStrategy) {
         super(OnPackageMemory.class, embeddableCleanAndCreateStrategy);
     }

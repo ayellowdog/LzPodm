@@ -24,6 +24,10 @@ import com.intel.podm.mappers.subresources.RedfishLocationMapper;
 
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -31,11 +35,11 @@ import static com.intel.podm.common.utils.Converters.convertGibToBytes;
 import static java.util.Collections.singletonList;
 import static java.util.Optional.ofNullable;
 
-@Dependent
+@Component
 public class DeviceMapper extends EntityMapper<DeviceResource, Drive> {
     private static final String INFO_FORMAT = "BusInfo";
 
-    @Inject
+    @Autowired
     RedfishLocationMapper redfishLocationMapper;
 
     public DeviceMapper() {

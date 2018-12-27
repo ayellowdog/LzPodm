@@ -16,17 +16,19 @@
 
 package com.intel.podm.mappers.subresources;
 
+import java.util.Objects;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.intel.podm.business.entities.redfish.SimpleStorageDevice;
 import com.intel.podm.client.resources.redfish.SimpleStorageDeviceResource;
 import com.intel.podm.mappers.subresources.strategies.EntityCleanAndCreateStrategy;
 
-import javax.enterprise.context.Dependent;
-import javax.inject.Inject;
-import java.util.Objects;
-
-@Dependent
+//@Dependent
+@Component
 public class SimpleStorageDeviceMapper extends SubresourceMapper<SimpleStorageDeviceResource, SimpleStorageDevice> {
-    @Inject
+	@Autowired
     public SimpleStorageDeviceMapper(EntityCleanAndCreateStrategy<SimpleStorageDevice> entityCleanAndCreateStrategy) {
         super(SimpleStorageDevice.class, entityCleanAndCreateStrategy);
     }

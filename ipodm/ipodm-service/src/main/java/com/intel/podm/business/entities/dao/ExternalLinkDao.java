@@ -24,6 +24,8 @@ import java.util.function.Predicate;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.intel.podm.business.entities.redfish.DiscoverableEntity;
 import com.intel.podm.business.entities.redfish.ExternalLink;
@@ -36,6 +38,7 @@ public class ExternalLinkDao {
     private GenericDao genericDao;
 
 //    @Transactional(MANDATORY)
+    @Transactional(propagation = Propagation.MANDATORY)
     public void removeAll(ExternalService externalService, Predicate<ExternalLink> predicate) {
         List<DiscoverableEntity> affectedEntities = externalService
             .getOwnedLinks().stream()

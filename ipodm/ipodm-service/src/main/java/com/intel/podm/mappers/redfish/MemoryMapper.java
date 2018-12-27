@@ -26,11 +26,15 @@ import com.intel.podm.mappers.subresources.SimpleTypeMapper;
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 
-@Dependent
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+//@Dependent
+@Component
 public class MemoryMapper extends EntityMapper<MemoryResource, Memory> {
-    @Inject
+	@Autowired
     RegionMapper regionMapper;
-    @Inject
+	@Autowired
     SimpleTypeMapper simpleTypeMapper;
 
     public MemoryMapper() {

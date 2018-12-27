@@ -16,13 +16,14 @@
 
 package com.intel.podm.mappers.redfish;
 
+import org.springframework.stereotype.Component;
+
 import com.intel.podm.business.entities.redfish.MetricItem;
 import com.intel.podm.client.resources.redfish.MetricItemResource;
 import com.intel.podm.mappers.EntityMapper;
 
-import javax.enterprise.context.Dependent;
-
-@Dependent
+//@Dependent
+@Component
 public class MetricItemMapper extends EntityMapper<MetricItemResource, MetricItem> {
 
     protected MetricItemMapper() {

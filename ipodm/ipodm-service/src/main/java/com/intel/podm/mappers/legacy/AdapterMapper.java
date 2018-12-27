@@ -23,13 +23,17 @@ import com.intel.podm.mappers.subresources.legacy.AdapterToStorageControllerMapp
 
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import java.util.List;
 
 import static java.util.Collections.singletonList;
 
-@Dependent
+@Component
 public class AdapterMapper extends EntityMapper<AdapterResource, Storage> {
-    @Inject
+    @Autowired
     private AdapterToStorageControllerMapper storageControllerMapper;
 
     protected AdapterMapper() {

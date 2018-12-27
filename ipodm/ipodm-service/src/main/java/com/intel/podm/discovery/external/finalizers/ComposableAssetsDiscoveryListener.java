@@ -26,6 +26,7 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.intel.podm.business.entities.redfish.base.ComposableAsset;
@@ -41,7 +42,7 @@ public class ComposableAssetsDiscoveryListener {
     private ComposedNodeDisableService composedNodeDisableService;
 
 //    @Transactional(MANDATORY)
-	@Transactional
+	@Transactional(propagation = Propagation.MANDATORY)
     public void updateRelatedComposedNodes(Collection<ComposableAsset> composableAssets) {
         Set<ComposableAsset> availableAssets = getAvailableAssets(composableAssets);
         composeNodeRecoveryService.recoverFromAssets(availableAssets);

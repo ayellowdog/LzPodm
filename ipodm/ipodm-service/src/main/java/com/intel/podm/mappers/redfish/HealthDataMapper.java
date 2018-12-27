@@ -16,21 +16,23 @@
 
 package com.intel.podm.mappers.redfish;
 
-import com.intel.podm.business.entities.redfish.embeddables.HealthData;
-import com.intel.podm.client.resources.redfish.HealthDataObject;
-import com.intel.podm.mappers.subresources.strategies.EmbeddableCleanAndCreateStrategy;
-import com.intel.podm.mappers.subresources.SubresourceMapper;
-
-import javax.enterprise.context.Dependent;
-import javax.inject.Inject;
 import java.util.Objects;
 
-@Dependent
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import com.intel.podm.business.entities.redfish.embeddables.HealthData;
+import com.intel.podm.client.resources.redfish.HealthDataObject;
+import com.intel.podm.mappers.subresources.SubresourceMapper;
+import com.intel.podm.mappers.subresources.strategies.EmbeddableCleanAndCreateStrategy;
+
+//@Dependent
+@Component
 public class HealthDataMapper extends SubresourceMapper<HealthDataObject, HealthData> {
-    @Inject
+	@Autowired
     private AlarmTripsMapper alarmTripsMapper;
 
-    @Inject
+    @Autowired
     public HealthDataMapper(EmbeddableCleanAndCreateStrategy<HealthData> embeddableCleanAndCreateStrategy) {
         super(HealthData.class, embeddableCleanAndCreateStrategy);
     }

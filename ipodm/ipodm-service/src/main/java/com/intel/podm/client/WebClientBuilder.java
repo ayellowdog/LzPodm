@@ -102,7 +102,8 @@ public class WebClientBuilder {
 		  httpClientConnectionManager.setMaxTotal(connectionParameters.getConnectionPoolSize());
 		  httpClientConnectionManager.setDefaultMaxPerRoute(connectionParameters.getMaxPooledPerRoute());
 	      HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
-	      httpClientBuilder.setConnectionManager(httpClientConnectionManager);
+	      httpClientBuilder.setConnectionManager(httpClientConnectionManager)
+	      .setConnectionManagerShared(true);
 //	      httpClientBuilder.setSSLContext(sslContextProvider.getContext());
 //	      httpClientBuilder.setSSLHostnameVerifier(new NoopHostnameVerifier());
 	      CloseableHttpClient client = httpClientBuilder.build();

@@ -39,8 +39,8 @@ import static com.intel.podm.common.types.discovery.DiscoveryProtocols.SSDP;
 
 //@Startup
 //@Singleton
-//@Component
-//@DependsOn({"DiscoveryStartup"})
+@Component
+@DependsOn({"DiscoveryStartup"})
 public class ServiceDetectionStartup {
 //    @Autowired
 //    private SsdpServiceDetector ssdpServiceDetector;
@@ -57,8 +57,8 @@ public class ServiceDetectionStartup {
 
     private static final Logger logger = LoggerFactory.getLogger(ServiceDetectionStartup.class);
 
-    @PostConstruct
-    private void init() {
+//    @PostConstruct
+    public void init() {
         ServiceDetectionConfig serviceDetectionConfig = configuration.get(ServiceDetectionConfig.class);
 //        if (serviceDetectionConfig.isProtocolEnabled(SSDP)) {
 //            ssdpServiceDetector.init(serviceDetectionConfig.getProtocols().getSsdp());

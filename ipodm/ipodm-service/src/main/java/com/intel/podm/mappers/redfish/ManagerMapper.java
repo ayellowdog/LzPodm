@@ -24,12 +24,16 @@ import com.intel.podm.mappers.subresources.SimpleTypeMapper;
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import static java.util.Optional.ofNullable;
 
-@Dependent
+//@Dependent
+@Component
 public class ManagerMapper extends EntityMapper<ManagerResource, Manager> {
 
-    @Inject
+	@Autowired
     private SimpleTypeMapper simpleTypeMapper;
 
     public ManagerMapper() {

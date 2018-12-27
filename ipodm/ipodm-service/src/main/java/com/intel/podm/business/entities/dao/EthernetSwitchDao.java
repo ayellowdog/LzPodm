@@ -22,9 +22,10 @@ import static javax.transaction.Transactional.TxType.MANDATORY;
 import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.intel.podm.business.entities.redfish.EthernetSwitch;
 import com.intel.podm.common.types.Id;
@@ -33,6 +34,7 @@ import com.intel.podm.common.types.Id;
 @Component
 public class EthernetSwitchDao extends Dao<EthernetSwitch> {
 //    @Transactional(MANDATORY)
+    @Transactional(propagation = Propagation.MANDATORY)
     public List<Id> getAllEthernetSwitchIds() {
         return entityManager.createNamedQuery(GET_ALL_ETHERNET_SWITCH_IDS, Id.class).getResultList();
     }

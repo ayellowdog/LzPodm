@@ -23,14 +23,15 @@ import java.time.LocalDateTime;
 
 import static java.lang.String.format;
 import static java.util.Objects.hash;
-
-class DhcpServiceCandidate {
+//此类原来没有public修饰
+public class DhcpServiceCandidate {
     private final ServiceType serviceType;
     private final URI endpointUri;
     private LocalDateTime updateDate;
+    //重试次数初始为0
     private long retries;
 
-    DhcpServiceCandidate(ServiceType serviceType, URI endpointUri, LocalDateTime updateDate) {
+    public DhcpServiceCandidate(ServiceType serviceType, URI endpointUri, LocalDateTime updateDate) {
         if (endpointUri == null) {
             throw new IllegalArgumentException("URI cannot be null in DhcpServiceCandidate");
         }

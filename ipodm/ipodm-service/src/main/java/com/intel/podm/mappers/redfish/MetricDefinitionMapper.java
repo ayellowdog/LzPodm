@@ -26,16 +26,20 @@ import com.intel.podm.mappers.subresources.WildcardMapper;
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 
-@Dependent
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+//@Dependent
+@Component
 public class MetricDefinitionMapper extends EntityMapper<MetricDefinitionResource, MetricDefinition> {
 
-    @Inject
+	@Autowired
     SimpleTypeMapper simpleTypeMapper;
 
-    @Inject
+	@Autowired
     WildcardMapper wildcardMapper;
 
-    @Inject
+	@Autowired
     CalculationParamsTypeResourceMapper calculationParamsTypeResourceMapper;
 
     public MetricDefinitionMapper() {

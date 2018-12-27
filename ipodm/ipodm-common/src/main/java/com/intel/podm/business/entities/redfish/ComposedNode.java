@@ -150,7 +150,7 @@ public class ComposedNode extends Entity {
     @JoinColumn(name = "computer_system_id")
     private ComputerSystem computerSystem;
 
-    public Id getTheId() {
+    public Id getId() {
         return entityId;
     }
 

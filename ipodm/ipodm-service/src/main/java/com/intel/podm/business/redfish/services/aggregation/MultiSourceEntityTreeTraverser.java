@@ -64,7 +64,7 @@ public class MultiSourceEntityTreeTraverser {
 
             Collection<DiscoverableEntity> entities = getSubResourcesAsDiscoverableEntities(context, multiSourceRoot);
             for (DiscoverableEntity entity : entities) {
-                if (Objects.equals(entity.getTheId(), context.getId())) {
+                if (Objects.equals(entity.getId(), context.getId())) {
                     return entity;
                 }
             }

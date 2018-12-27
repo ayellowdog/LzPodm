@@ -23,12 +23,16 @@ import com.intel.podm.mappers.subresources.strategies.EmbeddableCleanAndCreateSt
 
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import java.util.Objects;
 
-@Dependent
+@Component
 public class PciIdMapper extends SubresourceMapper<PciIdResource, PciId> {
 
-    @Inject
+	@Autowired
     public PciIdMapper(EmbeddableCleanAndCreateStrategy<PciId> embeddableCleanAndCreateStrategy) {
         super(PciId.class, embeddableCleanAndCreateStrategy);
     }

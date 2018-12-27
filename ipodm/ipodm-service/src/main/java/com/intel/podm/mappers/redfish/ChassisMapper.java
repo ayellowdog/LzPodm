@@ -26,10 +26,12 @@ import com.intel.podm.mappers.EntityMapper;
 
 import javax.enterprise.context.Dependent;
 
+import org.springframework.stereotype.Component;
+
 import static com.intel.podm.common.types.Health.OK;
 import static com.intel.podm.common.types.State.ENABLED;
 
-@Dependent
+@Component
 public class ChassisMapper extends EntityMapper<ChassisResource, Chassis> {
     public ChassisMapper() {
         super(ChassisResource.class, Chassis.class);

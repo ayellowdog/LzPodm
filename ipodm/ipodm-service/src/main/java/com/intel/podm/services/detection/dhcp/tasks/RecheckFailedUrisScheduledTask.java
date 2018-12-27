@@ -18,18 +18,22 @@ package com.intel.podm.services.detection.dhcp.tasks;
 
 import com.intel.podm.common.enterprise.utils.tasks.DefaultManagedTask;
 import com.intel.podm.common.logger.Logger;
+import com.intel.podm.common.logger.LoggerFactory;
 import com.intel.podm.services.detection.dhcp.ServiceChecker;
 
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 
-@Dependent
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+//@Dependent
+@Component
 public class RecheckFailedUrisScheduledTask extends DefaultManagedTask implements Runnable {
 
-    @Inject
-    private Logger logger;
+	private static final Logger logger = LoggerFactory.getLogger(RecheckFailedUrisScheduledTask.class);
 
-    @Inject
+    @Autowired
     private ServiceChecker serviceChecker;
 
     @Override

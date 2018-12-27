@@ -22,7 +22,10 @@ import com.intel.podm.mappers.EntityMapper;
 
 import javax.enterprise.context.Dependent;
 
-@Dependent
+import org.springframework.stereotype.Component;
+
+//@Dependent
+@Component
 public class DriveMetricsMapper extends EntityMapper<DriveMetricsResource, DriveMetrics> {
     public DriveMetricsMapper() {
         super(DriveMetricsResource.class, DriveMetrics.class);

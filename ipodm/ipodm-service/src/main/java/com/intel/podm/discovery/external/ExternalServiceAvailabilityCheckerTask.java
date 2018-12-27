@@ -31,13 +31,18 @@ import com.intel.podm.common.enterprise.utils.tasks.DefaultManagedTask;
 import com.intel.podm.common.types.ServiceType;
 import com.intel.podm.common.types.Status;
 import com.intel.podm.config.base.Config;
+import com.intel.podm.config.base.ConfigProvider;
 import com.intel.podm.config.base.Holder;
 import com.intel.podm.config.base.dto.ExternalServiceConfig;
 import com.intel.podm.discovery.external.finalizers.ComposableAssetsDiscoveryListener;
 
+import javax.annotation.Resource;
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
-import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -51,33 +56,37 @@ import static com.intel.podm.common.utils.Contracts.requiresNonNull;
 import static java.lang.String.format;
 import static javax.transaction.Transactional.TxType.REQUIRES_NEW;
 
-@Dependent
-@SuppressWarnings({"checkstyle:ClassFanOutComplexity"})
+//@Dependent
+//@SuppressWarnings({"checkstyle:ClassFanOutComplexity"})
 class ExternalServiceAvailabilityCheckerTask extends DefaultManagedTask implements Runnable {
 //    @Inject
 //    @ServiceLifecycle
 //    private ServiceLifecycleLogger logger;
 
-    @Inject
+    @Autowired
     private ExternalServiceRepository externalServiceRepository;
 
-    @Inject
+    @Autowired
     private ExternalServiceReaderFactory readerFactory;
 
-    @Inject
+//    @Inject
+//    @Config
+//    private Holder<ExternalServiceConfig> configHolder;
     @Config
-    private Holder<ExternalServiceConfig> configHolder;
+    @Resource(name="podmConfigProvider")
+    private ConfigProvider configHolder;
 
-    @Inject
+    @Autowired
     private ComposableAssetsDiscoveryListener composableAssetsDiscoveryListener;
 
-    @Inject
+    @Autowired
     private ChassisDao chassisDao;
 
     private UUID serviceUuid;
 
     @Override
-    @Transactional(REQUIRES_NEW)
+//    @Transactional(REQUIRES_NEW)
+    @Transactional
     public void run() {
         requiresNonNull(serviceUuid, "serviceUuid");
 //        logger.d("Verifying service with UUID {}", serviceUuid);

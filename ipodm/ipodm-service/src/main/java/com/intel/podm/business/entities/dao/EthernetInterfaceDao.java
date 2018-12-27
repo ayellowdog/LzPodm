@@ -32,6 +32,8 @@ import java.util.Optional;
 import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.intel.podm.business.entities.NonUniqueResultException;
 import com.intel.podm.business.entities.redfish.EthernetInterface;
@@ -41,6 +43,7 @@ import com.intel.podm.common.types.net.MacAddress;
 @Service
 public class EthernetInterfaceDao extends Dao<EthernetInterface> {
 //    @Transactional(MANDATORY)
+    @Transactional(propagation = Propagation.MANDATORY)
     public EthernetInterface getEnabledEthernetInterfaceByMacAddress(MacAddress macAddress) throws NonUniqueResultException {
         if (macAddress == null) {
             return null;
@@ -65,6 +68,7 @@ public class EthernetInterfaceDao extends Dao<EthernetInterface> {
     }
 
 //    @Transactional(MANDATORY)
+    @Transactional(propagation = Propagation.MANDATORY)
     public List<EthernetInterface> findComplementaryEthernetInterfaces(EthernetInterface ethernetInterface) {
         TypedQuery<EthernetInterface> query = entityManager.createNamedQuery(GET_ETHERNET_INTERFACE_MULTI_SOURCE, EthernetInterface.class);
         query.setParameter("multiSourceDiscriminator", ethernetInterface.getMultiSourceDiscriminator());
@@ -73,6 +77,7 @@ public class EthernetInterfaceDao extends Dao<EthernetInterface> {
     }
 
 //    @Transactional(MANDATORY)
+    @Transactional(propagation = Propagation.MANDATORY)
     public Optional<EthernetInterface> findPrimaryEthernetInterface(EthernetInterface complementaryEthernetInterface) {
         TypedQuery<EthernetInterface> query = entityManager.createNamedQuery(GET_ETHERNET_INTERFACE_MULTI_SOURCE, EthernetInterface.class);
         query.setParameter("multiSourceDiscriminator", complementaryEthernetInterface.getMultiSourceDiscriminator());

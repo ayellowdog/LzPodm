@@ -38,7 +38,7 @@ public class MemoryModuleFromMemorySummary implements MemoryModule {
     }
 
     @Override
-    public Id getTheId() {
+    public Id getId() {
         return null;
     }
 

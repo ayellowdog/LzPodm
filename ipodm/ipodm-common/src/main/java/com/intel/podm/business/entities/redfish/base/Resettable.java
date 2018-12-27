@@ -29,6 +29,6 @@ public interface Resettable {
     String getResetName();
     ExternalService getService();
     URI getSourceUri();
-    Id getTheId();
+    Id getId();
     boolean isPresent();
 }

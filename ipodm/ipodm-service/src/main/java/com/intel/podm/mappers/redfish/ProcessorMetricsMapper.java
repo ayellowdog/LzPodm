@@ -24,9 +24,13 @@ import com.intel.podm.mappers.subresources.SimpleTypeMapper;
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 
-@Dependent
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+//@Dependent
+@Component
 public class ProcessorMetricsMapper extends EntityMapper<ProcessorMetricsResource, ProcessorMetrics> {
-    @Inject
+	@Autowired
     private SimpleTypeMapper simpleTypeMapper;
 
     protected ProcessorMetricsMapper() {

@@ -26,6 +26,8 @@ import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.intel.podm.business.entities.redfish.ExternalService;
 //import com.intel.podm.business.entities.redfish.ExternalService;
@@ -76,7 +78,7 @@ class EventServiceDefinitionFactory {
     }
 
 //    @Transactional(REQUIRES_NEW)
-    @org.springframework.transaction.annotation.Transactional
+    @Transactional(propagation = Propagation.REQUIRED)
     EventServiceDefinition create(UUID serviceUuid) {
         ExternalService service = repository.find(serviceUuid);
         URI podManagerEventServiceUri = buildPodManagerEventServiceUri(service.getServiceType(), service.getUuid());

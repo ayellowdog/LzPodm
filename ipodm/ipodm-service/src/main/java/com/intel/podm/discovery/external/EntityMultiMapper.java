@@ -33,12 +33,13 @@ import com.intel.podm.mappers.MapperFinder;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import javax.transaction.Transactional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -76,10 +77,11 @@ public class EntityMultiMapper {
     @Autowired
     private MapperFinder mapperFinder;
 
-    @Transactional(MANDATORY)
+//    @Transactional(MANDATORY)
+    @Transactional(propagation = Propagation.MANDATORY)
     public Map<ExternalServiceResource, DiscoverableEntity> map(Collection<ExternalServiceResource> resources, ExternalService externalService) {
         requires(nonNull(externalService), "externalService should not be null");
-
+        System.out.println("resources size is :" + resources.size());
         Map<ExternalServiceResource, DiscoverableEntity> result = new HashMap<>();
 
         for (ExternalServiceResource resource : resources) {
@@ -96,7 +98,8 @@ public class EntityMultiMapper {
         externalLinkDao.removeAll(externalService, el -> !resourceIds.contains(el.getDiscoverableEntity().getGlobalId()));
     }
 
-    @Transactional(MANDATORY)
+//    @Transactional(MANDATORY)
+    @Transactional(propagation = Propagation.MANDATORY)
     public DiscoverableEntity map(ExternalServiceResource resource, ExternalService service) {
         return mapperFinder.find(resource)
             .flatMap(mapper -> mapWithMapper(resource, service, mapper))

@@ -68,7 +68,7 @@ public class ResetActionInvoker {
             logger.info("Invoking reset action ({}) on resource [ service: {}, path: {} ]", resetType, service.getBaseUri(), resettableEntity.getSourceUri());
             webClient.post(resourceResetUri, new ResetRequest(resetType));
         } catch (WebClientRequestException e) {
-            String errorMessage = format("Resource %s reset action (%s) failed", resettableEntity.getTheId(), resetType);
+            String errorMessage = format("Resource %s reset action (%s) failed", resettableEntity.getId(), resetType);
             logger.warn(errorMessage + " on [ service: {}, path: {} ]", service.getBaseUri(), resettableEntity.getSourceUri());
             throw new EntityOperationException(errorMessage, e);
         }

@@ -16,6 +16,14 @@
 
 package com.intel.podm.mappers.redfish;
 
+import static com.intel.podm.common.utils.StringRepresentation.fromMap;
+import static org.apache.commons.lang3.StringUtils.isNumeric;
+
+import javax.inject.Inject;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.intel.podm.business.entities.redfish.Processor;
 import com.intel.podm.business.entities.redfish.embeddables.Fpga;
 import com.intel.podm.business.entities.redfish.embeddables.ProcessorId;
@@ -25,21 +33,16 @@ import com.intel.podm.mappers.subresources.FpgaMapper;
 import com.intel.podm.mappers.subresources.OnPackageMemoryMapper;
 import com.intel.podm.mappers.subresources.SimpleTypeMapper;
 
-import javax.enterprise.context.Dependent;
-import javax.inject.Inject;
-
-import static org.apache.commons.lang3.StringUtils.isNumeric;
-import static com.intel.podm.common.utils.StringRepresentation.fromMap;
-
-@Dependent
+//@Dependent
+@Component
 public class ProcessorMapper extends EntityMapper<ProcessorResource, Processor> {
-    @Inject
+	@Autowired
     SimpleTypeMapper simpleTypeMapper;
 
-    @Inject
+	@Autowired
     OnPackageMemoryMapper onPackageMemoryMapper;
 
-    @Inject
+	@Autowired
     FpgaMapper fpgaMapper;
 
     public ProcessorMapper() {
