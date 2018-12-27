@@ -129,7 +129,6 @@ import static java.util.Optional.of;
 import static java.util.Optional.ofNullable;
 import static java.util.stream.Collectors.toMap;
 
-@SuppressWarnings({"checkstyle:ClassFanOutComplexity", "checkstyle:MethodCount"})
 public final class Contexts {
 
     private static final Map<Class<?>, Method> CLASS_TO_CONTEXT_METHOD_MAPPING = stream(Contexts.class.getDeclaredMethods())
