@@ -117,7 +117,7 @@ public class EndpointAssemblyTask extends NodeTask {
     private void resolveVolumeDependency() {
         if (volumeId == null) {
             ComposedNode composedNode = getComposedNode();
-            volumeId = any(composedNode.getVolumes()).getTheId();
+            volumeId = any(composedNode.getVolumes()).getId();
         }
     }
 

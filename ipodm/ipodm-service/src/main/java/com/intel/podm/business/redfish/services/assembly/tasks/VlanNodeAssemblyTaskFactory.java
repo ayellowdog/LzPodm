@@ -32,7 +32,7 @@ public class VlanNodeAssemblyTaskFactory {
                                            RequestedNode.EthernetInterface requestedEthernetInterface) {
         VlanNodeAssemblyTask vlanNodeAssemblyTask = beanFactory.create(VlanNodeAssemblyTask.class);
         vlanNodeAssemblyTask.setRequestedInterface(requestedEthernetInterface);
-        vlanNodeAssemblyTask.setAvailableInterfaceId(availableEthernetInterface.getTheId());
+        vlanNodeAssemblyTask.setAvailableInterfaceId(availableEthernetInterface.getId());
 
         return vlanNodeAssemblyTask;
     }

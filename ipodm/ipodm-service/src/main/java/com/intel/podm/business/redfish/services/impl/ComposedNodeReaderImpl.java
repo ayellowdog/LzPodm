@@ -77,7 +77,7 @@ class ComposedNodeReaderImpl implements ReaderService<ComposedNodeDto> {
     }
 
     private void fillFromNode(ComposedNodeDto composedNodeDto, ComposedNode composedNode) {
-        composedNodeDto.setId(composedNode.getTheId().toString());
+        composedNodeDto.setId(composedNode.getId().toString());
         composedNodeDto.setName(composedNode.getName());
         composedNodeDto.setDescription(composedNode.getDescription());
         composedNodeDto.setStatus(composedNode.getStatus());
@@ -99,7 +99,7 @@ class ComposedNodeReaderImpl implements ReaderService<ComposedNodeDto> {
     }
 
     private void fillNodeActions(ComposedNodeDto composedNodeDto, ComposedNode composedNode) {
-        Context context = contextOf(composedNode.getTheId(), ContextType.COMPOSED_NODE);
+        Context context = contextOf(composedNode.getId(), ContextType.COMPOSED_NODE);
         ComposedNodeDto.Actions actions = composedNodeDto.getActions();
         actions.getResetAction().setTarget(singletonContextOf(context, "Actions/ComposedNode.Reset"));
         actions.getAssembleAction().setTarget(singletonContextOf(context, "Actions/ComposedNode.Assemble"));

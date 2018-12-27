@@ -132,12 +132,12 @@ public class Switch extends DiscoverableEntity implements Resettable {
     private Fabric fabric;
 
     @Override
-    public Id getTheId() {
+    public Id getId() {
         return entityId;
     }
 
     @Override
-    public void setTheId(Id id) {
+    public void setId(Id id) {
         entityId = id;
     }
 

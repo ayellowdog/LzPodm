@@ -83,12 +83,12 @@ public class PcieDevice extends DiscoverableEntity {
     private ComputerSystem computerSystem;
 
     @Override
-    public Id getTheId() {
+    public Id getId() {
         return entityId;
     }
 
     @Override
-    public void setTheId(Id id) {
+    public void setId(Id id) {
         entityId = id;
     }
 

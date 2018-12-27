@@ -49,7 +49,7 @@ public class MemoryModulesAllocationMapper {
         Map<RequestedNode.Memory, List<MemoryModule>> mappedMemoryModules = new HashMap<>();
 
         Collection<RequestedNode.Memory> requestedMemoryModulesQueue = sort(requestedMemoryModules, contextsAscendingWhereNullsLast());
-        Collection<MemoryModule> availableMemoryModulesQueue = sort(availableMemoryModules, ascendingWhereNullsLast(MemoryModule::getTheId));
+        Collection<MemoryModule> availableMemoryModulesQueue = sort(availableMemoryModules, ascendingWhereNullsLast(MemoryModule::getId));
 
         for (RequestedNode.Memory requestedMemoryModule : requestedMemoryModulesQueue) {
             List<MemoryModule> matched = findMatchedMemoryModules(requestedMemoryModule, availableMemoryModulesQueue);

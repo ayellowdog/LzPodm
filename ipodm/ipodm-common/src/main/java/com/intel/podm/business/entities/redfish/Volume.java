@@ -163,12 +163,12 @@ public class Volume extends DiscoverableEntity implements ComposableAsset {
     private List<InitializeType> allowableInitializeTypes = new ArrayList<>();
 
     @Override
-    public Id getTheId() {
+    public Id getId() {
         return entityId;
     }
 
     @Override
-    public void setTheId(Id entityId) {
+    public void setId(Id entityId) {
         this.entityId = entityId;
     }
 

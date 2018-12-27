@@ -30,7 +30,7 @@ class Predicates {
     }
 
     public static Predicate<? super MemoryModule> byExactId(Context context) {
-        return isNull(context) ? alwaysMatches() : memory -> Objects.equals(memory.getTheId(), context.getId());
+        return isNull(context) ? alwaysMatches() : memory -> Objects.equals(memory.getId(), context.getId());
     }
 
     public static Predicate<? super MemoryModule> byExactMemoryDeviceType(MemoryDeviceType memoryDeviceType) {

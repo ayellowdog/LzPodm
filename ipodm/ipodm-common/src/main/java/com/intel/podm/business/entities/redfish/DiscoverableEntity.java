@@ -111,9 +111,9 @@ public abstract class DiscoverableEntity extends Entity{
     @OneToMany(mappedBy = "entityLink", fetch = LAZY, cascade = {MERGE, PERSIST})
     private Set<ConnectedEntity> entityConnections = new HashSet<>();
 
-    public abstract Id getTheId();
+    public abstract Id getId();
 
-    public abstract void setTheId(Id id);
+    public abstract void setId(Id id);
 
     public Id getGlobalId() {
         return globalId;
@@ -325,7 +325,7 @@ public abstract class DiscoverableEntity extends Entity{
     @Override
     public String toString() {
         return format("DiscoverableEntity {clazz=%s, entityId=%s, primaryKey=%d, externalLinks=%s}",
-            getClass().getSimpleName(), getTheId(), getPrimaryKey(), getExternalLinks());
+            getClass().getSimpleName(), getId(), getPrimaryKey(), getExternalLinks());
     }
 
     public List<ExternalService> getExternalServices() {

@@ -73,7 +73,7 @@ public class DiscoverableEntityDao extends Dao<DiscoverableEntity> {
 //    @Transactional(MANDATORY)
     public <T extends DiscoverableEntity> T createEntity(ExternalService externalService, Id entityId, Class<T> clazz) {
         T entity = create(clazz);
-        entity.setTheId(entityId);
+        entity.setId(entityId);
         entity.setGlobalId(entityId);
         entity.setComplementary(externalService.isComplementaryDataSource());
         return entity;

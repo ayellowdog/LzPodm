@@ -23,13 +23,10 @@ import static java.util.stream.StreamSupport.stream;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 
 import javax.annotation.PostConstruct;
-import javax.enterprise.inject.Instance;
-import javax.inject.Inject;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -80,5 +77,6 @@ public class MapperProducer {
 			Class<? extends Entity> entityClass) {
 		return stream(mapperCache.spliterator(), false).filter(mapper -> mapper.canMap(entityClass)).findFirst();
 	}
+	
 
 }

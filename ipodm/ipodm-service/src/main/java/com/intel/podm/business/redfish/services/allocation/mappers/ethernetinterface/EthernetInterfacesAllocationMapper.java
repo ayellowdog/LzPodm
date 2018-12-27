@@ -83,7 +83,7 @@ public class EthernetInterfacesAllocationMapper {
     }
 
     private boolean idConstraintIsSatisfied(RequestedNode.EthernetInterface requestedEthernetInterface, EthernetInterface availableInterface) {
-        Id availableId = availableInterface.getTheId();
+        Id availableId = availableInterface.getId();
         Optional<Context> requestedAddress = ofNullable(requestedEthernetInterface.getResourceContext());
 
         return requestedAddress.map(context -> Objects.equals(context.getId(), availableId)).orElse(true);

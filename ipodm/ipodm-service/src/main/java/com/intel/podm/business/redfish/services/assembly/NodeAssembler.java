@@ -44,7 +44,7 @@ public class NodeAssembler {
         if (!composedNode.isInAnyOfStates(ALLOCATED)) {
             throw new ResourceStateMismatchException(format("Only composed node in %s state can be assembled", ALLOCATED));
         }
-        composedNodeStateChanger.change(composedNode.getTheId(), ASSEMBLING);
-        nodeTasksCoordinator.runTasks(composedNode.getTheId());
+        composedNodeStateChanger.change(composedNode.getId(), ASSEMBLING);
+        nodeTasksCoordinator.runTasks(composedNode.getId());
     }
 }

@@ -86,12 +86,12 @@ public class PowerVoltage extends DiscoverableEntity {
     private Power power;
 
     @Override
-    public Id getTheId() {
+    public Id getId() {
         return entityId;
     }
 
     @Override
-    public void setTheId(Id id) {
+    public void setId(Id id) {
         entityId = id;
     }
 

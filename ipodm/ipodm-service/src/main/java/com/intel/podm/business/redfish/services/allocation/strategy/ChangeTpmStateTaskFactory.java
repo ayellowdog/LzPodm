@@ -36,7 +36,7 @@ public class ChangeTpmStateTaskFactory {
     @Transactional(propagation = Propagation.SUPPORTS)
     public ChangeTpmStateTask createChangeTpmStateTask(ComputerSystem computerSystem,
                                                        ChangeTpmStatusUpdateDefinition changeTpmStatusUpdateDefinition) {
-        ChangeTpmStateTask changeTpmStateTask = beanFactory.create(ChangeTpmStateTask.class).init(computerSystem.getTheId());
+        ChangeTpmStateTask changeTpmStateTask = beanFactory.create(ChangeTpmStateTask.class).init(computerSystem.getId());
         changeTpmStateTask.setChangeTpmStatusUpdateDefinition(changeTpmStatusUpdateDefinition);
         return changeTpmStateTask;
     }

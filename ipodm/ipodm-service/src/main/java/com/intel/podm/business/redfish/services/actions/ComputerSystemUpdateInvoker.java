@@ -70,6 +70,6 @@ public class ComputerSystemUpdateInvoker {
             throw new EntityOperationException(errorMessage, e);
         }
 
-        computerSystemUpdater.updateComputerSystemWithRetry(computerSystem.getTheId(), computerSystemResource);
+        computerSystemUpdater.updateComputerSystemWithRetry(computerSystem.getId(), computerSystemResource);
     }
 }

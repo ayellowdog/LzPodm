@@ -86,7 +86,7 @@ class PodManagerDiscoveryHandler {
 
         manager.setFirmwareVersion(versionLoader.loadAppVersion());
 
-        manager.setTheId(id("pod-manager"));
+        manager.setId(id("pod-manager"));
         manager.setStatus(new Status(ENABLED, OK, OK));
         manager.setName("Pod Manager");
         manager.setGraphicalConsole(createDisabledGraphicalConsole());

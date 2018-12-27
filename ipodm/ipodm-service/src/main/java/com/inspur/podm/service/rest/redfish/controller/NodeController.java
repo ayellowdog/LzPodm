@@ -7,6 +7,7 @@ import static com.inspur.podm.api.business.services.context.PathParamConstants.C
 import static com.inspur.podm.api.business.services.redfish.ReaderService.SERVICE_ROOT_CONTEXT;
 import static com.inspur.podm.service.rest.error.PodmExceptions.resourcesStateMismatch;
 import static com.inspur.podm.service.rest.error.PodmExceptions.unsupportedCreationRequest;
+import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static javax.ws.rs.core.Response.noContent;
 import static javax.ws.rs.core.Response.ok;
 
@@ -15,6 +16,9 @@ import java.util.concurrent.TimeoutException;
 import javax.annotation.Resource;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,14 +34,22 @@ import com.inspur.podm.api.business.RequestValidationException;
 import com.inspur.podm.api.business.dto.ComposedNodeDto;
 import com.inspur.podm.api.business.dto.redfish.CollectionDto;
 import com.inspur.podm.api.business.services.context.Context;
+import com.inspur.podm.api.business.services.redfish.ActionService;
 import com.inspur.podm.api.business.services.redfish.AllocationService;
 import com.inspur.podm.api.business.services.redfish.ReaderService;
 import com.inspur.podm.api.business.services.redfish.RemovalService;
 import com.inspur.podm.api.business.services.redfish.UpdateService;
 import com.inspur.podm.api.business.services.redfish.odataid.ODataId;
+import com.inspur.podm.api.business.services.redfish.requests.AssemblyRequest;
+import com.inspur.podm.api.business.services.redfish.requests.AttachResourceRequest;
+import com.inspur.podm.api.business.services.redfish.requests.DetachResourceRequest;
+import com.inspur.podm.api.business.services.redfish.requests.ResetRequest;
 import com.inspur.podm.service.rest.redfish.json.templates.CollectionJson;
 import com.inspur.podm.service.rest.redfish.json.templates.RedfishResourceAmazingWrapper;
+import com.inspur.podm.service.rest.redfish.json.templates.actions.AttachResourceJson;
 import com.inspur.podm.service.rest.redfish.json.templates.actions.ComposedNodePartialRepresentation;
+import com.inspur.podm.service.rest.redfish.json.templates.actions.DetachResourceJson;
+import com.inspur.podm.service.rest.redfish.json.templates.actions.ResetActionJson;
 import com.inspur.podm.service.rest.redfish.json.templates.assembly.RequestedNodeJson;
 import com.inspur.podm.service.rest.redfish.serializers.CollectionDtoJsonSerializer;
 import com.intel.podm.common.types.redfish.RedfishComputerSystem;
@@ -66,6 +78,14 @@ public class NodeController extends BaseController {
     private RemovalService<ComposedNodeDto> nodeRemovalService;
 	@Resource(name = "ComposedNode")
     private UpdateService<RedfishComputerSystem> composedNodeUpdateService;
+	@Resource(name = "resetActionServiceImpl")
+    private ActionService<ResetRequest> resetRequestActionService;
+	@Resource(name = "assemblyActionServiceImpl")
+    private ActionService<AssemblyRequest> assemblyRequestActionService;
+	@Resource(name = "attachResourceActionServiceImpl")
+	private ActionService<AttachResourceRequest> attachResourceRequestActionService;
+	@Resource(name = "detachResourceActionServiceImpl")
+    private ActionService<DetachResourceRequest> detachResourceRequestActionService;
 
 	@ApiOperation(value = "查看redfish目录/redfish/v1/Nodes", notes = "Nodes")
 	@RequestMapping(method = RequestMethod.GET)
@@ -106,7 +126,7 @@ public class NodeController extends BaseController {
 
 	@ApiOperation(value = "/redfish/v1/Nodes/Actions/Allocate", notes = "/redfish/v1/Nodes/Actions/Allocate")
 	@RequestMapping(value = "/Actions/Allocate", method = RequestMethod.POST)
-	public Response allocate(RequestedNodeJson requestedNode) {
+	public Response allocate(@RequestBody(required = true) RequestedNodeJson requestedNode) {
 		try {
 			Context context = service.allocate(requestedNode);
 			return Response.created(context.asOdataId().toUri()).build();
@@ -116,5 +136,33 @@ public class NodeController extends BaseController {
 			throw resourcesStateMismatch("Conflict during allocation", e);
 		}
 	}
+	
+    @ApiOperation(value = "/redfish/v1/Nodes/Actions/ComposedNode.Reset", notes = "/redfish/v1/Nodes/Actions/ComposedNode.Reset")
+	@RequestMapping(value = "/Actions/ComposedNode.Reset", method = RequestMethod.POST)
+    public Response reset(@RequestBody(required = true) ResetActionJson resetActionJson) throws TimeoutException, BusinessApiException {
+        resetRequestActionService.perform(getCurrentContext(), resetActionJson);
+        return noContent().build();
+    }
+    
+    @ApiOperation(value = "/redfish/v1/Nodes/Actions/ComposedNode.Assemble", notes = "/redfish/v1/Nodes/Actions/ComposedNode.Assemble")
+	@RequestMapping(value = "/Actions/ComposedNode.Assemble", method = RequestMethod.POST)
+    public Response assemble() throws TimeoutException, BusinessApiException {
+        assemblyRequestActionService.perform(getCurrentContext(), null);
+        return noContent().build();
+    }
+    
+    @ApiOperation(value = "/redfish/v1/Nodes/Actions/ComposedNode.AttachResource", notes = "/redfish/v1/Nodes/Actions/ComposedNode.AttachResource")
+   	@RequestMapping(value = "/Actions/ComposedNode.AttachResource", method = RequestMethod.POST)
+    public Response attachEndpoint(@RequestBody(required = true) AttachResourceJson attachResourceJson) throws TimeoutException, BusinessApiException {
+        attachResourceRequestActionService.perform(getCurrentContext(), attachResourceJson);
+        return noContent().build();
+    }
+    
+    @ApiOperation(value = "/redfish/v1/Nodes/Actions/ComposedNode.DetachResource", notes = "/redfish/v1/Nodes/Actions/ComposedNode.DetachResource")
+   	@RequestMapping(value = "/Actions/ComposedNode.DetachResource", method = RequestMethod.POST)
+    public Response detachResource(@RequestBody(required = true) DetachResourceJson detachResourceJson) throws TimeoutException, BusinessApiException {
+        detachResourceRequestActionService.perform(getCurrentContext(), detachResourceJson);
+        return noContent().build();
+    }
 
 }

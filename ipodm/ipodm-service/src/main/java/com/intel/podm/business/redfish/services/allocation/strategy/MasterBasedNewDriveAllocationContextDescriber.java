@@ -52,8 +52,8 @@ public class MasterBasedNewDriveAllocationContextDescriber implements RemoteDriv
         }
 
         descriptor.setMasterUri(masterDrive.getSourceUri());
-        descriptor.setStoragePoolId(masterDrive.getStoragePool().getTheId());
-        descriptor.setStorageServiceId(masterDrive.getStorageService().getTheId());
+        descriptor.setStoragePoolId(masterDrive.getStoragePool().getId());
+        descriptor.setStorageServiceId(masterDrive.getStorageService().getId());
         descriptor.setCapacity(getCapacity(remoteDrive, masterDrive));
         descriptor.setProtocol(volumeHelper.retrieveProtocolFromVolume(masterDrive));
         descriptor.setReplicaType(remoteDrive.getMaster().getType());

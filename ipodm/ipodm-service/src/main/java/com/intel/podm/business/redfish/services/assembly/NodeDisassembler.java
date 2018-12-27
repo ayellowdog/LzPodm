@@ -108,7 +108,7 @@ public class NodeDisassembler {
             tasks.addAll(prepareCleanVlansTasks(composedNode.getEthernetInterfaces()));
         }
         tasks.addAll(prepareComposeNodeDeletionTasks());
-        tasks.forEach(t -> t.setNodeId(composedNode.getTheId()));
+        tasks.forEach(t -> t.setNodeId(composedNode.getId()));
         return tasks;
     }
 
@@ -149,7 +149,7 @@ public class NodeDisassembler {
             .map(EthernetInterface::getMacAddress)
             .map(this::getEthernetSwitchPortFromMac)
             .filter(Objects::nonNull)
-            .map(EthernetSwitchPort::getTheId)
+            .map(EthernetSwitchPort::getId)
             .map(id -> beanFactory.create(CleanUpVlanDisassembleTask.class).init(id))
             .collect(toList());
     }
@@ -172,13 +172,13 @@ public class NodeDisassembler {
     private Collection<? extends NodeTask> preparePcieDriveSecureEraseTasks(ComposedNode composedNode) {
         return composedNode.getDrives().stream()
             .filter(drive -> TRUE.equals(drive.getEraseOnDetach()))
-            .map(drive -> beanFactory.create(SecureErasePcieDriveTask.class).setPcieDriveId(drive.getTheId()))
+            .map(drive -> beanFactory.create(SecureErasePcieDriveTask.class).setPcieDriveId(drive.getId()))
             .collect(toList());
     }
 
     private Collection<? extends NodeRemovalTask> preparePcieDriveDeallocationTasks(ComposedNode composedNode) {
         return composedNode.getDrives().stream()
-            .map(pcieDrive -> beanFactory.create(DeallocatePcieDriveTask.class).setDriveId(pcieDrive.getTheId()))
+            .map(pcieDrive -> beanFactory.create(DeallocatePcieDriveTask.class).setDriveId(pcieDrive.getId()))
             .collect(toList());
     }
 
@@ -197,8 +197,8 @@ public class NodeDisassembler {
     private DetachPcieDriveTask createDetachPcieDriveTask(Drive drive) {
         DetachPcieDriveTask detachPcieDriveTask = beanFactory.create(DetachPcieDriveTask.class);
         Endpoint endpoint = single(drive.getEntityConnections()).getEndpoint();
-        detachPcieDriveTask.setZoneId(endpoint.getZone().getTheId());
-        detachPcieDriveTask.setEndpointId(endpoint.getTheId());
+        detachPcieDriveTask.setZoneId(endpoint.getZone().getId());
+        detachPcieDriveTask.setEndpointId(endpoint.getId());
         return detachPcieDriveTask;
     }
 

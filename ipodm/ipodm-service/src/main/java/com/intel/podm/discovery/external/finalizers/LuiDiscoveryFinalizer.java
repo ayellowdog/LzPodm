@@ -70,7 +70,7 @@ public class LuiDiscoveryFinalizer extends ServiceTypeSpecializedDiscoveryFinali
 
     private void finalizeDeepDiscovery(Set<DiscoverableEntity> discoveredEntities) {
         filterByType(discoveredEntities, ComputerSystem.class).stream()
-            .map(ComputerSystem::getTheId)
+            .map(ComputerSystem::getId)
             .forEach(id -> beanManager.fireEvent(deepDiscoveryCompletedEvent(id)));
     }
 

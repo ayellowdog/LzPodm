@@ -73,7 +73,7 @@ public class RackChassisFinder {
         podChassis.addContainedChassis(rackChassis);
         rackChassis.setLocationParentId(podChassis.getLocationId());
         rackChassis.setLocationId(locationId);
-        rackChassis.setTheId(id(encodeBase64(locationId)));
+        rackChassis.setId(id(encodeBase64(locationId)));
         rackChassis.setChassisType(RACK);
         rackChassis.setName(DEFAULT_RACK_NAME);
         rackChassis.setStatus(new Status(State.ENABLED, Health.OK, null));

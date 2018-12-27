@@ -20,7 +20,7 @@ import com.intel.podm.common.types.Id;
 import com.intel.podm.common.types.MemoryDeviceType;
 
 public interface MemoryModule {
-    Id getTheId();
+    Id getId();
     MemoryDeviceType getMemoryDeviceType();
     Integer getCapacityMib();
     Integer getDataWidthBits();

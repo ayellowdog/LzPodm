@@ -73,7 +73,7 @@ class ComposedNodeRemovalServiceImpl implements RemovalService<ComposedNodeDto> 
         try {
 			taskCoordinator.run(composedNode.getAssociatedComputerSystemUuid(), (ThrowingRunnable) () -> {
 			    ComposedNodeState composedNodeState = composedNode.getComposedNodeState();
-			    Collection<NodeTask> tasks = nodeDisassembler.getDisassemblyTasks(composedNode.getTheId());
+			    Collection<NodeTask> tasks = nodeDisassembler.getDisassemblyTasks(composedNode.getId());
 			    for (NodeTask task : tasks) {
 			        taskRunnerWrapper(task, composedNodeState);
 			    }

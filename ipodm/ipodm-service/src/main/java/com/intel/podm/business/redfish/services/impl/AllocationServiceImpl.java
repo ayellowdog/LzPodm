@@ -55,7 +55,7 @@ class AllocationServiceImpl implements AllocationService {
         String baseExceptionMessage = "Creation failed due to allocation failure: ";
         Id composedNodeId;
         try {
-            composedNodeId = nodeAllocator.compose(requestedNode).getTheId();
+            composedNodeId = nodeAllocator.compose(requestedNode).getId();
         } catch (AllocationRequestProcessingException e) {
             throw new RequestValidationException(baseExceptionMessage + e.getMessage(), e.getViolations(), e);
         } catch (CompositionException e) {

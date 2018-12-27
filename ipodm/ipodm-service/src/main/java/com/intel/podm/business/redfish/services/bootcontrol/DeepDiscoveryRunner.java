@@ -87,7 +87,7 @@ class DeepDiscoveryRunner {
 
         for (ComputerSystem computerSystem : getComputerSystemsWaitingToStart(externalService)) {
             ExternalService service = computerSystem.getService();
-            Id systemId = computerSystem.getTheId();
+            Id systemId = computerSystem.getId();
             if (!isServiceAvailable(service, systemId)) {
                 continue;
             }
@@ -122,9 +122,9 @@ class DeepDiscoveryRunner {
     }
 
     private UUID launchDeepDiscovery(ComputerSystem computerSystem) throws DeepDiscoveryException {
-        invoker.startDeepDiscovery(computerSystem.getTheId());
+        invoker.startDeepDiscovery(computerSystem.getId());
         UUID deepDiscoveryTaskUuid = randomUUID();
-        DeepDiscoveryTimeoutTask task = taskFactory.create(computerSystem.getTheId(), deepDiscoveryTaskUuid);
+        DeepDiscoveryTimeoutTask task = taskFactory.create(computerSystem.getId(), deepDiscoveryTaskUuid);
         executorService.schedule(task, configHolder.get(DiscoveryConfig.class).getDeepDiscoveryExecutionTimeoutSeconds(), SECONDS);
         return deepDiscoveryTaskUuid;
     }
