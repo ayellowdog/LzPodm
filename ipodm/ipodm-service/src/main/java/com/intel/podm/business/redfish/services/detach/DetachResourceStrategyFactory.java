@@ -42,7 +42,7 @@ public class DetachResourceStrategyFactory {
     @Autowired
     private BeanFactory beanFactory;
 
-    @PostConstruct
+//    @PostConstruct
     public void init() {
         resourceTypeToStrategyMapping.put(DRIVE, createsStrategy(DriveDetachStrategy.class));
         resourceTypeToStrategyMapping.put(VOLUME, createsStrategy(VolumeDetachStrategy.class));

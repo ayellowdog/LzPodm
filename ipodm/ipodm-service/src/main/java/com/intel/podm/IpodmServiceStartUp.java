@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import com.intel.podm.business.redfish.services.detach.DetachResourceStrategyFactory;
 import com.intel.podm.client.typeidresolver.ResourceProvider;
 import com.intel.podm.common.logger.Logger;
 import com.intel.podm.common.logger.LoggerFactory;
@@ -32,6 +33,8 @@ private ResourceProvider resourceProvider;
 private PodStartupDiscovery podStartupDiscovery;
 @Autowired
 private ServiceDetectionStartup serviceDetectionStartup;
+@Autowired
+DetachResourceStrategyFactory detachResourceStrategyFactory;
 	@Override
 	public void run(String... args) throws Exception {
 		logger.i("starting ipodm services");
@@ -39,6 +42,7 @@ private ServiceDetectionStartup serviceDetectionStartup;
 		podStartupDiscovery.initInitialPod();
 		discoveryStartup.initialize();
 		serviceDetectionStartup.init();
+		detachResourceStrategyFactory.init();
 		logger.i("start ipodm services finish");
 	}
 

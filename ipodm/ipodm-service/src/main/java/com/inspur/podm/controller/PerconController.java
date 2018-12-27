@@ -126,15 +126,15 @@ public class PerconController {
 
 @GetMapping
 public void testTrans() throws InterruptedException, ExecutionException {
-	System.out.println("最外层Thread：" + Thread.currentThread());
-	TestRunner runner = bf.create(TestRunner.class);
-	ScheduledFuture<?> schedule = executor.scheduleAtFixedRate(runner, 1, 10, TimeUnit.SECONDS);
-	System.out.println("已经提交了1");
-	TestRunner runner2 = new TestRunner();
-	runner2.setDao(myDao);
-	ScheduledFuture<?> schedul2 = executor.scheduleAtFixedRate(runner2, 1, 5, TimeUnit.SECONDS);
-	System.out.println("已经提交了2");
-//	dao.create();
+//	System.out.println("最外层Thread：" + Thread.currentThread());
+//	TestRunner runner = bf.create(TestRunner.class);
+//	ScheduledFuture<?> schedule = executor.scheduleAtFixedRate(runner, 1, 10, TimeUnit.SECONDS);
+//	System.out.println("已经提交了1");
+//	TestRunner runner2 = new TestRunner();
+//	runner2.setDao(myDao);
+//	ScheduledFuture<?> schedul2 = executor.scheduleAtFixedRate(runner2, 1, 5, TimeUnit.SECONDS);
+//	System.out.println("已经提交了2");
+////	dao.create();
 	
 }
     
