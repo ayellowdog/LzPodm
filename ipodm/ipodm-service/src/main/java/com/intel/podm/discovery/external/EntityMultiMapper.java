@@ -88,17 +88,19 @@ public class EntityMultiMapper {
             DiscoverableEntity entity = map(resource, externalService);
             result.put(resource, entity);
         }
+        //删除陈旧的entity
         deleteStaleEntities(resources, externalService);
 
         return result;
     }
 
     private void deleteStaleEntities(Collection<ExternalServiceResource> resources, ExternalService externalService) {
-        Collection<Id> resourceIds = resources.stream().map(r -> r.getGlobalId(externalService.getTheId())).collect(toSet());
+        Collection<Id> resourceIds = resources.stream().map(r -> r.getGlobalId(externalService.getId())).collect(toSet());
         externalLinkDao.removeAll(externalService, el -> !resourceIds.contains(el.getDiscoverableEntity().getGlobalId()));
     }
 
 //    @Transactional(MANDATORY)
+    //之所以需要事务，是因为128行可能会创建discoverableEntity
     @Transactional(propagation = Propagation.MANDATORY)
     public DiscoverableEntity map(ExternalServiceResource resource, ExternalService service) {
         return mapperFinder.find(resource)
@@ -120,7 +122,7 @@ public class EntityMultiMapper {
     }
 
     private Optional<DiscoverableEntity> matchResourceByServiceType(ExternalServiceResource resource, ExternalService service, Class targetClass) {
-        Id entityId = resource.getGlobalId(service.getTheId());
+        Id entityId = resource.getGlobalId(service.getId());
         return ofNullable(
             Objects.equals(LUI, service.getServiceType())
                 ? entityObtainer.obtain(service, resource)

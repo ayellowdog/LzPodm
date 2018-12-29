@@ -16,17 +16,22 @@
 
 package com.intel.podm.discovery.external.finalizers;
 
+import org.springframework.context.ApplicationEvent;
+
 import com.intel.podm.common.types.Id;
 
-public final class DeepDiscoveryCompletedEvent {
-    private final Id computerSystemId;
+public final class DeepDiscoveryCompletedEvent extends ApplicationEvent{
+    /** @Fields serialVersionUID: TODO 功能描述  */
+	private static final long serialVersionUID = 3918556550251886870L;
+	private final Id computerSystemId;
 
-    private DeepDiscoveryCompletedEvent(Id computerSystemId) {
+    private DeepDiscoveryCompletedEvent(Object source, Id computerSystemId) {
+    	super(source);
         this.computerSystemId = computerSystemId;
     }
 
-    static DeepDiscoveryCompletedEvent deepDiscoveryCompletedEvent(Id computerSystemId) {
-        return new DeepDiscoveryCompletedEvent(computerSystemId);
+    static DeepDiscoveryCompletedEvent deepDiscoveryCompletedEvent(Object source, Id computerSystemId) {
+        return new DeepDiscoveryCompletedEvent(source, computerSystemId);
     }
 
     public Id getComputerSystemId() {

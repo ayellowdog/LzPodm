@@ -36,6 +36,7 @@ final class ResourceLinksCache {
     };
     private static final int CACHE_SIZE = 100;
 
+    //这是谷歌的一个动态的缓存，可以指定CacheLoader来动态取得数据，支持同步操作，详见43行build方法
     private static final LoadingCache<Class<? extends ExternalServiceResource>, Map<String, Method>> EXTERNAL_SERVICE_RESOURCE_METHODS =
         newBuilder()
             .maximumSize(CACHE_SIZE)

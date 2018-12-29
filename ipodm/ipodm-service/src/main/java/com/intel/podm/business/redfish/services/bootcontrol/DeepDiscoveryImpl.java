@@ -25,10 +25,12 @@ import javax.ejb.Lock;
 import javax.ejb.Singleton;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.transaction.Transactional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -49,20 +51,20 @@ import static javax.transaction.Transactional.TxType.SUPPORTS;
 public class DeepDiscoveryImpl implements DeepDiscovery {
     private static final int DEEP_DISCOVERY_INTERVAL = 10;
 
-    @Inject
+//    @Inject
     @Named(SYNCHRONIZED_TASK_EXECUTOR)
     private ScheduledExecutorService discoveryTaskExecutor;
 
-    @Inject
+    @Autowired
     private TaskCoordinator taskCoordinator;
 
-    @Inject
+    @Autowired
     private BeanFactory beanFactory;
 
-    @Inject
+    @Autowired
     private DeepDiscoveryFinalizer deepDiscoveryFinalizer;
 
-    @Inject
+    @Autowired
     private DeepDiscoveryHelper deepDiscoveryHelper;
 
     private Map<UUID, ScheduledFuture> deepDiscoveryTasks = new HashMap<>();
@@ -80,9 +82,10 @@ public class DeepDiscoveryImpl implements DeepDiscovery {
      * @see DeepDiscoveryHelper
      */
     @Override
-    @Lock(READ)
-    @Transactional(SUPPORTS)
-    @AccessTimeout(value = 5, unit = SECONDS)
+//    @Lock(READ)
+//    @Transactional(SUPPORTS)
+//    @AccessTimeout(value = 5, unit = SECONDS)
+    @Transactional(propagation = Propagation.SUPPORTS, timeout = 5)
     public void triggerForComputerSystem(Id computerSystemId) throws DeepDiscoveryException {
         deepDiscoveryHelper.triggerDeepDiscovery(computerSystemId);
     }
@@ -97,9 +100,10 @@ public class DeepDiscoveryImpl implements DeepDiscovery {
      * @see DeepDiscoveryFinalizer
      */
     @Override
-    @Lock(WRITE)
-    @Transactional(MANDATORY)
-    @AccessTimeout(value = 5, unit = SECONDS)
+//    @Lock(WRITE)
+//    @Transactional(MANDATORY)
+//    @AccessTimeout(value = 5, unit = SECONDS)
+    @Transactional(propagation = Propagation.MANDATORY, timeout = 5)
     public void finalizeForComputerSystem(Id computerSystemId) {
         deepDiscoveryFinalizer.finalizeSuccessfulDeepDiscovery(computerSystemId);
     }
@@ -108,9 +112,10 @@ public class DeepDiscoveryImpl implements DeepDiscovery {
      * LockType.WRITE used due to concurrent access to deep discovery tasks map that modifies it (put operation)
      */
     @Override
-    @Lock(WRITE)
-    @Transactional(SUPPORTS)
-    @AccessTimeout(value = 5, unit = SECONDS)
+//    @Lock(WRITE)
+//    @Transactional(SUPPORTS)
+//    @AccessTimeout(value = 5, unit = SECONDS)
+    @Transactional(propagation = Propagation.SUPPORTS, timeout = 5)   
     public void triggerForExternalService(UUID externalServiceUuid) {
         if (!deepDiscoveryTasks.containsKey(externalServiceUuid)) {
             ScheduledFuture<?> deepDiscoveryTriggeringTask = discoveryTaskExecutor.scheduleWithFixedDelay(
@@ -127,9 +132,10 @@ public class DeepDiscoveryImpl implements DeepDiscovery {
      * LockType.WRITE used due to concurrent access to deep discovery tasks map that modifies it (remove operation)
      */
     @Override
-    @Lock(WRITE)
-    @Transactional(SUPPORTS)
-    @AccessTimeout(value = 5, unit = SECONDS)
+//    @Lock(WRITE)
+//    @Transactional(SUPPORTS)
+//    @AccessTimeout(value = 5, unit = SECONDS)
+    @Transactional(propagation = Propagation.SUPPORTS, timeout = 5)
     public void cancelForExternalService(UUID externalServiceUuid) {
         if (deepDiscoveryTasks.containsKey(externalServiceUuid)) {
             deepDiscoveryTasks.get(externalServiceUuid).cancel(false);

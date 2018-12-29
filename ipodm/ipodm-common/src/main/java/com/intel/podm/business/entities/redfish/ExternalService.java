@@ -46,6 +46,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Generated;
 
+import com.intel.podm.business.entities.IgnoreUnlinkingRelationship;
 import com.intel.podm.business.entities.converter.IdToLongConverter;
 import com.intel.podm.business.entities.redfish.base.Entity;
 import com.intel.podm.common.types.Id;
@@ -94,11 +95,11 @@ public class ExternalService extends Entity {
     @Column(name = "is_eventing_available")
     private boolean eventingAvailable = true;
 
-//    @IgnoreUnlinkingRelationship
+    @IgnoreUnlinkingRelationship
     @OneToMany(mappedBy = "externalService", fetch = LAZY, cascade = {MERGE, PERSIST})
     private Set<ExternalLink> ownedLinks = new HashSet<>();
 
-    public Id getTheId() {
+    public Id getId() {
         return entityId;
     }
 

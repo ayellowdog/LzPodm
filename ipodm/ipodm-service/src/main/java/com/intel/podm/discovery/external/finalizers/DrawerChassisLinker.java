@@ -31,6 +31,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.intel.podm.business.entities.dao.ChassisDao;
 import com.intel.podm.business.entities.redfish.Chassis;
@@ -52,7 +54,7 @@ public class DrawerChassisLinker {
 
 //    @TimeMeasured(tag = "[Finalizer]")
 //    @Transactional(MANDATORY)
-    @org.springframework.transaction.annotation.Transactional
+    @Transactional(propagation = Propagation.MANDATORY)
     public void linkToModel(Collection<Chassis> topLevelChassis) {
         linkToPod(topLevelChassis.stream().filter(this::shouldBeLinkedToPod));
         linkToRack(topLevelChassis.stream().filter(chassis -> !shouldBeLinkedToPod(chassis)));

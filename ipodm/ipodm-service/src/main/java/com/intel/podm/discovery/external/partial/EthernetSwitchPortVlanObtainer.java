@@ -70,7 +70,7 @@ public class EthernetSwitchPortVlanObtainer {
 
         try (WebClient webClient = webClientBuilder.newInstance(service.getBaseUri()).retryable().build()) {
             EthernetSwitchPortVlanResource psmeVlan = (EthernetSwitchPortVlanResource) webClient.get(vlanUri);
-            Id entityId = psmeVlan.getGlobalId(service.getTheId());
+            Id entityId = psmeVlan.getGlobalId(service.getId());
             EthernetSwitchPortVlan target = discoverableEntityDao.findOrCreateEntity(service, entityId, psmeVlan.getUri(), EthernetSwitchPortVlan.class);
             mapper.map(psmeVlan, target);
 

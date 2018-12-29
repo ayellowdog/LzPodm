@@ -31,6 +31,7 @@ import org.springframework.stereotype.Component;
 import com.intel.podm.business.entities.redfish.DiscoverableEntity;
 import com.intel.podm.business.entities.redfish.Endpoint;
 import com.intel.podm.business.entities.redfish.Zone;
+import com.intel.podm.business.entities.redfish.base.Entity;
 
 /**
  * Class exposes interface that allows to manage links between entities.
@@ -71,6 +72,12 @@ public class EntityLinks {
 
     public void link(EntityLink entityLink) {
         requiresNonNull(entityLink, "entityLink");
+        Entity source = entityLink.getSource();
+        System.out.println(source.toString());
+        Entity target = entityLink.getTarget();
+        System.out.println(target.toString());
+        String name = entityLink.getName();
+        System.out.println(name);
         linker.link(entityLink.getSource(), entityLink.getTarget(), entityLink.getName());
     }
 

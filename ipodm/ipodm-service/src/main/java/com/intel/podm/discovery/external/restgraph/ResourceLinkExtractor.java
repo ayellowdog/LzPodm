@@ -38,6 +38,7 @@ import static java.util.Collections.emptySet;
 
 //@Dependent
 @Component
+//这个类用到了@linkName注解，获取相关的json link
 public class ResourceLinkExtractor {
 	private static final Logger logger = LoggerFactory.getLogger(ResourceLinkExtractor.class);
 

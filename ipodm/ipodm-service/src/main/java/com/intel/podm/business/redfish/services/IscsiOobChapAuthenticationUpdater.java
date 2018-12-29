@@ -60,7 +60,7 @@ public class IscsiOobChapAuthenticationUpdater {
 	@Autowired
     private NetworkDeviceFunctionAuthenticationUpdater networkDeviceFunctionAuthenticationUpdater;
 
-    @Transactional(propagation = Propagation.REQUIRED)
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void checkIscsiOobAuthentication(UUID serviceUuid) {
         endpointDao.findEndpointsWithNullUsername(serviceUuid, ISCSI).forEach(this::fixAuthentication);
 

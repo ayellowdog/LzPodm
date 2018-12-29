@@ -50,7 +50,7 @@ public class EthernetSwitchStaticMacObtainer {
     }
 
     private EthernetSwitchStaticMac readResource(ExternalService service, EthernetSwitchStaticMacResource resource) {
-        Id entityId = resource.getGlobalId(service.getTheId());
+        Id entityId = resource.getGlobalId(service.getId());
 
         EthernetSwitchStaticMac entity = discoverableEntityDao.findOrCreateEntity(service, entityId, resource.getUri(), EthernetSwitchStaticMac.class);
 

@@ -25,7 +25,7 @@ import com.inspur.podm.service.itaskbase.utils.TimeUtil;
  * @author chenchunfeng
  * @date 2018年4月5日
  */
-@Component
+//@Component
 public class QuartzManager {
 	
 	/**

@@ -59,6 +59,13 @@ public class DiscoveryRunnerHooks {
                 throw new TaskCanceledException("Computer system exposed by InBand service doesn't provide obligatory value for UUID");
             }
 
+            /*
+             *     public static final String GET_PRIMARY_COMPUTER_SYSTEM = "SELECT computerSystem "
+			        + "FROM ComputerSystem computerSystem "
+			        + "WHERE computerSystem.uuid = :uuid "
+			        + "AND computerSystem.isComplementary = false "
+			        + "AND computerSystem.systemType != :systemTypeToBeExcluded(此处为virtual)";
+             * */
             if (!computerSystemDao.findPrimarySystem(computerSystem.getUuid().get()).isPresent()) {
                 throw new TaskCanceledException("Primary service is not discovered yet");
             }

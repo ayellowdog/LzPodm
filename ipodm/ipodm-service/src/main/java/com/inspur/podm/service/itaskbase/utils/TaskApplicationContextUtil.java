@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
  * @author chenchunfeng
  * @date 2018年4月11日
  */
-@Component
+//@Component
 public class TaskApplicationContextUtil implements ApplicationContextAware {
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {

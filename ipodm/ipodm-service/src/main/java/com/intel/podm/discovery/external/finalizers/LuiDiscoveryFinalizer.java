@@ -33,7 +33,10 @@ import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.inspur.podm.common.context.AppContext;
 import com.intel.podm.business.entities.redfish.Chassis;
 import com.intel.podm.business.entities.redfish.ComputerSystem;
 import com.intel.podm.business.entities.redfish.DiscoverableEntity;
@@ -46,7 +49,7 @@ public class LuiDiscoveryFinalizer extends ServiceTypeSpecializedDiscoveryFinali
 	private static final Logger logger = LoggerFactory.getLogger(LuiDiscoveryFinalizer.class);
 
 //    @Inject
-    private BeanManager beanManager;
+//    private BeanManager beanManager;
 
     public LuiDiscoveryFinalizer() {
         super(LUI);
@@ -54,7 +57,7 @@ public class LuiDiscoveryFinalizer extends ServiceTypeSpecializedDiscoveryFinali
 
     @Override
 //    @Transactional(MANDATORY)
-    @org.springframework.transaction.annotation.Transactional
+    @Transactional(propagation = Propagation.MANDATORY)
     public void finalize(Set<DiscoverableEntity> discoveredEntities, ExternalService service) {
         finalizeDeepDiscovery(discoveredEntities);
         ComputerSystem computerSystem = retrieveDiscoveredComputerSystem(discoveredEntities);
@@ -71,7 +74,9 @@ public class LuiDiscoveryFinalizer extends ServiceTypeSpecializedDiscoveryFinali
     private void finalizeDeepDiscovery(Set<DiscoverableEntity> discoveredEntities) {
         filterByType(discoveredEntities, ComputerSystem.class).stream()
             .map(ComputerSystem::getId)
-            .forEach(id -> beanManager.fireEvent(deepDiscoveryCompletedEvent(id)));
+//            .forEach(id -> beanManager.fireEvent(deepDiscoveryCompletedEvent(id)));
+            .forEach(id -> AppContext.context().publishEvent(deepDiscoveryCompletedEvent(this, id)));
+            
     }
 
     private static ComputerSystem retrieveDiscoveredComputerSystem(Set<DiscoverableEntity> discoveredEntities) {

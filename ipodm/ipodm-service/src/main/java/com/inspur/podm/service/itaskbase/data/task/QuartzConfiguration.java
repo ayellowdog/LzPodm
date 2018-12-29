@@ -9,7 +9,7 @@ import org.springframework.scheduling.quartz.SchedulerFactoryBean;
  * @author chenchunfeng
  * @date 2018年4月5日
  */
-@Configuration
+//@Configuration
 public class QuartzConfiguration {
    /**
     * Scheduler调度.

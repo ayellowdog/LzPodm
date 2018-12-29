@@ -58,7 +58,6 @@ import static javax.transaction.Transactional.TxType.REQUIRES_NEW;
 //@SuppressWarnings({"checkstyle:ClassFanOutComplexity", "checkstyle:IllegalCatch"})
 //@Component
 public class DiscoveryRunner extends CancelableRunnable {
-    @Autowired
     private static final Logger logger = LoggerFactory.getLogger(DiscoveryRunner.class);
 
     @Autowired
@@ -98,7 +97,7 @@ public class DiscoveryRunner extends CancelableRunnable {
     @Override
 //    @Transactional(REQUIRES_NEW)
 //    @TimeMeasured(tag = "[DiscoveryTask]")
-    @Transactional(propagation = Propagation.REQUIRED)
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void run() {
         try {
             requiresNonNull(serviceUuid, "Service UUID cannot be null, discovery action has not been configured correctly");
@@ -126,7 +125,9 @@ public class DiscoveryRunner extends CancelableRunnable {
                 availabilityChecker.verifyServiceAvailabilityByUuid(serviceUuid);
                 return;
             }
+            //这个graph放的数据都是json类型的resource而非entity，因此里面的link，set里面存的只是uri
             RestGraph graph = restGraphBuilderFactory.createWithCancelableChecker(this::throwIfEligibleForCancellation).build(reader);
+            //如果是Inband类型的服务，需要取出graph里的computerSystem来校验一下
             discoveryRunnerHooks.onRestGraphCreated(graph, service);
             mapper.map(graph);
             logger.info("Polling data from {} finished", service);

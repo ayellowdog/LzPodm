@@ -26,7 +26,7 @@ import static com.intel.podm.common.enterprise.utils.beans.JndiNames.SYNCHRONIZE
 public class ExecutorConfig {
 	@Bean(name = "managedExecutorService")
 	public ScheduledExecutorService getManagedExecutorService() {
-		ScheduledExecutorService managedExecutorService = Executors.newScheduledThreadPool(10);
+		ScheduledExecutorService managedExecutorService = Executors.newScheduledThreadPool(5);
 		return managedExecutorService;
 	}
 	@Bean(name = SYNCHRONIZED_TASK_EXECUTOR)
@@ -36,7 +36,7 @@ public class ExecutorConfig {
 	}
 	@Bean(name = EVENT_SUBSCRIPTION_TASK_EXECUTOR)
 	public ScheduledExecutorService getEventsExecutorService() {
-		ScheduledExecutorService eventsExecutorService = Executors.newScheduledThreadPool(10);
+		ScheduledExecutorService eventsExecutorService = Executors.newScheduledThreadPool(2);
 		return eventsExecutorService;
 	}
 }

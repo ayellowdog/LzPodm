@@ -16,7 +16,7 @@ import com.inspur.podm.service.itaskbase.data.strategy.ThreadPoolSizeStrategy;
  * @author jiawei
  * @2018年5月23日 下午2:52:22
  */
-@Configuration
+//@Configuration
 public class StrategyUtils {
 
 	private static String type;

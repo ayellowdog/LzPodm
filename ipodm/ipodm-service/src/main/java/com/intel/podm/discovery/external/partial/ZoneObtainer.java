@@ -47,7 +47,7 @@ public class ZoneObtainer {
 
         try (WebClient webClient = webClientBuilder.newInstance(service.getBaseUri()).retryable().build()) {
             ZoneResource zoneResource = (ZoneResource) webClient.get(zoneUri);
-            Id entityId = zoneResource.getGlobalId(service.getTheId());
+            Id entityId = zoneResource.getGlobalId(service.getId());
             Zone zone = discoverableEntityDao.findOrCreateEntity(service, entityId, zoneResource.getUri(), Zone.class);
             mapper.map(zoneResource, zone);
             refreshZoneEndpointsAfterUpdate(zone, zoneResource);
@@ -70,7 +70,7 @@ public class ZoneObtainer {
     private Endpoint getEndpoint(ResourceSupplier endpointResourceSupplier, ExternalService service) {
         try {
             ExternalServiceResource externalResource = endpointResourceSupplier.get();
-            Id globalId = externalResource.getGlobalId(service.getTheId());
+            Id globalId = externalResource.getGlobalId(service.getId());
             Endpoint endpoint = discoverableEntityDao.findByGlobalId(globalId, Endpoint.class);
 
             if (endpoint == null) {

@@ -32,6 +32,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
+import com.intel.podm.business.entities.IgnoreUnlinkingRelationship;
 import com.intel.podm.business.entities.redfish.base.Entity;
 
 @javax.persistence.Entity
@@ -48,7 +49,7 @@ public class ExternalLink extends Entity {
     @Column(name = "uri")
     private URI sourceUri;
 
-//    @IgnoreUnlinkingRelationship
+    @IgnoreUnlinkingRelationship
     @ManyToOne(fetch = EAGER, cascade = {MERGE, PERSIST})
     @JoinColumn(name = "external_service_id")
     private ExternalService externalService;

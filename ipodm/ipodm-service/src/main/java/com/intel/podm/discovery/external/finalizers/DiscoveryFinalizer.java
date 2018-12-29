@@ -32,6 +32,7 @@ import javax.enterprise.inject.Instance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.intel.podm.business.entities.redfish.DiscoverableEntity;
 import com.intel.podm.business.entities.redfish.ExternalService;
@@ -45,7 +46,7 @@ public class DiscoveryFinalizer {
     private Collection<ServiceTypeSpecializedDiscoveryFinalizer> finalizers;
 
 //    @Transactional(MANDATORY)
-    @org.springframework.transaction.annotation.Transactional(propagation = Propagation.MANDATORY)
+    @Transactional(propagation = Propagation.MANDATORY)
     public void finalizeDiscovery(Set<DiscoverableEntity> discoveredEntities, ExternalService service) {
         service.markAsReachable();
         tryFindFinalizer(service)
@@ -61,6 +62,5 @@ public class DiscoveryFinalizer {
     @PostConstruct
     private void init() {
         finalizers = stream(discoveryFinalizers.spliterator(), false).collect(toList());
-        System.out.println("DiscoveryFinalizer: size is " + finalizers.size());
     }
 }

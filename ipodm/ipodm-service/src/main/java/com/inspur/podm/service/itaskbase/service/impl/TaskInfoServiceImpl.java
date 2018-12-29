@@ -22,7 +22,7 @@ import com.inspur.podm.service.itaskbase.utils.TimeUtil;
  * @author chenchunfeng
  * @date 2018年4月10日
  */
-@Service("taskInfoService")
+//@Service("taskInfoService")
 public class TaskInfoServiceImpl implements TaskInfoService {
 	
 	/**

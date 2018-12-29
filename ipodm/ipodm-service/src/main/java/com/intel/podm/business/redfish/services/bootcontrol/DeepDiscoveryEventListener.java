@@ -84,7 +84,7 @@ public class DeepDiscoveryEventListener {
     }
 
 //    @Transactional(MANDATORY)
-//    @Transactional(propagation = Propagation.MANDATORY)
+    @Transactional(propagation = Propagation.MANDATORY)
     @TransactionalEventListener(phase = TransactionPhase.BEFORE_COMMIT)
 //    public void onBeforeDeepDiscoveryCompletion(@Observes(during = BEFORE_COMPLETION) DeepDiscoveryCompletedEvent event) {
     public void onBeforeDeepDiscoveryCompletion(DeepDiscoveryCompletedEvent event) {

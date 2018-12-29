@@ -19,10 +19,11 @@ package com.intel.podm.discovery.external.finalizers;
 
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
-import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.intel.podm.business.entities.dao.ComputerSystemDao;
 import com.intel.podm.business.entities.dao.EndpointDao;
@@ -63,7 +64,7 @@ public class EndpointLinker {
 
 //    @TimeMeasured(tag = "[Finalizer]")
 //    @Transactional(MANDATORY)
-    @org.springframework.transaction.annotation.Transactional
+    @Transactional(propagation = Propagation.MANDATORY)
     void linkEndpointToRelatedSystem(Collection<Endpoint> discoveredEndpoints) {
         for (Endpoint endpoint : discoveredEndpoints) {
             getInitiatorConnectedEntities(endpoint)

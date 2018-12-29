@@ -29,6 +29,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.intel.podm.business.entities.dao.ComposedNodeDao;
 import com.intel.podm.business.entities.redfish.ComposedNode;
@@ -60,7 +62,7 @@ public class ComposedNodeRecoveryService {
     private Recoupler<ComputerSystem> computerSystemRecoupler;
 
 //    @Transactional(MANDATORY)
-    @org.springframework.transaction.annotation.Transactional
+    @Transactional(propagation = Propagation.MANDATORY)
     void recoverFromAssets(Set<ComposableAsset> assetsAvailableToAttach) {
         Collection<Drive> drives = filterByType(assetsAvailableToAttach, Drive.class);
         Collection<ComputerSystem> systems = filterByType(assetsAvailableToAttach, ComputerSystem.class);

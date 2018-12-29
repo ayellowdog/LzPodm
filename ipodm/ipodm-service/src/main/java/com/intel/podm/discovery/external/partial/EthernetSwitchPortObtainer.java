@@ -77,7 +77,7 @@ public class EthernetSwitchPortObtainer {
     }
 
     private EthernetSwitchPort readEthernetSwitchPortResource(ExternalService service, EthernetSwitchPortResource resource) {
-        Id entityId = resource.getGlobalId(service.getTheId());
+        Id entityId = resource.getGlobalId(service.getId());
         EthernetSwitchPort targetSwitchPort = discoverableEntityDao.findOrCreateEntity(service, entityId, resource.getUri(), EthernetSwitchPort.class);
         switchPortMapper.map(resource, targetSwitchPort);
 

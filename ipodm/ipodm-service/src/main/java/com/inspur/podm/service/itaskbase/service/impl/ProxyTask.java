@@ -24,7 +24,7 @@ import com.inspur.podm.service.itaskbase.utils.TaskAppContext;
  * @author jiawei
  * @2018年5月21日 下午2:05:07
  */
-@Component
+//@Component
 public class ProxyTask implements InvocationHandler, Serializable {
 	/**
 	 * 序列化.

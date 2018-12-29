@@ -71,7 +71,7 @@ public class EthernetSwitchAclObtainer {
     }
 
     private EthernetSwitchAcl readEthernetSwitchAcl(ExternalService service, EthernetSwitchAclResource aclResource) {
-        Id entityId = aclResource.getGlobalId(service.getTheId());
+        Id entityId = aclResource.getGlobalId(service.getId());
         EthernetSwitchAcl acl = discoverableEntityDao.findOrCreateEntity(service, entityId, aclResource.getUri(), EthernetSwitchAcl.class);
         aclMapper.map(aclResource, acl);
         return acl;

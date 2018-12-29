@@ -66,7 +66,7 @@ public class EthernetSwitchAclRuleObtainer {
         try (WebClient webClient = webClientBuilder.newInstance(service.getBaseUri()).retryable().build()) {
             EthernetSwitchAclRuleResource psmeRule = (EthernetSwitchAclRuleResource) webClient.get(ruleUri);
 
-            Id entityId = psmeRule.getGlobalId(service.getTheId());
+            Id entityId = psmeRule.getGlobalId(service.getId());
             EthernetSwitchAclRule target = discoverableEntityDao.findOrCreateEntity(service, entityId, psmeRule.getUri(), EthernetSwitchAclRule.class);
             updateMirrorPorts(psmeRule, target);
             mapper.map(psmeRule, target);

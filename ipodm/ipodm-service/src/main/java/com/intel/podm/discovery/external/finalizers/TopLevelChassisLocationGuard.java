@@ -25,6 +25,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.intel.podm.business.entities.dao.ChassisDao;
 import com.intel.podm.business.entities.redfish.Chassis;
@@ -54,7 +56,7 @@ class TopLevelChassisLocationGuard {
      */
 //    @Transactional(MANDATORY)
 //    @TimeMeasured(tag = "[Finalizer]")
-    @org.springframework.transaction.annotation.Transactional
+    @Transactional(propagation = Propagation.MANDATORY)
     public void assureSingleRackParent(Collection<Chassis> discoveredChassis) {
         List<Chassis> racks = chassisDao.getAllByChassisType(RACK);
         for (Chassis chassis : discoveredChassis) {

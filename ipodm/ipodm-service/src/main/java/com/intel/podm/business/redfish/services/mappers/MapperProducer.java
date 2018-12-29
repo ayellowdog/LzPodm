@@ -53,7 +53,6 @@ public class MapperProducer {
 	@SuppressWarnings("unchecked")
 	@PostConstruct
 	private void init() {
-		System.out.println("初始化mapper cache");
 		mapperCache = new ArrayList<DtoMapper<? extends Entity, ? extends RedfishDto>>();
 		DtoMapper mapperPool;
 		mapperPool = new DtoMapper(Chassis.class, ChassisDto.class);

@@ -46,7 +46,7 @@ public class ExternalLinkDao {
             .collect(toList());
 
         genericDao.removeAndClear(externalService.getOwnedLinks(), predicate);
-
+        //清楚孤儿entity
         removeOrphanEntities(affectedEntities);
     }
 

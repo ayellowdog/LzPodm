@@ -32,6 +32,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.intel.podm.business.entities.dao.DiscoverableEntityDao;
 import com.intel.podm.business.entities.dao.ExternalLinkDao;
@@ -46,8 +48,8 @@ import com.intel.podm.client.resources.redfish.ComputerSystemResource;
 //@SuppressWarnings({"checkstyle:ClassFanOutComplexity"})
 @Component
 public class EntityObtainer {
-//	@Autowired
-    private Instance<EntityObtainerHelper<? extends ExternalServiceResource>> helpers;
+	@Autowired
+    private List<EntityObtainerHelper<? extends ExternalServiceResource>> helpers;
 
     private List<EntityObtainerHelper<? extends ExternalServiceResource>> cachedHelpers;
 
@@ -64,7 +66,7 @@ public class EntityObtainer {
 
     @SuppressWarnings({"unchecked"})
 //    @Transactional(MANDATORY)
-    @org.springframework.transaction.annotation.Transactional
+    @Transactional(propagation = Propagation.MANDATORY)
     public DiscoverableEntity obtain(ExternalService service, ExternalServiceResource resource) {
         EntityObtainerHelper entityObtainerHelper = getHelper(resource);
         if (entityObtainerHelper == null) {
@@ -78,7 +80,7 @@ public class EntityObtainer {
             DiscoverableEntity entity = (DiscoverableEntity) entityObtainerHelper.findEntityFor(computerSystem, resource)
                 .orElseGet(() -> discoverableEntityDao.createEntity(
                     service,
-                    resource.getGlobalId(service.getTheId()),
+                    resource.getGlobalId(service.getId()),
                     entityObtainerHelper.getEntityClass())
                 );
 
@@ -91,7 +93,8 @@ public class EntityObtainer {
 
     @PostConstruct
     private void init() {
-//        cachedHelpers = stream(helpers.spliterator(), false).collect(toList());
+        cachedHelpers = stream(helpers.spliterator(), false).collect(toList());
+        System.out.println("EntityObtainer.class : cachedHelpers size is " + cachedHelpers.size());
     }
 
     @SuppressWarnings({"unchecked"})

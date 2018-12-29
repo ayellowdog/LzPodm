@@ -71,7 +71,12 @@ class RestGraphBuilderImpl implements RestGraphBuilder {
             cancelableChecker.check();
             ExternalServiceResource current = queue.poll();
             visited.add(current.getUri());
-
+            /**
+             * 这个方法用到了@linkName注解，获取相关的resource的@linkname注解标注的关联resource:
+             * 1.对于获取到的json resource，获取它的@linkName注解，取得相关的方法，然后用反射调用方法，返回相应的单个或iterable对象(ResourceSupplier)
+             * 而这个supplier的get方法返回的就是ExternalServiceResource
+             * 2.其次，存储method用到了一个谷歌的cache，能够动态添加内容，支持同步操作
+             */
             Collection<ResourceLink> relatedLinks = extractor.extractFrom(current);
             Collection<? extends ExternalServiceResource> notVisited = filterNotVisited(relatedLinks, visited);
 

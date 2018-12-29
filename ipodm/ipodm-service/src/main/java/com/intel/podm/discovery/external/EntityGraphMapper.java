@@ -43,6 +43,8 @@ import com.intel.podm.business.entities.redfish.ExternalService;
 //import com.intel.podm.business.entities.redfish.base.DiscoverableEntity;
 import com.intel.podm.business.entities.redfish.base.Entity;
 import com.intel.podm.client.resources.ExternalServiceResource;
+import com.intel.podm.common.logger.Logger;
+import com.intel.podm.common.logger.LoggerFactory;
 //import com.intel.podm.common.enterprise.utils.logger.TimeMeasured;
 //import com.intel.podm.common.enterprise.utils.retry.RetryOnRollback;
 //import com.intel.podm.common.enterprise.utils.retry.RetryOnRollbackInterceptor;
@@ -56,6 +58,7 @@ import com.intel.podm.discovery.external.restgraph.RestGraph;
 //@Interceptors(RetryOnRollbackInterceptor.class)//这个拦截器是用于map方法的@RetryOnRollback(3)注解的，重试机制
 @Component
 public class EntityGraphMapper {
+	private static final Logger logger = LoggerFactory.getLogger(EntityGraphMapper.class);
 	@Autowired
 	private EntityMultiMapper multiMapper;
 
@@ -79,16 +82,21 @@ public class EntityGraphMapper {
 	@Transactional(propagation=Propagation.REQUIRES_NEW, timeout=500)
 	@Retryable(value= {RollbackException.class, OptimisticLockException.class},maxAttempts = 3,backoff = @Backoff(delay = 100l,multiplier = 1))
     public void map(RestGraph graph) {
-		System.out.println("开始尝试Map》》》》》》》》》》》》》》》》》》");
+		logger.i("开始尝试mapping start>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>.");
         requiresNonNull(graph, "graph");
         UUID serviceUuid = graph.findServiceUuid();
         ExternalService service = repository.find(serviceUuid);
+        /**
+         * 这是最关键的一步，将所有的找到的json resource，找到与之对应的discoverableEntity（没有则创建），并返回。
+         * 而传入service的目的是为了判断类型以及创建entity时需要（比如创建link，设置complmentartType啥的）
+         */   
         Map<ExternalServiceResource, DiscoverableEntity> tmpMap = multiMapper.map(graph.getResources(), service);
         Map<ExternalServiceResource, DiscoverableEntity> map = filterNonNullValues(tmpMap);
-
+        //这个方法会在entity里赋值相应的关联对象，这样entity保存时，不同的表之间就有了关联关系（可能是外键，也可能是关系表）。
         updateLinks(graph, map);
 
         discoveryFinalizer.finalizeDiscovery(new HashSet<>(map.values()), service);
+        logger.i("开始尝试mapping end>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>.");
     }
 
 //    @TimeMeasured(tag = "[Discovery]")

@@ -37,7 +37,6 @@ final class Linker<S extends Entity, T extends Entity> {
         if (!canLink(source, target, linkName)) {
             return false;
         }
-
         method.link((S) source, (T) target);
         return true;
     }
