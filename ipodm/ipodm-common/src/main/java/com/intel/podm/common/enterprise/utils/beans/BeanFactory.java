@@ -73,7 +73,7 @@ public class BeanFactory implements Serializable {
         dbf.registerBeanDefinition(beanName, beanDefinition);
         T existingBean = (T) context.getBean(beanName);
         //完成注入
-        dbf.autowireBean(existingBean);
+//        dbf.autowireBean(existingBean);
         return existingBean;
     }
 //    @Inject

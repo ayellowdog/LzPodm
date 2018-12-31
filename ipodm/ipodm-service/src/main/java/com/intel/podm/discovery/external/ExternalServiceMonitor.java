@@ -66,7 +66,7 @@ public class ExternalServiceMonitor {
 //    @Transactional(SUPPORTS)
 //    @AccessTimeout(value = 5, unit = SECONDS)
     @Transactional(propagation = Propagation.SUPPORTS, timeout = 5)
-    public void monitorService(UUID serviceUuid) {
+    public synchronized void monitorService(UUID serviceUuid) {
         ExternalService service = externalServiceRepository.find(serviceUuid);
         if (service.isEventingAvailable()) {
         	/**

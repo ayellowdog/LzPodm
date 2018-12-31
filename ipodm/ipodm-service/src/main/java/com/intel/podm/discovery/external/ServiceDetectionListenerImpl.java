@@ -16,6 +16,7 @@
 
 package com.intel.podm.discovery.external;
 
+import com.inspur.podm.common.context.AppContext;
 import com.intel.podm.common.enterprise.utils.beans.BeanFactory;
 import com.intel.podm.common.logger.Logger;
 import com.intel.podm.common.logger.LoggerFactory;
@@ -73,7 +74,9 @@ public class ServiceDetectionListenerImpl implements ServiceDetectionListener {
 //                    break;
 //            }
 //        });
-        OnServiceDetectRunner runner = beanFactory.create(OnServiceDetectRunner.class);
+//        OnServiceDetectRunner runner = beanFactory.create(OnServiceDetectRunner.class);
+        //这里之所以再封一层，因为serviceExplorer的事务全是support(不知道为啥), 只好在外层给run方法加事务
+        OnServiceDetectRunner runner = AppContext.context().getBean(OnServiceDetectRunner.class);
         runner.setServiceEndpoint(serviceEndpoint);
         taskCoordinator.registerAsync(serviceUuid,runner);
     }

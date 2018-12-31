@@ -34,7 +34,6 @@ import static javax.transaction.Transactional.TxType.SUPPORTS;
 
 //@Stateless
 @Component
-@Lazy
 public class ServiceExplorerImpl implements ServiceExplorer {
     @Autowired
     private BeanFactory beanFactory;

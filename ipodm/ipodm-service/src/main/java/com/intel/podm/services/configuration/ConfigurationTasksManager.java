@@ -77,7 +77,7 @@ public class ConfigurationTasksManager {
 //    @Transactional(SUPPORTS)
 //    @AccessTimeout(value = 5, unit = SECONDS)
     @Transactional(propagation = Propagation.SUPPORTS, timeout = 5)
-    public void scheduleConfigurer(ServiceEndpoint serviceEndpoint) {
+    public synchronized void scheduleConfigurer(ServiceEndpoint serviceEndpoint) {
         UUID serviceUuid = serviceEndpoint.getServiceUuid();
         if (!configurationTasks.containsKey(serviceUuid)) {
             ScheduledFuture<?> configurationTask = scheduleConfigurationTask(serviceEndpoint);
@@ -94,7 +94,7 @@ public class ConfigurationTasksManager {
 //    @Transactional(SUPPORTS)
 //    @AccessTimeout(value = 5, unit = SECONDS)
     @Transactional(propagation = Propagation.SUPPORTS, timeout = 5)
-    public void cancelConfigurer(UUID serviceUuid) {
+    public synchronized void cancelConfigurer(UUID serviceUuid) {
         ScheduledFuture<?> configurationTask = configurationTasks.remove(serviceUuid);
         if (configurationTask != null) {
             logger.d("Configurer cancelled for service {}", serviceUuid);

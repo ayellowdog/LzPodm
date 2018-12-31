@@ -78,8 +78,8 @@ class EventServiceDefinitionFactory {
     }
 
 //    @Transactional(REQUIRES_NEW)
-    @Transactional(propagation = Propagation.REQUIRED)
-    EventServiceDefinition create(UUID serviceUuid) {
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public EventServiceDefinition create(UUID serviceUuid) {
         ExternalService service = repository.find(serviceUuid);
         URI podManagerEventServiceUri = buildPodManagerEventServiceUri(service.getServiceType(), service.getUuid());
         return new EventServiceDefinition(podManagerEventServiceUri, service.getBaseUri(), podManagerServiceUuid);

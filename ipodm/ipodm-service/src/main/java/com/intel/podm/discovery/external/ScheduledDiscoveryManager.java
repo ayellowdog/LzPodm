@@ -85,7 +85,7 @@ public class ScheduledDiscoveryManager {
 //    @Transactional(SUPPORTS)
 //    @AccessTimeout(value = 5, unit = SECONDS)
     @Transactional(propagation = Propagation.SUPPORTS, timeout = 5)
-    public void scheduleDiscovery(UUID serviceUuid) {
+    public synchronized void scheduleDiscovery(UUID serviceUuid) {
         if (!discoveryTasks.containsKey(serviceUuid)) {
             ScheduledFuture<?> discoveryTask = scheduleDiscoveryTask(serviceUuid);
             discoveryTasks.put(serviceUuid, discoveryTask);
@@ -101,11 +101,11 @@ public class ScheduledDiscoveryManager {
 //    @Transactional(SUPPORTS)
 //    @AccessTimeout(value = 5, unit = SECONDS)
     @Transactional(propagation = Propagation.SUPPORTS, timeout = 5)
-    public void cancelDiscovery(UUID serviceUuid) {
+    public synchronized void cancelDiscovery(UUID serviceUuid) {
         discoveryRunners.remove(serviceUuid);
         ScheduledFuture discoveryTask = discoveryTasks.remove(serviceUuid);
         if (discoveryTask != null) {
-            logger.debug("Discovery cancelled for service {}", serviceUuid);
+            logger.info("Discovery cancelled for service {}", serviceUuid);
             discoveryTask.cancel(false);
         } else {
             logger.warn("Discovery was already cancelled for service {} or was not scheduled", serviceUuid);

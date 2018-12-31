@@ -50,12 +50,9 @@ public class ExternalServiceUpdater {
     @Autowired
     private ExternalServiceRepository repository;
 
-    /**
-     * 这个Transactional注解其实是没用的，因为它只在线程中被调用了。而在spring中，线程对象必须是被spring管理的bean，
-     * 且在run上加上transactional注解，才有事务，因此需要用beanFactory创建线程对象，并且在run上加上transactional
-     */
-    @Transactional(propagation = Propagation.REQUIRED)
-    void updateExternalService(ServiceEndpoint serviceEndpoint) {
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void updateExternalService(ServiceEndpoint serviceEndpoint) {
         ExternalService service = repository.findOrNull(serviceEndpoint.getServiceUuid());
         if (service == null) {
             service = repository.create(serviceEndpoint);

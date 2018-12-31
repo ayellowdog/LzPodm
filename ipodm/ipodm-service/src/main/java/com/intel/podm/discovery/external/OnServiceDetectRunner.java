@@ -4,6 +4,8 @@
 package com.intel.podm.discovery.external;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +22,8 @@ import com.intel.podm.services.configuration.DiscoveryServiceDetectionHandler;
  * @author: liuchangbj
  * @date: 2018年12月26日 上午10:52:26
  */
+@Component
+@Scope("prototype")
 public class OnServiceDetectRunner implements Runnable {
 
 private static final Logger logger = LoggerFactory.getLogger(OnServiceDetectRunner.class);
@@ -40,6 +44,7 @@ public void setServiceEndpoint(ServiceEndpoint serviceEndpoint) {
 	this.serviceEndpoint = serviceEndpoint;
 }
 
+	//因为 serviceExplorer.startMonitoringOfService没有事务会报错，所以在run上添加事务
 	@Transactional(propagation = Propagation.REQUIRED)
 	@Override
 	public void run() {

@@ -33,6 +33,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.inspur.podm.common.client.HttpApiService;
+import com.inspur.podm.common.context.AppContext;
 import com.inspur.podm.controller.test.CostTime;
 import com.inspur.podm.service.itaskbase.data.bean.TaskInfoModel;
 import com.inspur.podm.service.itaskbase.service.TaskInfoService;
@@ -135,7 +136,16 @@ public void testTrans() throws InterruptedException, ExecutionException {
 //	ScheduledFuture<?> schedul2 = executor.scheduleAtFixedRate(runner2, 1, 5, TimeUnit.SECONDS);
 //	System.out.println("已经提交了2");
 ////	dao.create();
-	
+	TestRunner r1 = AppContext.getBean(TestRunner.class);
+	r1.setId("1");
+	System.out.println(r1.getId());
+	System.out.println(r1.getDao());
+	TestRunner r2 = AppContext.getBean(TestRunner.class);
+	r2.setId("2");
+	System.out.println(r2.getId());
+	System.out.println(r2.getDao());
+//	@SuppressWarnings("unused")
+//	ScheduledFuture<?> schedule = executor.scheduleAtFixedRate(r2, 1, 300, TimeUnit.SECONDS);
 }
     
 }

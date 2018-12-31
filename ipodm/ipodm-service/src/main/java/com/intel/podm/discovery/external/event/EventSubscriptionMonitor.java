@@ -69,7 +69,7 @@ public class EventSubscriptionMonitor {
 //    @Transactional(SUPPORTS)
 //    @AccessTimeout(value = 5, unit = SECONDS)
     @Transactional(propagation = Propagation.SUPPORTS, timeout = 5)
-    public void monitorService(UUID serviceUuid) {
+    public synchronized void monitorService(UUID serviceUuid) {
         if (!eventSubscriptionTasks.containsKey(serviceUuid)) {
             EventSubscriptionTask subscriptionTask = eventSubscriptionTaskFactory.create(serviceUuid);
             // run synchronously for the first time
@@ -89,7 +89,7 @@ public class EventSubscriptionMonitor {
 //    @Transactional(SUPPORTS)
 //    @AccessTimeout(value = 5, unit = SECONDS)
     @Transactional(propagation = Propagation.SUPPORTS, timeout = 5)
-    public void cancelMonitoring(UUID serviceUuid) {
+    public synchronized void cancelMonitoring(UUID serviceUuid) {
         ScheduledFuture<?> monitoringTask = eventSubscriptionTasks.remove(serviceUuid);
         if (monitoringTask != null) {
             monitoringTask.cancel(false);
