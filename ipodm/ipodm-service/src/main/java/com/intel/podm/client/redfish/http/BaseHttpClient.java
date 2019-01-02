@@ -8,6 +8,7 @@ import java.net.URI;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPatch;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.entity.StringEntity;
@@ -52,6 +53,9 @@ public class BaseHttpClient implements AutoCloseable{
 		try(CloseableHttpResponse response = this.httpClient.execute(request)) {
 			int statusCode = response.getStatusLine().getStatusCode();
 			JavaType javaType = objMapper.constructType(responseEntityClass);
+			if(response.getEntity() == null) {
+				return new HttpResponse(statusCode, null, uri);
+			}
 			String entity = EntityUtils.toString(response.getEntity(), "UTF-8");
 			Object readEntity = objMapper.readValue(entity, javaType);
 			return new HttpResponse(statusCode, readEntity, uri);
@@ -76,6 +80,17 @@ public class BaseHttpClient implements AutoCloseable{
 			}
 			post.setHeader("Content-Type", "application/json");
 			return post;
+		case PATCH:
+			HttpPatch patch = new HttpPatch(uri);
+			String patchEntity;
+			try {
+				patchEntity = objMapper.writeValueAsString(requestEntity);
+				patch.setEntity(new StringEntity(patchEntity, "utf-8"));
+			} catch (JsonProcessingException e) {
+				logger.error("Json Convert error on '{}' : " + e.getMessage(), requestEntity);
+			}
+			patch.setHeader("Content-Type", "application/json");
+			return patch;
 		default:
 			break;
 		}

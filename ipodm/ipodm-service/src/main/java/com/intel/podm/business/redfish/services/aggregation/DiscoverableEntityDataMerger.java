@@ -20,25 +20,21 @@ import static com.intel.podm.mappers.Conditions.aggregateCondition;
 import static java.lang.String.format;
 import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.toMap;
-import static javax.transaction.Transactional.TxType.MANDATORY;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.inspur.podm.api.business.dto.RedfishDto;
 import com.inspur.podm.api.business.dto.redfish.attributes.UnknownOemDto;
 import com.intel.podm.business.entities.redfish.DiscoverableEntity;
 import com.intel.podm.business.redfish.services.mappers.DtoMapper;
 import com.intel.podm.business.redfish.services.mappers.MapperProducer;
-import com.intel.podm.config.base.Config;
-import com.intel.podm.config.base.ConfigHolderFactory;
 import com.intel.podm.config.base.DynamicHolder;
-import com.intel.podm.config.base.Holder;
 import com.intel.podm.config.base.dto.InBandServiceConfig;
 
 public abstract class DiscoverableEntityDataMerger<T extends DiscoverableEntity, S extends RedfishDto> {
@@ -48,7 +44,7 @@ public abstract class DiscoverableEntityDataMerger<T extends DiscoverableEntity,
 	@Autowired
     private MapperProducer mapperProducer;
 
-    @Transactional(MANDATORY)
+    @Transactional(propagation = Propagation.MANDATORY)
     public S toDto(T discoverableEntity) {
         DtoMapper<T, S> mapper = getDtoMapperForDiscoverableEntity(discoverableEntity);
         S dto = mapper.createDto();

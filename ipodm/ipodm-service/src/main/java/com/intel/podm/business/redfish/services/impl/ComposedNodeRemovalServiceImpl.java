@@ -65,7 +65,7 @@ class ComposedNodeRemovalServiceImpl implements RemovalService<ComposedNodeDto> 
     private DynamicHolder<ServiceConfig> config;
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Transactional(propagation = Propagation.REQUIRED)
     @SuppressWarnings({"unchecked"})
     public void perform(Context target) throws BusinessApiException, TimeoutException {
         ComposedNode composedNode = (ComposedNode) traverser.traverse(target);

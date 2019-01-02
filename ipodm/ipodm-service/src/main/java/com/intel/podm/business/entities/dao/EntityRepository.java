@@ -19,7 +19,6 @@ package com.intel.podm.business.entities.dao;
 import static com.intel.podm.common.utils.Contracts.requiresNonNull;
 import static com.intel.podm.common.utils.IterableHelper.singleOrNull;
 import static java.util.Optional.ofNullable;
-import static javax.transaction.Transactional.TxType.MANDATORY;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -30,13 +29,12 @@ import java.util.function.Predicate;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-import javax.transaction.Transactional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.intel.podm.business.entities.EntityNotFoundException;
 import com.intel.podm.business.entities.redfish.base.Entity;
@@ -50,7 +48,7 @@ class EntityRepository {
 	private static final Logger logger = LoggerFactory.getLogger(EntityRepository.class);
 
 //    @Transactional(MANDATORY)
-	@org.springframework.transaction.annotation.Transactional(propagation = Propagation.MANDATORY)
+	@Transactional(propagation = Propagation.MANDATORY)
     public <T extends Entity> T create(Class<T> entityClass) {
         requiresNonNull(entityClass, "entityClass");
 
@@ -65,7 +63,7 @@ class EntityRepository {
     }
 
 //    @Transactional(MANDATORY)
-	@org.springframework.transaction.annotation.Transactional(propagation = Propagation.MANDATORY)
+	@Transactional(propagation = Propagation.MANDATORY)
     public <T extends Entity> Optional<T> tryFind(Class<T> entityClass, Id entityId) {
         TypedQuery<T> query = entityManager
             .createQuery("SELECT e FROM " + entityClass.getSimpleName() + " e WHERE e.entityId = :entityId", entityClass);
@@ -74,7 +72,7 @@ class EntityRepository {
     }
 
 //    @Transactional(MANDATORY)
-	@org.springframework.transaction.annotation.Transactional(propagation = Propagation.MANDATORY)
+	@Transactional(propagation = Propagation.MANDATORY)
     public <T extends Entity> T find(Class<T> entityClass, Id entityId) {
         return tryFind(entityClass, entityId).orElseThrow(
             () -> new EntityNotFoundException(entityClass, entityId)
@@ -82,7 +80,7 @@ class EntityRepository {
     }
 
 //    @Transactional(MANDATORY)
-	@org.springframework.transaction.annotation.Transactional(propagation = Propagation.MANDATORY)
+	@Transactional(propagation = Propagation.MANDATORY)
     public <T extends Entity> List<T> findAll(Class<T> entityClass) {
         TypedQuery<T> query =
             entityManager.createQuery("SELECT e FROM " + entityClass.getSimpleName() + " e ORDER BY e.entityId", entityClass);
@@ -90,7 +88,7 @@ class EntityRepository {
     }
 
 //    @Transactional(MANDATORY)
-	@org.springframework.transaction.annotation.Transactional(propagation = Propagation.MANDATORY)
+	@Transactional(propagation = Propagation.MANDATORY)
     public <T extends Entity> void remove(T entity) {
         if (entity != null) {
             if (entityManager.contains(entity)) {
@@ -102,13 +100,13 @@ class EntityRepository {
     }
 
 //    @Transactional(MANDATORY)
-	@org.springframework.transaction.annotation.Transactional(propagation = Propagation.MANDATORY)
+	@Transactional(propagation = Propagation.MANDATORY)
     public <T extends Entity> void removeAndClear(Collection<T> entities) {
         removeAndClear(entities, x -> true);
     }
 
 //    @Transactional(MANDATORY)
-	@org.springframework.transaction.annotation.Transactional(propagation = Propagation.MANDATORY)
+	@Transactional(propagation = Propagation.MANDATORY)
     public <T extends Entity> void removeAndClear(Collection<T> entities, Predicate<T> predicate) {
         if (entities != null) {
             //TODO: RSASW-8093

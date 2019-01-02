@@ -1,5 +1,6 @@
 package com.intel.podm.business.redfish.services.impl;
 
+import static com.inspur.podm.api.business.services.context.Context.contextOf;
 import static com.inspur.podm.api.business.services.context.SingletonContext.singletonContextOf;
 import static com.intel.podm.business.redfish.services.ContextCollections.asDriveContexts;
 import static com.intel.podm.business.redfish.services.ContextCollections.asEthernetInterfaceContexts;
@@ -15,15 +16,13 @@ import static com.intel.podm.common.types.actions.ActionInfoNames.DETACH_RESOURC
 import static com.intel.podm.common.utils.IterableHelper.single;
 import static java.lang.String.format;
 import static java.util.stream.Collectors.toList;
-import static javax.transaction.Transactional.TxType.REQUIRED;
-import static com.inspur.podm.api.business.services.context.Context.contextOf;
 
 import java.util.List;
 
-import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.inspur.podm.api.business.ContextResolvingException;
 import com.inspur.podm.api.business.dto.ComposedNodeDto;
@@ -50,7 +49,7 @@ class ComposedNodeReaderImpl implements ReaderService<ComposedNodeDto> {
     @Autowired
     private ChassisDao chassisDao;
 
-    @Transactional(REQUIRED)
+    @Transactional(propagation = Propagation.REQUIRED)
     @Override
     public CollectionDto getCollection(Context serviceRootContext) {
         List<Context> nodeContexts = composedNodeDao.getAllComposedNodeIds().stream().map(id -> contextOf(id, ContextType.COMPOSED_NODE)).sorted()
@@ -58,7 +57,7 @@ class ComposedNodeReaderImpl implements ReaderService<ComposedNodeDto> {
         return new ComposedNodeCollectionDto(CollectionDto.Type.COMPOSED_NODE, nodeContexts);
     }
 
-    @Transactional(REQUIRED)
+    @Transactional(propagation = Propagation.REQUIRED)
     @Override
     public ComposedNodeDto getResource(Context composedNodeContext) throws ContextResolvingException {
         ComposedNode composedNode = (ComposedNode) traverser.traverse(composedNodeContext);

@@ -18,16 +18,16 @@ package com.intel.podm.business.redfish.services.aggregation;
 
 import java.util.List;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.inspur.podm.api.business.dto.ComputerSystemDto;
 import com.intel.podm.business.entities.dao.ComputerSystemDao;
 import com.intel.podm.business.entities.redfish.ComputerSystem;
 
-@ApplicationScoped
+@Component
 public class ComputerSystemMerger extends DiscoverableEntityDataMerger<ComputerSystem, ComputerSystemDto> {
-    @Inject
+    @Autowired
     private ComputerSystemDao computerSystemDao;
 
     @Override

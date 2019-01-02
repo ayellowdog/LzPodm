@@ -40,8 +40,8 @@ DetachResourceStrategyFactory detachResourceStrategyFactory;
 		logger.i("starting ipodm services");
 		resourceProvider.resourceProvider();
 		podStartupDiscovery.initInitialPod();
-		discoveryStartup.initialize();
-		serviceDetectionStartup.init();
+//		discoveryStartup.initialize();
+//		serviceDetectionStartup.init();
 		detachResourceStrategyFactory.init();
 		logger.i("start ipodm services finish");
 	}

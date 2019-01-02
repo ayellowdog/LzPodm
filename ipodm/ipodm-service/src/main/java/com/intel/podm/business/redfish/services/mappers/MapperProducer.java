@@ -18,12 +18,10 @@ package com.intel.podm.business.redfish.services.mappers;
 
 import static java.util.Optional.empty;
 import static java.util.Optional.of;
-import static java.util.stream.Collectors.toList;
 import static java.util.stream.StreamSupport.stream;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.Optional;
 
 import javax.annotation.PostConstruct;
@@ -32,8 +30,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.inspur.podm.api.business.dto.ChassisDto;
+import com.inspur.podm.api.business.dto.ComputerSystemDto;
 import com.inspur.podm.api.business.dto.RedfishDto;
 import com.intel.podm.business.entities.redfish.Chassis;
+import com.intel.podm.business.entities.redfish.ComputerSystem;
 import com.intel.podm.business.entities.redfish.base.Entity;
 import com.intel.podm.business.redfish.services.helpers.UnknownOemTranslator;
 
@@ -54,9 +54,8 @@ public class MapperProducer {
 	@PostConstruct
 	private void init() {
 		mapperCache = new ArrayList<DtoMapper<? extends Entity, ? extends RedfishDto>>();
-		DtoMapper mapperPool;
-		mapperPool = new DtoMapper(Chassis.class, ChassisDto.class);
-		mapperCache.add(mapperPool);
+		mapperCache.add(new DtoMapper(Chassis.class, ChassisDto.class));
+		mapperCache.add(new DtoMapper(ComputerSystem.class, ComputerSystemDto.class));
 	}
 
 	public Optional<DtoMapper<? extends Entity, ? extends RedfishDto>> tryFindDtoMapperForEntity(
