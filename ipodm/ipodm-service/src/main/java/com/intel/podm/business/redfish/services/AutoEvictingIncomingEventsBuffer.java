@@ -103,7 +103,6 @@ public class AutoEvictingIncomingEventsBuffer {
         }
 
         void evict() {
-        	System.out.println("执行evict。。。。。。。。。。。。。。。");
             cache.invalidateAll();
             bufferSize.set(0);
         }

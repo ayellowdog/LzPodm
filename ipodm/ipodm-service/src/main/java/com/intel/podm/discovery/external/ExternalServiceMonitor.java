@@ -73,8 +73,8 @@ public class ExternalServiceMonitor {
             /**
              * 目前的cancel不是立即能停掉，重启服务后，短时间内会同时有两个discovery线程，
              */
-//            scheduledDiscoveryManager.cancelDiscovery(serviceUuid);
-//            scheduledDiscoveryManager.scheduleDiscovery(serviceUuid);
+            scheduledDiscoveryManager.cancelDiscovery(serviceUuid);
+            scheduledDiscoveryManager.scheduleDiscovery(serviceUuid);
         } else {
             scheduledDiscoveryManager.scheduleDiscovery(serviceUuid);
         }
