@@ -35,7 +35,8 @@ public final class EventServiceDto extends RedfishDto {
     private Collection<EventType> eventTypesForSubscription;
     private Status status;
     @IgnoreAutomaticOem
-    private Object actions = new Object();
+//    private Object actions = new Object();
+    private Object actions = null;
     private ODataId subscriptions;
 
     public EventServiceDto() {

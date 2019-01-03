@@ -354,7 +354,7 @@ public final class Contexts {
     }
 
     private static Context toContext(EventSubscription eventSubscription) {
-        return contextOf(id(""), EVENT_SERVICE).child(eventSubscription.getTheId(), EVENT_SUBSCRIPTION);
+        return contextOf(id(""), EVENT_SERVICE).child(eventSubscription.getId(), EVENT_SUBSCRIPTION);
     }
 
     private static Context toContext(MetricDefinition metricDefinition) {
