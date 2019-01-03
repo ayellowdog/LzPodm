@@ -31,9 +31,11 @@ import org.springframework.stereotype.Component;
 
 import com.inspur.podm.api.business.dto.ChassisDto;
 import com.inspur.podm.api.business.dto.ComputerSystemDto;
+import com.inspur.podm.api.business.dto.ProcessorDto;
 import com.inspur.podm.api.business.dto.RedfishDto;
 import com.intel.podm.business.entities.redfish.Chassis;
 import com.intel.podm.business.entities.redfish.ComputerSystem;
+import com.intel.podm.business.entities.redfish.Processor;
 import com.intel.podm.business.entities.redfish.base.Entity;
 import com.intel.podm.business.redfish.services.helpers.UnknownOemTranslator;
 
@@ -56,6 +58,7 @@ public class MapperProducer {
 		mapperCache = new ArrayList<DtoMapper<? extends Entity, ? extends RedfishDto>>();
 		mapperCache.add(new DtoMapper(Chassis.class, ChassisDto.class));
 		mapperCache.add(new DtoMapper(ComputerSystem.class, ComputerSystemDto.class));
+		mapperCache.add(new DtoMapper(Processor.class, ProcessorDto.class));
 	}
 
 	public Optional<DtoMapper<? extends Entity, ? extends RedfishDto>> tryFindDtoMapperForEntity(

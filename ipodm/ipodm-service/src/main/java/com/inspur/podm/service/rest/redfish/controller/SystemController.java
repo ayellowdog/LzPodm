@@ -4,12 +4,22 @@
 package com.inspur.podm.service.rest.redfish.controller;
 
 import static com.inspur.podm.api.business.services.context.PathParamConstants.COMPUTER_SYSTEM_ID;
+import static com.inspur.podm.api.business.services.context.PathParamConstants.PROCESSOR_ID;
 import static com.inspur.podm.api.business.services.redfish.ReaderService.SERVICE_ROOT_CONTEXT;
+import static com.intel.podm.common.types.redfish.ResourceNames.COMPUTER_SYSTEM_METRICS_RESOURCE_NAME;
+import static com.intel.podm.common.types.redfish.ResourceNames.ETHERNET_INTERFACES_RESOURCE_NAME;
+import static com.intel.podm.common.types.redfish.ResourceNames.MEMORY_RESOURCE_NAME;
+import static com.intel.podm.common.types.redfish.ResourceNames.NETWORK_INTERFACES_RESOURCE_NAME;
+import static com.intel.podm.common.types.redfish.ResourceNames.PROCESSORS_RESOURCE_NAME;
+import static com.intel.podm.common.types.redfish.ResourceNames.SIMPLE_STORAGE_RESOURCE_NAME;
+import static com.intel.podm.common.types.redfish.ResourceNames.STORAGE_RESOURCE_NAME;
 import static javax.ws.rs.core.Response.ok;
 
 import java.util.concurrent.TimeoutException;
 
 import javax.annotation.Resource;
+import javax.inject.Inject;
+import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +31,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.inspur.podm.api.business.BusinessApiException;
 import com.inspur.podm.api.business.dto.ComputerSystemDto;
+import com.inspur.podm.api.business.dto.ProcessorDto;
 import com.inspur.podm.api.business.dto.redfish.CollectionDto;
 import com.inspur.podm.api.business.services.context.Context;
 import com.inspur.podm.api.business.services.redfish.ReaderService;
@@ -29,6 +40,14 @@ import com.inspur.podm.api.business.services.redfish.odataid.ODataId;
 import com.inspur.podm.service.rest.redfish.json.templates.CollectionJson;
 import com.inspur.podm.service.rest.redfish.json.templates.RedfishResourceAmazingWrapper;
 import com.inspur.podm.service.rest.redfish.json.templates.actions.ComputerSystemPartialRepresentation;
+import com.inspur.podm.service.rest.redfish.resources.ComputerSystemMetricsResource;
+import com.inspur.podm.service.rest.redfish.resources.EthernetInterfaceCollectionResource;
+import com.inspur.podm.service.rest.redfish.resources.MemoryCollectionResource;
+import com.inspur.podm.service.rest.redfish.resources.NetworkInterfaceCollectionResource;
+import com.inspur.podm.service.rest.redfish.resources.ProcessorResource;
+import com.inspur.podm.service.rest.redfish.resources.ProcessorsCollectionResource;
+import com.inspur.podm.service.rest.redfish.resources.SimpleStorageCollectionResource;
+import com.inspur.podm.service.rest.redfish.resources.StorageCollectionResource;
 import com.inspur.podm.service.rest.redfish.serializers.CollectionDtoJsonSerializer;
 import com.intel.podm.common.types.redfish.RedfishComputerSystem;
 
@@ -52,6 +71,9 @@ public class SystemController extends BaseController {
 	
 	@Resource(name = "ComputerSystemService")
     private ReaderService<ComputerSystemDto> readerService;
+	
+	@Resource(name = "ProcessorService")
+    private ReaderService<ProcessorDto> readerProcessorService;
 	
     @Resource(name = "ComputerSystem")
     private UpdateService<RedfishComputerSystem> computerSystemUpdateService;
@@ -82,6 +104,54 @@ public class SystemController extends BaseController {
 		computerSystemUpdateService.perform(getCurrentContext(), representation);
         return ok(get()).build();
 	}
+	
+	@ApiOperation(value = "/redfish/v1/Systems/{computerSystemId}/Processors", notes = "Processors")
+	@RequestMapping(value = "/" + COMPUTER_SYSTEM_ID + "/" +PROCESSORS_RESOURCE_NAME, method = RequestMethod.GET)
+    public CollectionJson getProcessorsCollection(@PathVariable(required = true) String computerSystemId) {
+		CollectionDto collectionDto = getOrThrow(() -> readerProcessorService.getCollection(SERVICE_ROOT_CONTEXT));
+		CollectionJson collectionJson = collectionDtoJsonSerializer.translate(collectionDto,
+				new ODataId("/redfish/v1/Systems" + computerSystemId.toString() + "/Processors"));
+		return collectionJson;
+    }
+	
+    @ApiOperation(value = "/redfish/v1/Systems/{computerSystemId}/Processors/{processorId}", notes = "Processors")
+	@RequestMapping(value = "/" + COMPUTER_SYSTEM_ID + "/" + PROCESSORS_RESOURCE_NAME + "/" + PROCESSOR_ID, method = RequestMethod.GET)
+    public RedfishResourceAmazingWrapper getProcessor(@PathVariable(required = true) String computerSystemId) {
+    	super.uriInfo.put("computerSystemId", computerSystemId.toString());
+        Context context = getCurrentContext();
+        ProcessorDto processorDto = getOrThrow(() -> readerProcessorService.getResource(context));
+        return new RedfishResourceAmazingWrapper(context, processorDto);
+    }
+
+//    @Path(SIMPLE_STORAGE_RESOURCE_NAME)
+//    public SimpleStorageCollectionResource getSimpleStorage() {
+//        return getResource(SimpleStorageCollectionResource.class);
+//    }
+//
+//    @Path(STORAGE_RESOURCE_NAME)
+//    public StorageCollectionResource getStorage() {
+//        return getResource(StorageCollectionResource.class);
+//    }
+//
+//    @Path(MEMORY_RESOURCE_NAME)
+//    public MemoryCollectionResource getMemoryCollection() {
+//        return getResource(MemoryCollectionResource.class);
+//    }
+//
+//    @Path(ETHERNET_INTERFACES_RESOURCE_NAME)
+//    public EthernetInterfaceCollectionResource getEthernetInterfacesCollection() {
+//        return getResource(EthernetInterfaceCollectionResource.class);
+//    }
+//
+//    @Path(NETWORK_INTERFACES_RESOURCE_NAME)
+//    public NetworkInterfaceCollectionResource getNetworkInterfacesCollection() {
+//        return getResource(NetworkInterfaceCollectionResource.class);
+//    }
+//
+//    @Path(COMPUTER_SYSTEM_METRICS_RESOURCE_NAME)
+//    public ComputerSystemMetricsResource getComputerSystemMetrics() {
+//        return getResource(ComputerSystemMetricsResource.class);
+//    }
 
 
 }

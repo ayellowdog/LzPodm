@@ -26,8 +26,8 @@ import java.util.Collection;
 import java.util.EnumSet;
 import java.util.Objects;
 
-import javax.enterprise.context.Dependent;
-import javax.inject.Inject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.inspur.podm.api.business.ContextResolvingException;
 import com.inspur.podm.api.business.services.context.Context;
@@ -39,21 +39,21 @@ import com.intel.podm.business.entities.redfish.base.Entity;
 import com.intel.podm.business.redfish.services.ContextTypeToEntityMapper;
 import com.intel.podm.business.redfish.services.EntityTreeTraverser;
 
-@Dependent
+@Component
 @SuppressWarnings({"checkstyle:ClassFanOutComplexity"})
 public class MultiSourceEntityTreeTraverser {
     private static final EnumSet<ContextType> MULTI_SOURCE_ROOT_TYPES = of(COMPUTER_SYSTEM, CHASSIS);
 
-    @Inject
+    @Autowired
     private EntityTreeTraverser traverser;
 
-    @Inject
+    @Autowired
     private ComputerSystemSubResourcesFinder computerSystemSubResourcesFinder;
 
-    @Inject
+    @Autowired
     private ChassisSubResourcesFinder chassisSubResourcesFinder;
 
-    @Inject
+    @Autowired
     private ContextTypeToEntityMapper contextMapper;
 
     public Entity traverse(Context context) throws ContextResolvingException {

@@ -18,16 +18,16 @@ package com.intel.podm.business.redfish.services.aggregation;
 
 import java.util.List;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.inspur.podm.api.business.dto.ProcessorDto;
 import com.intel.podm.business.entities.dao.ProcessorDao;
 import com.intel.podm.business.entities.redfish.Processor;
 
-@ApplicationScoped
+@Component
 public class ProcessorMerger extends DiscoverableEntityDataMerger<Processor, ProcessorDto> {
-    @Inject
+    @Autowired
     private ProcessorDao processorDao;
 
     @Override

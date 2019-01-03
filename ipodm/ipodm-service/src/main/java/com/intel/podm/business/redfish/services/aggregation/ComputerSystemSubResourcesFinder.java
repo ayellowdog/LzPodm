@@ -17,7 +17,6 @@
 package com.intel.podm.business.redfish.services.aggregation;
 
 import static java.util.Collections.emptyMap;
-import static javax.transaction.Transactional.TxType.MANDATORY;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -27,9 +26,10 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.function.Function;
 
-import javax.enterprise.context.Dependent;
-import javax.inject.Inject;
-import javax.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.intel.podm.business.entities.dao.ComputerSystemDao;
 import com.intel.podm.business.entities.redfish.ComputerSystem;
@@ -41,12 +41,12 @@ import com.intel.podm.business.entities.redfish.SimpleStorage;
 import com.intel.podm.business.entities.redfish.Storage;
 import com.intel.podm.business.entities.redfish.base.MultiSourceResource;
 
-@Dependent
+@Component
 public class ComputerSystemSubResourcesFinder {
-    @Inject
+    @Autowired
     private ComputerSystemDao computerSystemDao;
 
-    @Transactional(MANDATORY)
+    @Transactional(propagation = Propagation.MANDATORY)
     public Collection<? extends DiscoverableEntity> getUniqueSubResourcesOfClass(ComputerSystem baseEntity,
                                                                                  Class<? extends DiscoverableEntity> subResourceClass) {
         List<ComputerSystem> complementarySystems = computerSystemDao.findComplementarySystems(baseEntity);
