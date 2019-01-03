@@ -16,6 +16,16 @@
 
 package com.intel.podm.business.redfish.services;
 
+import static java.lang.String.format;
+
+import java.util.UUID;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.inspur.podm.api.business.EventDispatchingException;
 import com.inspur.podm.api.business.services.redfish.EventReceivingService;
 //import com.intel.podm.business.EventDispatchingException;
@@ -23,30 +33,9 @@ import com.intel.podm.business.entities.dao.ExternalServiceDao;
 import com.intel.podm.business.entities.redfish.ExternalService;
 //import com.intel.podm.business.services.redfish.EventReceivingService;
 import com.intel.podm.common.types.redfish.RedfishEventArray;
-import com.intel.podm.config.base.Config;
-import com.intel.podm.config.base.ConfigProvider;
-import com.intel.podm.config.base.Holder;
-import com.intel.podm.config.base.dto.EventsConfig;
-import com.intel.podm.config.base.dto.EventsConfig.BufferedEventProcessing;
-import com.intel.podm.config.base.dto.EventsConfig.SouthboundConfiguration;
-
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.inject.Produces;
-import javax.inject.Inject;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.UUID;
-
-import static java.lang.String.format;
-import static javax.transaction.Transactional.TxType.REQUIRES_NEW;
 
 //@ApplicationScoped
-@Component
+@Service("EventReceivingService")
 class EventReceivingServiceImpl implements EventReceivingService {
 	@Autowired
 	private ExternalServiceDao externalServiceDao;
