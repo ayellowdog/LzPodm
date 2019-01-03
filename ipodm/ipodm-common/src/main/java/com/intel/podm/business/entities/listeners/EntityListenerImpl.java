@@ -16,22 +16,26 @@
 
 package com.intel.podm.business.entities.listeners;
 
+import javax.enterprise.util.AnnotationLiteral;
 import javax.persistence.PostPersist;
 
+import org.springframework.stereotype.Component;
+
+import com.inspur.podm.common.context.AppContext;
 import com.intel.podm.business.entities.redfish.base.Entity;
+import com.intel.podm.business.entities.types.EntityAdded;
 
 //@ApplicationScoped
+@Component
 public class EntityListenerImpl extends EntityListener {
-//    private static final AnnotationLiteral<EntityAdded> ENTITY_ADDED = new AnnotationLiteral<EntityAdded>() {
-//        private static final long serialVersionUID = 1013570273485238779L;
-//    };
-//
-//    @PostPersist
-//    public void postPersist(Entity entity) {
+    private static final AnnotationLiteral<EntityAdded> ENTITY_ADDED = new AnnotationLiteral<EntityAdded>() {
+        private static final long serialVersionUID = 1013570273485238779L;
+    };
+
+    @PostPersist
+    public void postPersist(Entity entity) {
 //        beanManager.fireEvent(entity, ENTITY_ADDED);
-//    }
-	@PostPersist
-	public void postPersist(Entity entity) {
-		System.out.println("postPersist:实体已经保存：" + entity.getClass());
-	}
+    	EntityAddedEvent event = new EntityAddedEvent(this, entity);
+    	AppContext.context().publishEvent(event);
+    }
 }

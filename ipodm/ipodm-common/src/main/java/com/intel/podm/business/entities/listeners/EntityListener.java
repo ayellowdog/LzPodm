@@ -23,12 +23,23 @@ import javax.enterprise.inject.spi.Bean;
 import javax.enterprise.inject.spi.BeanManager;
 import javax.enterprise.util.AnnotationLiteral;
 import javax.inject.Inject;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.intel.podm.common.enterprise.utils.beans.BeanFactory;
+
 import java.util.Set;
 
 //import static com.intel.podm.common.utils.IterableHelper.single;
 
 //@ApplicationScoped
 public class EntityListener {
+	@Autowired
+	private BeanFactory beanFactory;
+	
+	protected <T> T create(Class<T> beanClass) {
+		return beanFactory.create(beanClass);
+	}
 //    @Inject
 //    protected BeanManager beanManager;
 //

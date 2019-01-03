@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import com.intel.podm.business.entities.migration.DatabaseSchemaUpdateFinalizer;
 import com.intel.podm.business.redfish.services.detach.DetachResourceStrategyFactory;
 import com.intel.podm.client.typeidresolver.ResourceProvider;
 import com.intel.podm.common.logger.Logger;
@@ -26,6 +27,8 @@ import com.intel.podm.services.detection.ServiceDetectionStartup;
 public class IpodmServiceStartUp implements CommandLineRunner{
 	private static final Logger logger = LoggerFactory.getLogger(IpodmServiceStartUp.class);
 @Autowired
+private DatabaseSchemaUpdateFinalizer databaseSchemaUpdateFinalizer;
+@Autowired
 private DiscoveryStartup discoveryStartup;
 @Autowired
 private ResourceProvider resourceProvider;
@@ -39,6 +42,7 @@ DetachResourceStrategyFactory detachResourceStrategyFactory;
 	public void run(String... args) throws Exception {
 		logger.i("starting ipodm services");
 		resourceProvider.resourceProvider();
+		databaseSchemaUpdateFinalizer.postConstruct();
 		podStartupDiscovery.initInitialPod();
 		discoveryStartup.initialize();
 		serviceDetectionStartup.init();
