@@ -19,6 +19,7 @@ package com.intel.podm.client.events;
 import com.intel.podm.client.WebClient;
 import com.intel.podm.client.WebClientRequestException;
 import com.intel.podm.client.reader.ResourceSupplier;
+import com.intel.podm.client.resources.EventServiceResource;
 import com.intel.podm.client.resources.EventSubscriptionResource;
 import com.intel.podm.common.types.events.EventType;
 
@@ -58,8 +59,8 @@ public class EventSubscriptionManager {
             .eventTypes(getAllKnownEventTypesFrom(eventServiceResource))
             .context(podManagerSubscriptionDescription)
             .build();
-
-        webClient.post(createSubscriptionUri(), eventSubscribeRequest);
+        URI createSubscriptionUri = createSubscriptionUri();
+        webClient.post(createSubscriptionUri, eventSubscribeRequest);
     }
 
     private EnumSet<EventType> getAllKnownEventTypesFrom(EventServiceResource eventServiceResource) {
@@ -87,7 +88,8 @@ public class EventSubscriptionManager {
     }
 
     private EventServiceResource getEventService() throws WebClientRequestException {
-        return (EventServiceResource) webClient.get(createEventServiceUri());
+    	URI createEventServiceUri = createEventServiceUri();
+        return (EventServiceResource) webClient.get(createEventServiceUri);
     }
 
     private URI createEventServiceUri() {

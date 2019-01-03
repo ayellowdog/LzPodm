@@ -110,12 +110,14 @@ public class EventsConfig extends BaseConfig {
         try {
             String ipAddress = getPodManagerIpForReceivingEventsFromServiceOfType(serviceType);
             String path = EVENT_RECEIVING_ENDPOINT + "/" + serviceType.name().toLowerCase();
-            return fromUri("{scheme}://{ip}:{port}")
+            URI result = fromUri("{scheme}://{ip}:{port}")
                 .resolveTemplate("scheme", sslEnabled ? HTTPS_SCHEME : HTTP_SCHEME)
                 .resolveTemplate("ip", ipAddress)
                 .resolveTemplate("port", sslEnabled ? HTTPS_POD_MANAGER_PORT : HTTP_POD_MANAGER_PORT)
                 .path(path)
                 .build();
+            System.out.println(result.toString());
+            return result;
         } catch (IllegalArgumentException | UriBuilderException e) {
             throw new IllegalArgumentException("Couldn't create valid PodM Event Service destination", e);
         }

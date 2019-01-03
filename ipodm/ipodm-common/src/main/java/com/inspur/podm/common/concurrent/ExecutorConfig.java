@@ -13,6 +13,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 
 import static com.intel.podm.common.enterprise.utils.beans.JndiNames.EVENT_SUBSCRIPTION_TASK_EXECUTOR;
 import static com.intel.podm.common.enterprise.utils.beans.JndiNames.SYNCHRONIZED_TASK_EXECUTOR;
+import static com.intel.podm.common.enterprise.utils.beans.JndiNames.DEFAULT_SCHEDULED_EXECUTOR_SERVICE;
 
 /**
  * @ClassName: ExecutorConfig
@@ -36,7 +37,13 @@ public class ExecutorConfig {
 	}
 	@Bean(name = EVENT_SUBSCRIPTION_TASK_EXECUTOR)
 	public ScheduledExecutorService getEventsExecutorService() {
-		ScheduledExecutorService eventsExecutorService = Executors.newScheduledThreadPool(2);
+		ScheduledExecutorService eventsExecutorService = Executors.newScheduledThreadPool(3);
+		return eventsExecutorService;
+	}
+	//这个好像只需要单线程，可以优化Executors.newSingleThreadScheduledExecutor()
+	@Bean(name = DEFAULT_SCHEDULED_EXECUTOR_SERVICE)
+	public ScheduledExecutorService getDefaultScheduledExecutorService() {
+		ScheduledExecutorService eventsExecutorService = Executors.newScheduledThreadPool(1);
 		return eventsExecutorService;
 	}
 }

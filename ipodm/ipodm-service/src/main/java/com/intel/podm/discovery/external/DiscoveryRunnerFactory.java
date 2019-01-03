@@ -20,11 +20,16 @@ import com.intel.podm.common.enterprise.utils.beans.BeanFactory;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import java.util.UUID;
 
-@ApplicationScoped
+//@ApplicationScoped
+@Component
 public class DiscoveryRunnerFactory {
-    @Inject
+    @Autowired
     private BeanFactory beanFactory;
 
     public DiscoveryRunner createDiscoveryRunner(UUID serviceUuid) {

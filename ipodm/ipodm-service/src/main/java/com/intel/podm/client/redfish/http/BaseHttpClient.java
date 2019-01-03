@@ -7,6 +7,7 @@ import java.net.URI;
 
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPatch;
 import org.apache.http.client.methods.HttpPost;
@@ -57,6 +58,9 @@ public class BaseHttpClient implements AutoCloseable{
 				return new HttpResponse(statusCode, null, uri);
 			}
 			String entity = EntityUtils.toString(response.getEntity(), "UTF-8");
+			if(entity.isEmpty()) {
+				return new HttpResponse(statusCode, null, uri);
+			}
 			Object readEntity = objMapper.readValue(entity, javaType);
 			return new HttpResponse(statusCode, readEntity, uri);
 		} catch (Exception e) {
@@ -91,6 +95,9 @@ public class BaseHttpClient implements AutoCloseable{
 			}
 			patch.setHeader("Content-Type", "application/json");
 			return patch;
+		case DELETE:
+			HttpDelete delete = new HttpDelete(uri);
+			return delete;
 		default:
 			break;
 		}

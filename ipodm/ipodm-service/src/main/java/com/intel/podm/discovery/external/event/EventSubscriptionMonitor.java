@@ -68,7 +68,7 @@ public class EventSubscriptionMonitor {
 //    @Lock(WRITE)
 //    @Transactional(SUPPORTS)
 //    @AccessTimeout(value = 5, unit = SECONDS)
-    @Transactional(propagation = Propagation.SUPPORTS, timeout = 5)
+    @Transactional(propagation = Propagation.SUPPORTS, timeout = 500)
     public synchronized void monitorService(UUID serviceUuid) {
         if (!eventSubscriptionTasks.containsKey(serviceUuid)) {
             EventSubscriptionTask subscriptionTask = eventSubscriptionTaskFactory.create(serviceUuid);

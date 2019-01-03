@@ -21,8 +21,8 @@ public final class JndiNames {
     public static final String EVENT_SUBSCRIPTION_TASK_EXECUTOR = "EventsExecutor";
     public static final String DEEP_DISCOVERY_EXECUTOR = "DeepDiscoveryExecutor";
     public static final String SSDP_EXECUTOR = "SSDPExecutor";
-    public static final String DEFAULT_SCHEDULED_EXECUTOR_SERVICE = "java:jboss/ee/concurrency/scheduler/default";
-
+//    public static final String DEFAULT_SCHEDULED_EXECUTOR_SERVICE = "java:jboss/ee/concurrency/scheduler/default";
+    public static final String DEFAULT_SCHEDULED_EXECUTOR_SERVICE = "DefaultScheduledExecutor";
     private JndiNames() {
     }
 }

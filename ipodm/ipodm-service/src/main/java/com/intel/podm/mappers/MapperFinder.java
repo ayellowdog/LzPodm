@@ -50,7 +50,6 @@ public class MapperFinder {
     }
     @PostConstruct
     private void init() {
-    	System.out.println("MapperFinder size is:" + mapperPool.size());
     }
     private Iterable<EntityMapper<? extends ExternalServiceResource, ? extends DiscoverableEntity>> getMapperPool() {
         if (cache == null) {

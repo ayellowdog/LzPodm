@@ -81,7 +81,6 @@ public class EntityMultiMapper {
     @Transactional(propagation = Propagation.MANDATORY)
     public Map<ExternalServiceResource, DiscoverableEntity> map(Collection<ExternalServiceResource> resources, ExternalService externalService) {
         requires(nonNull(externalService), "externalService should not be null");
-        System.out.println("resources size is :" + resources.size());
         Map<ExternalServiceResource, DiscoverableEntity> result = new HashMap<>();
 
         for (ExternalServiceResource resource : resources) {

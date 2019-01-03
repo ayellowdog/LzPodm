@@ -61,14 +61,17 @@ class EventSubscriptionTask extends DefaultManagedTask implements Runnable {
 
     @Override
     public void run() {
+    	logger.info("开始订阅：" + serviceUuid);
         EventServiceDefinition eventServiceDefinition = eventServiceDefinitionFactory.create(serviceUuid);
         URI serviceBaseUri = eventServiceDefinition.getServiceBaseUri();
         try (WebClient webClient = webClientBuilder.newInstance(serviceBaseUri).retryable().build()) {
             EventSubscriptionManager eventSubscriptionManager = new EventSubscriptionManager(webClient, eventServiceDefinition);
+            //返回是否被当前podm订阅的那个记录，因此只能是0或1
             Optional<EventSubscriptionResource> eventSubscription = eventSubscriptionManager.fetchPodmSubscription();
 
             if (eventSubscription.isPresent()) {
                 EventSubscriptionResource subscription = eventSubscription.get();
+                //比较接收event的podm目的地址是否一样
                 if (!subscriptionHaveSameDestinationAsThisPodm(subscription.getDestination(), eventServiceDefinition.getPodmEventServiceDestinationUri())) {
                     eventSubscriptionManager.deleteSubscription(subscription);
                     subscribe(eventSubscriptionManager, serviceBaseUri);

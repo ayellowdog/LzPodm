@@ -14,14 +14,12 @@
  * limitations under the License.
  */
 
-package com.intel.podm.client.events;
+package com.intel.podm.client.resources;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.intel.podm.client.OdataTypes;
 import com.intel.podm.client.WebClientRequestException;
 import com.intel.podm.client.reader.ResourceSupplier;
-import com.intel.podm.client.resources.ExternalServiceResourceImpl;
-import com.intel.podm.client.resources.ODataId;
 
 import java.util.Set;
 

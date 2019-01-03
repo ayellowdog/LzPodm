@@ -42,7 +42,6 @@ public class EntityLinker {
 	@PostConstruct
 	public void init() {
 		this.linkers = LinkerCollectionProducer.create();
-		System.out.println("EntityLinker.class: linker size is "  + linkers.size());
 	}
     public void link(Entity source, Entity target, String linkName) {
         for (Linker linker : linkers) {

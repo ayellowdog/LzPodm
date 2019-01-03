@@ -72,12 +72,6 @@ public class EntityLinks {
 
     public void link(EntityLink entityLink) {
         requiresNonNull(entityLink, "entityLink");
-        Entity source = entityLink.getSource();
-        System.out.println(source.toString());
-        Entity target = entityLink.getTarget();
-        System.out.println(target.toString());
-        String name = entityLink.getName();
-        System.out.println(name);
         linker.link(entityLink.getSource(), entityLink.getTarget(), entityLink.getName());
     }
 

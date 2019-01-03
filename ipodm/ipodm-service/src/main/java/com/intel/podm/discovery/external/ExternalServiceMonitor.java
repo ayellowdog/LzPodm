@@ -69,12 +69,12 @@ public class ExternalServiceMonitor {
     public synchronized void monitorService(UUID serviceUuid) {
         ExternalService service = externalServiceRepository.find(serviceUuid);
         if (service.isEventingAvailable()) {
-        	/**
-        	 * 暂时注释掉eventMonitor
-        	 */
-//            eventSubscriptionMonitor.monitorService(serviceUuid);
-            scheduledDiscoveryManager.cancelDiscovery(serviceUuid);
-            scheduledDiscoveryManager.scheduleDiscovery(serviceUuid);
+            eventSubscriptionMonitor.monitorService(serviceUuid);
+            /**
+             * 目前的cancel不是立即能停掉，重启服务后，短时间内会同时有两个discovery线程，
+             */
+//            scheduledDiscoveryManager.cancelDiscovery(serviceUuid);
+//            scheduledDiscoveryManager.scheduleDiscovery(serviceUuid);
         } else {
             scheduledDiscoveryManager.scheduleDiscovery(serviceUuid);
         }

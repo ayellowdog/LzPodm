@@ -94,7 +94,6 @@ public class EntityObtainer {
     @PostConstruct
     private void init() {
         cachedHelpers = stream(helpers.spliterator(), false).collect(toList());
-        System.out.println("EntityObtainer.class : cachedHelpers size is " + cachedHelpers.size());
     }
 
     @SuppressWarnings({"unchecked"})
