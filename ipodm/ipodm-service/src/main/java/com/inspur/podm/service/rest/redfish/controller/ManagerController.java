@@ -3,32 +3,47 @@
  */
 package com.inspur.podm.service.rest.redfish.controller;
 
+import static com.inspur.podm.api.business.services.context.ContextType.ETHERNET_SWITCH_PORT;
 import static com.inspur.podm.api.business.services.context.PathParamConstants.ETHERNET_INTERFACE_ID;
 import static com.inspur.podm.api.business.services.context.PathParamConstants.MANAGER_ID;
 import static com.inspur.podm.api.business.services.context.PathParamConstants.ETHERNET_SWITCH_PORT_VLAN_ID;
 import static com.inspur.podm.api.business.services.context.SingletonContext.singletonContextOf;
 import static com.inspur.podm.api.business.services.redfish.ReaderService.SERVICE_ROOT_CONTEXT;
+import static com.inspur.podm.service.rest.error.PodmExceptions.invalidHttpMethod;
 import static com.intel.podm.common.types.redfish.ResourceNames.NETWORK_PROTOCOL_RESOURCE_NAME;
 
+import java.util.concurrent.TimeoutException;
+
+import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
+
 import javax.annotation.Resource;
+import javax.inject.Inject;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.POST;
+import javax.ws.rs.core.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.inspur.podm.api.business.BusinessApiException;
 import com.inspur.podm.api.business.dto.EthernetInterfaceDto;
 import com.inspur.podm.api.business.dto.ManagerDto;
 import com.inspur.podm.api.business.dto.NetworkProtocolDto;
 import com.inspur.podm.api.business.dto.VlanNetworkInterfaceDto;
 import com.inspur.podm.api.business.dto.redfish.CollectionDto;
 import com.inspur.podm.api.business.services.context.Context;
+import com.inspur.podm.api.business.services.redfish.CreationService;
 import com.inspur.podm.api.business.services.redfish.ReaderService;
 import com.inspur.podm.api.business.services.redfish.odataid.ODataId;
 import com.inspur.podm.service.rest.redfish.json.templates.CollectionJson;
 import com.inspur.podm.service.rest.redfish.json.templates.RedfishResourceAmazingWrapper;
+import com.inspur.podm.service.rest.redfish.json.templates.actions.CreateVlanJson;
 import com.inspur.podm.service.rest.redfish.serializers.CollectionDtoJsonSerializer;
+import com.intel.podm.common.types.redfish.RedfishVlanNetworkInterface;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -53,11 +68,13 @@ public class ManagerController extends BaseController {
 	private ReaderService<EthernetInterfaceDto> readerEthernetInterfacesService;
 	@Resource(name = "VlanNetworkInterfaceReaderService")
 	private ReaderService<VlanNetworkInterfaceDto> readerVlanNetworkInterfaceService;
+	@Resource(name = "VlanNetworkInterfaceCreationService")
+	private CreationService<RedfishVlanNetworkInterface> creationService;
 
 	@Autowired
 	private CollectionDtoJsonSerializer collectionDtoJsonSerializer;
 
-	@ApiOperation(value = "Managers", notes = "Managers")
+	@ApiOperation(value = "get Manager collection", notes = "Managers")
 	@RequestMapping(method = RequestMethod.GET)
 	public CollectionJson get() {
 		CollectionDto collectionDto = getOrThrow(() -> readerService.getCollection(SERVICE_ROOT_CONTEXT));
@@ -66,7 +83,7 @@ public class ManagerController extends BaseController {
 		return collectionJson;
 	}
 
-	@ApiOperation(value = "Managers/{managerId}", notes = "Managers/{managerId}")
+	@ApiOperation(value = "getManager ", notes = "Managers/{managerId}")
 	@RequestMapping(value = "/" + MANAGER_ID, method = RequestMethod.GET)
 	public RedfishResourceAmazingWrapper getManager(@PathVariable(required = true) String managerId) {
 		super.uriInfo.put("managerId", managerId.toString());
@@ -75,7 +92,7 @@ public class ManagerController extends BaseController {
 		return new RedfishResourceAmazingWrapper(context, managerDto);
 	}
 
-	@ApiOperation(value = "Managers/{managerId}/NetworkProtocol", notes = "NetworkProtocol")
+	@ApiOperation(value = "get NetworkProtocol", notes = "NetworkProtocol")
 	@RequestMapping(value = "/" + MANAGER_ID + "/NetworkProtocol", method = RequestMethod.GET)
 	public RedfishResourceAmazingWrapper getNetworkProtocol(@PathVariable(required = true) String managerId) {
 		super.uriInfo.put("managerId", managerId.toString());
@@ -85,7 +102,7 @@ public class ManagerController extends BaseController {
 				networkProtocolDto);
 	}
 
-	@ApiOperation(value = "Managers/{managerId}/EthernetInterfaces", notes = "EthernetInterfaces")
+	@ApiOperation(value = "get EthernetInterface collection", notes = "EthernetInterfaces")
 	@RequestMapping(value = "/" + MANAGER_ID + "/EthernetInterfaces", method = RequestMethod.GET)
 	public CollectionJson getEthernetInterfaces(@PathVariable(required = true) String managerId) {
 		super.uriInfo.put("managerId", managerId.toString());
@@ -96,7 +113,7 @@ public class ManagerController extends BaseController {
 		return collectionJson;
 	}
 
-	@ApiOperation(value = "Managers/{managerId}/EthernetInterfaces/{ethernetInterfaceId}", notes = "{ethernetInterfaceId}")
+	@ApiOperation(value = "get ethernetInterface  by ethernetInterfaceId", notes = "{ethernetInterfaceId}")
 	@RequestMapping(value = "/" + MANAGER_ID + "/EthernetInterfaces/"
 			+ ETHERNET_INTERFACE_ID, method = RequestMethod.GET)
 	public RedfishResourceAmazingWrapper getEthernetInterface(@PathVariable(required = true) String managerId,
@@ -109,7 +126,7 @@ public class ManagerController extends BaseController {
 		return new RedfishResourceAmazingWrapper(context, ethernetInterfaceDto);
 	}
 
-	@ApiOperation(value = "Managers/{managerId}/EthernetInterfaces/{ethernetInterfaceId}/VLANs", notes = "VLANs")
+	@ApiOperation(value = "get vlan collection", notes = "VLANs")
 	@RequestMapping(value = "/" + MANAGER_ID + "/EthernetInterfaces/" + ETHERNET_INTERFACE_ID
 			+ "/VLANs", method = RequestMethod.GET)
 	public CollectionJson getVlanCollection(@PathVariable(required = true) String managerId,
@@ -123,7 +140,7 @@ public class ManagerController extends BaseController {
 		return collectionJson;
 	}
 
-	@ApiOperation(value = "Managers/{managerId}/EthernetInterfaces/{ethernetInterfaceId}/VLANs/{ethernetSwitchPortVlanId}", notes = "ethernetSwitchPortVlanId")
+	@ApiOperation(value = "get vlan by id", notes = "ethernetSwitchPortVlanId")
 	@RequestMapping(value = "/" + MANAGER_ID + "/EthernetInterfaces/" + ETHERNET_INTERFACE_ID + "/VLANs/"
 			+ ETHERNET_SWITCH_PORT_VLAN_ID, method = RequestMethod.GET)
 	public RedfishResourceAmazingWrapper getEthernetSwitchPortVlans(@PathVariable(required = true) String managerId,
@@ -138,50 +155,26 @@ public class ManagerController extends BaseController {
 		return new RedfishResourceAmazingWrapper(context, vlanNetworkInterfaceDto);
 	}
 
-	// @ApiOperation(value = "patchComputerSystem", notes = "PATCH")
-	// @RequestMapping(value = "/" + COMPUTER_SYSTEM_ID, method =
-	// RequestMethod.PATCH)
-	// public Response patchComputerSystem(@PathVariable(required = true) String
-	// computerSystemId,
-	// @RequestBody(required = false) ComputerSystemPartialRepresentation
-	// representation)
-	// throws TimeoutException, BusinessApiException {
-	// super.uriInfo.put("computerSystemId", computerSystemId.toString());
-	// computerSystemUpdateService.perform(getCurrentContext(), representation);
-	// return ok(get()).build();
-	// }
-	//
-	// @ApiOperation(value = "/redfish/v1/Systems/{computerSystemId}/Processors",
-	// notes = "Processors")
-	// @RequestMapping(value = "/" + COMPUTER_SYSTEM_ID + "/"
-	// +PROCESSORS_RESOURCE_NAME, method = RequestMethod.GET)
-	// public CollectionJson getProcessorsCollection(@PathVariable(required = true)
-	// String computerSystemId) {
-	// super.uriInfo.put("computerSystemId", computerSystemId.toString());
-	// Context context = getCurrentContext();
-	// CollectionDto collectionDto = getOrThrow(() ->
-	// readerProcessorService.getCollection(context));
-	// CollectionJson collectionJson =
-	// collectionDtoJsonSerializer.translate(collectionDto,
-	// new ODataId("/redfish/v1/Systems" + computerSystemId.toString() +
-	// "/Processors"));
-	// return collectionJson;
-	// }
-	//
-	// @ApiOperation(value =
-	// "/redfish/v1/Systems/{computerSystemId}/Processors/{processorId}", notes =
-	// "Processors")
-	// @RequestMapping(value = "/" + COMPUTER_SYSTEM_ID + "/" +
-	// PROCESSORS_RESOURCE_NAME + "/" + PROCESSOR_ID, method = RequestMethod.GET)
-	// public RedfishResourceAmazingWrapper getProcessor(@PathVariable(required =
-	// true) String computerSystemId,
-	// @PathVariable(required = true) String processorId) {
-	// super.uriInfo.put("computerSystemId", computerSystemId.toString());
-	// super.uriInfo.put("processorId", processorId.toString());
-	// Context context = getCurrentContext();
-	// ProcessorDto processorDto = getOrThrow(() ->
-	// readerProcessorService.getResource(context));
-	// return new RedfishResourceAmazingWrapper(context, processorDto);
-	// }
+	@ApiOperation(value = "此方法目前无法创建Vlan，只有交换机才能划分vlan", notes = "此方法目前无法创建Vlan，只有交换机才能划分vlan")
+	@RequestMapping(value = "/" + MANAGER_ID + "/EthernetInterfaces/" + ETHERNET_INTERFACE_ID
+			+ "/VLANs", method = RequestMethod.POST)
+	public Response createVlan(@PathVariable(required = true) String managerId,
+			@PathVariable(required = true) String ethernetInterfaceId,
+			@RequestBody(required = true) CreateVlanJson representation) throws TimeoutException, BusinessApiException {
+		super.uriInfo.put("managerId", managerId.toString());
+		super.uriInfo.put("ethernetInterfaceId", ethernetInterfaceId.toString());
+		Context currentContext = getCurrentContext();
+
+		if (!isPostEnabled(currentContext)) {
+			throw invalidHttpMethod("Vlan cannot be created in specified resource");
+		}
+
+		Context createdContext = creationService.create(currentContext, representation);
+		return Response.created(createdContext.asOdataId().toUri()).build();
+	}
+
+	private boolean isPostEnabled(Context currentContext) {
+		return ETHERNET_SWITCH_PORT.equals(currentContext.getType());
+	}
 
 }
