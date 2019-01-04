@@ -44,7 +44,7 @@ public class ChassisController extends BaseController {
 	@Autowired
 	private CollectionDtoJsonSerializer collectionDtoJsonSerializer;
 	
-	@ApiOperation(value = "查看redfish目录/redfish/v1/Chassis", notes = "Chassis")
+	@ApiOperation(value = "Chassis", notes = "Chassis")
 	@RequestMapping(method = RequestMethod.GET)
     public CollectionJson get() {
 		CollectionDto collectionDto = getOrThrow(() -> readerService.getCollection(SERVICE_ROOT_CONTEXT));
@@ -52,7 +52,7 @@ public class ChassisController extends BaseController {
 		return collectionJson;
     }
 	
-	@ApiOperation(value = "/redfish/v1/Chassis/{Chassis}", notes = "/redfish/v1/Chassis/{Chassis}")
+	@ApiOperation(value = "Chassis/{Chassis}", notes = "/redfish/v1/Chassis/{Chassis}")
 	@RequestMapping(value = "/" + CHASSIS_ID, method = RequestMethod.GET)
 	public RedfishResourceAmazingWrapper getChassis(@PathVariable(required = true) String chassisId) {
 		super.uriInfo.put("chassisId", chassisId);

@@ -41,54 +41,12 @@ public class ServiceRootController extends BaseController {
 	private static final String SERVICE_ROOT = "/redfish/v1/";
 	private static final String SERVICE = "Service";
 
-	@ApiOperation(value = "查看redfish目录/redfish/v1", notes = "/redfish/v1")
+	@ApiOperation(value = "redfish/v1", notes = "/redfish/v1")
 	@RequestMapping(method = RequestMethod.GET)
 	public RedfishResourceAmazingWrapper get() {
 		ServiceRootDto serviceRootDto = serviceRootReaderService.getServiceRoot();
 		return new RedfishResourceAmazingWrapper(new ServiceRootContext(), serviceRootDto);
 	}
-
-	// @Path(COMPOSED_NODES_RESOURCE_NAME)
-	// public ComposedNodeCollectionResource getComposedNodes() {
-	// return getResource(ComposedNodeCollectionResource.class);
-	// }
-	//
-	// @Path(COMPUTER_SYSTEM_RESOURCE_NAME)
-	// public ComputerSystemCollectionResource getComputerSystems() {
-	// return getResource(ComputerSystemCollectionResource.class);
-	// }
-	//
-
-	//
-	// @Path(MANAGERS_RESOURCE_NAME)
-	// public ManagerCollectionResource getManagers() {
-	// return getResource(ManagerCollectionResource.class);
-	// }
-	//
-	// @Path(FABRIC_RESOURCE_NAME)
-	// public FabricCollectionResource getFabrics() {
-	// return getResource(FabricCollectionResource.class);
-	// }
-	//
-	// @Path(STORAGE_SERVICES_RESOURCE_NAME)
-	// public StorageServiceCollectionResource getStorageServices() {
-	// return getResource(StorageServiceCollectionResource.class);
-	// }
-	//
-	// @Path(EVENT_SERVICE_RESOURCE_NAME)
-	// public EventServiceResource getEventService() {
-	// return getResource(EventServiceResource.class);
-	// }
-	//
-	// @Path(ETHERNET_SWITCHES_RESOURCE_NAME)
-	// public EthernetSwitchCollectionResource getEthernetSwitches() {
-	// return getResource(EthernetSwitchCollectionResource.class);
-	// }
-	//
-	// @Path(TELEMETRY_SERVICE_RESOURCE_NAME)
-	// public TelemetryServiceResource getTelemetryService() {
-	// return getResource(TelemetryServiceResource.class);
-	// }
 
 	/**
 	 * <p>
@@ -99,7 +57,7 @@ public class ServiceRootController extends BaseController {
 	 * @date: 2018年11月28日 上午10:49:35
 	 * @return
 	 */
-	@ApiOperation(value = "查看redfish目录/redfish/v1/odata", notes = "/redfish/v1/odata")
+	@ApiOperation(value = "/redfish/v1/odata", notes = "/redfish/v1/odata")
 	@RequestMapping(value = "/odata", method = RequestMethod.GET)
 	public ODataServiceDocumentDto getOData() {
 		return ODataServiceDocumentDto.newBuilder().values(getODataRootServices(), "/redfish/v1/$metdata").build();

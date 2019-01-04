@@ -53,6 +53,13 @@ import com.intel.podm.config.base.dto.ServiceConnectionConfig;
 import io.swagger.annotations.Api;
 
 
+/**
+ * @ClassName: EventListenerResource
+ * @Description: 监听PSME请求
+ *
+ * @author: zhangdian
+ * @date: 2019年1月4日 上午10:02:05
+ */
 @RestController
 @RequestMapping("/rest/EventListener")
 @Api(value = "EventServiceController", description = "/redfish/v1/EventService")

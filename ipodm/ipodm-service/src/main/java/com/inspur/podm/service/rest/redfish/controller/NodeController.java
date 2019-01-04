@@ -86,7 +86,7 @@ public class NodeController extends BaseController {
 	@Resource(name = "detachResourceActionServiceImpl")
 	private ActionService<DetachResourceRequest> detachResourceRequestActionService;
 
-	@ApiOperation(value = "查看redfish目录/redfish/v1/Nodes", notes = "Nodes")
+	@ApiOperation(value = "Nodes", notes = "Nodes")
 	@RequestMapping(method = RequestMethod.GET)
 	public CollectionJson get() {
 		CollectionDto collectionDto = getOrThrow(() -> readerService.getCollection(SERVICE_ROOT_CONTEXT));
@@ -123,7 +123,7 @@ public class NodeController extends BaseController {
 		return ok(get()).build();
 	}
 
-	@ApiOperation(value = "/redfish/v1/Nodes/Actions/Allocate", notes = "/redfish/v1/Nodes/Actions/Allocate")
+	@ApiOperation(value = "Actions/Allocate", notes = "/redfish/v1/Nodes/Actions/Allocate")
 	@RequestMapping(value = "/Actions/Allocate", method = RequestMethod.POST)
 	public Response allocate(@RequestBody(required = true) RequestedNodeJson requestedNode) {
 		try {
@@ -136,7 +136,7 @@ public class NodeController extends BaseController {
 		}
 	}
 
-	@ApiOperation(value = "/redfish/v1/Nodes/Actions/ComposedNode.Reset", notes = "/redfish/v1/Nodes/Actions/ComposedNode.Reset")
+	@ApiOperation(value = "Actions/ComposedNode.Reset", notes = "/redfish/v1/Nodes/Actions/ComposedNode.Reset")
 	@RequestMapping(value = "/{" + COMPOSED_NODE_ID + "}/Actions/ComposedNode.Reset", method = RequestMethod.POST)
 	public Response reset(@RequestBody(required = true) ResetActionJson resetActionJson, 
 			@PathVariable(required = true) Long composedNodeId)
@@ -146,7 +146,7 @@ public class NodeController extends BaseController {
 		return noContent().build();
 	}
 
-	@ApiOperation(value = "/redfish/v1/Nodes/Actions/ComposedNode.Assemble", notes = "/redfish/v1/Nodes/Actions/ComposedNode.Assemble")
+	@ApiOperation(value = "ComposedNode.Assemble", notes = "/redfish/v1/Nodes/Actions/ComposedNode.Assemble")
 	@RequestMapping(value = "/{" + COMPOSED_NODE_ID + "}/Actions/ComposedNode.Assemble", method = RequestMethod.POST)
 	public Response assemble(@PathVariable(required = true) Long composedNodeId) throws TimeoutException, BusinessApiException {
 		super.uriInfo.put("composedNodeId", composedNodeId.toString());
@@ -154,7 +154,7 @@ public class NodeController extends BaseController {
 		return noContent().build();
 	}
 
-	@ApiOperation(value = "/redfish/v1/Nodes/Actions/ComposedNode.AttachResource", notes = "/redfish/v1/Nodes/Actions/ComposedNode.AttachResource")
+	@ApiOperation(value = "ComposedNode.AttachResource", notes = "/redfish/v1/Nodes/Actions/ComposedNode.AttachResource")
 	@RequestMapping(value = "/{" + COMPOSED_NODE_ID + "}/Actions/ComposedNode.AttachResource", method = RequestMethod.POST)
 	public Response attachEndpoint(@RequestBody(required = true) AttachResourceJson attachResourceJson, 
 			@PathVariable(required = true) Long composedNodeId)
@@ -164,7 +164,7 @@ public class NodeController extends BaseController {
 		return noContent().build();
 	}
 
-	@ApiOperation(value = "/redfish/v1/Nodes/Actions/ComposedNode.DetachResource", notes = "/redfish/v1/Nodes/Actions/ComposedNode.DetachResource")
+	@ApiOperation(value = "Actions/ComposedNode.DetachResource", notes = "/redfish/v1/Nodes/Actions/ComposedNode.DetachResource")
 	@RequestMapping(value = "/{" + COMPOSED_NODE_ID + "}/Actions/ComposedNode.DetachResource", method = RequestMethod.POST)
 	public Response detachResource(@RequestBody(required = true) DetachResourceJson detachResourceJson, 
 			@PathVariable(required = true) Long composedNodeId)
@@ -174,7 +174,7 @@ public class NodeController extends BaseController {
 		return noContent().build();
 	}
 
-	@ApiOperation(value = "/redfish/v1/Nodes/{COMPOSED_NODE_ID}/Actions/AttachResourceActionInfo", notes = "/redfish/v1/Nodes/Actions/AttachResourceActionInfo")
+	@ApiOperation(value = "Actions/AttachResourceActionInfo", notes = "/redfish/v1/Nodes/Actions/AttachResourceActionInfo")
 	@RequestMapping(value = "/{" + COMPOSED_NODE_ID + "}/Actions/" + ATTACH_RESOURCE_ACTION_INFO, method = RequestMethod.GET)
 	public RedfishResourceAmazingWrapper getAttachResourceActionInfo(@PathVariable(required = true) Long composedNodeId)
 			throws BusinessApiException {
@@ -185,7 +185,7 @@ public class NodeController extends BaseController {
 				singletonContextOf(context, format("Actions/%s", ATTACH_RESOURCE_ACTION_INFO)), actionInfoDto);
 	}
 
-	@ApiOperation(value = "/redfish/v1/Nodes/{COMPOSED_NODE_ID}/Actions/DetachResourceActionInfo", notes = "/redfish/v1/Nodes/Actions/DetachResourceActionInfo")
+	@ApiOperation(value = "Actions/DetachResourceActionInfo", notes = "/redfish/v1/Nodes/Actions/DetachResourceActionInfo")
 	@RequestMapping(value = "/{" + COMPOSED_NODE_ID + "}/Actions/" + DETACH_RESOURCE_ACTION_INFO, method = RequestMethod.GET)
 	public RedfishResourceAmazingWrapper getDetachResourceActionInfo(@PathVariable(required = true) Long composedNodeId)
 			throws BusinessApiException {

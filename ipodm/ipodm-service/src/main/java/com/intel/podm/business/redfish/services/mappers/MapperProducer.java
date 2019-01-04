@@ -31,10 +31,16 @@ import org.springframework.stereotype.Component;
 
 import com.inspur.podm.api.business.dto.ChassisDto;
 import com.inspur.podm.api.business.dto.ComputerSystemDto;
+import com.inspur.podm.api.business.dto.EthernetInterfaceDto;
+import com.inspur.podm.api.business.dto.ManagerDto;
 import com.inspur.podm.api.business.dto.ProcessorDto;
 import com.inspur.podm.api.business.dto.RedfishDto;
+import com.inspur.podm.api.business.dto.VlanNetworkInterfaceDto;
 import com.intel.podm.business.entities.redfish.Chassis;
 import com.intel.podm.business.entities.redfish.ComputerSystem;
+import com.intel.podm.business.entities.redfish.EthernetInterface;
+import com.intel.podm.business.entities.redfish.EthernetSwitchPortVlan;
+import com.intel.podm.business.entities.redfish.Manager;
 import com.intel.podm.business.entities.redfish.Processor;
 import com.intel.podm.business.entities.redfish.base.Entity;
 import com.intel.podm.business.redfish.services.helpers.UnknownOemTranslator;
@@ -59,6 +65,9 @@ public class MapperProducer {
 		mapperCache.add(new DtoMapper(Chassis.class, ChassisDto.class));
 		mapperCache.add(new DtoMapper(ComputerSystem.class, ComputerSystemDto.class));
 		mapperCache.add(new DtoMapper(Processor.class, ProcessorDto.class));
+		mapperCache.add(new DtoMapper(Manager.class, ManagerDto.class));
+		mapperCache.add(new DtoMapper(EthernetInterface.class, EthernetInterfaceDto.class));
+		mapperCache.add(new DtoMapper(EthernetSwitchPortVlan.class, VlanNetworkInterfaceDto.class));
 	}
 
 	public Optional<DtoMapper<? extends Entity, ? extends RedfishDto>> tryFindDtoMapperForEntity(

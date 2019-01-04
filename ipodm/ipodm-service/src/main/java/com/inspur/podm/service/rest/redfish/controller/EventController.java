@@ -79,7 +79,7 @@ public class EventController extends BaseController {
     @Resource(name = "SubscriptionActionService")
     private RemovalService<EventSubscriptionRequest> removalService;
 
-    @ApiOperation(value = "查看redfish目录/redfish/v1/EventService", notes = "EventService")
+    @ApiOperation(value = "EventService", notes = "EventService")
 	@RequestMapping(method = RequestMethod.GET)
     public RedfishResourceAmazingWrapper get() {
         Context context = contextOf(id(""), EVENT_SERVICE);
@@ -87,7 +87,7 @@ public class EventController extends BaseController {
 		return new RedfishResourceAmazingWrapper(context, eventServiceDto);
     }
     
-    @ApiOperation(value = "查看redfish目录/redfish/v1/EventService/Subscriptions", notes = "Subscriptions")
+    @ApiOperation(value = "EventService/Subscriptions", notes = "Subscriptions")
     @RequestMapping(value = "/Subscriptions", method = RequestMethod.GET)
     public CollectionJson getSubscriptions() {
         CollectionDto collectionDto = getOrThrow(() -> readerSubscriptionService.getCollection(SERVICE_ROOT_CONTEXT));
@@ -95,7 +95,7 @@ public class EventController extends BaseController {
 		return collectionJson;
     }
     
-    @ApiOperation(value = "查看redfish目录/redfish/v1/EventService/Subscriptions/{id}", notes = "Subscriptions")
+    @ApiOperation(value = "EventService/Subscriptions/{id}", notes = "Subscriptions")
     @RequestMapping(value = "/Subscriptions/{id}", method = RequestMethod.GET)
     public RedfishResourceAmazingWrapper getSubscription(@PathVariable(required = true) Long id) {
         Context context = contextFromSubscriptionId(id);
@@ -105,14 +105,14 @@ public class EventController extends BaseController {
         );
     }
     
-    @ApiOperation(value = "/redfish/v1/EventService/Subscriptions", notes = "Subscriptions")
+    @ApiOperation(value = "EventService/Subscriptions", notes = "Subscriptions")
 	@RequestMapping(value = "/Subscriptions", method = RequestMethod.POST)
     public Response createSubscription(@RequestBody(required = true)EventSubscriptionRequestJson payload) throws BusinessApiException, TimeoutException {
         Context context = creationService.create(null, payload);
         return Response.created(context.asOdataId().toUri()).build();
     }
     
-	@ApiOperation(value = "/redfish/v1/EventService/Subscriptions/{id} Delete", notes = "Delete")
+	@ApiOperation(value = "EventService/Subscriptions/{id} Delete", notes = "Delete")
 	@RequestMapping(value = "/Subscriptions/{id}", method = RequestMethod.DELETE)
     public Response deleteSubscription(@PathVariable(required = true) Long id) throws BusinessApiException, TimeoutException {
         removalService.perform(contextFromSubscriptionId(id));

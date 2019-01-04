@@ -55,8 +55,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 /**
- * @ClassName: NodeController
- * @Description: NodeController
+ * @ClassName: SystemsController
+ * @Description: SystemsController
  *
  * @author: zhangdian
  * @date: 2018年12月11日 下午2:11:45
@@ -78,7 +78,7 @@ public class SystemController extends BaseController {
     @Resource(name = "ComputerSystem")
     private UpdateService<RedfishComputerSystem> computerSystemUpdateService;
 
-	@ApiOperation(value = "查看redfish目录/redfish/v1/Systems", notes = "Systems")
+	@ApiOperation(value = "Systems", notes = "Systems")
 	@RequestMapping(method = RequestMethod.GET)
 	public CollectionJson get() {
 		CollectionDto collectionDto = getOrThrow(() -> readerService.getCollection(SERVICE_ROOT_CONTEXT));
@@ -86,7 +86,7 @@ public class SystemController extends BaseController {
 		return collectionJson;
     }
 	
-	@ApiOperation(value = "/redfish/v1/Systems/{computerSystemId}", notes = "/redfish/v1/Systems/{computerSystemId}")
+	@ApiOperation(value = "Systems/{computerSystemId}", notes = "/redfish/v1/Systems/{computerSystemId}")
 	@RequestMapping(value = "/" + COMPUTER_SYSTEM_ID, method = RequestMethod.GET)
 	public RedfishResourceAmazingWrapper getNode(@PathVariable(required = true) String computerSystemId) {
 		super.uriInfo.put("computerSystemId", computerSystemId.toString());
@@ -105,19 +105,23 @@ public class SystemController extends BaseController {
         return ok(get()).build();
 	}
 	
-	@ApiOperation(value = "/redfish/v1/Systems/{computerSystemId}/Processors", notes = "Processors")
+	@ApiOperation(value = "{computerSystemId}/Processors", notes = "Processors")
 	@RequestMapping(value = "/" + COMPUTER_SYSTEM_ID + "/" +PROCESSORS_RESOURCE_NAME, method = RequestMethod.GET)
     public CollectionJson getProcessorsCollection(@PathVariable(required = true) String computerSystemId) {
-		CollectionDto collectionDto = getOrThrow(() -> readerProcessorService.getCollection(SERVICE_ROOT_CONTEXT));
+		super.uriInfo.put("computerSystemId", computerSystemId.toString());
+		Context context = getCurrentContext();
+		CollectionDto collectionDto = getOrThrow(() -> readerProcessorService.getCollection(context));
 		CollectionJson collectionJson = collectionDtoJsonSerializer.translate(collectionDto,
 				new ODataId("/redfish/v1/Systems" + computerSystemId.toString() + "/Processors"));
 		return collectionJson;
     }
 	
-    @ApiOperation(value = "/redfish/v1/Systems/{computerSystemId}/Processors/{processorId}", notes = "Processors")
+    @ApiOperation(value = "{computerSystemId}/Processors/{processorId}", notes = "Processors")
 	@RequestMapping(value = "/" + COMPUTER_SYSTEM_ID + "/" + PROCESSORS_RESOURCE_NAME + "/" + PROCESSOR_ID, method = RequestMethod.GET)
-    public RedfishResourceAmazingWrapper getProcessor(@PathVariable(required = true) String computerSystemId) {
+    public RedfishResourceAmazingWrapper getProcessor(@PathVariable(required = true) String computerSystemId, 
+    		@PathVariable(required = true) String processorId) {
     	super.uriInfo.put("computerSystemId", computerSystemId.toString());
+    	super.uriInfo.put("processorId", processorId.toString());
         Context context = getCurrentContext();
         ProcessorDto processorDto = getOrThrow(() -> readerProcessorService.getResource(context));
         return new RedfishResourceAmazingWrapper(context, processorDto);

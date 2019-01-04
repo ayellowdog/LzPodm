@@ -22,7 +22,7 @@ import io.swagger.annotations.ApiOperation;
 @Api(value = "RedfishController", description = "根目录控制器")
 public class RedfishResourceController {
 
-	@ApiOperation(value = "查看redfish根目录", notes = "查看redfish根目录")
+	@ApiOperation(value = "redfish", notes = "查看redfish根目录")
 	@RequestMapping(method = RequestMethod.GET)
 	public Object get() {
         return new V1();

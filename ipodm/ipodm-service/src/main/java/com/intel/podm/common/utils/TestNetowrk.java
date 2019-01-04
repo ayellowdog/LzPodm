@@ -26,7 +26,7 @@ public static void main(String[] args) throws SocketException {
 //		}
 //		System.out.println(nextElement.getName());
 //	}
-	NetworkInterface networkInterface = NetworkInterface.getByName("eth7");
+	NetworkInterface networkInterface = NetworkInterface.getByName("eth2");
 	Enumeration<InetAddress> inetAddresses = networkInterface.getInetAddresses();
 	while(inetAddresses.hasMoreElements()) {
 	System.out.println(inetAddresses.nextElement().getHostAddress());

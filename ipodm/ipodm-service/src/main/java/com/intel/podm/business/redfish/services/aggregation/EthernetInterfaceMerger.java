@@ -20,17 +20,17 @@ import static java.util.Collections.emptyList;
 
 import java.util.List;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.inspur.podm.api.business.dto.EthernetInterfaceDto;
 import com.intel.podm.business.entities.dao.EthernetInterfaceDao;
 import com.intel.podm.business.entities.redfish.ComputerSystem;
 import com.intel.podm.business.entities.redfish.EthernetInterface;
 
-@ApplicationScoped
+@Component
 public class EthernetInterfaceMerger extends DiscoverableEntityDataMerger<EthernetInterface, EthernetInterfaceDto> {
-    @Inject
+    @Autowired
     private EthernetInterfaceDao ethernetInterfaceDao;
 
     @Override
